@@ -8,7 +8,10 @@ class Settings_model extends CI_Model
     {
         $user_id = $this->session->userdata('user_id');
         $this->mongodb->order_by(['DisplaySequence' => 'ASC']);
-        $this->mongodb->where(['UserId' => mongo_id($user_id), 'Module' => $module]);
+        $this->mongodb->where([
+            'UserId' => mongo_id($user_id),
+            'Module' => $module,
+        ]);
         $qry = $this->mongodb->get('AccountSettings');
         foreach ($qry as $key) {
             $settings[] = $key;
@@ -23,7 +26,10 @@ class Settings_model extends CI_Model
         $account_setting_id_arr = $params['account_setting_id'];
         if (count($account_setting_id_arr ?? []) > 0) {
             $this->mongodb->set(['SettingValue' => 'N']);
-            $this->mongodb->where(['Module' => $module, 'UserId' => mongo_id($user_id)]);
+            $this->mongodb->where([
+                'Module' => $module,
+                'UserId' => mongo_id($user_id),
+            ]);
             $this->mongodb->update('AccountSettings', ['multiple' => true]);
 
             for ($i = 0; $i < count($account_setting_id_arr ?? []); $i++) {

@@ -155,14 +155,14 @@ function PageCount_DOCX($file)
             <div class="row">
                 <div class="col-md-8">
                     <?php if (in_array($filetype, $images ?? [])) {
-     $num_pages = '1'; ?>
+                        $num_pages = '1'; ?>
                     <iframe name="iframetoprint" id="iframetoprint" src="<?= $path ?>"></iframe>
                     <?php
- } else {
-      ?>
+                    } else {
+                         ?>
                     <iframe class="doc" id="iframefiles" src="https://docs.google.com/gview?url=<?= $path ?>&embedded=true"></iframe>
                     <?php
- } ?>
+                    } ?>
                 </div>
                 <div class="col-md-4">
                     <form class="form-horizontal" role="form" id="print_form">
@@ -241,30 +241,30 @@ function PageCount_DOCX($file)
 						</div>-->
                                     <?php  ?>
                                     <?php
-      $locations = [];
-      $i = 1;
-      foreach ($data as $row) {
+                                    $locations = [];
+                                    $i = 1;
+                                    foreach ($data as $row) {
 
-          $name = $row['name'];
-          $lattitude = $row['latitude'];
-          $longitude = $row['longitude'];
-          $id = $i;
-          $code = $row['code'];
-          $location_address = $row['address'];
-          $locations[] = [
-              'google_map' => [
-                  'lat' => $lattitude,
-                  'lng' => $longitude,
-              ],
-              'location_address' => $location_address,
-              'location_name' => $name,
-              'id' => $id,
-          ];
-          ?>
+                                        $name = $row['name'];
+                                        $lattitude = $row['latitude'];
+                                        $longitude = $row['longitude'];
+                                        $id = $i;
+                                        $code = $row['code'];
+                                        $location_address = $row['address'];
+                                        $locations[] = [
+                                            'google_map' => [
+                                                'lat' => $lattitude,
+                                                'lng' => $longitude,
+                                            ],
+                                            'location_address' => $location_address,
+                                            'location_name' => $name,
+                                            'id' => $id,
+                                        ];
+                                        ?>
                                     <input type="hidden" id="<?= $id ?>" value="<?= $code ?>">
                                     <?php $i++;
-      }
-      ?>
+                                    }
+                                    ?>
                                     <?php  ?>
                                     <?php  ?>
                                 </div>

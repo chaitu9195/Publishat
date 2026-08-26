@@ -16,7 +16,9 @@ class Signup_model extends CI_Model
         $joined_on = date('Y-m-d H:i:s');
         $admin_from_email = 'no-reply@publishat.com';
         $prime_multiplier = 379;
-        $qry = $this->db->query('SELECT * FROM ' . TBL_USER . " WHERE Email = '$email'");
+        $qry = $this->db->query(
+            'SELECT * FROM ' . TBL_USER . " WHERE Email = '$email'",
+        );
         if ($qry->num_rows() == 0) {
             $this->db->query(
                 'INSERT INTO ' .
@@ -26,7 +28,8 @@ class Signup_model extends CI_Model
 
             $user_id = $this->db->insert_id();
 
-            $email_template = '../../templates/account-verification-template.html';
+            $email_template =
+                '../../templates/account-verification-template.html';
             $to_email = $email;
             $from_email = $admin_from_email;
             $subject = 'Publishat.com Account Verification';
@@ -35,7 +38,13 @@ class Signup_model extends CI_Model
             $vc = $user_id * $prime_multiplier . '!' . $password;
             $email_body = str_replace('##name##', $fullname, $email_body);
             $email_body = str_replace('##vc##', $vc, $email_body);
-            $this->phpmail_nocc($from_email, $to_email, $subject, $email_body, 'html');
+            $this->phpmail_nocc(
+                $from_email,
+                $to_email,
+                $subject,
+                $email_body,
+                'html',
+            );
             return ['status' => 'success'];
         } else {
             return ['status' => 'failure'];
@@ -71,8 +80,13 @@ class Signup_model extends CI_Model
         }
     }
 
-    public function phpmail_nocc($from_email, $to_email, $subject, $message, $type = 'html')
-    {
+    public function phpmail_nocc(
+        $from_email,
+        $to_email,
+        $subject,
+        $message,
+        $type = 'html',
+    ) {
         if ($type == 'html') {
             $mailheaders =
                 "From:$from_email\r\n" .

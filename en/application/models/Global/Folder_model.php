@@ -33,7 +33,10 @@ class Folder_model extends CI_Model
         $user_id = $this->session->userdata('user_id');
         $typeId = $params['typeId'];
         $this->mongodb->order_by(['Date' => 'DESC']);
-        $this->mongodb->where(['UserId' => mongo_id($user_id), 'RecordTypeId' => $typeId]);
+        $this->mongodb->where([
+            'UserId' => mongo_id($user_id),
+            'RecordTypeId' => $typeId,
+        ]);
         $qry = $this->mongodb->get('Bookmarks');
         if (count($qry ?? []) > 0) {
             foreach ($qry as $data) {
@@ -62,7 +65,9 @@ class Folder_model extends CI_Model
         $date = date('Y-m-d H:i:s');
         if (count($_FILES['uploadedfile']['name']) > 0) {
             $mongo_connection = new MongoClient();
-            $gridfs = $mongo_connection->selectDB('publisha_dbase')->getGridFS();
+            $gridfs = $mongo_connection
+                ->selectDB('publisha_dbase')
+                ->getGridFS();
             $gridfs->storeUpload('uploadedfile', [
                 'UserId' => $user_id,
                 'RecordTypeId' => $record_type_id,
@@ -86,7 +91,10 @@ class Folder_model extends CI_Model
         $typeId = $params['typeId'];
         if (count($document_ids ?? []) > 0) {
             foreach ($document_ids as $id) {
-                $this->mongodb->where(['_id' => mongo_id($id), 'RecordTypeId' => $typeId]);
+                $this->mongodb->where([
+                    '_id' => mongo_id($id),
+                    'RecordTypeId' => $typeId,
+                ]);
                 $qry = $this->mongodb->get('fs.files');
                 if (count($qry ?? []) > 0) {
                     $rec = $qry;
@@ -103,7 +111,10 @@ class Folder_model extends CI_Model
                         } else {
                             $m = new MongoClient();
                             $con = $m->SelectDB('publisha_dbase')->getGridFS();
-                            $qry = $con->remove(['_id' => mongo_id($id), 'RecordTypeId' => $typeId]);
+                            $qry = $con->remove([
+                                '_id' => mongo_id($id),
+                                'RecordTypeId' => $typeId,
+                            ]);
                             if ($qry) {
                                 $status = 'success';
                             }
@@ -115,7 +126,10 @@ class Folder_model extends CI_Model
                         }
                         $m = new MongoClient();
                         $con = $m->SelectDB('publisha_dbase')->getGridFS();
-                        $qry = $con->remove(['_id' => mongo_id($id), 'RecordTypeId' => $typeId]);
+                        $qry = $con->remove([
+                            '_id' => mongo_id($id),
+                            'RecordTypeId' => $typeId,
+                        ]);
                         if ($qry) {
                             $status = 'success';
                         } else {
@@ -202,7 +216,10 @@ class Folder_model extends CI_Model
 
         $i = $fid;
         while ($i != '') {
-            $this->mongodb->where(['UserId' => mongo_id($user_id), '_id' => mongo_id($i)]);
+            $this->mongodb->where([
+                'UserId' => mongo_id($user_id),
+                '_id' => mongo_id($i),
+            ]);
             $qury = $this->mongodb->get('fs.files');
             $result = $qury;
             foreach ($qury as $row) {
@@ -213,7 +230,12 @@ class Folder_model extends CI_Model
         }
         $ff = $this->msort($ff, ['Type', 'TS']);
         $data = $this->msort($data, ['Type', 'TS'], SORT_REGULAR, SORT_ASC);
-        return ['ff' => $ff, 'fdetails' => $data, 'typeId' => $type_id, 'module' => $module];
+        return [
+            'ff' => $ff,
+            'fdetails' => $data,
+            'typeId' => $type_id,
+            'module' => $module,
+        ];
     }
     public function getmapsdata()
     {
@@ -251,7 +273,10 @@ class Folder_model extends CI_Model
             $cost = $lbw;
         } elseif ($print_type == 'Landscape' && $color == 'Color') {
             $cost = $lco;
-        } elseif (($print_type == 'Portriate' || $print_type == 'Landscape') && $color == 'LOR') {
+        } elseif (
+            ($print_type == 'Portriate' || $print_type == 'Landscape') &&
+            $color == 'LOR'
+        ) {
             $cost = $lor;
         } elseif ($color == 'Black and White' && $print_type == 'Project') {
             $cost = $pbw;
@@ -261,7 +286,8 @@ class Folder_model extends CI_Model
         if ($print_type == 'Project') {
             $ProjectPageNos = $params['ProjectPageNos'];
             $ProjectColorPagesCount = count(array_filter($ProjectPageNos));
-            $costForProjectColorPrint = $ProjectColorPagesCount * $pco * $copies;
+            $costForProjectColorPrint =
+                $ProjectColorPagesCount * $pco * $copies;
             $totalcost = $totalcost + $costForProjectColorPrint;
         }
 
@@ -273,7 +299,9 @@ class Folder_model extends CI_Model
         $copies = $params['copies'];
         $pagescount = $params['pagescount'];
         $user_id = $this->session->userdata('user_id');
-        $qury = $this->db->query("SELECT * FROM PrintProperties WHERE  Color = '$color'");
+        $qury = $this->db->query(
+            "SELECT * FROM PrintProperties WHERE  Color = '$color'",
+        );
         $result = $qury->row_array();
         $cost = $result['Cost'];
         $totalcost = $cost * $copies * $pagescount;
@@ -283,7 +311,12 @@ class Folder_model extends CI_Model
     {
         $location = $params['location'];
         $regex = new MongoRegex("/$location/i");
-        $where = ['$or' => [['address' => $regex], ['name' => new MongoRegex("/$location/i")]]];
+        $where = [
+            '$or' => [
+                ['address' => $regex],
+                ['name' => new MongoRegex("/$location/i")],
+            ],
+        ];
 
         $m = new MongoClient();
         $db = $m->jobs;
@@ -305,10 +338,15 @@ class Folder_model extends CI_Model
             if (!$uploaded_filename) {
                 return [
                     'status' => 'failed',
-                    'data' => 'File size is too high. Document should not be more than ' . max_document_file_size_text,
+                    'data' =>
+                        'File size is too high. Document should not be more than ' .
+                        max_document_file_size_text,
                 ];
             }
-            $docs = ['ext' => $file_extension, 'filename' => $uploaded_filename];
+            $docs = [
+                'ext' => $file_extension,
+                'filename' => $uploaded_filename,
+            ];
         }
         return $docs;
     }
@@ -363,8 +401,12 @@ class Folder_model extends CI_Model
             }
         }
     }
-    public function msort($array, $key, $sort_flags = SORT_REGULAR, $order = SORT_DESC)
-    {
+    public function msort(
+        $array,
+        $key,
+        $sort_flags = SORT_REGULAR,
+        $order = SORT_DESC,
+    ) {
         if (is_array($array) && count($array ?? []) > 0) {
             if (!empty($key)) {
                 $mapping = [];

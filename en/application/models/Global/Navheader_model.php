@@ -26,13 +26,20 @@ class Navheader_model extends CI_Model
         $module_arr = array_keys(array_flip($moduledb));
 
         $this->mongodb->order_by(['DisplaySequence' => 'ASC']);
-        $this->mongodb->where(['UserId' => mongo_id($user_id), 'SettingValue' => 'Y']);
+        $this->mongodb->where([
+            'UserId' => mongo_id($user_id),
+            'SettingValue' => 'Y',
+        ]);
         $subQry = $this->mongodb->get('AccountSettings');
 
         $rtMap = [];
         foreach ($this->mongodb->get('RecordType') as $rtRow) {
             if (isset($rtRow['RecordTypeId'])) {
-                $rtMap[(string) $rtRow['RecordTypeId']] = isset($rtRow['DBTable']) ? $rtRow['DBTable'] : null;
+                $rtMap[(string) $rtRow['RecordTypeId']] = isset(
+                    $rtRow['DBTable'],
+                )
+                    ? $rtRow['DBTable']
+                    : null;
             }
         }
         foreach ($module_arr as $key => $value) {
@@ -43,10 +50,14 @@ class Navheader_model extends CI_Model
                     $submodule[] = $key;
                     $typeids[] = $key['RecordTypeId'];
 
-                    $db_table = isset($rtMap[(string) $record_type_id]) ? $rtMap[(string) $record_type_id] : null;
+                    $db_table = isset($rtMap[(string) $record_type_id])
+                        ? $rtMap[(string) $record_type_id]
+                        : null;
                     if (!empty($db_table)) {
                         $this->mongodb->where(['UserId' => mongo_id($user_id)]);
-                        $count[$record_type_id] = $this->mongodb->count($db_table);
+                        $count[$record_type_id] = $this->mongodb->count(
+                            $db_table,
+                        );
                     } else {
                         $count[$record_type_id] = 0;
                     }
@@ -54,7 +65,12 @@ class Navheader_model extends CI_Model
             }
         }
 
-        return ['module' => $module, 'submod' => $submodule, 'typeIds' => $typeids, 'rec_count' => $count];
+        return [
+            'module' => $module,
+            'submod' => $submodule,
+            'typeIds' => $typeids,
+            'rec_count' => $count,
+        ];
     }
     public function getModules()
     {

@@ -206,7 +206,9 @@
         $("#error").hide();
     });
 
-    document.title = "New Record | <?= $tabName ?> | <?= ucfirst($moduleName) ?> | Publishat";
+    document.title = "New Record | <?= $tabName ?> | <?= ucfirst(
+     $moduleName,
+ ) ?> | Publishat";
     $('.doc_id').click(function(e) {
         e.stopPropagation();
 

@@ -7,7 +7,9 @@ class Articles_view_model extends CI_Model
     public function getarticleinfo()
     {
         $user_id = $this->session->userdata('user_id');
-        $query = $this->db->query("SELECT * FROM Articles WHERE UserId = '$user_id'");
+        $query = $this->db->query(
+            "SELECT * FROM Articles WHERE UserId = '$user_id'",
+        );
         if ($query->num_rows() > 0) {
             foreach ($query->result_array() as $data) {
                 $article_data[] = $data;

@@ -7,7 +7,9 @@ class User_model extends CI_Model
     public function get_contactsdata()
     {
         $this->load->database();
-        $useridsqry = $this->db->query('SELECT UserId FROM ' . TBL_USER_VENDOR . " WHERE VendorId = '2' ");
+        $useridsqry = $this->db->query(
+            'SELECT UserId FROM ' . TBL_USER_VENDOR . " WHERE VendorId = '2' ",
+        );
         if ($useridsqry->num_rows() > 0) {
             foreach ($useridsqry->result_array() as $singleUserId) {
                 $contctsrecqry = $this->db->query(
@@ -27,16 +29,27 @@ class User_model extends CI_Model
                         " WHERE OrgId = '$user_vendor' AND Email !='' AND Email = '$user_table_email'",
                 );
                 if ($contctsrecqry->num_rows() > 0) {
-                    foreach ($contctsrecqry->result_array() as $singleContact1) {
+                    foreach (
+                        $contctsrecqry->result_array()
+                        as $singleContact1
+                    ) {
                         $tempArr1[] = $singleContact1;
                     }
                 }
             }
 
             if (count($tempArr ?? []) > 0) {
-                return ['status' => 'success', 'data' => $tempArr, 'data1' => $tempArr1];
+                return [
+                    'status' => 'success',
+                    'data' => $tempArr,
+                    'data1' => $tempArr1,
+                ];
             } else {
-                return ['status' => 'failed', 'data' => 'No data available', 'data1' => $tempArr1];
+                return [
+                    'status' => 'failed',
+                    'data' => 'No data available',
+                    'data1' => $tempArr1,
+                ];
             }
         } else {
             return ['status' => 'failed', 'data' => 'No users available'];
@@ -47,7 +60,11 @@ class User_model extends CI_Model
     {
         $this->load->database();
         $vendorname = VendorName;
-        $getvendorqry = $this->db->query('SELECT VendorId FROM ' . TBL_VENDORS . " WHERE VendorName = '$vendorname' ");
+        $getvendorqry = $this->db->query(
+            'SELECT VendorId FROM ' .
+                TBL_VENDORS .
+                " WHERE VendorName = '$vendorname' ",
+        );
         if ($getvendorqry->num_rows() > 0) {
             $vendordtls = $getvendorqry->row_array();
             $checkuserrelqry = $this->db->query(
@@ -57,7 +74,9 @@ class User_model extends CI_Model
             );
             if ($checkuserrelqry->num_rows() == 0) {
                 $relateuservendor = $this->db->query(
-                    'INSERT INTO ' . TBL_USER_VENDOR . " (UserId,VendorId) VALUES ('$params','$vendordtls[VendorId]') ",
+                    'INSERT INTO ' .
+                        TBL_USER_VENDOR .
+                        " (UserId,VendorId) VALUES ('$params','$vendordtls[VendorId]') ",
                 );
             }
         }
@@ -74,9 +93,15 @@ class User_model extends CI_Model
         $cell_collection = $objPHPExcel->getActiveSheet()->getCoordinates();
 
         foreach ($cell_collection as $cell) {
-            $column = $objPHPExcel->getActiveSheet()->getCell($cell)->getColumn();
+            $column = $objPHPExcel
+                ->getActiveSheet()
+                ->getCell($cell)
+                ->getColumn();
             $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
-            $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
+            $data_value = $objPHPExcel
+                ->getActiveSheet()
+                ->getCell($cell)
+                ->getValue();
 
             if ($row == 1) {
                 $header[$column] = $data_value;
@@ -115,7 +140,11 @@ class User_model extends CI_Model
             $email_id_arr = explode(',', $emailadd);
             for ($i = 0; $i < count($email_id_arr ?? []); $i++) {
                 if ($email_id_arr[$i] != '' && $email_id_arr[$i] != '\r\n') {
-                    $email_id = str_replace("\r\n", '', strtolower($email_id_arr[$i]));
+                    $email_id = str_replace(
+                        "\r\n",
+                        '',
+                        strtolower($email_id_arr[$i]),
+                    );
                     $emailids[] = strtolower(str_replace(' ', '', $email_id));
                 }
             }

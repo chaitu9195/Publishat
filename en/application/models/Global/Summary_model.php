@@ -112,7 +112,8 @@ class Summary_model extends CI_Model
 
             $document_folder = '../../profile/' . $user_id;
             $createFolder = $this->create_folder($document_folder);
-            $document_filename = date('YmdHis') . '-' . str_replace(' ', '-', $fileName);
+            $document_filename =
+                date('YmdHis') . '-' . str_replace(' ', '-', $fileName);
             $target_file_name = $document_folder . '/' . $document_filename;
             $db_document_filename = str_replace('../..', '', $target_file_name);
 

@@ -43,17 +43,34 @@ class Getallfields_model extends CI_Model
                 }
 
                 if ($dropdown->num_rows() > 0) {
-                    if (!empty($groupdropdownarray) && count($groupdropdownarray ?? []) > 0) {
-                        $groupdropdownarray = array_merge($groupdropdownarray ?? [], $dropdown->result_array());
+                    if (
+                        !empty($groupdropdownarray) &&
+                        count($groupdropdownarray ?? []) > 0
+                    ) {
+                        $groupdropdownarray = array_merge(
+                            $groupdropdownarray ?? [],
+                            $dropdown->result_array(),
+                        );
                     } else {
                         $groupdropdownarray = $dropdown->result_array();
                     }
                     $dropdownarray = ['dropDownValues' => $groupdropdownarray];
-                    $completeArray[] = array_merge($singleRow ?? [], $dropdownarray ?? []);
+                    $completeArray[] = array_merge(
+                        $singleRow ?? [],
+                        $dropdownarray ?? [],
+                    );
                 } else {
-                    if (!empty($groupdropdownarray) && count($groupdropdownarray ?? []) > 0) {
-                        $dropdownarray = ['dropDownValues' => $groupdropdownarray];
-                        $completeArray[] = array_merge($singleRow ?? [], $dropdownarray ?? []);
+                    if (
+                        !empty($groupdropdownarray) &&
+                        count($groupdropdownarray ?? []) > 0
+                    ) {
+                        $dropdownarray = [
+                            'dropDownValues' => $groupdropdownarray,
+                        ];
+                        $completeArray[] = array_merge(
+                            $singleRow ?? [],
+                            $dropdownarray ?? [],
+                        );
                     } else {
                         $completeArray[] = $singleRow;
                     }
@@ -70,7 +87,9 @@ class Getallfields_model extends CI_Model
         $this->load->database();
         $field_id = $params['field_id'];
         $qry = $this->db->query(
-            'SELECT * FROM ' . TBL_DROPDOWNFIELDS . " WHERE FieldId = '$field_id' ORDER BY Id ASC ",
+            'SELECT * FROM ' .
+                TBL_DROPDOWNFIELDS .
+                " WHERE FieldId = '$field_id' ORDER BY Id ASC ",
         );
         if ($qry->num_rows() > 0) {
             $resultSet = $qry->result_array();

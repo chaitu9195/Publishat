@@ -18,7 +18,10 @@ class Log_model extends CI_Model
         if ($event_name == 'All') {
             $this->mongodb->where(['UserId' => mongo_id($user_id)]);
         } else {
-            $this->mongodb->where(['UserId' => mongo_id($user_id), 'EventType' => $event_name]);
+            $this->mongodb->where([
+                'UserId' => mongo_id($user_id),
+                'EventType' => $event_name,
+            ]);
         }
         $this->mongodb->order_by(['Date' => 'DESC']);
 

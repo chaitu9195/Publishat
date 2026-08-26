@@ -40,7 +40,9 @@ if (strtolower($moduleName) == 'medical') {
                 $na = 'NA'; ?>
             <div class="col-sm-12 col-xs-12 metadata">
                 <span class="col-sm-5 col-xs-5"> <strong><?= $label ?></strong> <span style="float:right"> : </span> </span>
-                <span class="col-sm-7 col-xs-7"> <?= !empty($field) ? $field : $na ?> </span>
+                <span class="col-sm-7 col-xs-7"> <?= !empty($field)
+                    ? $field
+                    : $na ?> </span>
             </div>
             <?php
             }
@@ -59,7 +61,10 @@ if (strtolower($moduleName) == 'medical') {
                     $filename = $files[$i]['filename'];
                     if (empty($filename)) {
                         $filename = basename($path);
-                        $filename = substr($filename, strpos($filename, '-') + 1);
+                        $filename = substr(
+                            $filename,
+                            strpos($filename, '-') + 1,
+                        );
                     }
                     $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
                     $file_name = basename($filename, $ext);
@@ -68,38 +73,46 @@ if (strtolower($moduleName) == 'medical') {
             <div class="col-sm-8 col-xs-12 file_wrapper_view">
                 <div class="col-sm-4 col-xs-4 ext_type">
                     <?php
-              $images = ['jpg', 'png', 'jpeg', 'gif', ''];
-              if (in_array($ext, $images ?? [])) {
-                  $filesrc = base_url() . 'web/viewfile?fid=' . $doc_id;
-                  $ch = curl_init();
-                  $timeout = 5;
-                  curl_setopt($ch, CURLOPT_URL, $filesrc);
-                  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-                  $src = curl_exec($ch);
-                  curl_close($ch);
-                  echo "<img src='data:image/jpg;base64," .
-                      base64_encode($src) .
-                      "' alt='$filename;' width='100%' style='padding: 2px'>";
-              } else {
-                   ?>
+                    $images = ['jpg', 'png', 'jpeg', 'gif', ''];
+                    if (in_array($ext, $images ?? [])) {
+                        $filesrc = base_url() . 'web/viewfile?fid=' . $doc_id;
+                        $ch = curl_init();
+                        $timeout = 5;
+                        curl_setopt($ch, CURLOPT_URL, $filesrc);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+                        $src = curl_exec($ch);
+                        curl_close($ch);
+                        echo "<img src='data:image/jpg;base64," .
+                            base64_encode($src) .
+                            "' alt='$filename;' width='100%' style='padding: 2px'>";
+                    } else {
+                         ?>
                     <?= get_icon($ext) ?>
                     <?php
-              }
-              ?>
+                    }
+                    ?>
                 </div>
                 <div class='col-sm-8 col-xs-8 filename'>
-                    <input type="hidden" name="fileids[]" id="fname" value="<?= !empty($label) ? $label : ucfirst($filename) ?>">
+                    <input type="hidden" name="fileids[]" id="fname" value="<?= !empty(
+                        $label
+                    )
+                        ? $label
+                        : ucfirst($filename) ?>">
                     <span>
-                        <?= !empty($label) ? $label : ucfirst($file_name . '.' . $ext) ?>
+                        <?= !empty($label)
+                            ? $label
+                            : ucfirst($file_name . '.' . $ext) ?>
                     </span>
                 </div>
                 <a href="./docviewer?fid=<?= $doc_id ?>&type=<?= strtolower(
     $ext,
 ) ?>" target="_blank" class="downloadpop1"><i class="fa fa-download"></i>
-                    <?= $ext == 'jpeg' || $ext == 'png' || ($ext = 'jpg' || $ext == 'pdf' || $ext == 'gif')
-                   ? 'View'
-                   : 'Download' ?> </a>
+                    <?= $ext == 'jpeg' ||
+                    $ext == 'png' ||
+                    ($ext = 'jpg' || $ext == 'pdf' || $ext == 'gif')
+                        ? 'View'
+                        : 'Download' ?> </a>
             </div>
             <?php
                 }

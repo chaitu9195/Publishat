@@ -36,54 +36,64 @@
 
                 <?php foreach ($data as $mod) {
 
-    $module = $mod['Module'];
-    if ($module == 'Medical') {
-        $module = 'Health';
-    }
-    ?>
+                    $module = $mod['Module'];
+                    if ($module == 'Medical') {
+                        $module = 'Health';
+                    }
+                    ?>
                 <li class="dropdown" id="<?= strtolower($module) ?>">
                     <a href="#/<?= strtolower(
-              $module,
-          ) ?>" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php if ($module == 'Academic') { ?> <i class="fa fa-graduation-cap" aria-hidden="true"></i> <?php } elseif (
-              $module == 'Professional'
-          ) { ?> <i class="fa fa-briefcase" aria-hidden="true"></i> <?php } elseif (
-              $module == 'Personal'
-          ) { ?> <i class="fa fa-user" aria-hidden="true"></i> <?php } elseif (
-              $module == 'Health'
-          ) { ?> <i class="fa fa-stethoscope" aria-hidden="true"></i> <?php } elseif (
-              $module == 'Financial'
-          ) { ?> <i class="fa fa-bar-chart" aria-hidden="true"></i> <?php } elseif (
-              $module == 'Legal'
-          ) { ?> <i class="fa fa-gavel" aria-hidden="true"></i> <?php } ?>
+                        $module,
+                    ) ?>" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <?php if (
+                            $module == 'Academic'
+                        ) { ?> <i class="fa fa-graduation-cap" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Professional'
+                        ) { ?> <i class="fa fa-briefcase" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Personal'
+                        ) { ?> <i class="fa fa-user" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Health'
+                        ) { ?> <i class="fa fa-stethoscope" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Financial'
+                        ) { ?> <i class="fa fa-bar-chart" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Legal'
+                        ) { ?> <i class="fa fa-gavel" aria-hidden="true"></i> <?php } ?>
                         <span class="hidden-xs"><?= $module ?></span> <span class="caret"></span></a>
-                    <ul class="dropdown-menu" id="<?= strtolower($module) ?>_child">
+                    <ul class="dropdown-menu" id="<?= strtolower(
+                        $module,
+                    ) ?>_child">
                         <?php foreach ($submod as $nav) {
-              if ($mod['Module'] == $nav['Module']) { ?>
+                            if ($mod['Module'] == $nav['Module']) { ?>
                         <li id="<?= $nav['RecordType'] ?>">
                             <span class="add-icon">
-                                <a href="javascript:void(0)" class="text" onclick="getVal('<?= $nav['RecordTypeId'] ?>','<?= strtolower(
+                                <a href="javascript:void(0)" class="text" onclick="getVal('<?= $nav[
+                                    'RecordTypeId'
+                                ] ?>','<?= strtolower(
     $nav['Module'],
 ) ?>')"> <?= $nav['RecordType'] ?>
-                                    <b title="No of files" id="count<?= $nav['RecordTypeId'] ?>">(0)</b>
+                                    <b title="No of files" id="count<?= $nav[
+                                        'RecordTypeId'
+                                    ] ?>">(0)</b>
                                 </a>
                                 <a href="javascript:void(0)" title="New Record" class="icon" onclick="getNew('<?= $nav[
-                  'RecordTypeId'
-              ] ?>','<?= strtolower($nav['Module']) ?>')">
+                                    'RecordTypeId'
+                                ] ?>','<?= strtolower($nav['Module']) ?>')">
                                     <i class="fa fa-plus-square" aria-hidden="true"></i>
                                 </a> <a href="" class="icon"><i class="fa fa-folder " aria-hidden="true"></i></a>
                             </span>
                             <script>
-                                rec_count('<?= $nav['
-                                    RecordTypeId '] ?>');
+                                rec_count('<?= $nav[
+                                    '
+                                    RecordTypeId '
+                                ] ?>');
                             </script>
                         </li>
                         <?php }
-          } ?>
+                        } ?>
                     </ul>
                 </li>
                 <?php
-} ?>
+                } ?>
 
 
                 <li class="dropdown">
@@ -107,49 +117,59 @@
 
                 <?php foreach ($data as $mod) {
 
-    $module = $mod['Module'];
-    if ($module == 'Medical') {
-        $module = 'Health';
-    }
-    ?>
+                    $module = $mod['Module'];
+                    if ($module == 'Medical') {
+                        $module = 'Health';
+                    }
+                    ?>
                 <li>
                     <a href="#">
-                        <?php if ($module == 'Academic') { ?> <i class="fa fa-graduation-cap" aria-hidden="true"></i> <?php } elseif (
-            $module == 'Professional'
-        ) { ?> <i class="fa fa-briefcase" aria-hidden="true"></i> <?php } elseif (
-            $module == 'Personal'
-        ) { ?> <i class="fa fa-user" aria-hidden="true"></i> <?php } elseif (
-            $module == 'Health'
-        ) { ?> <i class="fa fa-stethoscope" aria-hidden="true"></i> <?php } elseif (
-            $module == 'Financial'
-        ) { ?> <i class="fa fa-bar-chart" aria-hidden="true"></i> <?php } elseif (
-            $module == 'Legal'
-        ) { ?> <i class="fa fa-gavel" aria-hidden="true"></i> <?php } ?>
+                        <?php if (
+                            $module == 'Academic'
+                        ) { ?> <i class="fa fa-graduation-cap" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Professional'
+                        ) { ?> <i class="fa fa-briefcase" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Personal'
+                        ) { ?> <i class="fa fa-user" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Health'
+                        ) { ?> <i class="fa fa-stethoscope" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Financial'
+                        ) { ?> <i class="fa fa-bar-chart" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Legal'
+                        ) { ?> <i class="fa fa-gavel" aria-hidden="true"></i> <?php } ?>
                         <h6><?= $module ?></h6>
                     </a>
                     <ul>
                         <?php foreach ($submod as $nav) {
-            if ($mod['Module'] == $nav['Module']) { ?>
+                            if ($mod['Module'] == $nav['Module']) { ?>
                         <li>
-                            <span href="javascript:void(0)','<?= strtolower($nav['Module']) ?>')">
-                                <?= $nav['RecordType'] ?> <b title="No of files" id="mcount<?= $nav['RecordTypeId'] ?>">(0)</b>
+                            <span href="javascript:void(0)','<?= strtolower(
+                                $nav['Module'],
+                            ) ?>')">
+                                <?= $nav[
+                                    'RecordType'
+                                ] ?> <b title="No of files" id="mcount<?= $nav[
+     'RecordTypeId'
+ ] ?>">(0)</b>
                             </span>
                             <span href="#/" title="New Record" class="icon" onclick="getNew('<?= $nav[
-                      'RecordTypeId'
-                  ] ?>','<?= strtolower($nav['Module']) ?>')">
+                                'RecordTypeId'
+                            ] ?>','<?= strtolower($nav['Module']) ?>')">
                                 <i class="fa fa-plus-square" aria-hidden="true"></i>
                             </span>
                             <script>
-                                rec_count('<?= $nav['
-                                    RecordTypeId '] ?>');
+                                rec_count('<?= $nav[
+                                    '
+                                    RecordTypeId '
+                                ] ?>');
                             </script>
                         </li>
                         <?php }
-        } ?>
+                        } ?>
                     </ul>
                 </li>
                 <?php
-} ?>
+                } ?>
 
                 <!--<li >
           <a href="#" ><span class="visible-xs"><i class="fa fa-cog"></i> Settings <span class="caret"></span> </span> <i class="fa fa-cog fa-2x hidden-xs"></i><span class="caret hidden-xs"></span> </a>

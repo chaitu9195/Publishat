@@ -28,17 +28,17 @@
                 <div class="form-group">
                     <?php for ($i = 0; $i <= count($files ?? []) - 1; $i++) {
 
-               $label = $files[$i]['Notes'];
-               $doc_id = $files[$i]['DocumentId'];
-               $path = $files[$i]['DocumentPath'];
-               $filename = $files[$i]['filename'];
-               if (empty($filename)) {
-                   $filename = explode('-', $path);
-                   $filename = $filename[1];
-               }
-               $filename = substr($filename, 0, 11);
-               $ext = $files[$i]['FileType'];
-               ?>
+                        $label = $files[$i]['Notes'];
+                        $doc_id = $files[$i]['DocumentId'];
+                        $path = $files[$i]['DocumentPath'];
+                        $filename = $files[$i]['filename'];
+                        if (empty($filename)) {
+                            $filename = explode('-', $path);
+                            $filename = $filename[1];
+                        }
+                        $filename = substr($filename, 0, 11);
+                        $ext = $files[$i]['FileType'];
+                        ?>
                     <div class="attchdocuments">
                         <input type="checkbox" name="document_id[]" class='document_id_arr' id="document_id_arr" value="<?= $doc_id ?>">
                         <a href="./viewfile?fid=<?= $doc_id ?>" target="_blank" title='View / Download File'><span class="files"> <?= !empty(
@@ -48,22 +48,26 @@
     : ucfirst($filename) ?> </span></a>
                     </div>
                     <?php
-           } ?>
+                    } ?>
                 </div>
                 <div class="form-group">
-                    <?php for ($i = 0; $i <= count($sub_files ?? []) - 1; $i++) {
+                    <?php for (
+                        $i = 0;
+                        $i <= count($sub_files ?? []) - 1;
+                        $i++
+                    ) {
 
-               $label = $sub_files[$i]['Notes'];
-               $doc_id = $sub_files[$i]['DocumentId'];
-               $path = $sub_files[$i]['DocumentPath'];
-               $filename = $sub_files[$i]['filename'];
-               if (empty($filename)) {
-                   $filename = explode('-', $path);
-                   $filename = $filename[1];
-               }
-               $filename = substr($filename, 0, 11);
-               $ext = $sub_files[$i]['FileType'];
-               ?>
+                        $label = $sub_files[$i]['Notes'];
+                        $doc_id = $sub_files[$i]['DocumentId'];
+                        $path = $sub_files[$i]['DocumentPath'];
+                        $filename = $sub_files[$i]['filename'];
+                        if (empty($filename)) {
+                            $filename = explode('-', $path);
+                            $filename = $filename[1];
+                        }
+                        $filename = substr($filename, 0, 11);
+                        $ext = $sub_files[$i]['FileType'];
+                        ?>
                     <div class="attchdocuments">
                         <input type="checkbox" name="document_id[]" class='document_id_arr' id="document_ids" value="<?= $doc_id ?>">
                         <a href="./viewfile?fid=<?= $doc_id ?>" target="_blank" title='View / Download File'><span class="files"> <?= !empty(
@@ -73,7 +77,7 @@
     : ucfirst($filename) ?> </span></a>
                     </div>
                     <?php
-           } ?>
+                    } ?>
                 </div>
 
 
@@ -172,7 +176,9 @@
             }
         });
         $("#goback").click(function() {
-            displayView("<?= $recTypeId ?>", "<?= $files[0]['RecordId'] ?>", "<?= $moduleName ?>", "");
+            displayView("<?= $recTypeId ?>", "<?= $files[0][
+    'RecordId'
+] ?>", "<?= $moduleName ?>", "");
         });
     </script>
 

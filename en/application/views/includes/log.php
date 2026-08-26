@@ -49,11 +49,11 @@
         <tbody>
             <?php foreach ($data as $event) {
 
-            $receiver = $event['Receiver'];
-            $recid = $event['_id'];
-            $rest = substr("$receiver", 0, 10);
-            $name_drivers = str_replace(',', '<br /><br/>', $receiver);
-            ?>
+                $receiver = $event['Receiver'];
+                $recid = $event['_id'];
+                $rest = substr("$receiver", 0, 10);
+                $name_drivers = str_replace(',', '<br /><br/>', $receiver);
+                ?>
             <tr>
                 <?php if ($e_name != '' && $e_name == 'All') { ?>
                 <td><?= $event['EventType'] ?> </td>
@@ -63,7 +63,9 @@
                 <td><?= $event['RecordName'] ?> </td>
                 <?php if ($e_name == 'Shared' || $e_name == 'All') { ?>
                 <td><span style="cursor:pointer;" data-toggle="modal" data-target="#emaillist<?= $recid ?>"><?= $rest ?>
-                        <?php if (!empty($receiver)) { ?>...<?php } ?></span></td>
+                        <?php if (
+                            !empty($receiver)
+                        ) { ?>...<?php } ?></span></td>
                 <?php } ?>
                 <!-- Modal -->
                 <div class="modal fade spacing" id="emaillist<?= $recid ?>" role="dialog">
@@ -89,7 +91,7 @@
 
 
             <?php
-        } ?>
+            } ?>
         </tbody>
     </table>
 </div>

@@ -17,10 +17,18 @@ class Downloadfile_model extends CI_Model
             header('Pragma: public');
             header('Expires: 0');
             header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-            header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($filename)) . ' GMT');
+            header(
+                'Last-Modified: ' .
+                    gmdate('D, d M Y H:i:s', filemtime($filename)) .
+                    ' GMT',
+            );
             header('Cache-Control: private', false);
             header('Content-Type: ' . $ctype);
-            header('Content-Disposition: inline; filename="' . basename($filename) . '"');
+            header(
+                'Content-Disposition: inline; filename="' .
+                    basename($filename) .
+                    '"',
+            );
             header('Content-Transfer-Encoding: binary');
             header('Content-Length: ' . filesize($filename));
             header('Connection: close');
@@ -35,7 +43,9 @@ class Downloadfile_model extends CI_Model
         $label = '';
         $name = 'povendor';
         $user_id = $this->session->userdata('user_id');
-        $qry = $this->db->query("SELECT * FROM Projects where RecordId = '$recordid'");
+        $qry = $this->db->query(
+            "SELECT * FROM Projects where RecordId = '$recordid'",
+        );
         $result = $qry->result_array();
         foreach ($result as $value) {
             $usersid = $value['UserId'];
@@ -49,10 +59,18 @@ class Downloadfile_model extends CI_Model
             header('Pragma: public');
             header('Expires: 0');
             header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-            header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($filename)) . ' GMT');
+            header(
+                'Last-Modified: ' .
+                    gmdate('D, d M Y H:i:s', filemtime($filename)) .
+                    ' GMT',
+            );
             header('Cache-Control: private', false);
             header('Content-Type: ' . $ctype);
-            header('Content-Disposition: inline; filename="' . basename($filename) . '"');
+            header(
+                'Content-Disposition: inline; filename="' .
+                    basename($filename) .
+                    '"',
+            );
             header('Content-Transfer-Encoding: binary');
             header('Content-Length: ' . filesize($filename));
             header('Connection: close');
@@ -104,10 +122,12 @@ class Downloadfile_model extends CI_Model
                 $ctype = 'image/jpg';
                 break;
             case 'docx':
-                $ctype = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+                $ctype =
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
                 break;
             case 'xlsx':
-                $ctype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+                $ctype =
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
                 break;
             case 'txt':
                 $ctype = 'text/plain';
@@ -119,7 +139,8 @@ class Downloadfile_model extends CI_Model
                 $ctype = 'application/x-rar-compressed';
                 break;
             case 'ppt':
-                $ctype = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+                $ctype =
+                    'application/vnd.openxmlformats-officedocument.presentationml.presentation';
                 break;
             case 'pptx':
                 $ctype = 'application/vnd.ms-powerpoint';
@@ -182,7 +203,11 @@ class Downloadfile_model extends CI_Model
             if (file_exists($filename)) {
                 header('Content-Description: File Transfer');
                 header('Content-Type: ' . $ctype);
-                header('Content-Disposition: inline; filename="' . basename($filename) . '"');
+                header(
+                    'Content-Disposition: inline; filename="' .
+                        basename($filename) .
+                        '"',
+                );
                 header('Content-Transfer-Encoding: binary');
                 header('Expires: 0');
                 header('Cache-Control: must-revalidate');

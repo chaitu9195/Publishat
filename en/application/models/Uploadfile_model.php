@@ -22,20 +22,30 @@ class Uploadfile_model extends CI_Model
         if (!empty($_FILES['uploadImage']['name'])) {
             $file_extension = $this->get_file_extension();
             if ($file_extension == '') {
-                return ['data' => 'Invalid File Type. Only PDF, DOC, DOCX, JPEG, JPG, GIF & PNG formats are allowed'];
+                return [
+                    'data' =>
+                        'Invalid File Type. Only PDF, DOC, DOCX, JPEG, JPG, GIF & PNG formats are allowed',
+                ];
             }
             $uploaded_filename = $this->upload_thumbnail($params);
             if ($uploaded_filename == '') {
                 return [
-                    'data' => 'File size is too high. Document should not be more than ' . max_document_file_size_text,
+                    'data' =>
+                        'File size is too high. Document should not be more than ' .
+                        max_document_file_size_text,
                 ];
             }
         }
         if (strlen($uploaded_filename) > 0) {
             $mongo_connection = new MongoClient();
             $mid = mongo_id();
-            $gridfs = $mongo_connection->selectDB('publisha_dbase')->getGridFS();
-            if (strtolower($file_extension) == 'doc' || strtolower($file_extension) == 'docx') {
+            $gridfs = $mongo_connection
+                ->selectDB('publisha_dbase')
+                ->getGridFS();
+            if (
+                strtolower($file_extension) == 'doc' ||
+                strtolower($file_extension) == 'docx'
+            ) {
                 $config['upload_path'] = FCPATH . 'files/temp';
                 $config['allowed_types'] = '*';
                 $this->load->library('upload', $config);

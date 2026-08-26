@@ -51,32 +51,40 @@
                 <tbody id="cart_body">
                     <?php foreach ($cdata as $data) {
 
-                  $doc_path = $data['DocumentPath'];
-                  $label = $data['Notes'];
-                  $filename = $data['filename'];
-                  $fid = $data['_id'];
-                  if (empty($filename)) {
-                      $filename = basename($doc_path);
-                      $filename = substr($filename, strpos($filename, '-') + 1);
-                  }
-                  $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                  $filename = basename($filename, $ext);
-                  $filename = substr($filename, 0, 11);
-                  ?>
+                        $doc_path = $data['DocumentPath'];
+                        $label = $data['Notes'];
+                        $filename = $data['filename'];
+                        $fid = $data['_id'];
+                        if (empty($filename)) {
+                            $filename = basename($doc_path);
+                            $filename = substr(
+                                $filename,
+                                strpos($filename, '-') + 1,
+                            );
+                        }
+                        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                        $filename = basename($filename, $ext);
+                        $filename = substr($filename, 0, 11);
+                        ?>
                     <tr>
                         <td class="col-xs-1"><input type="checkbox" name="document_id" id="doc_id" class="doc_id" value="<?= $data[
-                       'DocumentId'
-                   ] ?>"></td>
+                            'DocumentId'
+                        ] ?>"></td>
                         <td class="col-xs-4"><?= $filename . '.' . $ext ?></td>
-                        <td class="col-xs-5"><a href="./docviewer?fid=<?= $data['DocumentId'] ?>&type=<?= strtolower(
+                        <td class="col-xs-5"><a href="./docviewer?fid=<?= $data[
+                            'DocumentId'
+                        ] ?>&type=<?= strtolower(
     $ext,
 ) ?>" target="_blank" title='View / Download File'><span class="files">
-                                    <?= get_icon(strtolower($ext)) ?> &nbsp; <?= $filename . $ext ?> </span></a>
+                                    <?= get_icon(
+                                        strtolower($ext),
+                                    ) ?> &nbsp; <?= $filename .
+     $ext ?> </span></a>
                         </td>
                         <td class="col-xs-3"><?= $data['Path'] ?></td>
                     </tr>
                     <?php
-              } ?>
+                    } ?>
                 </tbody>
             </form>
         </table>
@@ -142,9 +150,9 @@
         </button>
     </div>
     <?php
-          $code = rand(100000, 999999);
-          $this->session->set_userdata('cart_captcha', $code);
-          ?>
+    $code = rand(100000, 999999);
+    $this->session->set_userdata('cart_captcha', $code);
+    ?>
     <div class="alert alert-danger alert-dismissable fade in err" id="del_error" style="display:none">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <div id="del_msg"> </div>

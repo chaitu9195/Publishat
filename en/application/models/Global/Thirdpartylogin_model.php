@@ -78,7 +78,11 @@ class Thirdpartylogin_model extends CI_Model
 
             $this->mongodb->insert(TBL_USER, $user_details);
             $this->initialise_user_settings($user_id);
-            $result = ['UserId' => $user_id, 'Name' => $name, 'Email' => $email];
+            $result = [
+                'UserId' => $user_id,
+                'Name' => $name,
+                'Email' => $email,
+            ];
             $this->mongodb->insert('UserLoginHistory', [
                 'UserId' => mongo_id($user_id),
                 'PrevLoginTime' => $joined_on,
@@ -95,7 +99,10 @@ class Thirdpartylogin_model extends CI_Model
     {
         $user_id = $this->session->userdata('user_id');
         $name = str_replace("'", '', $name);
-        $this->mongodb->where(['UserId' => mongo_id($user_id), 'PersonalEmail' => $email]);
+        $this->mongodb->where([
+            'UserId' => mongo_id($user_id),
+            'PersonalEmail' => $email,
+        ]);
         $qry = $this->mongodb->get(TBL_CONTACTS);
         if (count($qry ?? []) == 0) {
             $mid = mongo_id();
@@ -117,7 +124,10 @@ class Thirdpartylogin_model extends CI_Model
         $fileId = $params['file_id'];
         $oAuthToken = $params['token'];
         $file_name = $params['file_name'];
-        $getUrl = 'https://www.googleapis.com/drive/v2/files/' . $fileId . '?alt=media';
+        $getUrl =
+            'https://www.googleapis.com/drive/v2/files/' .
+            $fileId .
+            '?alt=media';
         $authHeader = 'Authorization: Bearer ' . $oAuthToken;
 
         $ch = curl_init();
@@ -145,7 +155,8 @@ class Thirdpartylogin_model extends CI_Model
         $document_folder = '../../fileupload/' . $user_id . '/' . $folder_name;
         $this->create_folder($document_folder);
 
-        $target_file_name = $document_folder . '/' . date('YmdHis') . '-' . $file_name;
+        $target_file_name =
+            $document_folder . '/' . date('YmdHis') . '-' . $file_name;
         $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
         $file_extension = strtolower($file_extension);
         $db_document_filename = str_replace('../../', '', $target_file_name);

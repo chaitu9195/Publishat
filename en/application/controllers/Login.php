@@ -33,7 +33,10 @@ class Login extends REST_Controller
 
             redirect('web/index');
         } else {
-            $this->load->view('index', ['failed' => 1, 'data' => $result['data']]);
+            $this->load->view('index', [
+                'failed' => 1,
+                'data' => $result['data'],
+            ]);
         }
     }
 
@@ -49,7 +52,10 @@ class Login extends REST_Controller
         $token = $gClient->fetchAccessTokenWithAuthCode($_GET['code']);
         if (isset($token['error'])) {
             log_message('error', 'Google OAuth: ' . $token['error']);
-            $this->load->view('index', ['failed' => 1, 'data' => 'Google sign-in failed.']);
+            $this->load->view('index', [
+                'failed' => 1,
+                'data' => 'Google sign-in failed.',
+            ]);
             return;
         }
         $gClient->setAccessToken($token);
@@ -61,7 +67,11 @@ class Login extends REST_Controller
         $gender = '';
 
         $this->load->model('Global/Thirdpartylogin_model');
-        $result = $this->Thirdpartylogin_model->google_oauth($email, $user_name, $gender);
+        $result = $this->Thirdpartylogin_model->google_oauth(
+            $email,
+            $user_name,
+            $gender,
+        );
 
         $userarray = [
             'user_id' => $result['data']['UserId'],

@@ -31,11 +31,11 @@
             <tbody>
                 <?php foreach ($bookmark as $data) {
 
-    $id = $data['_id'];
-    $title = $data['Title'];
-    $description = $data['Description'];
-    $notes = $data['Notes'];
-    ?>
+                    $id = $data['_id'];
+                    $title = $data['Title'];
+                    $description = $data['Description'];
+                    $notes = $data['Notes'];
+                    ?>
                 <tr class='clickable-row'>
                     <td><input type="checkbox" name="doc_id" value="<?= $id ?>" id="doc_id" class="doc_id"></td>
                     <td><a href="https://<?= $title ?>" target="_blank"><?= $title ?></a></td>
@@ -43,7 +43,7 @@
                     <td><?= $notes ?></td>
                 </tr>
                 <?php
-} ?>
+                } ?>
             </tbody>
         </form>
     </table>
@@ -111,9 +111,9 @@
         </button>
     </div>
     <?php
-          $code = rand(100000, 999999);
-          $this->session->set_userdata('folder_captcha', $code);
-          ?>
+    $code = rand(100000, 999999);
+    $this->session->set_userdata('folder_captcha', $code);
+    ?>
     <div class="alert alert-danger alert-dismissable fade in err" id="del_error" style="display:none">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <div id="del_msg"> </div>
@@ -124,7 +124,9 @@
         </div>
         <div class="form-group">
             <input type="hidden" name="del_doc_id" value="" id="del_doc_id">
-            <input type="hidden" name='typeId' value="<?= $param['typeId'] ?>" id="del_file">
+            <input type="hidden" name='typeId' value="<?= $param[
+                'typeId'
+            ] ?>" id="del_file">
             <label class="control-label col-sm-6 hidden-xs" for="Captcha">Captcha <span style="float:right"> : </span></label>
             <div class="col-sm-6 col-xs-12">
                 <span class="captcha"><?= $code ?> </span>
@@ -316,9 +318,13 @@
                         $('#del_error').show();
 
                         setTimeout(function() {
-                            getBookmark('<?= $param['
-                                typeId '] ?>', '<?= $param['
-                                module '] ?>')
+                            getBookmark('<?= $param[
+                                '
+                                typeId '
+                            ] ?>', '<?= $param[
+    '
+                                module '
+] ?>')
                         }, 3000);
                     } //resetform();
                 }
@@ -336,9 +342,13 @@
             $.each($("input[name='doc_id']:checked"), function() {
                 ids.push($(this).val());
             });
-            getNewrec('<?= $param['
-                typeId '] ?>', '<?= $param['
-                main_module '] ?>', ids);
+            getNewrec('<?= $param[
+                '
+                typeId '
+            ] ?>', '<?= $param[
+    '
+                main_module '
+] ?>', ids);
         }
     });
 </script>

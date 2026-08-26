@@ -26,10 +26,19 @@ class Related extends REST_Controller
         $tabName = $this->Common_model->get_tabName($record_type_id);
         $moduleName = $this->Common_model->get_moduleName($record_type_id);
         $this->load->model('Getallfields_model');
-        $fields = $this->Getallfields_model->get_allfields($parent_record_type_id, $this->user_id, 1);
+        $fields = $this->Getallfields_model->get_allfields(
+            $parent_record_type_id,
+            $this->user_id,
+            1,
+        );
         if (!empty($tableName) && $tableName != 'failed') {
-            $result = $this->Common_model->get_editrecord_data($record_id, $record_type_id);
-            $folder_files = $this->Common_model->folderfiles($parent_record_type_id);
+            $result = $this->Common_model->get_editrecord_data(
+                $record_id,
+                $record_type_id,
+            );
+            $folder_files = $this->Common_model->folderfiles(
+                $parent_record_type_id,
+            );
             $this->load->view('edit-related', [
                 'data' => $result['data'][0],
                 'files' => $result['files'],
@@ -56,13 +65,24 @@ class Related extends REST_Controller
             $this->load->model('Common/Uploadfile_model');
             $result1 = $this->Uploadfile_model->upload_file($params);
             if ($result1['data'] == 'Success') {
-                $tableName = $this->Common_model->get_table($parent_record_type_id);
+                $tableName = $this->Common_model->get_table(
+                    $parent_record_type_id,
+                );
                 $tabName = $this->Common_model->get_tabName($record_type_id);
-                $moduleName = $this->Common_model->get_moduleName($record_type_id);
+                $moduleName = $this->Common_model->get_moduleName(
+                    $record_type_id,
+                );
                 $this->load->model('Getallfields_model');
-                $fields = $this->Getallfields_model->get_allfields($parent_record_type_id, $this->user_id, 1);
+                $fields = $this->Getallfields_model->get_allfields(
+                    $parent_record_type_id,
+                    $this->user_id,
+                    1,
+                );
                 if (!empty($tableName) && $tableName != 'failed') {
-                    $result = $this->Common_model->get_editrecord_data($record_id, $record_type_id);
+                    $result = $this->Common_model->get_editrecord_data(
+                        $record_id,
+                        $record_type_id,
+                    );
                     $this->load->view('edit-related', [
                         'data' => $result['data'][0],
                         'files' => $result['files'],
@@ -91,14 +111,23 @@ class Related extends REST_Controller
         $tabName = $this->Common_model->get_tabName($record_type_id);
         $moduleName = $this->Common_model->get_moduleName($record_type_id);
         $this->load->model('Getallfields_model');
-        $fields = $this->Getallfields_model->get_allfields($parent_record_type_id, $this->user_id, 1);
+        $fields = $this->Getallfields_model->get_allfields(
+            $parent_record_type_id,
+            $this->user_id,
+            1,
+        );
         if (count($params ?? [])) {
             $this->load->model('Common/Common_model');
             $del_status = $this->Common_model->delete_single_rec($params);
             if ($del_status['status'] == 'Success') {
-                $tableName = $this->Common_model->get_table($parent_record_type_id);
+                $tableName = $this->Common_model->get_table(
+                    $parent_record_type_id,
+                );
                 if (!empty($tableName) && $tableName != 'failed') {
-                    $result = $this->Common_model->get_editrecord_data($record_id, $record_type_id);
+                    $result = $this->Common_model->get_editrecord_data(
+                        $record_id,
+                        $record_type_id,
+                    );
                     $this->load->view('edit-related', [
                         'data' => $result['data'][0],
                         'files' => $result['files'],

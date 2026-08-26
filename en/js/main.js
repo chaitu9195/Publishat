@@ -24,7 +24,10 @@
     autoplay: true,
     autoplayTimeout: 4000,
     smartSpeed: 1000,
-    navText: ['<i class="lnr lnr-chevron-left"></i>', '<i class="lnr lnr-chevron-right"></i>'],
+    navText: [
+      '<i class="lnr lnr-chevron-left"></i>',
+      '<i class="lnr lnr-chevron-right"></i>',
+    ],
     responsive: {
       0: {
         items: 1,
@@ -50,7 +53,10 @@
     autoplay: true,
     autoplayTimeout: 4000,
     smartSpeed: 1000,
-    navText: ['<i class="lnr lnr-chevron-left"></i>', '<i class="lnr lnr-chevron-right"></i>'],
+    navText: [
+      '<i class="lnr lnr-chevron-left"></i>',
+      '<i class="lnr lnr-chevron-right"></i>',
+    ],
     responsive: {
       0: {
         items: 1,
@@ -85,12 +91,15 @@
     .click(function (event) {
       // On-page links
       if (
-        location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') &&
+        location.pathname.replace(/^\//, '') ==
+          this.pathname.replace(/^\//, '') &&
         location.hostname == this.hostname
       ) {
         // Figure out element to scroll to
         var target = $(this.hash);
-        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+        target = target.length
+          ? target
+          : $('[name=' + this.hash.slice(1) + ']');
         // Does a scroll target exist?
         if (target.length) {
           // Only prevent default if animation is actually gonna happen
@@ -140,7 +149,9 @@
         opener: function (openerElement) {
           // openerElement is the element on which popup was initialized, in this case its <a> tag
           // you don't need to add "opener" option if this code matches your needs, it's defailt one.
-          return openerElement.is('img') ? openerElement : openerElement.find('img');
+          return openerElement.is('img')
+            ? openerElement
+            : openerElement.find('img');
         },
       },
     });

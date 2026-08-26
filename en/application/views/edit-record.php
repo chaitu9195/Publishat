@@ -50,12 +50,16 @@ if ($moduleName == 'medical') {
         if ($fieldType == 3 && $fieldId != '558') { ?>
     <div class="col-md-6 field">
         <label class="col-sm-4 hidden-xs noheight"><?= $field['FieldLable'] ?>
-            <?php if ($isFeildMandatoty == '1') { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
+            <?php if (
+                $isFeildMandatoty == '1'
+            ) { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
         </label>
         <select class="col-sm-8 col-xs-12 <?= $isMandatory ?>" name="<?= $fieldName ?>" id="<?= $fieldName ?>">
             <option value="">Select <?= $field['FieldLable'] ?></option>
             <?php foreach ($field['dropDownValues'] as $option) { ?>
-            <option value='<?= $option['DropdownValues'] ?>' <?= $option['DropdownValues'] == $data[$fieldName]
+            <option value='<?= $option['DropdownValues'] ?>' <?= $option[
+    'DropdownValues'
+] == $data[$fieldName]
     ? 'selected=selected'
     : '' ?>>
                 <?= $option['DropdownValues'] ?>
@@ -69,18 +73,24 @@ if ($moduleName == 'medical') {
     <div class="col-md-6 field">
         <label class="col-sm-4 hidden-xs noheight">
             <?= $field['FieldLable'] ?>
-            <?php if ($isFeildMandatoty == '1') { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
+            <?php if (
+                $isFeildMandatoty == '1'
+            ) { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
         </label>
         <input type="text" class="col-sm-8 col-xs-12 <?= $isMandatory ?>" placeholder="Enter <?= $field[
     'FieldLable'
-] ?>" name="<?= $fieldName ?>" id="<?= $fieldName ?>" value="<?= $data[$fieldName] ?>">
+] ?>" name="<?= $fieldName ?>" id="<?= $fieldName ?>" value="<?= $data[
+    $fieldName
+] ?>">
     </div>
     <?php }
         if ($fieldType == 5 || $fieldType == 11) { ?>
     <div class="col-md-6 field">
         <label class="col-sm-4 hidden-xs noheight">
             <?= $field['FieldLable'] ?>
-            <?php if ($isFeildMandatoty == '1') { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
+            <?php if (
+                $isFeildMandatoty == '1'
+            ) { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
         </label>
         <input type="text" class="col-sm-8 col-xs-12 timepicker <?= $isMandatory ?>" name="<?= $fieldName ?>" placeholder="YYYY-MM-DD" id="<?= $fieldName ?>" onclick="pickCalender('<?= $fieldName ?>')" value="<?= $data[
     $fieldName
@@ -92,12 +102,16 @@ if ($moduleName == 'medical') {
     <div class="col-md-6 field">
         <label class="col-sm-4 hidden-xs noheight">
             <?= $field['FieldLable'] ?>
-            <?php if ($isFeildMandatoty == '1') { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
+            <?php if (
+                $isFeildMandatoty == '1'
+            ) { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
         </label>
         <select name="<?= $fieldName ?>" class="col-sm-8 col-xs-12 <?= $isMandatory ?>" id="<?= $fieldName ?>">
             <option value="">Select Year</option>
             <?php for ($d = date('Y'); $d >= 1970; $d--) { ?>
-            <option <?= $d == $data[$fieldName] ? 'selected=selected' : '' ?>><?= $d ?> </option>
+            <option <?= $d == $data[$fieldName]
+                ? 'selected=selected'
+                : '' ?>><?= $d ?> </option>
             <?php } ?>
         </select>
 
@@ -136,8 +150,12 @@ if ($moduleName == 'medical') {
         <div class='attach_title'> <span class="">Upload / Add New Document</span></div>
         <form class="form-horizontal attach_from" id="attachmentForm" name="attachmentForm" method="post" action="" enctype="multipart/form-data">
             <input type="hidden" name="record_type_id" value="<?= $recTypeId ?>">
-            <input type="hidden" name="RecordId" value="<?= $data['RecordId'] ?>">
-            <input type="hidden" name='module' value="<?= strtolower($moduleName) ?>">
+            <input type="hidden" name="RecordId" value="<?= $data[
+                'RecordId'
+            ] ?>">
+            <input type="hidden" name='module' value="<?= strtolower(
+                $moduleName,
+            ) ?>">
             <div class="upload_input">
 
                 <label for='uploadFile'> Select file or Drag & Drop the file here </label>
@@ -159,7 +177,10 @@ if ($moduleName == 'medical') {
                     $filename = $files[$i]['filename'];
                     if (empty($filename)) {
                         $filename = basename($path);
-                        $filename = substr($filename, strpos($filename, '-') + 1);
+                        $filename = substr(
+                            $filename,
+                            strpos($filename, '-') + 1,
+                        );
                     }
                     $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
                     $f_name = basename($filename, $ext);
@@ -173,7 +194,9 @@ if ($moduleName == 'medical') {
                 <div class='col-sm-8 col-xs-8 filename'>
                     <input type="hidden" name="fileids[]" id="fname" value="<?= $filename ?>">
                     <span class="hidden-xs">
-                        <?= !empty($file_name) ? $file_name . '.' . $ext : ucfirst($file_name . '.' . $ext) ?>
+                        <?= !empty($file_name)
+                            ? $file_name . '.' . $ext
+                            : ucfirst($file_name . '.' . $ext) ?>
                     </span>
                 </div>
                 <a href="./docviewer?fid=<?= $doc_id ?>&type=<?= strtolower(
@@ -182,7 +205,9 @@ if ($moduleName == 'medical') {
 
                 <a href="#/delete?module=&id=" class="downloadpop" onclick="deleterecord('<?= $recTypeId ?>','<?= strtolower(
     $moduleName,
-) ?>','<?= $files[$i]['RecordId'] ?>','<?= $files[$i]['DocumentId'] ?>')"><i class="fa fa-remove"></i> </a>
+) ?>','<?= $files[$i]['RecordId'] ?>','<?= $files[$i][
+    'DocumentId'
+] ?>')"><i class="fa fa-remove"></i> </a>
             </div>
             <?php
                 }
@@ -261,7 +286,9 @@ if ($moduleName == 'medical') {
                     $path = base_url() . 'web/viewfile?fid=' . $id;
                     ?>
 
-                <tr onClick="viewfile('docviewer?fid=<?= $file['_id'] ?>&type=<?= strtolower($ext) ?>')">
+                <tr onClick="viewfile('docviewer?fid=<?= $file[
+                    '_id'
+                ] ?>&type=<?= strtolower($ext) ?>')">
                     <td>
                         <input type="checkbox" name="fileids[]" class="doc_id" value="<?= $doc_id ?>" <? if(in_array($doc_id, $fileids ?? [])) { echo 'checked'; } ?>>
                         <input type="hidden" name="filename[]" id="fname" value="<?= $filename ?>">

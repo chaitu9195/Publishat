@@ -23,15 +23,21 @@ $Upgraded = $this->session->userdata('Upgraded'); ?>
             <?php $domain = $_SERVER['SERVER_NAME']; ?>
             <a class="navbar-brand " href="<?php echo base_url(); ?>web/">
                 <?php
-       $domain = $_SERVER['SERVER_NAME'];
-       if ($domain == 'publishat.com' || $domain == 'www.publishat.com') { ?>
+                $domain = $_SERVER['SERVER_NAME'];
+                if (
+                    $domain == 'publishat.com' ||
+                    $domain == 'www.publishat.com'
+                ) { ?>
                 <span class="h1 active" style="color:white">Publishat</span>
-                <?php } elseif ($domain == 'mydzvault.com' || $domain == 'www.mydzvault.com') { ?>
+                <?php } elseif (
+                    $domain == 'mydzvault.com' ||
+                    $domain == 'www.mydzvault.com'
+                ) { ?>
                 <span class="h1 active" style="color:white;font-family:serif">myDZvault</span>
                 <? } else { ?>
                 <span class="h1 active" style="color:white;font-family:serif">Ntotalworld</span>
                 <?php }
-       ?>
+                ?>
 
                 <!-- <img src="https://www.publishat.com/img/logo.png" class="img-responsive xs-hidden sm-hidden "/> --> </a>
 
@@ -55,60 +61,72 @@ $Upgraded = $this->session->userdata('Upgraded'); ?>
             <ul class="nav navbar-nav">
 
                 <?php
-$i = 0;
-foreach ($data as $mod) {
-    $module = ucfirst($mod['Module']); ?>
+                $i = 0;
+                foreach ($data as $mod) {
+                    $module = ucfirst($mod['Module']); ?>
                 <li class="dropdown" id="<?= strtolower($module) ?>">
                     <a href="#/<?= strtolower(
-              $module,
-          ) ?>" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php if ($module == 'Academic') { ?> <i class="fa fa-graduation-cap" aria-hidden="true"></i> <?php } elseif (
-              $module == 'Professional'
-          ) { ?> <i class="fa fa-briefcase" aria-hidden="true"></i> <?php } elseif (
-              $module == 'Personal'
-          ) { ?> <i class="fa fa-user" aria-hidden="true"></i> <?php } elseif (
-              $module == 'Health'
-          ) { ?> <i class="fa fa-stethoscope" aria-hidden="true"></i> <?php } elseif (
-              $module == 'Financial'
-          ) { ?> <i class="fa fa-bar-chart" aria-hidden="true"></i> <?php } elseif (
-              $module == 'Legal'
-          ) { ?> <i class="fa fa-gavel" aria-hidden="true"></i> <?php } ?>
+                        $module,
+                    ) ?>" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <?php if (
+                            $module == 'Academic'
+                        ) { ?> <i class="fa fa-graduation-cap" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Professional'
+                        ) { ?> <i class="fa fa-briefcase" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Personal'
+                        ) { ?> <i class="fa fa-user" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Health'
+                        ) { ?> <i class="fa fa-stethoscope" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Financial'
+                        ) { ?> <i class="fa fa-bar-chart" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Legal'
+                        ) { ?> <i class="fa fa-gavel" aria-hidden="true"></i> <?php } ?>
                         <span class="hidden-xs"><?= $module ?></span> <span class="caret"></span></a>
-                    <ul class="dropdown-menu" id="<?= strtolower($module) ?>_child">
+                    <ul class="dropdown-menu" id="<?= strtolower(
+                        $module,
+                    ) ?>_child">
                         <?php foreach ((array) $submod as $nav) {
-              if ($mod['Module'] == $nav['Module']) {
+                            if ($mod['Module'] == $nav['Module']) {
 
-                  $module = $nav['Module'];
-                  if (lcfirst($module) == 'health') {
-                      $module = 'medical';
-                  }
-                  ?>
+                                $module = $nav['Module'];
+                                if (lcfirst($module) == 'health') {
+                                    $module = 'medical';
+                                }
+                                ?>
                         <li id="<?= $nav['Setting'] ?>">
                             <span class="add-icon">
-                                <a href="javascript:void(0)" class="text" onclick="getVal('<?= $nav['RecordTypeId'] ?>','<?= strtolower(
-    $module,
-) ?>')">
-                                    <?= $nav['Setting'] ?> <b title="No of files" id="">(<?= $rec_count[$nav['RecordTypeId']] ?>)</b>
-                                    <!--<?= $nav['Setting'] ?>  <b title="No of files" id=""></b>-->
+                                <a href="javascript:void(0)" class="text" onclick="getVal('<?= $nav[
+                                    'RecordTypeId'
+                                ] ?>','<?= strtolower($module) ?>')">
+                                    <?= $nav[
+                                        'Setting'
+                                    ] ?> <b title="No of files" id="">(<?= $rec_count[
+     $nav['RecordTypeId']
+ ] ?>)</b>
+                                    <!--<?= $nav[
+                                        'Setting'
+                                    ] ?>  <b title="No of files" id=""></b>-->
                                 </a>
                                 <a href="javascript:void(0)" title="New Record" class="icon" onclick="getNew('<?= $nav[
-                  'RecordTypeId'
-              ] ?>','<?= strtolower($module) ?>')">
+                                    'RecordTypeId'
+                                ] ?>','<?= strtolower($module) ?>')">
                                     <i class="fa fa-plus-square" aria-hidden="true"></i>
                                 </a> <a href="javascript:void(0)" class="icon" onclick="getFolder('<?= $nav[
-                      'RecordTypeId'
-                  ] ?>','<?= $nav['Setting'] ?>','<?= $module ?>')">
+                                    'RecordTypeId'
+                                ] ?>','<?= $nav[
+    'Setting'
+] ?>','<?= $module ?>')">
                                     <i class="fa fa-folder " aria-hidden="true"></i></a>
                             </span>
                         </li>
                         <?php $i++;
-              }
-          } ?>
+                            }
+                        } ?>
                     </ul>
                 </li>
                 <?php
-}
-?>
+                }
+                ?>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" area-expanded="false"><span class="visible-xs"><i class="fa fa-cog"></i> <span class="hidden-xs">Settings</span> <span class="caret"></span> </span> <i class="fa fa-cog fa-2x hidden-xs"></i><span class="caret hidden-xs"></span> </a>
                     <ul class="dropdown-menu">
@@ -120,15 +138,15 @@ foreach ($data as $mod) {
                         <li><a href="#" onclick="getPrintHistory()"><i class="fa fa-print" aria-hidden="true"></i> &nbsp;Print Job History</a></li>
                         <!--<li><a href = "#" onclick="captureFullPage()"><i class="fa fa-archive" aria-hidden="true"></i> &nbsp;Screen shot</a></li>-->
                         <?php
-    $user_id = $this->session->userdata('user_id');
-    if (
-        $user_id == '59907aac88424a8f66ca48ef' ||
-        $user_id == '59907aac88424a8f66ca4962' ||
-        $user_id == '59907ad188424a8f66ca89b1'
-    ) { ?>
+                        $user_id = $this->session->userdata('user_id');
+                        if (
+                            $user_id == '59907aac88424a8f66ca48ef' ||
+                            $user_id == '59907aac88424a8f66ca4962' ||
+                            $user_id == '59907ad188424a8f66ca89b1'
+                        ) { ?>
                         <li><a href="#" onclick="article_write()"><i class="fa fa-file-text" aria-hidden="true"></i> &nbsp; Post Article</a></li>
                         <?php }
-    ?>
+                        ?>
                         <li><a href="<?php echo base_url(); ?>web/logout"><i class="fa fa-power-off" aria-hidden="true"></i> &nbsp;Logout </a></li>
                     </ul>
                 </li>
@@ -142,57 +160,67 @@ foreach ($data as $mod) {
             <ul class="menu">
 
                 <?php
-$i = 0;
-foreach ($data as $mod) {
-    $module = ucfirst($mod['Module']); ?>
+                $i = 0;
+                foreach ($data as $mod) {
+                    $module = ucfirst($mod['Module']); ?>
                 <li>
                     <a href="#">
-                        <?php if ($module == 'Academic') { ?> <i class="fa fa-graduation-cap" aria-hidden="true"></i> <?php } elseif (
-            $module == 'Professional'
-        ) { ?> <i class="fa fa-briefcase" aria-hidden="true"></i> <?php } elseif (
-            $module == 'Personal'
-        ) { ?> <i class="fa fa-user" aria-hidden="true"></i> <?php } elseif (
-            $module == 'Health'
-        ) { ?> <i class="fa fa-stethoscope" aria-hidden="true"></i> <?php } elseif (
-            $module == 'Financial'
-        ) { ?> <i class="fa fa-bar-chart" aria-hidden="true"></i> <?php } elseif (
-            $module == 'Legal'
-        ) { ?> <i class="fa fa-gavel" aria-hidden="true"></i> <?php } ?>
+                        <?php if (
+                            $module == 'Academic'
+                        ) { ?> <i class="fa fa-graduation-cap" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Professional'
+                        ) { ?> <i class="fa fa-briefcase" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Personal'
+                        ) { ?> <i class="fa fa-user" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Health'
+                        ) { ?> <i class="fa fa-stethoscope" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Financial'
+                        ) { ?> <i class="fa fa-bar-chart" aria-hidden="true"></i> <?php } elseif (
+                            $module == 'Legal'
+                        ) { ?> <i class="fa fa-gavel" aria-hidden="true"></i> <?php } ?>
                         <h6><?= $module ?></h6>
                     </a>
                     <ul>
                         <?php foreach ((array) $submod as $nav) {
-            if ($mod['Module'] == $nav['Module']) {
+                            if ($mod['Module'] == $nav['Module']) {
 
-                $module = $nav['Module'];
-                if (lcfirst($module) == 'health') {
-                    $module = 'medical';
-                }
-                ?>
+                                $module = $nav['Module'];
+                                if (lcfirst($module) == 'health') {
+                                    $module = 'medical';
+                                }
+                                ?>
                         <li>
-                            <span href="#" onclick="getVal('<?= $nav['RecordTypeId'] ?>','<?= strtolower($module) ?>')">
-                                <?= $nav['Setting'] ?> <b title="No of files" id="">(<?= $rec_count[$i] ?>)</b>
+                            <span href="#" onclick="getVal('<?= $nav[
+                                'RecordTypeId'
+                            ] ?>','<?= strtolower($module) ?>')">
+                                <?= $nav[
+                                    'Setting'
+                                ] ?> <b title="No of files" id="">(<?= $rec_count[
+     $i
+ ] ?>)</b>
                             </span>
-                            <input type="hidden" id="recordTypeId<?= $nav['RecordTypeId'] ?>" value="<?= $rec_count[$i] ?>">
+                            <input type="hidden" id="recordTypeId<?= $nav[
+                                'RecordTypeId'
+                            ] ?>" value="<?= $rec_count[$i] ?>">
                             <span href="#" title="New Record" class="icon" onclick="getNew('<?= $nav[
-                      'RecordTypeId'
-                  ] ?>','<?= strtolower($module) ?>')">
+                                'RecordTypeId'
+                            ] ?>','<?= strtolower($module) ?>')">
                                 <i class="fa fa-plus-square" aria-hidden="true"></i>
                             </span> <span href="#" class="icon" style='margin-right:60px' onclick="getFolder('<?= $nav[
-                      'RecordTypeId'
-                  ] ?>','<?= $nav[
+                                'RecordTypeId'
+                            ] ?>','<?= $nav[
     'Setting'
 ] ?>','<?= $module ?>')"><i class="fa fa-folder " aria-hidden="true"></i></span>
                             <script> </script>
                         </li>
                         <?php $i++;
-            }
-        } ?>
+                            }
+                        } ?>
                     </ul>
                 </li>
                 <?php
-}
-?>
+                }
+                ?>
 
                 <!--<li >
           <a href="#" ><span class="visible-xs"><i class="fa fa-cog"></i> Settings <span class="caret"></span> </span> <i class="fa fa-cog fa-2x hidden-xs"></i><span class="caret hidden-xs"></span> </a>

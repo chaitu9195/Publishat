@@ -35,46 +35,56 @@ if ($moduleName == 'medical') {
     </div>
     <input type="hidden" name="record_type_id" value="<?= $record_type_id ?>">
     <?php foreach ($fields['data'] as $field) {
-    $fieldType = $field['FieldType'];
-    $isFeildMandatoty = $field['isFeildMandatoty'];
-    $typeId = $field['RecordTypeId'];
-    $fieldId = $field['Id'];
-    $fieldName = $field['RequestParamenter'];
-    if ($isFeildMandatoty == 1) {
-        $isMandatory = 'required';
-    } else {
-        $isMandatory = '';
-    }
-    if ($fieldType == 3 && $fieldId != '558') { ?>
+        $fieldType = $field['FieldType'];
+        $isFeildMandatoty = $field['isFeildMandatoty'];
+        $typeId = $field['RecordTypeId'];
+        $fieldId = $field['Id'];
+        $fieldName = $field['RequestParamenter'];
+        if ($isFeildMandatoty == 1) {
+            $isMandatory = 'required';
+        } else {
+            $isMandatory = '';
+        }
+        if ($fieldType == 3 && $fieldId != '558') { ?>
     <div class="col-md-6 field">
         <label class="col-sm-4 hidden-xs noheight"><?= $field['FieldLable'] ?>
-            <?php if ($isFeildMandatoty == '1') { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
+            <?php if (
+                $isFeildMandatoty == '1'
+            ) { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
         </label>
         <select class="col-sm-8 col-xs-12 <?= $isMandatory ?>" name="<?= $fieldName ?>" id="<?= $fieldName ?>">
             <option value="">Select <?= $field['FieldLable'] ?></option>
             <?php foreach ($field['dropDownValues'] as $option) { ?>
-            <option value='<?= $option['DropdownValues'] ?>'><?= $option['DropdownValues'] ?></option>
+            <option value='<?= $option['DropdownValues'] ?>'><?= $option[
+    'DropdownValues'
+] ?></option>
             <?php } ?>
 
         </select>
     </div>
     <?php }
-    if ($fieldType == 2 && $fieldId != '560') { ?>
+        if ($fieldType == 2 && $fieldId != '560') { ?>
     <div class="col-md-6 field">
         <label class="col-sm-4 hidden-xs noheight">
             <?= $field['FieldLable'] ?>
-            <?php if ($isFeildMandatoty == '1') { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
+            <?php if (
+                $isFeildMandatoty == '1'
+            ) { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
         </label>
         <input type="text" class="col-sm-8 col-xs-12 <?= $isMandatory ?>" placeholder="Enter <?= $field[
     'FieldLable'
-] ?>" name="<?= $fieldName ?>" id="<?= $fieldName ?>" value="<?= $ocrData[$fieldName] ?>">
+] ?>" name="<?= $fieldName ?>" id="<?= $fieldName ?>" value="<?= $ocrData[
+    $fieldName
+] ?>">
     </div>
     <?php }
-    if ($fieldType == 5 || $fieldType == 11) { ?>
+        if ($fieldType == 5 || $fieldType == 11) { ?>
     <div class="col-md-6 field">
         <label class="col-sm-4 hidden-xs noheight">
             <?= $field['FieldLable'] ?>
-            <?php if ($isFeildMandatoty == '1') { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
+            <?php if (
+                $isFeildMandatoty == '1'
+            ) { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
         </label>
         <input type="text" class="col-sm-8 col-xs-12 timepicker <?= $isMandatory ?>" name="<?= $fieldName ?>" placeholder="YYYY-MM-DD" id="<?= $fieldName ?>" onclick="pickCalender('<?= $fieldName ?>')" value="<?= $ocrData[
     $fieldName
@@ -82,11 +92,13 @@ if ($moduleName == 'medical') {
     </div>
 
     <?php }
-    if ($fieldType == 8) { ?>
+        if ($fieldType == 8) { ?>
     <div class="col-md-6 field">
         <label class="col-sm-4 hidden-xs noheight">
             <?= $field['FieldLable'] ?>
-            <?php if ($isFeildMandatoty == '1') { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
+            <?php if (
+                $isFeildMandatoty == '1'
+            ) { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
         </label>
         <select name="<?= $fieldName ?>" class="col-sm-8 col-xs-12 <?= $isMandatory ?>" id="<?= $fieldName ?>">
             <option value="">Select Year</option>
@@ -97,7 +109,7 @@ if ($moduleName == 'medical') {
 
     </div>
     <?php }
-    if ($fieldType == 6) { ?>
+        if ($fieldType == 6) { ?>
 
     <div class='col-sm-6 field'>
         <label class="col-sm-4 hidden-xs"><?= $field['FieldLable'] ?></label>
@@ -106,23 +118,25 @@ if ($moduleName == 'medical') {
 ] ?>" id="<?= $fieldName ?>"><?= $ocrData[$fieldName] ?></textarea>
     </div>
     <?php }
-    if ($fieldType == 7) { ?>
+        if ($fieldType == 7) { ?>
     <div class='col-sm-6 field'>
         <label class="col-sm-5 col-xs-12" style="padding-right: 0px"><a href="#" id="addrelaetd"> <i class="fa fa-file"></i> <?= str_replace(
-          '#',
-          '',
-          $field['FieldLable'],
-      ) ?></a></label>
+            '#',
+            '',
+            $field['FieldLable'],
+        ) ?></a></label>
         <span class="col-sm-7 col-xs-12"> Related Records not yet added.</span>
     </div>
 
     <?php }
-    if ($fieldType == 4) { ?>
+        if ($fieldType == 4) { ?>
     <div class='col-sm-6 field'>
-        <label class="col-sm-4 hidden-xs"><?= $field['FieldLable'] ?> / Upload File </label>
+        <label class="col-sm-4 hidden-xs"><?= $field[
+            'FieldLable'
+        ] ?> / Upload File </label>
         <input class="col-sm-4 col-xs-6 half" type="text" name="uploadedfile_tag" id="uploadedfile_tag" placeholder="Enter <?= $field[
-         'FieldLable'
-     ] ?>">
+            'FieldLable'
+        ] ?>">
         <span class="gap">&nbsp</span>
         <label class="btn-bs-file btn btn-primary col-sm-4 col-xs-6 half">
             <i class="fa fa-upload" aria-hidden="true"></i> Upload
@@ -131,7 +145,7 @@ if ($moduleName == 'medical') {
     </div>
 
     <?php }
-} ?>
+    } ?>
     <div class="row">
         <span class="col-sm-6 col-xs-12 text-center pull-right">
             <button class="btn btn-success" type="submit" id="save"> <span id="sub">Submit</span> <span class="" id="load"></span></button> &nbsp; &nbsp;
@@ -159,41 +173,45 @@ if ($moduleName == 'medical') {
                 <tbody id="searchable_data">
                     <?php foreach ($files as $file) {
 
-        $doc_id = $file['_id'];
-        $path = $file['DocumentPath'];
-        $type = strtolower($file['FileType']);
-        $filename = $file['filename'];
-        if (empty($type)) {
-            $type = strtolower(get_file_extension($filename));
-        }
-        $images = ['jpg', 'png', 'jpeg', 'gif', ''];
-        $fileextension = ['zip', 'rar'];
+                        $doc_id = $file['_id'];
+                        $path = $file['DocumentPath'];
+                        $type = strtolower($file['FileType']);
+                        $filename = $file['filename'];
+                        if (empty($type)) {
+                            $type = strtolower(get_file_extension($filename));
+                        }
+                        $images = ['jpg', 'png', 'jpeg', 'gif', ''];
+                        $fileextension = ['zip', 'rar'];
 
-        $not_image = get_folder_document_icon($type);
-        $fol_type = $file['Type'];
-        if (in_array($type, $images ?? [])) {
-            $url = base_url() . "web/viewfile?fid=$doc_id&type=png";
-            $view_file = "<img src='$url' alt='$filename;' width='30px' height='30px'>";
-        } else {
-            $view_file =
-                '<img src="../../../' .
-                $not_image .
-                '" id="img" class="img-responsive img imag" width="30px" height="30px" >';
-        }
+                        $not_image = get_folder_document_icon($type);
+                        $fol_type = $file['Type'];
+                        if (in_array($type, $images ?? [])) {
+                            $url =
+                                base_url() .
+                                "web/viewfile?fid=$doc_id&type=png";
+                            $view_file = "<img src='$url' alt='$filename;' width='30px' height='30px'>";
+                        } else {
+                            $view_file =
+                                '<img src="../../../' .
+                                $not_image .
+                                '" id="img" class="img-responsive img imag" width="30px" height="30px" >';
+                        }
 
-        $size = filesize_formatted($file['length']);
-        $date = date('d-M-Y', strtotime($file['TS']));
+                        $size = filesize_formatted($file['length']);
+                        $date = date('d-M-Y', strtotime($file['TS']));
 
-        if (empty($filename)) {
-            $doc_path = $file['DocumentPath'];
-            $filename = basename($doc_path);
-            $filename = end(explode('-', $filename));
-        }
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        $path = base_url() . 'web/viewfile?fid=' . $id;
-        ?>
+                        if (empty($filename)) {
+                            $doc_path = $file['DocumentPath'];
+                            $filename = basename($doc_path);
+                            $filename = end(explode('-', $filename));
+                        }
+                        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                        $path = base_url() . 'web/viewfile?fid=' . $id;
+                        ?>
 
-                    <tr onClick="viewfile('docviewer?fid=<?= $file['_id'] ?>&type=<?= strtolower($ext) ?>')">
+                    <tr onClick="viewfile('docviewer?fid=<?= $file[
+                        '_id'
+                    ] ?>&type=<?= strtolower($ext) ?>')">
                         <td>
                             <input type="checkbox" name="fileids[]" class="doc_id" value="<?= $doc_id ?>" <? if(in_array($doc_id, $fileids ?? [])) { echo 'checked'; } ?>>
                             <input type="hidden" name="filename[]" id="fname" value="<?= $filename ?>">
@@ -201,25 +219,25 @@ if ($moduleName == 'medical') {
                         </td>
                         <td><?= $view_file ?></td>
                         <td><?php if ($fol_type == 'File') {
-          echo $filename;
-      } else {
-          echo $fol_name;
-      } ?></td>
+                            echo $filename;
+                        } else {
+                            echo $fol_name;
+                        } ?></td>
                         <td><?php if ($fol_type == 'File') {
-          echo $type;
-      } else {
-          echo '-';
-      } ?></td>
+                            echo $type;
+                        } else {
+                            echo '-';
+                        } ?></td>
                         <td><?php if ($fol_type == 'File') {
-          echo $size;
-      } else {
-          echo '-';
-      } ?></td>
+                            echo $size;
+                        } else {
+                            echo '-';
+                        } ?></td>
                         <td><?= $date ?></td>
                     </tr>
 
                     <?php
-    } ?>
+                    } ?>
                 </tbody>
             </form>
         </table>

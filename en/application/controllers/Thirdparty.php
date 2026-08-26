@@ -16,9 +16,11 @@ class Thirdparty extends REST_Controller
     public function gcontacts_get()
     {
         $accesstoken = '';
-        $client_id = '298801891056-boiv3nlutpsqfdurfidvd9aktsiaditb.apps.googleusercontent.com';
+        $client_id =
+            '298801891056-boiv3nlutpsqfdurfidvd9aktsiaditb.apps.googleusercontent.com';
         $client_secret = 'qkc-OnA6UrBTiyGSDuo6_J2E';
-        $redirect_uri = 'https://www.publishat.com/digital/en/Thirdparty/gcontacts';
+        $redirect_uri =
+            'https://www.publishat.com/digital/en/Thirdparty/gcontacts';
 
         $max_results = 10000;
         $auth_code = $_GET['code'];
@@ -37,7 +39,11 @@ class Thirdparty extends REST_Controller
         $post = rtrim($post, '&');
 
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, 'https://accounts.google.com/o/oauth2/token');
+        curl_setopt(
+            $curl,
+            CURLOPT_URL,
+            'https://accounts.google.com/o/oauth2/token',
+        );
         curl_setopt($curl, CURLOPT_POST, 5);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -92,10 +98,15 @@ class Thirdparty extends REST_Controller
             }
 
             $this->load->model('Global/Thirdpartylogin_model');
-            $result = $this->Thirdpartylogin_model->google_contacts($name, $email);
+            $result = $this->Thirdpartylogin_model->google_contacts(
+                $name,
+                $email,
+            );
         }
 
-        header('Location: https://www.publishat.com/digital/en/web/records?page_id=14&module=professional');
+        header(
+            'Location: https://www.publishat.com/digital/en/web/records?page_id=14&module=professional',
+        );
     }
 
     public function gpicker_post()
@@ -107,7 +118,11 @@ class Thirdparty extends REST_Controller
         $this->load->model('Global/Thirdpartylogin_model');
         $result = $this->Thirdpartylogin_model->gpicker($params);
         $this->load->model('Global/Folder_model');
-        $data = $this->Folder_model->getfolderfilesdata($folder_id, $type_id, $module);
+        $data = $this->Folder_model->getfolderfilesdata(
+            $folder_id,
+            $type_id,
+            $module,
+        );
         $this->load->view('includes/folder', [
             'files' => $data['ff'],
             'fpath' => $data['fdetails'],
@@ -119,7 +134,8 @@ class Thirdparty extends REST_Controller
     public function curl_file_get_contents($url)
     {
         $curl = curl_init();
-        $userAgent = 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)';
+        $userAgent =
+            'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)';
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);

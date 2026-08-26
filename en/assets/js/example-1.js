@@ -8,8 +8,9 @@ $(document).ready(function () {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
-  $.prototype.mSelectDBox.prototype._globalStyles['.m-select-d-box__list-item_selected']['background-color'] =
-    'mediumseagreen';
+  $.prototype.mSelectDBox.prototype._globalStyles[
+    '.m-select-d-box__list-item_selected'
+  ]['background-color'] = 'mediumseagreen';
   $.prototype.mSelectDBox.prototype._globalStyles[
     '.m-select-d-box__list-item_selected:hover, .m-select-d-box__list-item_selected.m-select-d-box__list-item_hover'
   ]['background-color'] = 'green';

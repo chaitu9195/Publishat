@@ -292,7 +292,11 @@ define(
     'School',
     json_encode([
         'query' => 'School',
-        'headers' => ['key1' => 'Class', 'key2' => 'SchoolName', 'key3' => 'DocumentType'],
+        'headers' => [
+            'key1' => 'Class',
+            'key2' => 'SchoolName',
+            'key3' => 'DocumentType',
+        ],
     ]),
 );
 
@@ -300,7 +304,11 @@ define(
     'Undergraduate',
     json_encode([
         'query' => 'Undergraduate',
-        'headers' => ['key1' => 'Degree', 'key2' => 'Term', 'key3' => 'DocumentType'],
+        'headers' => [
+            'key1' => 'Degree',
+            'key2' => 'Term',
+            'key3' => 'DocumentType',
+        ],
     ]),
 );
 
@@ -308,7 +316,11 @@ define(
     'Postgraduate',
     json_encode([
         'query' => 'Postgraduate',
-        'headers' => ['key1' => 'Degree', 'key2' => 'Term', 'key3' => 'DocumentType'],
+        'headers' => [
+            'key1' => 'Degree',
+            'key2' => 'Term',
+            'key3' => 'DocumentType',
+        ],
     ]),
 );
 
@@ -316,7 +328,11 @@ define(
     'Phd',
     json_encode([
         'query' => 'Phd',
-        'headers' => ['key1' => 'Degree', 'key2' => 'AcademicYear', 'key3' => 'DocumentType'],
+        'headers' => [
+            'key1' => 'Degree',
+            'key2' => 'AcademicYear',
+            'key3' => 'DocumentType',
+        ],
     ]),
 );
 
@@ -324,7 +340,11 @@ define(
     'Exam',
     json_encode([
         'query' => 'Exam',
-        'headers' => ['key1' => 'ExamType', 'key2' => 'ExamName', 'key3' => 'DocumentType'],
+        'headers' => [
+            'key1' => 'ExamType',
+            'key2' => 'ExamName',
+            'key3' => 'DocumentType',
+        ],
     ]),
 );
 
@@ -332,7 +352,11 @@ define(
     'Certification',
     json_encode([
         'query' => 'Certification',
-        'headers' => ['key1' => 'CertificationType', 'key2' => 'CertificateName', 'key3' => 'ValidFrom'],
+        'headers' => [
+            'key1' => 'CertificationType',
+            'key2' => 'CertificateName',
+            'key3' => 'ValidFrom',
+        ],
     ]),
 );
 
@@ -340,7 +364,11 @@ define(
     'Project',
     json_encode([
         'query' => 'Project',
-        'headers' => ['key1' => 'ProjectType', 'key2' => 'Title', 'key3' => 'DocumentType'],
+        'headers' => [
+            'key1' => 'ProjectType',
+            'key2' => 'Title',
+            'key3' => 'DocumentType',
+        ],
     ]),
 );
 
@@ -348,7 +376,11 @@ define(
     'LocationHistory',
     json_encode([
         'query' => 'LocationHistory',
-        'headers' => ['key1' => 'Location', 'key2' => 'Purpose', 'key3' => 'FromDate'],
+        'headers' => [
+            'key1' => 'Location',
+            'key2' => 'Purpose',
+            'key3' => 'FromDate',
+        ],
     ]),
 );
 
@@ -356,7 +388,11 @@ define(
     'GovernmentCertificates',
     json_encode([
         'query' => 'GovernmentCertificates',
-        'headers' => ['key1' => 'DocumentType', 'key2' => 'ValidTo', 'key3' => 'ReferenceNo'],
+        'headers' => [
+            'key1' => 'DocumentType',
+            'key2' => 'ValidTo',
+            'key3' => 'ReferenceNo',
+        ],
     ]),
 );
 
@@ -364,7 +400,11 @@ define(
     'Relationship',
     json_encode([
         'query' => 'Relationship',
-        'headers' => ['key1' => 'Name', 'key2' => 'RelationshipType', 'key3' => 'ContactMode'],
+        'headers' => [
+            'key1' => 'Name',
+            'key2' => 'RelationshipType',
+            'key3' => 'ContactMode',
+        ],
     ]),
 );
 
@@ -372,7 +412,11 @@ define(
     'WebHistory',
     json_encode([
         'query' => 'WebHistory',
-        'headers' => ['key1' => 'SiteName', 'key2' => 'Usage', 'key3' => 'DocumentType '],
+        'headers' => [
+            'key1' => 'SiteName',
+            'key2' => 'Usage',
+            'key3' => 'DocumentType ',
+        ],
     ]),
 );
 
@@ -380,7 +424,11 @@ define(
     'Travel',
     json_encode([
         'query' => 'Travel',
-        'headers' => ['key1' => 'TravelType', 'key2' => 'FromDate', 'key3' => 'ToPlace'],
+        'headers' => [
+            'key1' => 'TravelType',
+            'key2' => 'FromDate',
+            'key3' => 'ToPlace',
+        ],
     ]),
 );
 
@@ -388,20 +436,35 @@ define(
     'Devices',
     json_encode([
         'query' => 'Devices',
-        'headers' => ['key1' => 'DiviceName', 'key2' => 'Brand', 'key3' => 'ReferenceNumber'],
+        'headers' => [
+            'key1' => 'DiviceName',
+            'key2' => 'Brand',
+            'key3' => 'ReferenceNumber',
+        ],
     ]),
 );
 
 define(
     'Wishes',
-    json_encode(['query' => 'Wishes', 'headers' => ['key1' => 'EventType', 'key2' => 'EventName', 'key3' => 'Date']]),
+    json_encode([
+        'query' => 'Wishes',
+        'headers' => [
+            'key1' => 'EventType',
+            'key2' => 'EventName',
+            'key3' => 'Date',
+        ],
+    ]),
 );
 
 define(
     'Contacts',
     json_encode([
         'query' => 'Contacts',
-        'headers' => ['key1' => 'ContactName', 'key2' => 'PersonalEmail', 'key3' => 'MobilePhoneNumber'],
+        'headers' => [
+            'key1' => 'ContactName',
+            'key2' => 'PersonalEmail',
+            'key3' => 'MobilePhoneNumber',
+        ],
     ]),
 );
 
@@ -409,7 +472,11 @@ define(
     'Employment',
     json_encode([
         'query' => 'Employment',
-        'headers' => ['key1' => 'DocumentType', 'key2' => 'OrganisationName', 'key3' => 'IssuedDate'],
+        'headers' => [
+            'key1' => 'DocumentType',
+            'key2' => 'OrganisationName',
+            'key3' => 'IssuedDate',
+        ],
     ]),
 );
 
@@ -417,8 +484,16 @@ define(
     'Projects',
     json_encode([
         'query' => 'Projects',
-        'headers' => ['key1' => 'ProjectName', 'key2' => 'ProjectType', 'key3' => 'FromDate'],
-        'subheaders' => ['key1' => 'TaskName', 'key2' => 'FromDate', 'key3' => 'ToDate'],
+        'headers' => [
+            'key1' => 'ProjectName',
+            'key2' => 'ProjectType',
+            'key3' => 'FromDate',
+        ],
+        'subheaders' => [
+            'key1' => 'TaskName',
+            'key2' => 'FromDate',
+            'key3' => 'ToDate',
+        ],
     ]),
 );
 
@@ -426,7 +501,11 @@ define(
     'Skills',
     json_encode([
         'query' => 'Skills',
-        'headers' => ['key1' => 'SkillType', 'key2' => 'SkillName', 'key3' => 'FromDate'],
+        'headers' => [
+            'key1' => 'SkillType',
+            'key2' => 'SkillName',
+            'key3' => 'FromDate',
+        ],
     ]),
 );
 
@@ -434,7 +513,11 @@ define(
     'Apps',
     json_encode([
         'query' => 'Apps',
-        'headers' => ['key1' => 'AppType', 'key2' => 'AppName', 'key3' => 'PasswordChangeStatus'],
+        'headers' => [
+            'key1' => 'AppType',
+            'key2' => 'AppName',
+            'key3' => 'PasswordChangeStatus',
+        ],
     ]),
 );
 
@@ -442,7 +525,11 @@ define(
     'Resume',
     json_encode([
         'query' => 'Resume',
-        'headers' => ['key1' => 'ResumeType', 'key2' => 'Name', 'key3' => 'FunctionalArea'],
+        'headers' => [
+            'key1' => 'ResumeType',
+            'key2' => 'Name',
+            'key3' => 'FunctionalArea',
+        ],
     ]),
 );
 
@@ -450,7 +537,11 @@ define(
     'LegalDispute',
     json_encode([
         'query' => 'LegalDispute',
-        'headers' => ['key1' => 'DisputeType', 'key2' => 'PartyName', 'key3' => 'FromDate'],
+        'headers' => [
+            'key1' => 'DisputeType',
+            'key2' => 'PartyName',
+            'key3' => 'FromDate',
+        ],
     ]),
 );
 
@@ -458,7 +549,11 @@ define(
     'LegalOwnershipTransfer',
     json_encode([
         'query' => 'LegalOwnershipTransfer',
-        'headers' => ['key1' => 'TransferType', 'key2' => 'AssetName', 'key3' => 'ValidFrom'],
+        'headers' => [
+            'key1' => 'TransferType',
+            'key2' => 'AssetName',
+            'key3' => 'ValidFrom',
+        ],
     ]),
 );
 
@@ -466,8 +561,16 @@ define(
     'MedMedicalTest',
     json_encode([
         'query' => 'MedMedicalTest',
-        'headers' => ['key1' => 'TestName', 'key2' => 'TestType', 'key3' => 'TestDate'],
-        'subheaders' => ['key1' => 'DiagnosticCenterName', 'key2' => 'Address', 'key3' => 'TestDate'],
+        'headers' => [
+            'key1' => 'TestName',
+            'key2' => 'TestType',
+            'key3' => 'TestDate',
+        ],
+        'subheaders' => [
+            'key1' => 'DiagnosticCenterName',
+            'key2' => 'Address',
+            'key3' => 'TestDate',
+        ],
     ]),
 );
 
@@ -475,8 +578,16 @@ define(
     'MedPrescription',
     json_encode([
         'query' => 'MedPrescription',
-        'headers' => ['key1' => 'PrescriptionType', 'key2' => 'DiseaseName', 'key3' => 'MedicineName'],
-        'subheaders' => ['key1' => 'MedicineName', 'key2' => 'Tenure', 'key3' => 'MedicineType'],
+        'headers' => [
+            'key1' => 'PrescriptionType',
+            'key2' => 'DiseaseName',
+            'key3' => 'MedicineName',
+        ],
+        'subheaders' => [
+            'key1' => 'MedicineName',
+            'key2' => 'Tenure',
+            'key3' => 'MedicineType',
+        ],
     ]),
 );
 
@@ -484,8 +595,16 @@ define(
     'MedFamily',
     json_encode([
         'query' => 'MedFamily',
-        'headers' => ['key1' => 'DiseaseType', 'key2' => 'TreatmentType', 'key3' => 'FromDate'],
-        'subheaders' => ['key1' => 'PatientName', 'key2' => 'Address', 'key3' => 'FromDate'],
+        'headers' => [
+            'key1' => 'DiseaseType',
+            'key2' => 'TreatmentType',
+            'key3' => 'FromDate',
+        ],
+        'subheaders' => [
+            'key1' => 'PatientName',
+            'key2' => 'Address',
+            'key3' => 'FromDate',
+        ],
     ]),
 );
 
@@ -493,8 +612,16 @@ define(
     'MedHealthInsurance',
     json_encode([
         'query' => 'MedHealthInsurance',
-        'headers' => ['key1' => 'PolicyType', 'key2' => 'PolicyNumber', 'key3' => 'FromDate'],
-        'subheaders' => ['key1' => 'BeneficiaryName', 'key2' => 'Relation', 'key3' => ''],
+        'headers' => [
+            'key1' => 'PolicyType',
+            'key2' => 'PolicyNumber',
+            'key3' => 'FromDate',
+        ],
+        'subheaders' => [
+            'key1' => 'BeneficiaryName',
+            'key2' => 'Relation',
+            'key3' => '',
+        ],
     ]),
 );
 
@@ -502,7 +629,11 @@ define(
     'FinFinancialAccounts',
     json_encode([
         'query' => 'FinFinancialAccounts',
-        'headers' => ['key1' => 'AccountType', 'key2' => 'AccountNumber', 'key3' => 'BranchName'],
+        'headers' => [
+            'key1' => 'AccountType',
+            'key2' => 'AccountNumber',
+            'key3' => 'BranchName',
+        ],
     ]),
 );
 
@@ -510,7 +641,11 @@ define(
     'FinAsset',
     json_encode([
         'query' => 'FinAsset',
-        'headers' => ['key1' => 'AssetType', 'key2' => 'AssetName', 'key3' => 'ValidFrom'],
+        'headers' => [
+            'key1' => 'AssetType',
+            'key2' => 'AssetName',
+            'key3' => 'ValidFrom',
+        ],
     ]),
 );
 
@@ -518,8 +653,16 @@ define(
     'FinRevenue',
     json_encode([
         'query' => 'FinRevenue',
-        'headers' => ['key1' => 'RevenueType', 'key2' => 'ItemName', 'key3' => 'Term'],
-        'subheaders' => ['key1' => 'Amount', 'key2' => 'Notes', 'key3' => 'RevenueDate'],
+        'headers' => [
+            'key1' => 'RevenueType',
+            'key2' => 'ItemName',
+            'key3' => 'Term',
+        ],
+        'subheaders' => [
+            'key1' => 'Amount',
+            'key2' => 'Notes',
+            'key3' => 'RevenueDate',
+        ],
     ]),
 );
 
@@ -527,7 +670,11 @@ define(
     'FinCards',
     json_encode([
         'query' => 'FinCards',
-        'headers' => ['key1' => 'CardType', 'key2' => 'ServiceProviderName', 'key3' => 'CardNumber'],
+        'headers' => [
+            'key1' => 'CardType',
+            'key2' => 'ServiceProviderName',
+            'key3' => 'CardNumber',
+        ],
     ]),
 );
 
@@ -535,7 +682,11 @@ define(
     'FinLiability',
     json_encode([
         'query' => 'FinLiability',
-        'headers' => ['key1' => 'LiabilityType', 'key2' => 'LiabilityName', 'key3' => 'FromDate'],
+        'headers' => [
+            'key1' => 'LiabilityType',
+            'key2' => 'LiabilityName',
+            'key3' => 'FromDate',
+        ],
     ]),
 );
 
@@ -543,8 +694,16 @@ define(
     'FinPayment',
     json_encode([
         'query' => 'FinPayment',
-        'headers' => ['key1' => 'PaymentType', 'key2' => 'ItemName', 'key3' => 'Term'],
-        'subheaders' => ['key1' => 'Amount', 'key2' => 'Notes', 'key3' => 'PaymentDate'],
+        'headers' => [
+            'key1' => 'PaymentType',
+            'key2' => 'ItemName',
+            'key3' => 'Term',
+        ],
+        'subheaders' => [
+            'key1' => 'Amount',
+            'key2' => 'Notes',
+            'key3' => 'PaymentDate',
+        ],
     ]),
 );
 
@@ -552,7 +711,11 @@ define(
     'FinTax',
     json_encode([
         'query' => 'FinTax',
-        'headers' => ['key1' => 'TaxDocumentType', 'key2' => 'Date', 'key3' => 'AssessmentYear'],
+        'headers' => [
+            'key1' => 'TaxDocumentType',
+            'key2' => 'Date',
+            'key3' => 'AssessmentYear',
+        ],
     ]),
 );
 
@@ -560,7 +723,11 @@ define(
     'FinInsurance',
     json_encode([
         'query' => 'FinInsurance',
-        'headers' => ['key1' => 'InsuranceType', 'key2' => 'PolicyNumber', 'key3' => 'FromDate'],
+        'headers' => [
+            'key1' => 'InsuranceType',
+            'key2' => 'PolicyNumber',
+            'key3' => 'FromDate',
+        ],
     ]),
 );
 

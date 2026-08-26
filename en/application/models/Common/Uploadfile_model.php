@@ -22,20 +22,30 @@ class Uploadfile_model extends CI_Model
         if (!empty($_FILES['uploadImage']['name'])) {
             $file_extension = $this->get_file_extension();
             if ($file_extension == '') {
-                return ['data' => 'Invalid File Type. Only PDF, DOC, DOCX, JPEG, JPG, GIF & PNG formats are allowed'];
+                return [
+                    'data' =>
+                        'Invalid File Type. Only PDF, DOC, DOCX, JPEG, JPG, GIF & PNG formats are allowed',
+                ];
             }
             $uploaded_filename = $this->upload_thumbnail($params);
             if ($uploaded_filename == '') {
                 return [
-                    'data' => 'File size is too high. Document should not be more than ' . max_document_file_size_text,
+                    'data' =>
+                        'File size is too high. Document should not be more than ' .
+                        max_document_file_size_text,
                 ];
             }
         }
         if (strlen($uploaded_filename) > 0) {
             $mongo_connection = new MongoClient();
             $mid = mongo_id();
-            $gridfs = $mongo_connection->selectDB('publisha_dbase')->getGridFS();
-            if (strtolower($file_extension) == 'doc' || strtolower($file_extension) == 'docx') {
+            $gridfs = $mongo_connection
+                ->selectDB('publisha_dbase')
+                ->getGridFS();
+            if (
+                strtolower($file_extension) == 'doc' ||
+                strtolower($file_extension) == 'docx'
+            ) {
                 $config['upload_path'] = FCPATH . 'files/temp';
                 $config['allowed_types'] = '*';
                 $config['file_name'] = $uploaded_filename;
@@ -48,10 +58,18 @@ class Uploadfile_model extends CI_Model
                 $SourceFolder = FCPATH . 'files/temp';
                 $CommandText = "libreoffice --headless --convert-to pdf  $SourceFolder/$SourceFileName  --outdir $TargetFolder";
                 if (strtolower($file_extension) == 'doc') {
-                    $TargetFileName = str_replace('.doc', '.pdf', $SourceFileName);
+                    $TargetFileName = str_replace(
+                        '.doc',
+                        '.pdf',
+                        $SourceFileName,
+                    );
                 }
                 if (strtolower($file_extension) == 'docx') {
-                    $TargetFileName = str_replace('.docx', '.pdf', $SourceFileName);
+                    $TargetFileName = str_replace(
+                        '.docx',
+                        '.pdf',
+                        $SourceFileName,
+                    );
                 }
 
                 $Res = exec($CommandText, $output, $return_var);

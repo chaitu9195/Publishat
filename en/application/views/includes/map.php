@@ -7,37 +7,41 @@
 				        </div>
 				        <?php  ?>
 				        <?php
-      $locations = [];
-      $i = 1;
-      foreach ($data as $row) {
+            $locations = [];
+            $i = 1;
+            foreach ($data as $row) {
 
-          $name = $row['name'];
+                $name = $row['name'];
 
-          $lattitude = $row['latitude'];
-          $longitude = $row['longitude'];
-          $id = $i;
-          $code = $row['code'];
-          $location_address = $row['address'];
+                $lattitude = $row['latitude'];
+                $longitude = $row['longitude'];
+                $id = $i;
+                $code = $row['code'];
+                $location_address = $row['address'];
 
-          $locations[] = [
-              'google_map' => [
-                  'lat' => $lattitude,
-                  'lng' => $longitude,
-              ],
-              'location_address' => $location_address,
-              'location_name' => $name,
-              'id' => $id,
-          ];
-          ?>
+                $locations[] = [
+                    'google_map' => [
+                        'lat' => $lattitude,
+                        'lng' => $longitude,
+                    ],
+                    'location_address' => $location_address,
+                    'location_name' => $name,
+                    'id' => $id,
+                ];
+                ?>
 				        <input type="hidden" id="<?= $i ?>" value="<?= $code ?>">
 				        <?php $i++;
-      }
-      ?>
+            }
+            ?>
 				        <?php  ?>
 				        <?php
-      $map_area_lat = isset($locations[0]['google_map']['lat']) ? $locations[0]['google_map']['lat'] : '';
-      $map_area_lng = isset($locations[0]['google_map']['lng']) ? $locations[0]['google_map']['lng'] : '';
-      ?>
+            $map_area_lat = isset($locations[0]['google_map']['lat'])
+                ? $locations[0]['google_map']['lat']
+                : '';
+            $map_area_lng = isset($locations[0]['google_map']['lng'])
+                ? $locations[0]['google_map']['lng']
+                : '';
+            ?>
 				        <script>
 				            jQuery(document).ready(function($) {
 				                /* Do not drag on mobile. */

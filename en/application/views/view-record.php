@@ -50,7 +50,9 @@ if ($record_type_id == 16) {
             <a href='#' id="collaboration_rec"> <i class="fa fa-users fa-2x" aria-hidden="true"></i></a>
             <?php } ?>
             <a href='#' id="addKart"> <i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i> </a>
-            <a href="#/" onclick="getedit('<?= $data['RecordId'] ?>','<?= $recTypeId ?>','<?= strtolower(
+            <a href="#/" onclick="getedit('<?= $data[
+                'RecordId'
+            ] ?>','<?= $recTypeId ?>','<?= strtolower(
     $moduleName,
 ) ?>')"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a>
             <a href="#/" id='share_button'><i class="fa fa-share-alt fa-2x" aria-hidden="true"></i></a>
@@ -72,17 +74,21 @@ if ($record_type_id == 16) {
         </div>
         <div class="delete_body">
             <?php
-          $code = rand(100000, 999999);
-          $this->session->set_userdata('captcha', $code);
-          ?>
+            $code = rand(100000, 999999);
+            $this->session->set_userdata('captcha', $code);
+            ?>
             <div class="alert alert-danger" id="error" style="display:none">
                 <div id="msg"> </div>
             </div>
             <form class="form-horizontal col-sm-8 col-sm-offset-1 pad" name="deleteForm" id='deleteForm'>
                 <div class="form-group">
                     <input type="hidden" name="record_type_id" value="<?= $recTypeId ?>">
-                    <input type="hidden" name="RecordId" value="<?= $data['RecordId'] ?>">
-                    <input type="hidden" name='module' value="<?= strtolower($moduleName) ?>">
+                    <input type="hidden" name="RecordId" value="<?= $data[
+                        'RecordId'
+                    ] ?>">
+                    <input type="hidden" name='module' value="<?= strtolower(
+                        $moduleName,
+                    ) ?>">
                     <label class="control-label col-sm-6 hidden-xs" for="Captcha">Captcha <span style="float:right"> : </span></label>
                     <div class="col-sm-6 col-xs-12">
                         <span class="captcha"><?= $code ?> </span>
@@ -117,7 +123,9 @@ if ($record_type_id == 16) {
             </div>
             <form class="form-horizontal col-sm-12 pad" name="coloborateForm" id='coloborateForm'>
                 <input type="hidden" name="record_type_id" value="<?= $recTypeId ?>">
-                <input type="hidden" name="record_id" value="<?= $data['RecordId'] ?>">
+                <input type="hidden" name="record_id" value="<?= $data[
+                    'RecordId'
+                ] ?>">
                 <div class="form-group">
                     <span class='attchdocuments files' style="width:98%">
                         Please enter the emails separated by a comma (,)
@@ -176,19 +184,23 @@ if ($record_type_id == 16) {
             <form class="form-horizontal col-sm-12 pad" name="emailForm" id='emailForm'>
                 <div class="form-group">
                     <?php if (count($files ?? [])) {
-               for ($i = 0; $i <= count($files ?? []) - 1; $i++) {
+                        for ($i = 0; $i <= count($files ?? []) - 1; $i++) {
 
-                   $label = $files[$i]['Notes'];
-                   $doc_id = $files[$i]['DocumentId'];
-                   $path = $files[$i]['DocumentPath'];
-                   $filename = $files[$i]['filename'];
-                   if (empty($filename)) {
-                       $filename = pathinfo($path, PATHINFO_FILENAME);
-                       $filename = substr(strstr($filename, '-'), 1, 15);
-                   }
-                   $filename = substr($filename, 0, 11);
-                   $ext = $files[$i]['FileType'];
-                   ?>
+                            $label = $files[$i]['Notes'];
+                            $doc_id = $files[$i]['DocumentId'];
+                            $path = $files[$i]['DocumentPath'];
+                            $filename = $files[$i]['filename'];
+                            if (empty($filename)) {
+                                $filename = pathinfo($path, PATHINFO_FILENAME);
+                                $filename = substr(
+                                    strstr($filename, '-'),
+                                    1,
+                                    15,
+                                );
+                            }
+                            $filename = substr($filename, 0, 11);
+                            $ext = $files[$i]['FileType'];
+                            ?>
                     <div class="attchdocuments">
                         <input type="checkbox" name="document_id[]" class='' id="document_id_arr" value="<?= $doc_id ?>">
                         <a href="./docviewer?fid=<?= $doc_id ?>" target="_blank" title='View / Download File'><span class="files"> <?= !empty(
@@ -200,20 +212,20 @@ if ($record_type_id == 16) {
                 </div>
                 <div class="form-group">
                     <?php
-               }
-           } ?>
+                        }
+                    } ?>
                     <?php foreach ($sub_rec as $sub_rec_idr) {
 
-       $constants = get_defined_constants();
-       $headers = json_decode($constants[$tableName], true);
-       $key1 = $headers['subheaders']['key1'];
-       $key2 = $headers['subheaders']['key2'];
-       $key3 = $headers['subheaders']['key3'];
-       $key_value1 = $sub_rec_idr[$key1];
-       $key_value2 = $sub_rec_idr[$key2];
-       $key_value3 = $sub_rec_idr[$key3];
-       $sub_rec_id = $sub_rec_idr['RecordId'];
-       ?>
+                        $constants = get_defined_constants();
+                        $headers = json_decode($constants[$tableName], true);
+                        $key1 = $headers['subheaders']['key1'];
+                        $key2 = $headers['subheaders']['key2'];
+                        $key3 = $headers['subheaders']['key3'];
+                        $key_value1 = $sub_rec_idr[$key1];
+                        $key_value2 = $sub_rec_idr[$key2];
+                        $key_value3 = $sub_rec_idr[$key3];
+                        $sub_rec_id = $sub_rec_idr['RecordId'];
+                        ?>
 
                     <div class="col-md-11 col-xs-12 subrec">
                         <input type="checkbox" name="sub_record_id[]" class="rec_id_arr" value="<?= $sub_rec_id ?>">
@@ -221,18 +233,22 @@ if ($record_type_id == 16) {
                     </div>
                     <div class="col-md-11 col-md-offset-1 col-xs-12">
                         <?php if (count($sub_files ?? [])) {
-         for ($i = 0; $i <= count($sub_files ?? []) - 1; $i++) {
-             if ($sub_files[$i]['RecordId'] == $sub_rec_id) {
+                            for (
+                                $i = 0;
+                                $i <= count($sub_files ?? []) - 1;
+                                $i++
+                            ) {
+                                if ($sub_files[$i]['RecordId'] == $sub_rec_id) {
 
-                 $label = $sub_files[$i]['Notes'];
-                 $doc_id = $sub_files[$i]['DocumentId'];
-                 $path = $sub_files[$i]['DocumentPath'];
-                 $filename = $sub_files[$i]['filename'];
-                 if (empty($filename)) {
-                     $filename = explode('-', $path);
-                     $filename = $filename[1];
-                 }
-                 ?>
+                                    $label = $sub_files[$i]['Notes'];
+                                    $doc_id = $sub_files[$i]['DocumentId'];
+                                    $path = $sub_files[$i]['DocumentPath'];
+                                    $filename = $sub_files[$i]['filename'];
+                                    if (empty($filename)) {
+                                        $filename = explode('-', $path);
+                                        $filename = $filename[1];
+                                    }
+                                    ?>
                         <div class="attchdocuments">
                             <input type="checkbox" name="document_id[]" class='' id="document_id_arr" value="<?= $doc_id ?>">
                             <a href="./docviewer?fid=<?= $doc_id ?>" target="_blank" title='View / Download File'><span class="files"> <?= !empty(
@@ -242,11 +258,11 @@ if ($record_type_id == 16) {
     : $filename ?> </span></a>
                         </div>
                         <?php
-             }
-         }
-     } ?>
+                                }
+                            }
+                        } ?>
                     </div><?php
-   } ?>
+                    } ?>
                 </div>
                 <div class="form-group">
                     <span class='attchdocuments files' style="width:98%">
@@ -256,7 +272,9 @@ if ($record_type_id == 16) {
                 <div class="form-group">
                     <input type="hidden" name="selective_attach" value="1">
                     <input type="hidden" name="record_type_id" value="<?= $recTypeId ?>">
-                    <input type="hidden" name="ids" value="<?= $data['RecordId'] ?>">
+                    <input type="hidden" name="ids" value="<?= $data[
+                        'RecordId'
+                    ] ?>">
                     <input type="hidden" name='module' value="<?= $modName ?>">
                     <label class="control-label col-sm-3 hidden-xs" for="email">Enter Emails:</label>
                     <div class="col-sm-9 col-xs-12">
@@ -292,7 +310,9 @@ if ($record_type_id == 16) {
                 $na = 'NA'; ?>
             <div class="col-sm-12 col-xs-12 metadata">
                 <span class="col-sm-5 col-xs-5"> <strong><?= $label ?> </strong> <span style="float:right"> : </span> </span>
-                <span class="col-sm-7 col-xs-7"> <?= !empty($fieldDetails) ? $fieldDetails : $na ?></span>
+                <span class="col-sm-7 col-xs-7"> <?= !empty($fieldDetails)
+                    ? $fieldDetails
+                    : $na ?></span>
             </div>
 
             <?php
@@ -301,7 +321,9 @@ if ($record_type_id == 16) {
             <?php if ($relatedRecTypeId) { ?>
             <div class="sub_records">
                 <div class="h4">
-                    <span class="pull-left"><?= ucfirst($tabName) ?> Records</span>
+                    <span class="pull-left"><?= ucfirst(
+                        $tabName,
+                    ) ?> Records</span>
                     <span class="pull-right">
                         <button class="btn btn-primary btn-sm" href="#" title="Add new record" onclick="addrelated('<?= $record_id ?>','<?= $recTypeId ?>','<?= strtolower(
     $moduleName,
@@ -309,18 +331,24 @@ if ($record_type_id == 16) {
                     </span>
                 </div>
                 <?php if ($sub_data != 'failed' && count($sub_data ?? []) > 0) {
-                  $constants = get_defined_constants();
-                  $headers = json_decode($constants[$tableName], true);
-                  $key1 = $headers['subheaders']['key1'];
-                  $key2 = $headers['subheaders']['key2'];
-                  $key3 = $headers['subheaders']['key3'];
-                  for ($i = 0; $i <= count($sub_data ?? []) - 1; $i++) {
-                      $rec_id = $sub_data[$i]['RecordId']; ?>
+                    $constants = get_defined_constants();
+                    $headers = json_decode($constants[$tableName], true);
+                    $key1 = $headers['subheaders']['key1'];
+                    $key2 = $headers['subheaders']['key2'];
+                    $key3 = $headers['subheaders']['key3'];
+                    for ($i = 0; $i <= count($sub_data ?? []) - 1; $i++) {
+                        $rec_id = $sub_data[$i]['RecordId']; ?>
                 <div class='sub_rec_wrapper'>
                     <div class="" onclick="sub_view('<?= $recTypeId ?>','<?= $relatedRecTypeId ?>','<?= $rec_id ?>','<?= $record_id ?>','<?= $moduleName ?>')">
-                        <div class="sub_rec_title"><?= $sub_data[$i][$key1] ?></div>
-                        <div class="sub_rec_title"><?= $sub_data[$i][$key2] ?></div>
-                        <span> <?= $sub_data[$i][$key3] ?> - (<?= $file_count[$i] ?>)</span>
+                        <div class="sub_rec_title"><?= $sub_data[$i][
+                            $key1
+                        ] ?></div>
+                        <div class="sub_rec_title"><?= $sub_data[$i][
+                            $key2
+                        ] ?></div>
+                        <span> <?= $sub_data[$i][$key3] ?> - (<?= $file_count[
+     $i
+ ] ?>)</span>
                     </div>
                     <div class="">
                         <a class="pull-right" onclick="subRecDelete('<?= $relatedRecTypeId ?>','<?= $rec_id ?>','<?= $record_id ?>','<?= $moduleName ?>')">
@@ -330,10 +358,12 @@ if ($record_type_id == 16) {
 
 
                 <?php
-                  }
-              } else {
-                   ?><div class=''> Related <?= ucfirst($tabName) ?> Records not available </div> <?php
-              } ?>
+                    }
+                } else {
+                     ?><div class=''> Related <?= ucfirst(
+    $tabName,
+) ?> Records not available </div> <?php
+                } ?>
             </div>
             <?php } ?>
         </div>
@@ -360,29 +390,37 @@ if ($record_type_id == 16) {
 
                 <div class="col-sm-4 col-xs-4 ext_type">
                     <?php
-    $images = ['jpg', 'png', 'jpeg', 'gif', ''];
-    if (in_array($ext, $images ?? [])) {
-        $url = base_url() . "web/viewfile?fid=$doc_id&type=png";
-        echo "<img src='$url' alt='$filename;' width='50px' height='50px' style='padding: 2px'>";
-    } else {
-         ?>
+                    $images = ['jpg', 'png', 'jpeg', 'gif', ''];
+                    if (in_array($ext, $images ?? [])) {
+                        $url = base_url() . "web/viewfile?fid=$doc_id&type=png";
+                        echo "<img src='$url' alt='$filename;' width='50px' height='50px' style='padding: 2px'>";
+                    } else {
+                         ?>
                     <?= get_icon($ext) ?>
                     <?php
-    }
-    ?>
+                    }
+                    ?>
                 </div>
                 <div class='col-sm-8 col-xs-8 filename'>
-                    <input type="hidden" name="fileids[]" id="fname" value="<?= !empty($label) ? $label : ucfirst($filename) ?>">
+                    <input type="hidden" name="fileids[]" id="fname" value="<?= !empty(
+                        $label
+                    )
+                        ? $label
+                        : ucfirst($filename) ?>">
                     <span>
-                        <?= !empty($label) ? $label : ucfirst($file_name . '.' . $ext) ?>
+                        <?= !empty($label)
+                            ? $label
+                            : ucfirst($file_name . '.' . $ext) ?>
                     </span>
                 </div>
                 <a href="./docviewer?fid=<?= $doc_id ?>&type=<?= strtolower(
     $ext,
 ) ?>" target="_blank" class="downloadpop1"><i class="fa fa-download"></i>
-                    <?= $ext == 'jpeg' || $ext == 'png' || ($ext = 'jpg' || $ext == 'pdf' || $ext == 'gif')
-                   ? 'View'
-                   : 'Download' ?> </a>
+                    <?= $ext == 'jpeg' ||
+                    $ext == 'png' ||
+                    ($ext = 'jpg' || $ext == 'pdf' || $ext == 'gif')
+                        ? 'View'
+                        : 'Download' ?> </a>
             </div>
             <?php
                 }
@@ -423,7 +461,9 @@ if ($record_type_id == 16) {
         var file_count = "<?= count($files ?? []) ?>";
         var sub_file_count = "<?= count($sub_files ?? []) ?>";
         if (file_count > 0 || sub_file_count > 0) {
-            getkart('<?= $record_id ?>', '<?= $recTypeId ?>', '<?= strtolower($moduleName) ?>', '<?= $sub_type_id ?>');
+            getkart('<?= $record_id ?>', '<?= $recTypeId ?>', '<?= strtolower(
+    $moduleName,
+) ?>', '<?= $sub_type_id ?>');
         } else {
             $("#cart_error").html('<div class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong style="text-align:center">Oops!</strong> No attachments found.</div>');
         }

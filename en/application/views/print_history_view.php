@@ -15,7 +15,7 @@
     </thead>
     <tbody>
         <?php if ($PrintHistory) {
-      foreach ($PrintHistory as $rowData) { ?>
+            foreach ($PrintHistory as $rowData) { ?>
         <tr>
             <td><?php echo $rowData['datetime']; ?></td>
             <td><?php echo $rowData['jobid']; ?></td>
@@ -27,12 +27,12 @@
             <td><?php echo $rowData['DelType']; ?></td>
         </tr>
         <?php }
-  } else {
-       ?>
+        } else {
+             ?>
         <tr>
             <td colspan="8">No Data Found!</td>
         </tr>
         <?php
-  } ?>
+        } ?>
     </tbody>
 </table>

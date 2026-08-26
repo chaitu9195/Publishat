@@ -341,28 +341,32 @@ if (!empty(trim((string) $user_id))) {
                 </div>
                 <div class="row menuclass blogs">
                     <?php
-         $query = $this->mongodb->get('Articles');
-         if (count($query ?? []) > 0) {
-             foreach ($query as $data) {
+                    $query = $this->mongodb->get('Articles');
+                    if (count($query ?? []) > 0) {
+                        foreach ($query as $data) {
 
-                 $id = $data['_id'];
-                 $heading = $data['articleheading'];
-                 $articledes = $data['ArticleDescription'];
-                 $string = strip_tags($articledes);
-                 if (strlen($string) > 500) {
-                     $stringCut = substr($string, 0, 500);
-                     $string = substr($stringCut, 0, strrpos($stringCut, ' '));
-                 }
-                 $user_id = $data['UserId'];
-                 $date = $data['Date'];
-                 $this->mongodb->where(['UserId' => $user_id]);
-                 $res = $this->mongodb->get('User');
-                 if (count($res ?? []) > 0) {
-                     foreach ($res as $data) {
-                         $name = $data['Name'];
-                     }
-                 }
-                 ?>
+                            $id = $data['_id'];
+                            $heading = $data['articleheading'];
+                            $articledes = $data['ArticleDescription'];
+                            $string = strip_tags($articledes);
+                            if (strlen($string) > 500) {
+                                $stringCut = substr($string, 0, 500);
+                                $string = substr(
+                                    $stringCut,
+                                    0,
+                                    strrpos($stringCut, ' '),
+                                );
+                            }
+                            $user_id = $data['UserId'];
+                            $date = $data['Date'];
+                            $this->mongodb->where(['UserId' => $user_id]);
+                            $res = $this->mongodb->get('User');
+                            if (count($res ?? []) > 0) {
+                                foreach ($res as $data) {
+                                    $name = $data['Name'];
+                                }
+                            }
+                            ?>
                     <div class="col-md-12" style="border-bottom:1px solid #ddd;">
                         <h2><a href="<?php echo base_url(); ?>web/articleinfo?id=<?= $id ?>"><?= $heading ?></a></h2>
                         <span class="col-md-12">POSTED ON <b><?= $date ?></b> BY <b><?= $name ?></b></span>
@@ -373,9 +377,9 @@ if (!empty(trim((string) $user_id))) {
                         </div>
                     </div>
                     <?php
-             }
-         }
-         ?>
+                        }
+                    }
+                    ?>
                 </div>
 
 

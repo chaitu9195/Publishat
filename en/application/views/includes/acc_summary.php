@@ -14,13 +14,13 @@
 <form method="post" id="user_info" enctype="multipart/form-data">
 
     <?php
-$data = $data['userinfo'];
-foreach ($data as $userinfo) {
+    $data = $data['userinfo'];
+    foreach ($data as $userinfo) {
 
-    $state = $userinfo['State'];
-    $bloodgroup = $userinfo['BloodGroup'];
-    $height_measurement = $userinfo['HeightMeasure'];
-    ?>
+        $state = $userinfo['State'];
+        $bloodgroup = $userinfo['BloodGroup'];
+        $height_measurement = $userinfo['HeightMeasure'];
+        ?>
     <div class="row">
         <div class="col-md-3 col-md-offset-0 col-xs-8 col-xs-offset-2">
 
@@ -28,7 +28,9 @@ foreach ($data as $userinfo) {
                 <?php if (empty($userinfo['PhotoPath'])) { ?>
                 <i class="fa fa-user" style="font-size: 182px;color: #b8bcca;padding: 33px;"></i>
                 <?php } else { ?>
-                <img src="../../../<?= $userinfo['PhotoPath'] ?>" class="img img-responsive img-spacing" id="img_profile">
+                <img src="../../../<?= $userinfo[
+                    'PhotoPath'
+                ] ?>" class="img img-responsive img-spacing" id="img_profile">
                 <?php } ?>
             </div>
             <div id="imagePreview" class="img_pro" style="display:none"></div>
@@ -87,7 +89,9 @@ foreach ($data as $userinfo) {
                     </tr>
                     <tr>
                         <td><b>Height</b></td>
-                        <td>: <?= $userinfo['Height'] ?> <?= $userinfo['HeightMeasure'] ?></td>
+                        <td>: <?= $userinfo['Height'] ?> <?= $userinfo[
+     'HeightMeasure'
+ ] ?></td>
                     </tr>
                     <tr>
                         <td><b>Blood Group</b></td>
@@ -113,7 +117,9 @@ foreach ($data as $userinfo) {
                             <label>Name :</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" name="name" class="form-control" value="<?= $userinfo['Name'] ?>">
+                            <input type="text" name="name" class="form-control" value="<?= $userinfo[
+                                'Name'
+                            ] ?>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -121,7 +127,9 @@ foreach ($data as $userinfo) {
                             <label>Email :</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" name="email" class="form-control" value="<?= $userinfo['Email'] ?>" readonly>
+                            <input type="text" name="email" class="form-control" value="<?= $userinfo[
+                                'Email'
+                            ] ?>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
@@ -129,7 +137,9 @@ foreach ($data as $userinfo) {
                             <label>Aadhar(UID) :</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="uid" value="<?= $userinfo['UID'] ?>">
+                            <input type="text" class="form-control" name="uid" value="<?= $userinfo[
+                                'UID'
+                            ] ?>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -138,8 +148,15 @@ foreach ($data as $userinfo) {
                         </div>
                         <div class="col-md-8">
                             <select name="gender" name="gender" class="form-control">
-                                <option value="Male" <?= $userinfo['Gender'] == 'Male' ? 'selected' : '' ?>>Male</option>
-                                <option value="Female" <?= $userinfo['Gender'] == 'Female' ? 'selected' : '' ?>>Female</option>
+                                <option value="Male" <?= $userinfo['Gender'] ==
+                                'Male'
+                                    ? 'selected'
+                                    : '' ?>>Male</option>
+                                <option value="Female" <?= $userinfo[
+                                    'Gender'
+                                ] == 'Female'
+                                    ? 'selected'
+                                    : '' ?>>Female</option>
                             </select>
                         </div>
                     </div>
@@ -148,7 +165,9 @@ foreach ($data as $userinfo) {
                             <label>DOB :</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="dob" value="<?= $userinfo['DateOfBirth'] ?>" id="dob">
+                            <input type="text" class="form-control" name="dob" value="<?= $userinfo[
+                                'DateOfBirth'
+                            ] ?>" id="dob">
                         </div>
                     </div>
                     <div class="form-group">
@@ -156,7 +175,9 @@ foreach ($data as $userinfo) {
                             <label>Phone / Mobile :</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="phone" value="<?= $userinfo['Phone'] ?>">
+                            <input type="text" class="form-control" name="phone" value="<?= $userinfo[
+                                'Phone'
+                            ] ?>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -164,7 +185,9 @@ foreach ($data as $userinfo) {
                             <label>Address :</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="address" value="<?= $userinfo['Address'] ?>">
+                            <input type="text" class="form-control" name="address" value="<?= $userinfo[
+                                'Address'
+                            ] ?>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -175,91 +198,127 @@ foreach ($data as $userinfo) {
                             <select name="state" name="state" class="form-control">
                                 <option value="">Select</option>
                                 <option value="Other" <?= $state == 'Other'
-                              ? "selected='selected'"
-                              : '' ?>>Other Country / State</option>
-                                <option value="Andaman And Nicobar Islands" <?= $state == 'Andaman And Nicobar Islands'
-        ? "selected='selected'"
-        : '' ?>>Andaman And Nicobar Islands</option>
-                                <option value="Andhra Pradesh" <?= $state == 'Andhra Pradesh'
-                              ? "selected='selected'"
-                              : '' ?>>Andhra Pradesh</option>
-                                <option value="Arunachal Pradesh" <?= $state == 'Arunachal Pradesh'
-                              ? "selected='selected'"
-                              : '' ?>>Arunachal Pradesh</option>
-                                <option value="Assam" <?= $state == 'Assam' ? "selected='selected'" : '' ?>>Assam</option>
-                                <option value="Bihar" <?= $state == 'Bihar' ? "selected='selected'" : '' ?>>Bihar</option>
-                                <option value="Chhattisgarh" <?= $state == 'Chhattisgarh'
-                              ? "selected='selected'"
-                              : '' ?>>Chhattisgarh</option>
-                                <option value="Daman And Diu" <?= $state == 'Daman And Diu'
-                              ? "selected='selected'"
-                              : '' ?>>Daman And Diu</option>
-                                <option value="Delhi" <?= $state == 'Delhi' ? "selected='selected'" : '' ?>>Delhi</option>
-                                <option value="Goa" <?= $state == 'Goa' ? "selected='selected'" : '' ?>>Goa</option>
+                                    ? "selected='selected'"
+                                    : '' ?>>Other Country / State</option>
+                                <option value="Andaman And Nicobar Islands" <?= $state ==
+                                'Andaman And Nicobar Islands'
+                                    ? "selected='selected'"
+                                    : '' ?>>Andaman And Nicobar Islands</option>
+                                <option value="Andhra Pradesh" <?= $state ==
+                                'Andhra Pradesh'
+                                    ? "selected='selected'"
+                                    : '' ?>>Andhra Pradesh</option>
+                                <option value="Arunachal Pradesh" <?= $state ==
+                                'Arunachal Pradesh'
+                                    ? "selected='selected'"
+                                    : '' ?>>Arunachal Pradesh</option>
+                                <option value="Assam" <?= $state == 'Assam'
+                                    ? "selected='selected'"
+                                    : '' ?>>Assam</option>
+                                <option value="Bihar" <?= $state == 'Bihar'
+                                    ? "selected='selected'"
+                                    : '' ?>>Bihar</option>
+                                <option value="Chhattisgarh" <?= $state ==
+                                'Chhattisgarh'
+                                    ? "selected='selected'"
+                                    : '' ?>>Chhattisgarh</option>
+                                <option value="Daman And Diu" <?= $state ==
+                                'Daman And Diu'
+                                    ? "selected='selected'"
+                                    : '' ?>>Daman And Diu</option>
+                                <option value="Delhi" <?= $state == 'Delhi'
+                                    ? "selected='selected'"
+                                    : '' ?>>Delhi</option>
+                                <option value="Goa" <?= $state == 'Goa'
+                                    ? "selected='selected'"
+                                    : '' ?>>Goa</option>
                                 <option value="Gujarat" <?= $state == 'Gujarat'
-                              ? "selected='selected'"
-                              : '' ?>>Gujarat</option>
+                                    ? "selected='selected'"
+                                    : '' ?>>Gujarat</option>
                                 <option value="Haryana" <?= $state == 'Haryana'
-                              ? "selected='selected'"
-                              : '' ?>>Haryana</option>
-                                <option value="Himachal Pradesh" <?= $state == 'Himachal Pradesh'
-                              ? "selected='selected'"
-                              : '' ?>>Himachal Pradesh</option>
-                                <option value="Jammu And Kashmir" <?= $state == 'Jammu And Kashmir'
-                              ? "selected='selected'"
-                              : '' ?>>Jammu And Kashmir</option>
-                                <option value="Jharkhand" <?= $state == 'Jharkhand'
-                              ? "selected='selected'"
-                              : '' ?>>Jharkhand</option>
-                                <option value="Karnataka" <?= $state == 'Karnataka'
-                              ? "selected='selected'"
-                              : '' ?>>Karnataka</option>
-                                <option value="Kerala" <?= $state == 'Kerala' ? "selected='selected'" : '' ?>>Kerala</option>
-                                <option value="Madhya Pradesh" <?= $state == 'Madhya Pradesh'
-                              ? "selected='selected'"
-                              : '' ?>>Madhya Pradesh</option>
-                                <option value="Maharashtra" <?= $state == 'Maharashtra'
-                              ? "selected='selected'"
-                              : '' ?>>Maharashtra</option>
+                                    ? "selected='selected'"
+                                    : '' ?>>Haryana</option>
+                                <option value="Himachal Pradesh" <?= $state ==
+                                'Himachal Pradesh'
+                                    ? "selected='selected'"
+                                    : '' ?>>Himachal Pradesh</option>
+                                <option value="Jammu And Kashmir" <?= $state ==
+                                'Jammu And Kashmir'
+                                    ? "selected='selected'"
+                                    : '' ?>>Jammu And Kashmir</option>
+                                <option value="Jharkhand" <?= $state ==
+                                'Jharkhand'
+                                    ? "selected='selected'"
+                                    : '' ?>>Jharkhand</option>
+                                <option value="Karnataka" <?= $state ==
+                                'Karnataka'
+                                    ? "selected='selected'"
+                                    : '' ?>>Karnataka</option>
+                                <option value="Kerala" <?= $state == 'Kerala'
+                                    ? "selected='selected'"
+                                    : '' ?>>Kerala</option>
+                                <option value="Madhya Pradesh" <?= $state ==
+                                'Madhya Pradesh'
+                                    ? "selected='selected'"
+                                    : '' ?>>Madhya Pradesh</option>
+                                <option value="Maharashtra" <?= $state ==
+                                'Maharashtra'
+                                    ? "selected='selected'"
+                                    : '' ?>>Maharashtra</option>
                                 <option value="Manipur" <?= $state == 'Manipur'
-                              ? "selected='selected'"
-                              : '' ?>>Manipur</option>
-                                <option value="Meghalaya" <?= $state == 'Meghalaya'
-                              ? "selected='selected'"
-                              : '' ?>>Meghalaya </option>
+                                    ? "selected='selected'"
+                                    : '' ?>>Manipur</option>
+                                <option value="Meghalaya" <?= $state ==
+                                'Meghalaya'
+                                    ? "selected='selected'"
+                                    : '' ?>>Meghalaya </option>
                                 <option value="Mizoram" <?= $state == 'Mizoram'
-                              ? "selected='selected'"
-                              : '' ?>>Mizoram</option>
-                                <option value="Nagaland" <?= $state == 'Nagaland'
-                              ? "selected='selected'"
-                              : '' ?>>Nagaland</option>
-                                <option value="Orissa" <?= $state == 'Orissa' ? "selected='selected'" : '' ?>>Orissa</option>
-                                <option value="Pondicherry" <?= $state == 'Pondicherry'
-                              ? "selected='selected'"
-                              : '' ?>>Pondicherry</option>
-                                <option value="Punjab" <?= $state == 'Punjab' ? "selected='selected'" : '' ?>>Punjab</option>
-                                <option value="Rajasthan" <?= $state == 'Rajasthan'
-                              ? "selected='selected'"
-                              : '' ?>>Rajasthan</option>
-                                <option value="Sikkim" <?= $state == 'Sikkim' ? "selected='selected'" : '' ?>>Sikkim</option>
-                                <option value="Tamilnadu" <?= $state == 'Tamilnadu'
-                              ? "selected='selected'"
-                              : '' ?>>Tamilnadu</option>
-                                <option value="Telangana" <?= $state == 'Telangana'
-                              ? "selected='selected'"
-                              : '' ?>>Telangana</option>
+                                    ? "selected='selected'"
+                                    : '' ?>>Mizoram</option>
+                                <option value="Nagaland" <?= $state ==
+                                'Nagaland'
+                                    ? "selected='selected'"
+                                    : '' ?>>Nagaland</option>
+                                <option value="Orissa" <?= $state == 'Orissa'
+                                    ? "selected='selected'"
+                                    : '' ?>>Orissa</option>
+                                <option value="Pondicherry" <?= $state ==
+                                'Pondicherry'
+                                    ? "selected='selected'"
+                                    : '' ?>>Pondicherry</option>
+                                <option value="Punjab" <?= $state == 'Punjab'
+                                    ? "selected='selected'"
+                                    : '' ?>>Punjab</option>
+                                <option value="Rajasthan" <?= $state ==
+                                'Rajasthan'
+                                    ? "selected='selected'"
+                                    : '' ?>>Rajasthan</option>
+                                <option value="Sikkim" <?= $state == 'Sikkim'
+                                    ? "selected='selected'"
+                                    : '' ?>>Sikkim</option>
+                                <option value="Tamilnadu" <?= $state ==
+                                'Tamilnadu'
+                                    ? "selected='selected'"
+                                    : '' ?>>Tamilnadu</option>
+                                <option value="Telangana" <?= $state ==
+                                'Telangana'
+                                    ? "selected='selected'"
+                                    : '' ?>>Telangana</option>
                                 <option value="Tripura" <?= $state == 'Tripura'
-                              ? "selected='selected'"
-                              : '' ?>>Tripura</option>
-                                <option value="Uttar Pradesh" <?= $state == 'Uttar Pradesh'
-                              ? "selected='selected'"
-                              : '' ?>>Uttar Pradesh</option>
-                                <option value="Uttaranchal" <?= $state == 'Uttaranchal'
-                              ? "selected='selected'"
-                              : '' ?>>Uttaranchal</option>
-                                <option value="West Bengal" <?= $state == 'West Bengal'
-                              ? "selected='selected'"
-                              : '' ?>>West Bengal</option>
+                                    ? "selected='selected'"
+                                    : '' ?>>Tripura</option>
+                                <option value="Uttar Pradesh" <?= $state ==
+                                'Uttar Pradesh'
+                                    ? "selected='selected'"
+                                    : '' ?>>Uttar Pradesh</option>
+                                <option value="Uttaranchal" <?= $state ==
+                                'Uttaranchal'
+                                    ? "selected='selected'"
+                                    : '' ?>>Uttaranchal</option>
+                                <option value="West Bengal" <?= $state ==
+                                'West Bengal'
+                                    ? "selected='selected'"
+                                    : '' ?>>West Bengal</option>
                             </select>
                         </div>
                     </div>
@@ -270,7 +329,9 @@ foreach ($data as $userinfo) {
                             <label>Weight :</label>
                         </div>
                         <div class="col-md-7">
-                            <input type="text" name="weight" class="form-control" value="<?= $userinfo['Weight'] ?>">
+                            <input type="text" name="weight" class="form-control" value="<?= $userinfo[
+                                'Weight'
+                            ] ?>">
                         </div>
                         <span>Kgs</span>
                     </div>
@@ -279,13 +340,19 @@ foreach ($data as $userinfo) {
                             <label>Height :</label>
                         </div>
                         <div class="col-md-4">
-                            <input type="text" name="height" class="form-control" value="<?= $userinfo['Height'] ?>">
+                            <input type="text" name="height" class="form-control" value="<?= $userinfo[
+                                'Height'
+                            ] ?>">
                         </div>
                         <div class="col-md-4">
                             <select name="height_measurement" class="form-control">
                                 <option value="">Select</option>
-                                <option <?= $height_measurement == 'cm' ? 'selected=selected' : '' ?>>cm</option>
-                                <option <?= $height_measurement == 'feets' ? 'selected=selected' : '' ?>>feets</option>
+                                <option <?= $height_measurement == 'cm'
+                                    ? 'selected=selected'
+                                    : '' ?>>cm</option>
+                                <option <?= $height_measurement == 'feets'
+                                    ? 'selected=selected'
+                                    : '' ?>>feets</option>
                             </select>
                         </div>
                     </div>
@@ -296,14 +363,30 @@ foreach ($data as $userinfo) {
                         <div class="col-md-8">
                             <select name="blood_group" class="form-control">
                                 <option value="">Select</option>
-                                <option <?= $bloodgroup == 'O+' ? 'selected=selected' : '' ?>>O+</option>
-                                <option <?= $bloodgroup == 'O-' ? 'selected=selected' : '' ?>>O-</option>
-                                <option <?= $bloodgroup == 'A+' ? 'selected=selected' : '' ?>>A+</option>
-                                <option <?= $bloodgroup == 'A-' ? 'selected=selected' : '' ?>>A-</option>
-                                <option <?= $bloodgroup == 'B+' ? 'selected=selected' : '' ?>>B+</option>
-                                <option <?= $bloodgroup == 'B-' ? 'selected=selected' : '' ?>>B-</option>
-                                <option <?= $bloodgroup == 'AB+' ? 'selected=selected' : '' ?>>AB+</option>
-                                <option <?= $bloodgroup == 'AB-' ? 'selected=selected' : '' ?>>AB-</option>
+                                <option <?= $bloodgroup == 'O+'
+                                    ? 'selected=selected'
+                                    : '' ?>>O+</option>
+                                <option <?= $bloodgroup == 'O-'
+                                    ? 'selected=selected'
+                                    : '' ?>>O-</option>
+                                <option <?= $bloodgroup == 'A+'
+                                    ? 'selected=selected'
+                                    : '' ?>>A+</option>
+                                <option <?= $bloodgroup == 'A-'
+                                    ? 'selected=selected'
+                                    : '' ?>>A-</option>
+                                <option <?= $bloodgroup == 'B+'
+                                    ? 'selected=selected'
+                                    : '' ?>>B+</option>
+                                <option <?= $bloodgroup == 'B-'
+                                    ? 'selected=selected'
+                                    : '' ?>>B-</option>
+                                <option <?= $bloodgroup == 'AB+'
+                                    ? 'selected=selected'
+                                    : '' ?>>AB+</option>
+                                <option <?= $bloodgroup == 'AB-'
+                                    ? 'selected=selected'
+                                    : '' ?>>AB-</option>
                             </select>
                         </div>
                     </div>
@@ -312,7 +395,9 @@ foreach ($data as $userinfo) {
                             <label>BMI :</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" name="bmi" class="form-control" value="<?= $userinfo['BMI'] ?>">
+                            <input type="text" name="bmi" class="form-control" value="<?= $userinfo[
+                                'BMI'
+                            ] ?>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -320,7 +405,9 @@ foreach ($data as $userinfo) {
                             <label>Blood Pressure :</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" name="bloodpressure" class="form-control" value="<?= $userinfo['BloodPressure'] ?>">
+                            <input type="text" name="bloodpressure" class="form-control" value="<?= $userinfo[
+                                'BloodPressure'
+                            ] ?>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -335,8 +422,8 @@ foreach ($data as $userinfo) {
 </div>
 
 <?php
-}
-?>
+    }
+    ?>
 </div>
 </div>
 

@@ -14,103 +14,235 @@ class Deleterecord_model extends CI_Model
         $getTableName = $this->mongodb->get(TBL_RECORDTYPE);
         if (count($getTableName ?? []) > 0) {
             if ($RecordTypeId == 1) {
-                $headers = ['key1' => 'Class', 'key2' => 'SchoolName', 'key3' => 'DocumentType'];
+                $headers = [
+                    'key1' => 'Class',
+                    'key2' => 'SchoolName',
+                    'key3' => 'DocumentType',
+                ];
             }
             if ($RecordTypeId == 2) {
-                $headers = ['key1' => 'Degree', 'key2' => 'Term', 'key3' => 'DocumentType'];
+                $headers = [
+                    'key1' => 'Degree',
+                    'key2' => 'Term',
+                    'key3' => 'DocumentType',
+                ];
             }
             if ($RecordTypeId == 3) {
-                $headers = ['key1' => 'Degree', 'key2' => 'Term', 'key3' => 'DocumentType'];
+                $headers = [
+                    'key1' => 'Degree',
+                    'key2' => 'Term',
+                    'key3' => 'DocumentType',
+                ];
             }
             if ($RecordTypeId == 4) {
-                $headers = ['key1' => 'Degree', 'key2' => 'Term', 'key3' => 'DocumentType'];
+                $headers = [
+                    'key1' => 'Degree',
+                    'key2' => 'Term',
+                    'key3' => 'DocumentType',
+                ];
             }
             if ($RecordTypeId == 5) {
-                $headers = ['key1' => 'CertificationType', 'key2' => 'CertificateName', 'key3' => 'ValidFrom'];
+                $headers = [
+                    'key1' => 'CertificationType',
+                    'key2' => 'CertificateName',
+                    'key3' => 'ValidFrom',
+                ];
             }
             if ($RecordTypeId == 6) {
-                $headers = ['key1' => 'ExamType', 'key2' => 'ExamName', 'key3' => 'DocumentType'];
+                $headers = [
+                    'key1' => 'ExamType',
+                    'key2' => 'ExamName',
+                    'key3' => 'DocumentType',
+                ];
             }
             if ($RecordTypeId == 7) {
-                $headers = ['key1' => 'ProjectType', 'key2' => 'Title', 'key3' => 'DocumentType'];
+                $headers = [
+                    'key1' => 'ProjectType',
+                    'key2' => 'Title',
+                    'key3' => 'DocumentType',
+                ];
             }
             if ($RecordTypeId == 8) {
-                $headers = ['key1' => 'Location', 'key2' => 'Purpose', 'key3' => 'FromDate'];
+                $headers = [
+                    'key1' => 'Location',
+                    'key2' => 'Purpose',
+                    'key3' => 'FromDate',
+                ];
             }
             if ($RecordTypeId == 9) {
-                $headers = ['key1' => 'DocumentType', 'key2' => 'IssuedDate', 'key3' => 'ReferenceNo'];
+                $headers = [
+                    'key1' => 'DocumentType',
+                    'key2' => 'IssuedDate',
+                    'key3' => 'ReferenceNo',
+                ];
             }
             if ($RecordTypeId == 10) {
-                $headers = ['key1' => 'Name', 'key2' => 'RelationshipType', 'key3' => 'ContactMode'];
+                $headers = [
+                    'key1' => 'Name',
+                    'key2' => 'RelationshipType',
+                    'key3' => 'ContactMode',
+                ];
             }
             if ($RecordTypeId == 11) {
-                $headers = ['key1' => 'SiteName', 'key2' => 'Usage', 'key3' => 'DocumentStatus'];
+                $headers = [
+                    'key1' => 'SiteName',
+                    'key2' => 'Usage',
+                    'key3' => 'DocumentStatus',
+                ];
             }
             if ($RecordTypeId == 12) {
-                $headers = ['key1' => 'TravelType', 'key2' => 'FromDate', 'key3' => 'ToPlace'];
+                $headers = [
+                    'key1' => 'TravelType',
+                    'key2' => 'FromDate',
+                    'key3' => 'ToPlace',
+                ];
             }
             if ($RecordTypeId == 13) {
-                $headers = ['key1' => 'DeviceName', 'key2' => 'Brand', 'key3' => 'ReferenceNumber'];
+                $headers = [
+                    'key1' => 'DeviceName',
+                    'key2' => 'Brand',
+                    'key3' => 'ReferenceNumber',
+                ];
             }
             if ($RecordTypeId == 14) {
-                $headers = ['key1' => 'ContactName', 'key2' => 'MobileNumber', 'key3' => 'PersonalEmail'];
+                $headers = [
+                    'key1' => 'ContactName',
+                    'key2' => 'MobileNumber',
+                    'key3' => 'PersonalEmail',
+                ];
             }
             if ($RecordTypeId == 15) {
-                $headers = ['key1' => 'DocumentType', 'key2' => 'OrganisationName', 'key3' => 'IssuedDate'];
+                $headers = [
+                    'key1' => 'DocumentType',
+                    'key2' => 'OrganisationName',
+                    'key3' => 'IssuedDate',
+                ];
             }
             if ($RecordTypeId == 16) {
-                $headers = ['key1' => 'ProjectName', 'key2' => 'FromDate', 'key3' => 'ToDate'];
+                $headers = [
+                    'key1' => 'ProjectName',
+                    'key2' => 'FromDate',
+                    'key3' => 'ToDate',
+                ];
             }
             if ($RecordTypeId == 17) {
-                $headers = ['key1' => 'SkillType', 'key2' => 'SkillName', 'key3' => 'DocumentType'];
+                $headers = [
+                    'key1' => 'SkillType',
+                    'key2' => 'SkillName',
+                    'key3' => 'DocumentType',
+                ];
             }
             if ($RecordTypeId == 18) {
-                $headers = ['key1' => 'AppType', 'key2' => 'AppName', 'key3' => 'PasswordChangeStatus'];
+                $headers = [
+                    'key1' => 'AppType',
+                    'key2' => 'AppName',
+                    'key3' => 'PasswordChangeStatus',
+                ];
             }
             if ($RecordTypeId == 38) {
-                $headers = ['key1' => 'ResumeType', 'key2' => 'Name', 'key3' => 'FunctionalArea'];
+                $headers = [
+                    'key1' => 'ResumeType',
+                    'key2' => 'Name',
+                    'key3' => 'FunctionalArea',
+                ];
             }
             if ($RecordTypeId == 19) {
-                $headers = ['key1' => 'TestName', 'key2' => 'TestType', 'key3' => 'TestDate'];
+                $headers = [
+                    'key1' => 'TestName',
+                    'key2' => 'TestType',
+                    'key3' => 'TestDate',
+                ];
             }
             if ($RecordTypeId == 20) {
-                $headers = ['key1' => 'PrescriptionType', 'key2' => 'DiseaseName', 'key3' => 'MedicineType'];
+                $headers = [
+                    'key1' => 'PrescriptionType',
+                    'key2' => 'DiseaseName',
+                    'key3' => 'MedicineType',
+                ];
             }
             if ($RecordTypeId == 21) {
-                $headers = ['key1' => 'DiseaseType', 'key2' => 'TreatmentType', 'key3' => 'FromDate'];
+                $headers = [
+                    'key1' => 'DiseaseType',
+                    'key2' => 'TreatmentType',
+                    'key3' => 'FromDate',
+                ];
             }
             if ($RecordTypeId == 22) {
-                $headers = ['key1' => 'PolicyType', 'key2' => 'PolicyName', 'key3' => 'FromDate'];
+                $headers = [
+                    'key1' => 'PolicyType',
+                    'key2' => 'PolicyName',
+                    'key3' => 'FromDate',
+                ];
             }
             if ($RecordTypeId == 28) {
-                $headers = ['key1' => 'DisputeType', 'key2' => 'PartyName', 'key3' => 'FromDate'];
+                $headers = [
+                    'key1' => 'DisputeType',
+                    'key2' => 'PartyName',
+                    'key3' => 'FromDate',
+                ];
             }
             if ($RecordTypeId == 29) {
-                $headers = ['key1' => 'TransferType', 'key2' => 'AssetName', 'key3' => 'ValidFrom'];
+                $headers = [
+                    'key1' => 'TransferType',
+                    'key2' => 'AssetName',
+                    'key3' => 'ValidFrom',
+                ];
             }
             if ($RecordTypeId == 30) {
-                $headers = ['key1' => 'AccountType', 'key2' => 'AccountNumber', 'key3' => 'BranchName'];
+                $headers = [
+                    'key1' => 'AccountType',
+                    'key2' => 'AccountNumber',
+                    'key3' => 'BranchName',
+                ];
             }
             if ($RecordTypeId == 31) {
-                $headers = ['key1' => 'AssetType', 'key2' => 'AssetName', 'key3' => 'ValidFrom'];
+                $headers = [
+                    'key1' => 'AssetType',
+                    'key2' => 'AssetName',
+                    'key3' => 'ValidFrom',
+                ];
             }
             if ($RecordTypeId == 32) {
-                $headers = ['key1' => 'RevenueType', 'key2' => 'ItemName', 'key3' => 'Term'];
+                $headers = [
+                    'key1' => 'RevenueType',
+                    'key2' => 'ItemName',
+                    'key3' => 'Term',
+                ];
             }
             if ($RecordTypeId == 33) {
-                $headers = ['key1' => 'CardType', 'key2' => 'ServiceProviderName', 'key3' => 'CardNumber'];
+                $headers = [
+                    'key1' => 'CardType',
+                    'key2' => 'ServiceProviderName',
+                    'key3' => 'CardNumber',
+                ];
             }
             if ($RecordTypeId == 34) {
-                $headers = ['key1' => 'LiabilityType', 'key2' => 'LiabilityName', 'key3' => 'FromDate'];
+                $headers = [
+                    'key1' => 'LiabilityType',
+                    'key2' => 'LiabilityName',
+                    'key3' => 'FromDate',
+                ];
             }
             if ($RecordTypeId == 35) {
-                $headers = ['key1' => 'PaymentType', 'key2' => 'ItemName', 'key3' => 'Term'];
+                $headers = [
+                    'key1' => 'PaymentType',
+                    'key2' => 'ItemName',
+                    'key3' => 'Term',
+                ];
             }
             if ($RecordTypeId == 36) {
-                $headers = ['key1' => 'TaxDocumentType', 'key2' => 'Date', 'key3' => 'AssessmentYear'];
+                $headers = [
+                    'key1' => 'TaxDocumentType',
+                    'key2' => 'Date',
+                    'key3' => 'AssessmentYear',
+                ];
             }
             if ($RecordTypeId == 37) {
-                $headers = ['key1' => 'InsuranceType', 'key2' => 'PolicyName', 'key3' => 'FromDate'];
+                $headers = [
+                    'key1' => 'InsuranceType',
+                    'key2' => 'PolicyName',
+                    'key3' => 'FromDate',
+                ];
             }
 
             $recordNames = $headers['key1'];
@@ -120,7 +252,10 @@ class Deleterecord_model extends CI_Model
             $tableName = $tableName[0]['DBTable'];
 
             foreach ($ids as $id) {
-                $this->mongodb->where(['UserId' => mongo_id($user_id), 'RecordId' => mongo_id($id)]);
+                $this->mongodb->where([
+                    'UserId' => mongo_id($user_id),
+                    'RecordId' => mongo_id($id),
+                ]);
                 $recordData = $this->mongodb->get($tableName);
                 if (count($recordData ?? []) > 0) {
                     $rdresult = $recordData;
@@ -129,7 +264,10 @@ class Deleterecord_model extends CI_Model
 
                     $document_type = $rdresult[0]['DocumentType'];
 
-                    $this->mongodb->where(['UserId' => mongo_id($user_id), 'RecordId' => mongo_id($id)]);
+                    $this->mongodb->where([
+                        'UserId' => mongo_id($user_id),
+                        'RecordId' => mongo_id($id),
+                    ]);
                     $qresult = $this->mongodb->delete($tableName);
                     $m = new MongoClient();
                     $con = $m->SelectDB('publisha_dbase')->getGridFS();
@@ -147,11 +285,20 @@ class Deleterecord_model extends CI_Model
                         if (in_array($RecordTypeId, $temprectypes ?? [])) {
                             $relatedTableName = $temp[$RecordTypeId];
 
-                            $this->mongodb->where(['ParentRecordId' => mongo_id($id), 'UserId' => mongo_id($user_id)]);
-                            $checkrelatedrecsqry = $this->mongodb->get($relatedTableName);
+                            $this->mongodb->where([
+                                'ParentRecordId' => mongo_id($id),
+                                'UserId' => mongo_id($user_id),
+                            ]);
+                            $checkrelatedrecsqry = $this->mongodb->get(
+                                $relatedTableName,
+                            );
                             if (count($checkrelatedrecsqry ?? []) > 0) {
-                                foreach ($checkrelatedrecsqry as $singlerelatedrec) {
-                                    $temprelatedrecid = $singlerelatedrec['RecordId'];
+                                foreach (
+                                    $checkrelatedrecsqry
+                                    as $singlerelatedrec
+                                ) {
+                                    $temprelatedrecid =
+                                        $singlerelatedrec['RecordId'];
                                     if ($RecordTypeId == 19) {
                                         $tempRecordTypeId = 23;
                                     }
@@ -186,9 +333,16 @@ class Deleterecord_model extends CI_Model
                             'DocumentType' => $document_type,
                             'Date' => TimeStamp,
                         ];
-                        $eventquery = $this->mongodb->insert(TBL_EVENTS, $eventdata);
+                        $eventquery = $this->mongodb->insert(
+                            TBL_EVENTS,
+                            $eventdata,
+                        );
 
-                        return ['status' => 'success', 'data' => 'Selected record has been deleted successfully'];
+                        return [
+                            'status' => 'success',
+                            'data' =>
+                                'Selected record has been deleted successfully',
+                        ];
                     } else {
                         return ['status' => 'failed', 'data' => 'Not deleted'];
                     }

@@ -44,7 +44,9 @@ if ($record_type_id == 16) {
     <div class="right-heading col-md-6">
         <a class="pull-right" href="#" onclick="sub_view('<?= $parentRecTypeId ?>','<?= $record_type_id ?>','<?= $data[
     'RecordId'
-] ?>','<?= $data['ParentRecordId'] ?>','<?= strtolower($moduleName) ?>')"> Back </a>
+] ?>','<?= $data['ParentRecordId'] ?>','<?= strtolower(
+    $moduleName,
+) ?>')"> Back </a>
     </div>
 </div>
 <form class="form-horizontal" id="documentForm" name="documentForm" method="post" action="" enctype="multipart/form-data">
@@ -61,28 +63,34 @@ if ($record_type_id == 16) {
     <input type="hidden" name="record_type_id" value="<?= $record_type_id ?>">
     <input type="hidden" name="parent_record_type_id" value="<?= $parentRecTypeId ?>">
     <input type="hidden" name="RecordId" value="<?= $data['RecordId'] ?>">
-    <input type="hidden" name="ParentRecordId" value="<?= $data['ParentRecordId'] ?>">
+    <input type="hidden" name="ParentRecordId" value="<?= $data[
+        'ParentRecordId'
+    ] ?>">
     <input type="hidden" name='module' value="<?= strtolower($moduleName) ?>">
     <?php foreach ($fields['data'] as $field) {
-    $fieldType = $field['FieldType'];
-    $isFeildMandatoty = $field['isFeildMandatoty'];
-    $typeId = $field['RecordTypeId'];
-    $fieldId = $field['Id'];
-    $fieldName = $field['RequestParamenter'];
-    if ($isFeildMandatoty == 1) {
-        $isMandatory = 'required';
-    } else {
-        $isMandatory = '';
-    }
-    if ($fieldType == 3 && $fieldId != '558') { ?>
+        $fieldType = $field['FieldType'];
+        $isFeildMandatoty = $field['isFeildMandatoty'];
+        $typeId = $field['RecordTypeId'];
+        $fieldId = $field['Id'];
+        $fieldName = $field['RequestParamenter'];
+        if ($isFeildMandatoty == 1) {
+            $isMandatory = 'required';
+        } else {
+            $isMandatory = '';
+        }
+        if ($fieldType == 3 && $fieldId != '558') { ?>
     <div class="col-md-6 field">
         <label class="col-sm-4 hidden-xs noheight"><?= $field['FieldLable'] ?>
-            <?php if ($isFeildMandatoty == '1') { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
+            <?php if (
+                $isFeildMandatoty == '1'
+            ) { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
         </label>
         <select class="col-sm-8 col-xs-12 <?= $isMandatory ?>" name="<?= $fieldName ?>" id="<?= $fieldName ?>">
             <option value="">Select <?= $field['FieldLable'] ?></option>
             <?php foreach ($field['dropDownValues'] as $option) { ?>
-            <option value='<?= $option['DropdownValues'] ?>' <?= $option['DropdownValues'] == $data[$fieldName]
+            <option value='<?= $option['DropdownValues'] ?>' <?= $option[
+    'DropdownValues'
+] == $data[$fieldName]
     ? 'selected=selected'
     : '' ?>>
                 <?= $option['DropdownValues'] ?>
@@ -92,22 +100,28 @@ if ($record_type_id == 16) {
         </select>
     </div>
     <?php }
-    if ($fieldType == 2 && $fieldId != '560') { ?>
+        if ($fieldType == 2 && $fieldId != '560') { ?>
     <div class="col-md-6 field">
         <label class="col-sm-4 hidden-xs noheight">
             <?= $field['FieldLable'] ?>
-            <?php if ($isFeildMandatoty == '1') { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
+            <?php if (
+                $isFeildMandatoty == '1'
+            ) { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
         </label>
         <input type="text" class="col-sm-8 col-xs-12 <?= $isMandatory ?>" placeholder="Enter <?= $field[
     'FieldLable'
-] ?>" name="<?= $fieldName ?>" id="<?= $fieldName ?>" value="<?= $data[$fieldName] ?>">
+] ?>" name="<?= $fieldName ?>" id="<?= $fieldName ?>" value="<?= $data[
+    $fieldName
+] ?>">
     </div>
     <?php }
-    if ($fieldType == 5 || $fieldType == 11) { ?>
+        if ($fieldType == 5 || $fieldType == 11) { ?>
     <div class="col-md-6 field">
         <label class="col-sm-4 hidden-xs noheight">
             <?= $field['FieldLable'] ?>
-            <?php if ($isFeildMandatoty == '1') { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
+            <?php if (
+                $isFeildMandatoty == '1'
+            ) { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
         </label>
         <input type="text" class="col-sm-8 col-xs-12 timepicker <?= $isMandatory ?>" name="<?= $fieldName ?>" placeholder="YYYY-MM-DD" id="<?= $fieldName ?>" onclick="pickCalender('<?= $fieldName ?>')" value="<?= $data[
     $fieldName
@@ -115,22 +129,26 @@ if ($record_type_id == 16) {
     </div>
 
     <?php }
-    if ($fieldType == 8) { ?>
+        if ($fieldType == 8) { ?>
     <div class="col-md-6 field">
         <label class="col-sm-4 hidden-xs noheight">
             <?= $field['FieldLable'] ?>
-            <?php if ($isFeildMandatoty == '1') { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
+            <?php if (
+                $isFeildMandatoty == '1'
+            ) { ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
         </label>
         <select name="<?= $fieldName ?>" class="col-sm-8 col-xs-12 <?= $isMandatory ?>" id="<?= $fieldName ?>">
             <option value="">Select Year</option>
             <?php for ($d = date('Y'); $d >= 1970; $d--) { ?>
-            <option <?= $d == $data[$fieldName] ? 'selected=selected' : '' ?>><?= $d ?> </option>
+            <option <?= $d == $data[$fieldName]
+                ? 'selected=selected'
+                : '' ?>><?= $d ?> </option>
             <?php } ?>
         </select>
 
     </div>
     <?php }
-    if ($fieldType == 6) { ?>
+        if ($fieldType == 6) { ?>
 
     <div class='col-sm-6 field'>
         <label class="col-sm-4 hidden-xs"><?= $field['FieldLable'] ?></label>
@@ -139,18 +157,18 @@ if ($record_type_id == 16) {
 ] ?>" id="<?= $fieldName ?>"><?= $data[$fieldName] ?></textarea>
     </div>
     <?php }
-    if ($fieldType == 7) { ?>
+        if ($fieldType == 7) { ?>
     <div class='col-sm-6 field'>
         <label class="col-sm-5 col-xs-12" style="padding-right: 0px"><a href="#" id="addrelaetd"> <i class="fa fa-file"></i> <?= str_replace(
-          '#',
-          '',
-          $field['FieldLable'],
-      ) ?></a></label>
+            '#',
+            '',
+            $field['FieldLable'],
+        ) ?></a></label>
         <span class="col-sm-7 col-xs-12"> Related Records not yet added.</span>
     </div>
 
     <?php }
-} ?>
+    } ?>
     <div class="row">
         <span class="col-sm-6 col-xs-12 text-center pull-right">
             <button class="btn btn-success" type="submit" id="save"> <span id="sub">Submit</span> <span class="" id="load"></span></button> &nbsp; &nbsp;
@@ -166,9 +184,15 @@ if ($record_type_id == 16) {
         <form class="form-horizontal attach_from" id="attachmentForm" name="attachmentForm" method="post" action="" enctype="multipart/form-data">
             <input type="hidden" name="record_type_id" value="<?= $record_type_id ?>">
             <input type="hidden" name="parent_record_type_id" value="<?= $parentRecTypeId ?>">
-            <input type="hidden" name="RecordId" value="<?= $data['RecordId'] ?>">
-            <input type="hidden" name="ParentRecordId" value="<?= $data['ParentRecordId'] ?>">
-            <input type="hidden" name='module' value="<?= strtolower($moduleName) ?>">
+            <input type="hidden" name="RecordId" value="<?= $data[
+                'RecordId'
+            ] ?>">
+            <input type="hidden" name="ParentRecordId" value="<?= $data[
+                'ParentRecordId'
+            ] ?>">
+            <input type="hidden" name='module' value="<?= strtolower(
+                $moduleName,
+            ) ?>">
             <div class="upload_input">
 
                 <label for='uploadFile'> Select file or Drag & Drop the file here </label>
@@ -181,21 +205,24 @@ if ($record_type_id == 16) {
         <div class='attach_title'> <span class="">View / Delete Existing Documents</span></div>
         <div class="upload_input">
             <?php if (count($files ?? [])) {
-                    for ($i = 0; $i <= count($files ?? []) - 1; $i++) {
+                for ($i = 0; $i <= count($files ?? []) - 1; $i++) {
 
-                        $doc_id = $files[$i]['DocumentId'];
-                        $label = $files[$i]['Notes'];
-                        $label = substr_replace($label, '', -7);
-                        $path = $files[$i]['DocumentPath'];
-                        $filename = $files[$i]['filename'];
-                        if (empty($filename)) {
-                            $filename = basename($path);
-                            $filename = substr($filename, strpos($filename, '-') + 1);
-                        }
-                        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                        $file_name = basename($filename, $ext);
-                        $file_name = substr($file_name, 0, 5);
-                        ?>
+                    $doc_id = $files[$i]['DocumentId'];
+                    $label = $files[$i]['Notes'];
+                    $label = substr_replace($label, '', -7);
+                    $path = $files[$i]['DocumentPath'];
+                    $filename = $files[$i]['filename'];
+                    if (empty($filename)) {
+                        $filename = basename($path);
+                        $filename = substr(
+                            $filename,
+                            strpos($filename, '-') + 1,
+                        );
+                    }
+                    $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                    $file_name = basename($filename, $ext);
+                    $file_name = substr($file_name, 0, 5);
+                    ?>
             <div class="col-sm-8 col-xs-12 file_wrapper">
 
                 <div class="col-sm-4 col-xs-4 ext_type">
@@ -203,7 +230,9 @@ if ($record_type_id == 16) {
                 </div>
                 <div class='col-sm-8 col-xs-8 filename'>
                     <span class="hidden-xs">
-                        <?= !empty($label) ? $file_name . '.' . $ext : ucfirst($file_name . '.' . $ext) ?>
+                        <?= !empty($label)
+                            ? $file_name . '.' . $ext
+                            : ucfirst($file_name . '.' . $ext) ?>
                     </span>
                 </div>
                 <a href="./viewfile?fid=<?= $doc_id ?>" target="_blank" class="downloadpop "><i class="fa fa-download"></i> </a>
@@ -215,10 +244,10 @@ if ($record_type_id == 16) {
 ] ?>','<?= $parentRecTypeId ?>')"><i class="fa fa-remove"></i> </a>
             </div>
             <?php
-                    }
-                } else {
-                    echo "<div class='file_nt_fnd'>Files not found</div>";
-                } ?>
+                }
+            } else {
+                echo "<div class='file_nt_fnd'>Files not found</div>";
+            } ?>
 
         </div>
     </div>
@@ -243,53 +272,57 @@ if ($record_type_id == 16) {
             <tbody id="searchable_data">
                 <?php foreach ($folder as $file) {
 
-        $doc_id = $file['_id'];
-        $path = $file['DocumentPath'];
-        $type = strtolower($file['FileType']);
-        $filename = $file['filename'];
-        if (empty($type)) {
-            $type = strtolower(get_file_extension($filename));
-        }
-        $images = ['jpg', 'png', 'jpeg', 'gif', ''];
-        $fileextension = ['zip', 'rar'];
+                    $doc_id = $file['_id'];
+                    $path = $file['DocumentPath'];
+                    $type = strtolower($file['FileType']);
+                    $filename = $file['filename'];
+                    if (empty($type)) {
+                        $type = strtolower(get_file_extension($filename));
+                    }
+                    $images = ['jpg', 'png', 'jpeg', 'gif', ''];
+                    $fileextension = ['zip', 'rar'];
 
-        $not_image = get_folder_document_icon($type);
-        $fol_type = $file['Type'];
-        if (in_array($type, $images ?? [])) {
-            if ($path) {
-                $view_file = "<img src='https://publishat.com/$path' alt='$filename;' width='30px' height='30px'>";
-            } else {
-                $filesrc = base_url() . 'web/viewfile?fid=' . $id;
-                $ch = curl_init();
-                $timeout = 5;
-                curl_setopt($ch, CURLOPT_URL, $filesrc);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-                $src = curl_exec($ch);
-                curl_close($ch);
-                $view_file =
-                    "<img src='data:image/jpg;base64," . base64_encode($src) . "' alt='$filename;' width='30px'>";
-            }
-        } else {
-            $view_file =
-                '<img src="../../../' .
-                $not_image .
-                '" id="img" class="img-responsive img imag" width="30px" height="30px" >';
-        }
+                    $not_image = get_folder_document_icon($type);
+                    $fol_type = $file['Type'];
+                    if (in_array($type, $images ?? [])) {
+                        if ($path) {
+                            $view_file = "<img src='https://publishat.com/$path' alt='$filename;' width='30px' height='30px'>";
+                        } else {
+                            $filesrc = base_url() . 'web/viewfile?fid=' . $id;
+                            $ch = curl_init();
+                            $timeout = 5;
+                            curl_setopt($ch, CURLOPT_URL, $filesrc);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+                            $src = curl_exec($ch);
+                            curl_close($ch);
+                            $view_file =
+                                "<img src='data:image/jpg;base64," .
+                                base64_encode($src) .
+                                "' alt='$filename;' width='30px'>";
+                        }
+                    } else {
+                        $view_file =
+                            '<img src="../../../' .
+                            $not_image .
+                            '" id="img" class="img-responsive img imag" width="30px" height="30px" >';
+                    }
 
-        $size = filesize_formatted($file['length']);
-        $date = date('d-M-Y', strtotime($file['TS']));
+                    $size = filesize_formatted($file['length']);
+                    $date = date('d-M-Y', strtotime($file['TS']));
 
-        if (empty($filename)) {
-            $doc_path = $file['DocumentPath'];
-            $filename = basename($doc_path);
-            $filename = end(explode('-', $filename));
-        }
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        $path = base_url() . 'web/viewfile?fid=' . $id;
-        ?>
+                    if (empty($filename)) {
+                        $doc_path = $file['DocumentPath'];
+                        $filename = basename($doc_path);
+                        $filename = end(explode('-', $filename));
+                    }
+                    $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                    $path = base_url() . 'web/viewfile?fid=' . $id;
+                    ?>
 
-                <tr onClick="viewfile('docviewer?fid=<?= $file['_id'] ?>&type=<?= strtolower($ext) ?>')">
+                <tr onClick="viewfile('docviewer?fid=<?= $file[
+                    '_id'
+                ] ?>&type=<?= strtolower($ext) ?>')">
                     <td>
                         <input type="checkbox" name="fileids[]" class="doc_id" value="<?= $doc_id ?>" <? if(in_array($doc_id, $fileids ?? [])) { echo 'checked'; } ?>>
                         <input type="hidden" name="filename[]" id="fname" value="<?= $filename ?>">
@@ -297,25 +330,25 @@ if ($record_type_id == 16) {
                     </td>
                     <td><?= $view_file ?></td>
                     <td><?php if ($fol_type == 'File') {
-          echo $filename;
-      } else {
-          echo $fol_name;
-      } ?></td>
+                        echo $filename;
+                    } else {
+                        echo $fol_name;
+                    } ?></td>
                     <td><?php if ($fol_type == 'File') {
-          echo $type;
-      } else {
-          echo '-';
-      } ?></td>
+                        echo $type;
+                    } else {
+                        echo '-';
+                    } ?></td>
                     <td><?php if ($fol_type == 'File') {
-          echo $size;
-      } else {
-          echo '-';
-      } ?></td>
+                        echo $size;
+                    } else {
+                        echo '-';
+                    } ?></td>
                     <td><?= $date ?></td>
                 </tr>
 
                 <?php
-    } ?>
+                } ?>
             </tbody>
         </form>
     </table>
@@ -519,4 +552,5 @@ function filesize_formatted($bytes)
         return '0 bytes';
     }
 }
+
 ?>

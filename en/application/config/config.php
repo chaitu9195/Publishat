@@ -20,7 +20,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 */
 
 if (
-    (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') ||
+    (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
+        $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') ||
     (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')
 ) {
     $protocal = 'https';
@@ -34,8 +35,13 @@ $RequestURI = $protocal . '://' . $_SERVER['HTTP_HOST'];
 // path is derived from the front-controller location. Falls back to the
 // production URL for CLI/cron requests where there is no HTTP host.
 if (!empty($_SERVER['HTTP_HOST'])) {
-    $__basedir = str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
-    $config['base_url'] = $protocal . '://' . $_SERVER['HTTP_HOST'] . $__basedir;
+    $__basedir = str_replace(
+        basename($_SERVER['SCRIPT_NAME']),
+        '',
+        $_SERVER['SCRIPT_NAME'],
+    );
+    $config['base_url'] =
+        $protocal . '://' . $_SERVER['HTTP_HOST'] . $__basedir;
 } else {
     $config['base_url'] = 'https://www.ntotalworld.com/digital/en/';
 }

@@ -46,7 +46,12 @@ class Common_model extends CI_Model
                 $data[] = $key;
             }
 
-            return ['status' => 'success', 'data' => $data, 'count' => $file_count, 'table' => $table_name];
+            return [
+                'status' => 'success',
+                'data' => $data,
+                'count' => $file_count,
+                'table' => $table_name,
+            ];
         } else {
             return ['status' => 'failed'];
         }
@@ -79,13 +84,21 @@ class Common_model extends CI_Model
                 unset($key['TS']);
                 $data[] = $key;
             }
-            $this->mongodb->where(['RecordId' => mongo_id($record_id), 'RecordTypeId' => $recordTypeId]);
+            $this->mongodb->where([
+                'RecordId' => mongo_id($record_id),
+                'RecordTypeId' => $recordTypeId,
+            ]);
             $qry = $this->mongodb->get('fs.files');
             foreach ($qry as $key) {
                 $file_data[] = $key;
             }
 
-            return ['status' => 'success', 'data' => $data, 'files' => $file_data, 'table' => $table_name];
+            return [
+                'status' => 'success',
+                'data' => $data,
+                'files' => $file_data,
+                'table' => $table_name,
+            ];
         } else {
             return ['status' => 'failed'];
         }
@@ -104,7 +117,10 @@ class Common_model extends CI_Model
             $user_id = $info[0]['UserId'];
         }
         if (!empty($table_name) && $table_name != 'failed') {
-            $this->mongodb->where(['UserId' => mongo_id($user_id), 'ParentRecordId' => mongo_id($record_id)]);
+            $this->mongodb->where([
+                'UserId' => mongo_id($user_id),
+                'ParentRecordId' => mongo_id($record_id),
+            ]);
             $qry = $this->mongodb->get($table_name);
             foreach ($qry as $key) {
                 $data[] = $key;
@@ -220,7 +236,10 @@ class Common_model extends CI_Model
     {
         $user_id = $this->session->userdata('user_id');
         $tableName = $this->get_table($record_type_id);
-        $this->mongodb->where(['RecordId' => mongo_id($record_id), 'UserId' => mongo_id($user_id)]);
+        $this->mongodb->where([
+            'RecordId' => mongo_id($record_id),
+            'UserId' => mongo_id($user_id),
+        ]);
         $data_qry = $this->mongodb->get($tableName);
         foreach ($data_qry as $key) {
             $record_data[] = $key;
@@ -308,18 +327,29 @@ class Common_model extends CI_Model
             foreach ($qry as $data) {
                 $userid = $data['UserId'];
             }
-            $this->mongodb->where(['touserid' => mongo_id($userid), 'recordid' => mongo_id($recordid)]);
+            $this->mongodb->where([
+                'touserid' => mongo_id($userid),
+                'recordid' => mongo_id($recordid),
+            ]);
             $qury = $this->mongodb->get('privileges');
             if (count($qury ?? []) > 0) {
-                $this->mongodb->where(['touserid' => mongo_id($userid), 'recordid' => mongo_id($recordid)]);
+                $this->mongodb->where([
+                    'touserid' => mongo_id($userid),
+                    'recordid' => mongo_id($recordid),
+                ]);
                 $this->mongodb->set(['editprivileges' => $privileges]);
                 $query = $this->mongodb->update('privileges');
                 if ($query) {
-                    $this->mongodb->where(['UserId' => mongo_id($user_id), 'RecordId' => mongo_id($recordid)]);
+                    $this->mongodb->where([
+                        'UserId' => mongo_id($user_id),
+                        'RecordId' => mongo_id($recordid),
+                    ]);
                     $this->mongodb->set(['Collaboration' => 'collaborated']);
                     $update = $this->mongodb->update($table_name);
                     if ($update) {
-                        $this->mongodb->where(['RecordId' => mongo_id($recordid)]);
+                        $this->mongodb->where([
+                            'RecordId' => mongo_id($recordid),
+                        ]);
                         $retrieve = $this->mongodb->get($table_name);
                     }
                 }
@@ -335,11 +365,18 @@ class Common_model extends CI_Model
                             'editprivileges' => $privileges,
                         ]);
                         if ($qry1) {
-                            $this->mongodb->where(['UserId' => mongo_id($user_id), 'RecordId' => mongo_id($recordid)]);
-                            $this->mongodb->set(['Collaboration' => 'collaborated']);
+                            $this->mongodb->where([
+                                'UserId' => mongo_id($user_id),
+                                'RecordId' => mongo_id($recordid),
+                            ]);
+                            $this->mongodb->set([
+                                'Collaboration' => 'collaborated',
+                            ]);
                             $update = $this->mongodb->update($table_name);
                             if ($update) {
-                                $this->mongodb->where(['RecordId' => mongo_id($recordid)]);
+                                $this->mongodb->where([
+                                    'RecordId' => mongo_id($recordid),
+                                ]);
                                 $retrieve = $this->mongodb->get($table_name);
                             }
                         }
@@ -352,7 +389,8 @@ class Common_model extends CI_Model
             $status_message = 'Emails have been shared with the record details';
             return ['status' => 'success', 'data' => 'Data has been shared.'];
         } else {
-            $status_message = 'Error: No emails have been shared. Please try again. ';
+            $status_message =
+                'Error: No emails have been shared. Please try again. ';
             return ['status' => 'failed', 'data' => 'No mails shared'];
         }
     }
@@ -378,6 +416,9 @@ class Common_model extends CI_Model
             ]);
             $file_count[] = $this->mongodb->count('fs.files');
         }
-        return ['shared_data' => $colaboration_res, 'col_files_count' => $file_count];
+        return [
+            'shared_data' => $colaboration_res,
+            'col_files_count' => $file_count,
+        ];
     }
 }

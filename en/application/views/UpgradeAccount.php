@@ -6,12 +6,19 @@ if ($Upgraded != 'Y') { ?>
             <div class="modal-body main_content">
                 <form class="form-horizontal" method="post" action="https://www.publishat.com/paytmgateway/pgRedirect.php">
                     <?php
-      $user_id = trim($this->session->userdata('user_id'));
-      $orderid = $user_id . '-' . date('YmdHis') . '_U';
-      setcookie('TotalAmount', AccountUpgradeAmonut, time() + 86400 * 30, '/');
-      ?>
+                    $user_id = trim($this->session->userdata('user_id'));
+                    $orderid = $user_id . '-' . date('YmdHis') . '_U';
+                    setcookie(
+                        'TotalAmount',
+                        AccountUpgradeAmonut,
+                        time() + 86400 * 30,
+                        '/',
+                    );
+                    ?>
                     <input type="hidden" name="ORDER_ID" value="<?= $orderid ?>">
-                    <input type="hidden" name="CUST_ID" value="<?= $user_id . '-' . date('YmdHis') ?>">
+                    <input type="hidden" name="CUST_ID" value="<?= $user_id .
+                        '-' .
+                        date('YmdHis') ?>">
                     <input type="hidden" name="INDUSTRY_TYPE_ID" value="Retail120">
                     <input type="hidden" name="CHANNEL_ID" value="WEB">
                     <span>

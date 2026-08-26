@@ -42,21 +42,67 @@ class Mailfolderfiles_model extends CI_Model
                 }
                 $table_bg_color = '#99CCCC';
                 foreach ($document_ids as $document_id) {
-                    $table_bg_color = $table_bg_color == '#CCCC99' ? '#99CCCC' : '#99CCCC';
-                    $email_content .= $this->get_record_table_html($document_id, $addtext, $table_bg_color, '#FFFFFF');
+                    $table_bg_color =
+                        $table_bg_color == '#CCCC99' ? '#99CCCC' : '#99CCCC';
+                    $email_content .= $this->get_record_table_html(
+                        $document_id,
+                        $addtext,
+                        $table_bg_color,
+                        '#FFFFFF',
+                    );
                 }
                 $email_content .= header_bottom;
                 $header_title = str_replace('Publishat.com | ', '', $subject);
-                $email_content = str_replace('##HEADER-TITLE##', $header_title, $email_content);
-                $email_content = str_replace('##HEADER-EMAIL##', $user_email, $email_content);
-                $email_content = str_replace('##HEADER-NAME##', $user_fullname, $email_content);
-                $email_content = str_replace('##HEADER-PHONE##', $user_phone, $email_content);
-                $email_content = str_replace('##ADD-TEXT##', $addtext, $email_content);
-                $email_content = str_replace('##USERTYPE##', $user_type, $email_content);
-                $email_content = str_replace('##GROUP##', $group, $email_content);
-                $email_content = str_replace('##CATEGORY##', $category, $email_content);
-                $email_content = str_replace('##SUBCATEGORY##', $Sub_Category, $email_content);
-                $email_content = str_replace('##ISSUESSTATUS##', $Issue_Status, $email_content);
+                $email_content = str_replace(
+                    '##HEADER-TITLE##',
+                    $header_title,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##HEADER-EMAIL##',
+                    $user_email,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##HEADER-NAME##',
+                    $user_fullname,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##HEADER-PHONE##',
+                    $user_phone,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##USERTYPE##',
+                    $user_type,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##GROUP##',
+                    $group,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##SUBCATEGORY##',
+                    $Sub_Category,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##ISSUESSTATUS##',
+                    $Issue_Status,
+                    $email_content,
+                );
                 $from_email = $user_email;
                 $email_list = $params['email_list'];
 
@@ -64,7 +110,12 @@ class Mailfolderfiles_model extends CI_Model
                     $email_arr = explode(',', trim($email_list));
                     if (count($email_arr ?? []) > 0) {
                         foreach ($email_arr as $out_email) {
-                            $mailStatus = $this->sendcartmail($from_email, trim($out_email), $subject, $email_content);
+                            $mailStatus = $this->sendcartmail(
+                                $from_email,
+                                trim($out_email),
+                                $subject,
+                                $email_content,
+                            );
                             $status_code = 1;
                         }
                         $eventdata = [
@@ -81,7 +132,8 @@ class Mailfolderfiles_model extends CI_Model
                     $status_message = 'Emails have been sent with the Files';
                     return ['status' => 'success', 'data' => $status_message];
                 } else {
-                    $status_message = 'Error: No emails have been sent. Please try again. ';
+                    $status_message =
+                        'Error: No emails have been sent. Please try again. ';
                     return ['status' => 'failed', 'data' => $status_message];
                 }
             }
@@ -102,9 +154,17 @@ class Mailfolderfiles_model extends CI_Model
             $attachments = $this->get_document_email_links2($rec[0]['_id']);
 
             $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-            $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+            $email_body = str_replace(
+                '##ATTACHMENTS##',
+                $attachments,
+                $email_body,
+            );
 
-            $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
+            $email_body = str_replace(
+                '##TABLE_BGCOLOR##',
+                $table_bg,
+                $email_body,
+            );
             $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
         }
 
@@ -131,7 +191,8 @@ class Mailfolderfiles_model extends CI_Model
                 $email_content = header_top;
                 $table_bg_color = '#99CCCC';
                 foreach ($document_ids as $document_id) {
-                    $table_bg_color = $table_bg_color == '#CCCC99' ? '#99CCCC' : '#99CCCC';
+                    $table_bg_color =
+                        $table_bg_color == '#CCCC99' ? '#99CCCC' : '#99CCCC';
                     $email_content .= $this->get_bookmark_data_html(
                         $document_id,
                         $addtext,
@@ -144,14 +205,46 @@ class Mailfolderfiles_model extends CI_Model
                 }
                 $email_content .= header_bottom;
                 $header_title = str_replace('Publishat.com | ', '', $subject);
-                $email_content = str_replace('##HEADER-TITLE##', $header_title, $email_content);
-                $email_content = str_replace('##HEADER-EMAIL##', $user_email, $email_content);
-                $email_content = str_replace('##HEADER-NAME##', $user_fullname, $email_content);
-                $email_content = str_replace('##HEADER-PHONE##', $user_phone, $email_content);
-                $email_content = str_replace('##ADD-TEXT##', $addtext, $email_content);
-                $email_content = str_replace('##MODULE##', $module, $email_content);
-                $email_content = str_replace('##SUBMODULE##', $submodule, $email_content);
-                $email_content = str_replace('##ISSUES##', $issues, $email_content);
+                $email_content = str_replace(
+                    '##HEADER-TITLE##',
+                    $header_title,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##HEADER-EMAIL##',
+                    $user_email,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##HEADER-NAME##',
+                    $user_fullname,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##HEADER-PHONE##',
+                    $user_phone,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##MODULE##',
+                    $module,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##SUBMODULE##',
+                    $submodule,
+                    $email_content,
+                );
+                $email_content = str_replace(
+                    '##ISSUES##',
+                    $issues,
+                    $email_content,
+                );
                 $from_email = admin_from_email;
                 $email_list = $params['email_list'];
 
@@ -159,7 +252,12 @@ class Mailfolderfiles_model extends CI_Model
                     $email_arr = explode(',', trim($email_list));
                     if (count($email_arr ?? []) > 0) {
                         foreach ($email_arr as $out_email) {
-                            $mailStatus = $this->sendcartmail($from_email, trim($out_email), $subject, $email_content);
+                            $mailStatus = $this->sendcartmail(
+                                $from_email,
+                                trim($out_email),
+                                $subject,
+                                $email_content,
+                            );
                             $status_code = 1;
                         }
                     }
@@ -168,7 +266,8 @@ class Mailfolderfiles_model extends CI_Model
                     $status_message = 'Emails have been sent with the Files';
                     return ['status' => 'success', 'data' => $status_message];
                 } else {
-                    $status_message = 'Error: No emails have been sent. Please try again. ';
+                    $status_message =
+                        'Error: No emails have been sent. Please try again. ';
                     return ['status' => 'failed', 'data' => $status_message];
                 }
             }
@@ -193,11 +292,23 @@ class Mailfolderfiles_model extends CI_Model
 
             $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
             $email_body = str_replace('##TITLE##', $title, $email_body);
-            $email_body = str_replace('##HEADER-TITLE##', $header_title, $email_body);
-            $email_body = str_replace('##DESCRIPTION##', $description, $email_body);
+            $email_body = str_replace(
+                '##HEADER-TITLE##',
+                $header_title,
+                $email_body,
+            );
+            $email_body = str_replace(
+                '##DESCRIPTION##',
+                $description,
+                $email_body,
+            );
             $email_body = str_replace('##NOTES##', $notes, $email_body);
 
-            $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
+            $email_body = str_replace(
+                '##TABLE_BGCOLOR##',
+                $table_bg,
+                $email_body,
+            );
             $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
         }
 
@@ -229,7 +340,10 @@ class Mailfolderfiles_model extends CI_Model
             $doc_icon = 'https://www.publishat.com/' . $documenticon;
 
             $doc_link_url =
-                'https://www.publishat.com/digital/en/web/docviewer?fid=' . $id . '&type=' . strtolower($ext);
+                'https://www.publishat.com/digital/en/web/docviewer?fid=' .
+                $id .
+                '&type=' .
+                strtolower($ext);
             $templink = "<a target='_blank' href='$doc_link_url'><img src='$doc_icon' width='20' height='20' border='0' align='absmiddle' /></a>&nbsp;
 	            <a target='_blank' href='$doc_link_url'>$filename</a>";
         } else {
@@ -250,8 +364,13 @@ class Mailfolderfiles_model extends CI_Model
         }
     }
 
-    public function sendcartmail($from_email, $to_email, $subject, $message, $type = 'html')
-    {
+    public function sendcartmail(
+        $from_email,
+        $to_email,
+        $subject,
+        $message,
+        $type = 'html',
+    ) {
         $this->load->library('email');
         $config = [
             'protocol' => protocol,

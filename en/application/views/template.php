@@ -90,7 +90,11 @@ $fileURL = $_GET['fileURL'];
             <section class="copyrightbottom">
                 <div class="container">
                     <div class="row">
-                        <div class="pull-left"> Copyright © <?= date('Y') ?>. <a href="/"><?= $_SERVER['SERVER_NAME'] ?></a>.</div>
+                        <div class="pull-left"> Copyright © <?= date(
+                            'Y',
+                        ) ?>. <a href="/"><?= $_SERVER[
+    'SERVER_NAME'
+] ?></a>.</div>
                         <div class="pull-right"> <a href="<?php echo base_url(); ?>web/aboutus">About Us</a> / <a href="<?php echo base_url(); ?>web/contactus">Contact</a> / <a href="<?php echo base_url(); ?>web/terms">Terms</a> / <a href="<?php echo base_url(); ?>web/privacy">Privacy</a> /
                             <a href="<?php echo base_url(); ?>web/cancellation">Cancellation Policy</a> /
 
@@ -138,21 +142,36 @@ $fileURL = $_GET['fileURL'];
                                     </table>
                                 </div>
                                 <?php
-     $user_id = trim($this->session->userdata('user_id'));
-     $orderid = $user_id . '-' . date('YmdHis') . '_U';
-     setcookie('TotalAmount', AccountUpgradeAmonut, time() + 86400 * 30, '/');
-     setcookie('OrderID', $orderid, time() + 86400 * 30, '/');
-     ?>
+                                $user_id = trim(
+                                    $this->session->userdata('user_id'),
+                                );
+                                $orderid =
+                                    $user_id . '-' . date('YmdHis') . '_U';
+                                setcookie(
+                                    'TotalAmount',
+                                    AccountUpgradeAmonut,
+                                    time() + 86400 * 30,
+                                    '/',
+                                );
+                                setcookie(
+                                    'OrderID',
+                                    $orderid,
+                                    time() + 86400 * 30,
+                                    '/',
+                                );
+                                ?>
 
-                                <input type="hidden" name="CUST_ID" value="<?= $user_id . '-' . date('YmdHis') ?>">
+                                <input type="hidden" name="CUST_ID" value="<?= $user_id .
+                                    '-' .
+                                    date('YmdHis') ?>">
                                 <input type="hidden" name="INDUSTRY_TYPE_ID" value="Retail120">
                                 <input type="hidden" name="CHANNEL_ID" value="WEB">
 
                                 <?php if ($Upgraded == 'Y') {
-         $disabled = 'disabled';
-     } else {
-         $disabled = '';
-     } ?>
+                                    $disabled = 'disabled';
+                                } else {
+                                    $disabled = '';
+                                } ?>
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-danger col-md-2 pull-right" <?= $disabled ?>>Pay <i class="fa fa-inr"><?= AccountUpgradeAmonut ?></i></button>
                                 </div>

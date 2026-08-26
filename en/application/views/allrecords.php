@@ -1,7 +1,8 @@
 <?php
 
 $data = isset($data) && is_array($data) ? $data : [];
-$shared_result = isset($shared_result) && is_array($shared_result) ? $shared_result : [];
+$shared_result =
+    isset($shared_result) && is_array($shared_result) ? $shared_result : [];
 $constants = get_defined_constants();
 $headers = json_decode($constants[$tableName], true);
 $key1 = $headers['headers']['key1'];
@@ -37,7 +38,9 @@ if ($recTypeId == 16) {
 ?>
 <input type="hidden" name="page" id="page_num" value="1">
 <input type="hidden" name="rec_id" id="rec_id" value="<?= $recTypeId ?>">
-<input type="hidden" name="mod_name" id="mod_name" value="<?= strtolower($moduleName) ?>">
+<input type="hidden" name="mod_name" id="mod_name" value="<?= strtolower(
+    $moduleName,
+) ?>">
 	<div class="row">
 	 <div class="left-heading col-md-4 col-xs-6">
 		<span class="hidden-xs pull-left">
@@ -81,7 +84,9 @@ if ($recTypeId == 16) {
 	     </thead>
 	     <tbody id="searchable_data"> 
                  <?php for ($i = 0; $i <= count($data ?? []) - 1; $i++) { ?>
-                <tr onclick='displayView("<?= $recTypeId ?>","<?= $data[$i]['RecordId'] ?>","<?= strtolower(
+                <tr onclick='displayView("<?= $recTypeId ?>","<?= $data[$i][
+    'RecordId'
+] ?>","<?= strtolower(
     $moduleName,
 ) ?>","<?= $sub_record_type_id ?>")' id='<?= $data[$i]['RecordId'] ?>'>
                  <td><?= $data[$i][$key1] ?></td>
@@ -109,8 +114,14 @@ if ($recTypeId == 16) {
                   <!--<th  class='col-sm-1 hidden-xs'></th>-->
 	    </thead>
 	     <tbody id="searchable_data">
-                 <?php for ($i = 0; $i <= count($shared_result ?? []) - 1; $i++) { ?>
-				 <tr onclick='displayView("<?= $recTypeId ?>","<?= $shared_result[$i]['RecordId'] ?>","<?= strtolower(
+                 <?php for (
+                     $i = 0;
+                     $i <= count($shared_result ?? []) - 1;
+                     $i++
+                 ) { ?>
+				 <tr onclick='displayView("<?= $recTypeId ?>","<?= $shared_result[$i][
+    'RecordId'
+] ?>","<?= strtolower(
     $moduleName,
 ) ?>","<?= $sub_record_type_id ?>")' id='<?= $shared_result[$i]['RecordId'] ?>'>
                  <td><?= $shared_result[$i][$key1] ?></td>
@@ -118,7 +129,9 @@ if ($recTypeId == 16) {
                  <td><?= $shared_result[$i][$key3] ?></td>
                  <td><?= $col_file_cnt[$i] ?></td>
                  <td class='hidden-xs'><?= $shared_result[$i]['TS'] ?></td>
-                 <!--<td><span class="btn btn-info" id="share<?= $shared_result[$i][
+                 <!--<td><span class="btn btn-info" id="share<?= $shared_result[
+                     $i
+                 ][
                      'RecordId'
                  ] ?>" style="display:none;padding:1px 10px;"> <span class='hidden-xs'>Share</span> <i class="fa fa-share" area-hidden='true' ></i></span></td>-->
                </tr>
@@ -141,7 +154,9 @@ if ($recTypeId == 16) {
     $('#financial').removeClass('active');
     $('#legal').removeClass('active');
 	$('#<?= $modName ?>').addClass('active');
-    document.title = "<?= $tabName ?> Records | <?= ucfirst($modName) ?> | Publishat";
+    document.title = "<?= $tabName ?> Records | <?= ucfirst(
+     $modName,
+ ) ?> | Publishat";
 
 $('tr').hover(function(){
 id = $(this).closest('tr').attr('id');

@@ -88,9 +88,9 @@ border: 0; */
      });
  </script>
  <?php
-$images = ['jpg', 'png', 'jpeg', 'bmp', 'gif'];
-$path = base_url() . "web/viewfile?fid=$fid";
-?>
+ $images = ['jpg', 'png', 'jpeg', 'bmp', 'gif'];
+ $path = base_url() . "web/viewfile?fid=$fid";
+ ?>
 
  <div class="container-fluid" style="padding: 0px;">
      <div class="row header headerbgcolor">

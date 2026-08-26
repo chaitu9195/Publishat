@@ -91,13 +91,13 @@
     <body>
         <?php foreach ($data as $articleinfo) {
 
-    $id = $articleinfo['id'];
-    $userid = $articleinfo['UserId'];
-    $imagepath = $articleinfo['ArticleImage'];
-    $articledes = $articleinfo['ArticleDescription'];
-    $art_heading = $articleinfo['ArticleHeading'];
-    $art_url = $articleinfo['ArticleUrl'];
-    ?>
+            $id = $articleinfo['id'];
+            $userid = $articleinfo['UserId'];
+            $imagepath = $articleinfo['ArticleImage'];
+            $articledes = $articleinfo['ArticleDescription'];
+            $art_heading = $articleinfo['ArticleHeading'];
+            $art_url = $articleinfo['ArticleUrl'];
+            ?>
         <script>
             $(document).ready(function() {
                 $("#txtEditor<?= $id ?>").Editor();
@@ -155,7 +155,7 @@
             </div>
         </form>
         <?php
-} ?>
+        } ?>
     </body>
     <script>
 

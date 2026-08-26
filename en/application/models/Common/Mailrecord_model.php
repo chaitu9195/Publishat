@@ -40,10 +40,13 @@ class Mailrecord_model extends CI_Model
 
             $table_bg_color = '#99CCCC';
             foreach ($record_id_arr as $l_record_id) {
-                $table_bg_color = $table_bg_color == '#CCCC99' ? '#99CCCC' : '#99CCCC';
+                $table_bg_color =
+                    $table_bg_color == '#CCCC99' ? '#99CCCC' : '#99CCCC';
                 if (empty($selective_attach)) {
                 } else {
-                    $this->mongodb->where(['RecordId' => mongo_id($l_record_id)]);
+                    $this->mongodb->where([
+                        'RecordId' => mongo_id($l_record_id),
+                    ]);
                     $tmp_qry = $this->mongodb->get($table_name);
                     foreach ($tmp_qry as $tmp_rec) {
                         $document_type = '';
@@ -340,7 +343,8 @@ class Mailrecord_model extends CI_Model
                             );
                         } elseif ($RecordTypeId == 18) {
                             $document_type = $tmp_rec['AppType'];
-                            $password_change_status = $tmp_rec['PasswordChangeStatus'];
+                            $password_change_status =
+                                $tmp_rec['PasswordChangeStatus'];
                             $subject =
                                 "$user_fullname | " .
                                 ucwords($record_type) .
@@ -603,10 +607,26 @@ class Mailrecord_model extends CI_Model
 
             $email_content .= header_bottom;
             $header_title = str_replace('Publishat.com | ', '', $subject);
-            $email_content = str_replace('##HEADER-TITLE##', $header_title, $email_content);
-            $email_content = str_replace('##HEADER-EMAIL##', $user_email, $email_content);
-            $email_content = str_replace('##HEADER-NAME##', $user_fullname, $email_content);
-            $email_content = str_replace('##HEADER-PHONE##', $phone, $email_content);
+            $email_content = str_replace(
+                '##HEADER-TITLE##',
+                $header_title,
+                $email_content,
+            );
+            $email_content = str_replace(
+                '##HEADER-EMAIL##',
+                $user_email,
+                $email_content,
+            );
+            $email_content = str_replace(
+                '##HEADER-NAME##',
+                $user_fullname,
+                $email_content,
+            );
+            $email_content = str_replace(
+                '##HEADER-PHONE##',
+                $phone,
+                $email_content,
+            );
             $from_email = $this->session->userdata('email');
 
             $email_list = $params['email_list'];
@@ -615,7 +635,13 @@ class Mailrecord_model extends CI_Model
                 if (count($email_arr ?? []) > 0) {
                     foreach ($email_arr as $out_email) {
                         try {
-                            $this->phpmail_nocc($from_email, trim($out_email), $subject, $email_content, 'html');
+                            $this->phpmail_nocc(
+                                $from_email,
+                                trim($out_email),
+                                $subject,
+                                $email_content,
+                                'html',
+                            );
                             $status_code = 1;
                         } catch (Exception $e) {
                         }
@@ -623,109 +649,246 @@ class Mailrecord_model extends CI_Model
                 }
             }
             if ($status_code == 1) {
-                $status_message = 'Emails have been sent with the record details';
+                $status_message =
+                    'Emails have been sent with the record details';
 
                 if ($RecordTypeId == 1) {
-                    $headers = ['key1' => 'Class', 'key2' => 'SchoolName', 'key3' => 'DocumentType'];
+                    $headers = [
+                        'key1' => 'Class',
+                        'key2' => 'SchoolName',
+                        'key3' => 'DocumentType',
+                    ];
                 }
                 if ($RecordTypeId == 2) {
-                    $headers = ['key1' => 'Degree', 'key2' => 'Term', 'key3' => 'DocumentType'];
+                    $headers = [
+                        'key1' => 'Degree',
+                        'key2' => 'Term',
+                        'key3' => 'DocumentType',
+                    ];
                 }
                 if ($RecordTypeId == 3) {
-                    $headers = ['key1' => 'Degree', 'key2' => 'Term', 'key3' => 'DocumentType'];
+                    $headers = [
+                        'key1' => 'Degree',
+                        'key2' => 'Term',
+                        'key3' => 'DocumentType',
+                    ];
                 }
                 if ($RecordTypeId == 4) {
-                    $headers = ['key1' => 'Degree', 'key2' => 'Term', 'key3' => 'DocumentType'];
+                    $headers = [
+                        'key1' => 'Degree',
+                        'key2' => 'Term',
+                        'key3' => 'DocumentType',
+                    ];
                 }
                 if ($RecordTypeId == 5) {
-                    $headers = ['key1' => 'CertificationType', 'key2' => 'CertificateName', 'key3' => 'ValidFrom'];
+                    $headers = [
+                        'key1' => 'CertificationType',
+                        'key2' => 'CertificateName',
+                        'key3' => 'ValidFrom',
+                    ];
                 }
                 if ($RecordTypeId == 6) {
-                    $headers = ['key1' => 'ExamType', 'key2' => 'ExamName', 'key3' => 'DocumentType'];
+                    $headers = [
+                        'key1' => 'ExamType',
+                        'key2' => 'ExamName',
+                        'key3' => 'DocumentType',
+                    ];
                 }
                 if ($RecordTypeId == 7) {
-                    $headers = ['key1' => 'ProjectType', 'key2' => 'Title', 'key3' => 'DocumentType'];
+                    $headers = [
+                        'key1' => 'ProjectType',
+                        'key2' => 'Title',
+                        'key3' => 'DocumentType',
+                    ];
                 }
                 if ($RecordTypeId == 8) {
-                    $headers = ['key1' => 'Location', 'key2' => 'Purpose', 'key3' => 'FromDate'];
+                    $headers = [
+                        'key1' => 'Location',
+                        'key2' => 'Purpose',
+                        'key3' => 'FromDate',
+                    ];
                 }
                 if ($RecordTypeId == 9) {
-                    $headers = ['key1' => 'DocumentType', 'key2' => 'IssuedDate', 'key3' => 'ReferenceNo'];
+                    $headers = [
+                        'key1' => 'DocumentType',
+                        'key2' => 'IssuedDate',
+                        'key3' => 'ReferenceNo',
+                    ];
                 }
                 if ($RecordTypeId == 10) {
-                    $headers = ['key1' => 'Name', 'key2' => 'RelationshipType', 'key3' => 'ContactMode'];
+                    $headers = [
+                        'key1' => 'Name',
+                        'key2' => 'RelationshipType',
+                        'key3' => 'ContactMode',
+                    ];
                 }
                 if ($RecordTypeId == 11) {
-                    $headers = ['key1' => 'SiteName', 'key2' => 'Usage', 'key3' => 'DocumentStatus'];
+                    $headers = [
+                        'key1' => 'SiteName',
+                        'key2' => 'Usage',
+                        'key3' => 'DocumentStatus',
+                    ];
                 }
                 if ($RecordTypeId == 12) {
-                    $headers = ['key1' => 'TravelType', 'key2' => 'FromDate', 'key3' => 'ToPlace'];
+                    $headers = [
+                        'key1' => 'TravelType',
+                        'key2' => 'FromDate',
+                        'key3' => 'ToPlace',
+                    ];
                 }
                 if ($RecordTypeId == 13) {
-                    $headers = ['key1' => 'DeviceName', 'key2' => 'Brand', 'key3' => 'ReferenceNumber'];
+                    $headers = [
+                        'key1' => 'DeviceName',
+                        'key2' => 'Brand',
+                        'key3' => 'ReferenceNumber',
+                    ];
                 }
                 if ($RecordTypeId == 14) {
-                    $headers = ['key1' => 'ContactName', 'key2' => 'MobileNumber', 'key3' => 'PersonalEmail'];
+                    $headers = [
+                        'key1' => 'ContactName',
+                        'key2' => 'MobileNumber',
+                        'key3' => 'PersonalEmail',
+                    ];
                 }
                 if ($RecordTypeId == 15) {
-                    $headers = ['key1' => 'DocumentType', 'key2' => 'OrganisationName', 'key3' => 'IssuedDate'];
+                    $headers = [
+                        'key1' => 'DocumentType',
+                        'key2' => 'OrganisationName',
+                        'key3' => 'IssuedDate',
+                    ];
                 }
                 if ($RecordTypeId == 16) {
-                    $headers = ['key1' => 'ProjectName', 'key2' => 'FromDate', 'key3' => 'ToDate'];
+                    $headers = [
+                        'key1' => 'ProjectName',
+                        'key2' => 'FromDate',
+                        'key3' => 'ToDate',
+                    ];
                 }
                 if ($RecordTypeId == 17) {
-                    $headers = ['key1' => 'SkillType', 'key2' => 'SkillName', 'key3' => 'DocumentType'];
+                    $headers = [
+                        'key1' => 'SkillType',
+                        'key2' => 'SkillName',
+                        'key3' => 'DocumentType',
+                    ];
                 }
                 if ($RecordTypeId == 18) {
-                    $headers = ['key1' => 'AppType', 'key2' => 'AppName', 'key3' => 'PasswordChangeStatus'];
+                    $headers = [
+                        'key1' => 'AppType',
+                        'key2' => 'AppName',
+                        'key3' => 'PasswordChangeStatus',
+                    ];
                 }
                 if ($RecordTypeId == 38) {
-                    $headers = ['key1' => 'ResumeType', 'key2' => 'Name', 'key3' => 'FunctionalArea'];
+                    $headers = [
+                        'key1' => 'ResumeType',
+                        'key2' => 'Name',
+                        'key3' => 'FunctionalArea',
+                    ];
                 }
                 if ($RecordTypeId == 19) {
-                    $headers = ['key1' => 'TestName', 'key2' => 'TestType', 'key3' => 'TestDate'];
+                    $headers = [
+                        'key1' => 'TestName',
+                        'key2' => 'TestType',
+                        'key3' => 'TestDate',
+                    ];
                 }
                 if ($RecordTypeId == 20) {
-                    $headers = ['key1' => 'PrescriptionType', 'key2' => 'DiseaseName', 'key3' => 'MedicineType'];
+                    $headers = [
+                        'key1' => 'PrescriptionType',
+                        'key2' => 'DiseaseName',
+                        'key3' => 'MedicineType',
+                    ];
                 }
                 if ($RecordTypeId == 21) {
-                    $headers = ['key1' => 'DiseaseType', 'key2' => 'TreatmentType', 'key3' => 'FromDate'];
+                    $headers = [
+                        'key1' => 'DiseaseType',
+                        'key2' => 'TreatmentType',
+                        'key3' => 'FromDate',
+                    ];
                 }
                 if ($RecordTypeId == 22) {
-                    $headers = ['key1' => 'PolicyType', 'key2' => 'PolicyName', 'key3' => 'FromDate'];
+                    $headers = [
+                        'key1' => 'PolicyType',
+                        'key2' => 'PolicyName',
+                        'key3' => 'FromDate',
+                    ];
                 }
                 if ($RecordTypeId == 28) {
-                    $headers = ['key1' => 'DisputeType', 'key2' => 'PartyName', 'key3' => 'FromDate'];
+                    $headers = [
+                        'key1' => 'DisputeType',
+                        'key2' => 'PartyName',
+                        'key3' => 'FromDate',
+                    ];
                 }
                 if ($RecordTypeId == 29) {
-                    $headers = ['key1' => 'TransferType', 'key2' => 'AssetName', 'key3' => 'ValidFrom'];
+                    $headers = [
+                        'key1' => 'TransferType',
+                        'key2' => 'AssetName',
+                        'key3' => 'ValidFrom',
+                    ];
                 }
                 if ($RecordTypeId == 30) {
-                    $headers = ['key1' => 'AccountType', 'key2' => 'AccountNumber', 'key3' => 'BranchName'];
+                    $headers = [
+                        'key1' => 'AccountType',
+                        'key2' => 'AccountNumber',
+                        'key3' => 'BranchName',
+                    ];
                 }
                 if ($RecordTypeId == 31) {
-                    $headers = ['key1' => 'AssetType', 'key2' => 'AssetName', 'key3' => 'ValidFrom'];
+                    $headers = [
+                        'key1' => 'AssetType',
+                        'key2' => 'AssetName',
+                        'key3' => 'ValidFrom',
+                    ];
                 }
                 if ($RecordTypeId == 32) {
-                    $headers = ['key1' => 'RevenueType', 'key2' => 'ItemName', 'key3' => 'Term'];
+                    $headers = [
+                        'key1' => 'RevenueType',
+                        'key2' => 'ItemName',
+                        'key3' => 'Term',
+                    ];
                 }
                 if ($RecordTypeId == 33) {
-                    $headers = ['key1' => 'CardType', 'key2' => 'ServiceProviderName', 'key3' => 'CardNumber'];
+                    $headers = [
+                        'key1' => 'CardType',
+                        'key2' => 'ServiceProviderName',
+                        'key3' => 'CardNumber',
+                    ];
                 }
                 if ($RecordTypeId == 34) {
-                    $headers = ['key1' => 'LiabilityType', 'key2' => 'LiabilityName', 'key3' => 'FromDate'];
+                    $headers = [
+                        'key1' => 'LiabilityType',
+                        'key2' => 'LiabilityName',
+                        'key3' => 'FromDate',
+                    ];
                 }
                 if ($RecordTypeId == 35) {
-                    $headers = ['key1' => 'PaymentType', 'key2' => 'ItemName', 'key3' => 'Term'];
+                    $headers = [
+                        'key1' => 'PaymentType',
+                        'key2' => 'ItemName',
+                        'key3' => 'Term',
+                    ];
                 }
                 if ($RecordTypeId == 36) {
-                    $headers = ['key1' => 'TaxDocumentType', 'key2' => 'Date', 'key3' => 'AssessmentYear'];
+                    $headers = [
+                        'key1' => 'TaxDocumentType',
+                        'key2' => 'Date',
+                        'key3' => 'AssessmentYear',
+                    ];
                 }
                 if ($RecordTypeId == 37) {
-                    $headers = ['key1' => 'InsuranceType', 'key2' => 'PolicyName', 'key3' => 'FromDate'];
+                    $headers = [
+                        'key1' => 'InsuranceType',
+                        'key2' => 'PolicyName',
+                        'key3' => 'FromDate',
+                    ];
                 }
                 if ($RecordTypeId == 42) {
-                    $headers = ['key1' => 'Event Type', 'key2' => 'Event Name', 'key3' => 'Date'];
+                    $headers = [
+                        'key1' => 'Event Type',
+                        'key2' => 'Event Name',
+                        'key3' => 'Date',
+                    ];
                 }
 
                 $document_type = $headers['key3'];
@@ -745,25 +908,38 @@ class Mailrecord_model extends CI_Model
 
                 return ['status' => 'success', 'data' => 'Mail has been sent.'];
             } else {
-                $status_message = 'Error: No emails have been sent. Please try again. ';
+                $status_message =
+                    'Error: No emails have been sent. Please try again. ';
                 return ['status' => 'failed', 'data' => 'No mails sent'];
             }
         }
     }
 
-    public function get_school_select($document_id_arr, $record_id, $table_bg, $tr_bg, $document_type, $addtext)
-    {
+    public function get_school_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $document_type,
+        $addtext,
+    ) {
         $record_type_id = 1;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_SCHOOL);
         if (count($qry ?? []) > 0) {
             if ($document_type == 'Marks Memo') {
-                $email_template = '../../templates/email-academic-school-template.html';
-            } elseif ($document_type == 'Hall Ticket' || $document_type == 'ID Card') {
-                $email_template = '../../templates/email-academic-school-template2.html';
+                $email_template =
+                    '../../templates/email-academic-school-template.html';
+            } elseif (
+                $document_type == 'Hall Ticket' ||
+                $document_type == 'ID Card'
+            ) {
+                $email_template =
+                    '../../templates/email-academic-school-template2.html';
             } else {
-                $email_template = '../../templates/email-academic-school-template1.html';
+                $email_template =
+                    '../../templates/email-academic-school-template1.html';
             }
 
             $email_body = $this->read_file($email_template);
@@ -784,7 +960,10 @@ class Mailrecord_model extends CI_Model
                 $roll_number = stripslashes($rec['RollNumber']);
                 $hall_ticket_number = stripslashes($rec['HallTicketNumber']);
                 $notes = stripslashes($rec['Notes']);
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -793,26 +972,82 @@ class Mailrecord_model extends CI_Model
                 } else {
                     $attachments = 'No Attachments';
                 }
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##SCHOOL LEVEL##', $type, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##SCHOOL LEVEL##',
+                    $type,
+                    $email_body,
+                );
                 $email_body = str_replace('##CLASS##', $class, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##SCHOOL-NAME##', $school_name, $email_body);
-                $email_body = str_replace('##LOCATION##', $location, $email_body);
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##SCHOOL-NAME##',
+                    $school_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##LOCATION##',
+                    $location,
+                    $email_body,
+                );
                 $email_body = str_replace('##BOARD##', $board, $email_body);
-                $email_body = str_replace('##EXAM-TYPE##', $exam_type, $email_body);
+                $email_body = str_replace(
+                    '##EXAM-TYPE##',
+                    $exam_type,
+                    $email_body,
+                );
                 $email_body = str_replace('##MARKS##', $marks, $email_body);
-                $email_body = str_replace('##MAX-MARKS##', $max_marks, $email_body);
-                $email_body = str_replace('##YEAR-OF-PASSING##', $year_of_passing, $email_body);
+                $email_body = str_replace(
+                    '##MAX-MARKS##',
+                    $max_marks,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##YEAR-OF-PASSING##',
+                    $year_of_passing,
+                    $email_body,
+                );
                 $email_body = str_replace('##RANK##', $rank, $email_body);
-                $email_body = str_replace('##ROLL-NUMBER##', $roll_number, $email_body);
-                $email_body = str_replace('##HALL-TICKET-NUMBER##', $hall_ticket_number, $email_body);
+                $email_body = str_replace(
+                    '##ROLL-NUMBER##',
+                    $roll_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##HALL-TICKET-NUMBER##',
+                    $hall_ticket_number,
+                    $email_body,
+                );
                 $email_body = str_replace('##GRADE##', $grade, $email_body);
-                $email_body = str_replace('##PERCENTAGE##', $percentage, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##PERCENTAGE##',
+                    $percentage,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
@@ -833,9 +1068,11 @@ class Mailrecord_model extends CI_Model
         $qry = $this->mongodb->get(TBL_UNDERGRADUATE);
         if (count($qry ?? []) > 0) {
             if ($document_type == 'Marks Memo') {
-                $email_template = '../../templates/email-academic-ug-template.html';
+                $email_template =
+                    '../../templates/email-academic-ug-template.html';
             } else {
-                $email_template = '../../templates/email-academic-ug-template2.html';
+                $email_template =
+                    '../../templates/email-academic-ug-template2.html';
             }
             $email_body = $this->read_file($email_template);
 
@@ -860,7 +1097,10 @@ class Mailrecord_model extends CI_Model
                 $hall_ticket_number = stripslashes($rec['HallTicketNumber']);
                 $notes = stripslashes($rec['Notes']);
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -869,30 +1109,91 @@ class Mailrecord_model extends CI_Model
                 } else {
                     $attachments = 'No Attachments';
                 }
-                $ug_loop_str = $this->get_ug_marksmemo_html($document_id_arr, $user_id, $record_id, $sub_id_arr);
+                $ug_loop_str = $this->get_ug_marksmemo_html(
+                    $document_id_arr,
+                    $user_id,
+                    $record_id,
+                    $sub_id_arr,
+                );
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
                 $email_body = str_replace('##UG-LEVEL##', $level, $email_body);
                 $email_body = str_replace('##DEGREE##', $degree, $email_body);
                 $email_body = str_replace('##COLLGE##', $college, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##ACADEMIC-YEAR##', $academic_year, $email_body);
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ACADEMIC-YEAR##',
+                    $academic_year,
+                    $email_body,
+                );
                 $email_body = str_replace('##TERM##', $term, $email_body);
-                $email_body = str_replace('##UNIVERSITY##', $university, $email_body);
-                $email_body = str_replace('##SPECIALISATION##', $specialisation, $email_body);
+                $email_body = str_replace(
+                    '##UNIVERSITY##',
+                    $university,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##SPECIALISATION##',
+                    $specialisation,
+                    $email_body,
+                );
                 $email_body = str_replace('##MARKS##', $marks, $email_body);
-                $email_body = str_replace('##MAX-MARKS##', $max_marks, $email_body);
+                $email_body = str_replace(
+                    '##MAX-MARKS##',
+                    $max_marks,
+                    $email_body,
+                );
                 $email_body = str_replace('##GRADE##', $grade, $email_body);
-                $email_body = str_replace('##YEAR-OF-PASSING##', $year_of_passing, $email_body);
+                $email_body = str_replace(
+                    '##YEAR-OF-PASSING##',
+                    $year_of_passing,
+                    $email_body,
+                );
                 $email_body = str_replace('##RANK##', $rank, $email_body);
-                $email_body = str_replace('##PERCENTAGE##', $percentage, $email_body);
-                $email_body = str_replace('##ROLL-NUMBER##', $roll_number, $email_body);
-                $email_body = str_replace('##HALL-TICKET-NUMBER##', $hall_ticket_number, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##PERCENTAGE##',
+                    $percentage,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ROLL-NUMBER##',
+                    $roll_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##HALL-TICKET-NUMBER##',
+                    $hall_ticket_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
-                $email_body = str_replace('##UG-LOOP##', $ug_loop_str, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##UG-LOOP##',
+                    $ug_loop_str,
+                    $email_body,
+                );
             }
         }
         return $email_body;
@@ -913,9 +1214,11 @@ class Mailrecord_model extends CI_Model
         $qry = $this->mongodb->get(TBL_POSTGRADUATE);
         if (count($qry ?? []) > 0) {
             if ($document_type == 'Marks Memo') {
-                $email_template = '../../templates/email-academic-pg-template.html';
+                $email_template =
+                    '../../templates/email-academic-pg-template.html';
             } else {
-                $email_template = '../../templates/email-academic-pg-template2.html';
+                $email_template =
+                    '../../templates/email-academic-pg-template2.html';
             }
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
@@ -938,55 +1241,131 @@ class Mailrecord_model extends CI_Model
                 $roll_number = stripslashes($rec['RollNumber']);
                 $hall_ticket_number = stripslashes($rec['HallTicketNumber']);
                 $notes = stripslashes($rec['Notes']);
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
                         $record_id,
                     );
-                    $attachments .= $this->get_document_email_links_by_id_arr($document_id_arr, '44', $record_id);
+                    $attachments .= $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        '44',
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
-                $pg_loop_str = $this->get_pg_marksmemo_html($document_id_arr, $user_id, $record_id, $sub_id_arr);
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
+                $pg_loop_str = $this->get_pg_marksmemo_html(
+                    $document_id_arr,
+                    $user_id,
+                    $record_id,
+                    $sub_id_arr,
+                );
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
                 $email_body = str_replace('##PG-TYPE##', $level, $email_body);
                 $email_body = str_replace('##DEGREE##', $degree, $email_body);
                 $email_body = str_replace('##COLLGE##', $college, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##ACADEMIC-YEAR##', $academic_year, $email_body);
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ACADEMIC-YEAR##',
+                    $academic_year,
+                    $email_body,
+                );
                 $email_body = str_replace('##TERM##', $term, $email_body);
-                $email_body = str_replace('##UNIVERSITY##', $university, $email_body);
-                $email_body = str_replace('##SPECIALISATION##', $specialisation, $email_body);
+                $email_body = str_replace(
+                    '##UNIVERSITY##',
+                    $university,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##SPECIALISATION##',
+                    $specialisation,
+                    $email_body,
+                );
                 $email_body = str_replace('##MARKS##', $marks, $email_body);
-                $email_body = str_replace('##MAX-MARKS##', $max_marks, $email_body);
+                $email_body = str_replace(
+                    '##MAX-MARKS##',
+                    $max_marks,
+                    $email_body,
+                );
                 $email_body = str_replace('##GRADE##', $grade, $email_body);
-                $email_body = str_replace('##YEAR-OF-PASSING##', $year_of_passing, $email_body);
+                $email_body = str_replace(
+                    '##YEAR-OF-PASSING##',
+                    $year_of_passing,
+                    $email_body,
+                );
                 $email_body = str_replace('##RANK##', $rank, $email_body);
-                $email_body = str_replace('##PERCENTAGE##', $percentage, $email_body);
-                $email_body = str_replace('##ROLL-NUMBER##', $roll_number, $email_body);
-                $email_body = str_replace('##HALL-TICKET-NUMBER##', $hall_ticket_number, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##PERCENTAGE##',
+                    $percentage,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ROLL-NUMBER##',
+                    $roll_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##HALL-TICKET-NUMBER##',
+                    $hall_ticket_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
-                $email_body = str_replace('##PG_LOOP##', $pg_loop_str, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PG_LOOP##',
+                    $pg_loop_str,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_phd_select($document_id_arr, $record_id, $table_bg, $tr_bg, $document_type, $addtext)
-    {
+    public function get_phd_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $document_type,
+        $addtext,
+    ) {
         $record_type_id = 4;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_PHD);
         if (count($qry ?? []) > 0) {
             if ($document_type == 'Marks Memo') {
-                $email_template = '../../templates/email-academic-phd-template.html';
+                $email_template =
+                    '../../templates/email-academic-phd-template.html';
             } else {
-                $email_template = '../../templates/email-academic-phd-template2.html';
+                $email_template =
+                    '../../templates/email-academic-phd-template2.html';
             }
 
             $email_body = $this->read_file($email_template);
@@ -1008,7 +1387,10 @@ class Mailrecord_model extends CI_Model
                 $roll_number = stripslashes($rec['RollNumber']);
                 $hall_ticket_number = stripslashes($rec['HallTicketNumber']);
                 $notes = stripslashes($rec['Notes']);
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -1018,40 +1400,98 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
                 $email_body = str_replace('##PHD-TYPE##', $level, $email_body);
                 $email_body = str_replace('##DEGREE##', $degree, $email_body);
                 $email_body = str_replace('##COLLGE##', $college, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##ACADEMIC-YEAR##', $academic_year, $email_body);
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ACADEMIC-YEAR##',
+                    $academic_year,
+                    $email_body,
+                );
                 $email_body = str_replace('##TERM##', $term, $email_body);
-                $email_body = str_replace('##UNIVERSITY##', $university, $email_body);
-                $email_body = str_replace('##SPECIALISATION##', $specialisation, $email_body);
+                $email_body = str_replace(
+                    '##UNIVERSITY##',
+                    $university,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##SPECIALISATION##',
+                    $specialisation,
+                    $email_body,
+                );
                 $email_body = str_replace('##MARKS##', $marks, $email_body);
-                $email_body = str_replace('##MAX-MARKS##', $max_marks, $email_body);
+                $email_body = str_replace(
+                    '##MAX-MARKS##',
+                    $max_marks,
+                    $email_body,
+                );
                 $email_body = str_replace('##GRADE##', $grade, $email_body);
-                $email_body = str_replace('##YEAR-OF-PASSING##', $year_of_passing, $email_body);
+                $email_body = str_replace(
+                    '##YEAR-OF-PASSING##',
+                    $year_of_passing,
+                    $email_body,
+                );
                 $email_body = str_replace('##RANK##', $rank, $email_body);
-                $email_body = str_replace('##PERCENTAGE##', $percentage, $email_body);
-                $email_body = str_replace('##ROLL-NUMBER##', $roll_number, $email_body);
-                $email_body = str_replace('##HALL-TICKET-NUMBER##', $hall_ticket_number, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##PERCENTAGE##',
+                    $percentage,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ROLL-NUMBER##',
+                    $roll_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##HALL-TICKET-NUMBER##',
+                    $hall_ticket_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_certification_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
-    {
+    public function get_certification_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+    ) {
         $record_type_id = 5;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_CERTIFICATION);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-academic-certification-template.html';
+            $email_template =
+                '../../templates/email-academic-certification-template.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
                 $certification_type = stripslashes($rec['CertificationType']);
@@ -1059,7 +1499,9 @@ class Mailrecord_model extends CI_Model
                 $document_type = stripslashes($rec['DocumentType']);
                 $valid_from = stripslashes($rec['ValidFrom']);
                 $valid_to = stripslashes($rec['ValidTo']);
-                $certification_status = stripslashes($rec['CertificationStatus']);
+                $certification_status = stripslashes(
+                    $rec['CertificationStatus'],
+                );
                 $result = stripslashes($rec['Result']);
                 $grade = stripslashes($rec['Grade']);
                 $percentage = stripslashes($rec['PercentageGrade']);
@@ -1077,7 +1519,10 @@ class Mailrecord_model extends CI_Model
                 if (!empty($password)) {
                     $username_password .= '/' . $password;
                 }
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -1087,40 +1532,110 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##CERTIFICATION-TYPE##', $certification_type, $email_body);
-                $email_body = str_replace('##CERTIFICATE-NAME##', $certificate_name, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##VALID-FROM##', $valid_from, $email_body);
-                $email_body = str_replace('##VALID-TO##', $valid_to, $email_body);
-                $email_body = str_replace('##STATUS##', $certification_status, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CERTIFICATION-TYPE##',
+                    $certification_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CERTIFICATE-NAME##',
+                    $certificate_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##VALID-FROM##',
+                    $valid_from,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##VALID-TO##',
+                    $valid_to,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##STATUS##',
+                    $certification_status,
+                    $email_body,
+                );
                 $email_body = str_replace('##RESULT##', $result, $email_body);
                 $email_body = str_replace('##GRADE##', $grade, $email_body);
-                $email_body = str_replace('##PERCENTAGE##', $percentage, $email_body);
-                $email_body = str_replace('##CERTIFICATE-NUMBER##', $certificate_number, $email_body);
-                $email_body = str_replace('##ORGANISATION-NAME##', $organisation_name, $email_body);
-                $email_body = str_replace('##CHAPTER-NAME##', $chapter_name, $email_body);
+                $email_body = str_replace(
+                    '##PERCENTAGE##',
+                    $percentage,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CERTIFICATE-NUMBER##',
+                    $certificate_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ORGANISATION-NAME##',
+                    $organisation_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CHAPTER-NAME##',
+                    $chapter_name,
+                    $email_body,
+                );
                 $email_body = str_replace('##ADDRESS##', $address, $email_body);
                 $email_body = str_replace('##LOGIN-URL##', $url, $email_body);
-                $email_body = str_replace('##USERNAME##', $username, $email_body);
-                $email_body = str_replace('##PASSWORD##', $password, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##USERNAME##',
+                    $username,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PASSWORD##',
+                    $password,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_exam_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
-    {
+    public function get_exam_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+    ) {
         $record_type_id = 6;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_EXAM);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-academic-exam-template.html';
+            $email_template =
+                '../../templates/email-academic-exam-template.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
                 $exam_type = stripslashes($rec['ExamType']);
@@ -1138,7 +1653,10 @@ class Mailrecord_model extends CI_Model
                 $percentage = stripslashes($rec['Percentage']);
                 $notes = stripslashes($rec['Notes']);
                 $exam_date = $this->date_format_short($exam_date);
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -1148,37 +1666,95 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##EXAM-TYPE##', $exam_type, $email_body);
-                $email_body = str_replace('##EXAM-NAME##', $exam_name, $email_body);
-                $email_body = str_replace('##EXAM-DATE##', $exam_date, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##EXAM-CENTER##', $exam_center, $email_body);
-                $email_body = str_replace('##HALL-TICKET##', $hall_ticket, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##EXAM-TYPE##',
+                    $exam_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##EXAM-NAME##',
+                    $exam_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##EXAM-DATE##',
+                    $exam_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##EXAM-CENTER##',
+                    $exam_center,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##HALL-TICKET##',
+                    $hall_ticket,
+                    $email_body,
+                );
                 $email_body = str_replace('##ADDRESS##', $address, $email_body);
                 $email_body = str_replace('##RESULT##', $result, $email_body);
                 $email_body = str_replace('##MARKS##', $marks, $email_body);
-                $email_body = str_replace('##MAX-MARKS##', $max_marks, $email_body);
-                $email_body = str_replace('##PERCENTILE##', $percentile, $email_body);
-                $email_body = str_replace('##PERCENTAGE##', $percentage, $email_body);
+                $email_body = str_replace(
+                    '##MAX-MARKS##',
+                    $max_marks,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PERCENTILE##',
+                    $percentile,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PERCENTAGE##',
+                    $percentage,
+                    $email_body,
+                );
                 $email_body = str_replace('##RANK##', $rank, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_projects_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
-    {
+    public function get_projects_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+    ) {
         $record_type_id = 7;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_PROJECT);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-academic-project-template.html';
+            $email_template =
+                '../../templates/email-academic-project-template.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
                 $record_id = stripslashes($rec['RecordId']);
@@ -1200,14 +1776,19 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 $submitted_date = $this->date_format_short($submitted_date);
                 $accepted_date = $this->date_format_short($accepted_date);
-                $presentation_date = $this->date_format_short($presentation_date);
+                $presentation_date = $this->date_format_short(
+                    $presentation_date,
+                );
                 if (!empty($username)) {
                     $username_password = $username;
                 }
                 if (!empty($password)) {
                     $username_password .= '/' . $password;
                 }
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -1217,42 +1798,102 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##PROJECT-TYPE##', $project_type, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PROJECT-TYPE##',
+                    $project_type,
+                    $email_body,
+                );
                 $email_body = str_replace('##TITLE##', $title, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
                 $email_body = str_replace('##LEVEL##', $level, $email_body);
-                $email_body = str_replace('##CONFERENCE##', $conference, $email_body);
+                $email_body = str_replace(
+                    '##CONFERENCE##',
+                    $conference,
+                    $email_body,
+                );
                 $email_body = str_replace('##AUTHOR##', $author, $email_body);
-                $email_body = str_replace('##COAUTHORS##', $coauthors, $email_body);
+                $email_body = str_replace(
+                    '##COAUTHORS##',
+                    $coauthors,
+                    $email_body,
+                );
                 $email_body = str_replace('##ADDRESS##', $address, $email_body);
                 $email_body = str_replace('##STATUS##', $status, $email_body);
-                $email_body = str_replace('##SUBMITTED-DATE##', $submitted_date, $email_body);
-                $email_body = str_replace('##ACCEPTED-DATE##', $accepted_date, $email_body);
-                $email_body = str_replace('##PRESENTED-DATE##', $presentation_date, $email_body);
+                $email_body = str_replace(
+                    '##SUBMITTED-DATE##',
+                    $submitted_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ACCEPTED-DATE##',
+                    $accepted_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PRESENTED-DATE##',
+                    $presentation_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##URL##', $url, $email_body);
-                $email_body = str_replace('##USERNAME##', $username, $email_body);
-                $email_body = str_replace('##PASSWORD##', $password, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##USERNAME##',
+                    $username,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PASSWORD##',
+                    $password,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_location_select($document_id_arr, $record_id, $table_bg, $tr_bg, $travel_status, $addtext)
-    {
+    public function get_location_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $travel_status,
+        $addtext,
+    ) {
         $record_type_id = 8;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_LOCATIONHISTORY);
         if (count($qry ?? []) > 0) {
             if ($travel_status == 'Single' || $travel_status == '') {
-                $email_template = '../../templates/email-personal-location-history-template1.html';
+                $email_template =
+                    '../../templates/email-personal-location-history-template1.html';
             } else {
-                $email_template = '../../templates/email-personal-location-history-template.html';
+                $email_template =
+                    '../../templates/email-personal-location-history-template.html';
             }
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
@@ -1265,7 +1906,9 @@ class Mailrecord_model extends CI_Model
                 $to_date = stripslashes($rec['ToDate']);
                 $purpose = stripslashes($rec['Purpose']);
                 $mobile_number = stripslashes($rec['MobileNumber']);
-                $alternate_phone_number = stripslashes($rec['AlternatePhoneNumber']);
+                $alternate_phone_number = stripslashes(
+                    $rec['AlternatePhoneNumber'],
+                );
                 $category = stripslashes($rec['Category']);
                 $document_type = stripslashes($rec['DocumentType']);
                 $famous_for = stripslashes($rec['FamousFor']);
@@ -1285,7 +1928,10 @@ class Mailrecord_model extends CI_Model
                 }
                 $family_members = trim($family_members, ' ,');
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -1295,33 +1941,95 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##LOCATION##', $location, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##LOCATION##',
+                    $location,
+                    $email_body,
+                );
                 $email_body = str_replace('##PURPOSE##', $purpose, $email_body);
-                $email_body = str_replace('##FROM-DATE##', $from_date, $email_body);
+                $email_body = str_replace(
+                    '##FROM-DATE##',
+                    $from_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##TO-DATE##', $to_date, $email_body);
                 $email_body = str_replace('##NAME##', $name, $email_body);
-                $email_body = str_replace('##NICK-NAME##', $nick_name, $email_body);
+                $email_body = str_replace(
+                    '##NICK-NAME##',
+                    $nick_name,
+                    $email_body,
+                );
                 $email_body = str_replace('##ADDRESS##', $address, $email_body);
-                $email_body = str_replace('##MOBILE##', $mobile_number, $email_body);
-                $email_body = str_replace('##ALTERNATE##', $alternate_phone_number, $email_body);
+                $email_body = str_replace(
+                    '##MOBILE##',
+                    $mobile_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ALTERNATE##',
+                    $alternate_phone_number,
+                    $email_body,
+                );
                 $email_body = str_replace('##COUNTRY##', $country, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##FAMOUS-FOR##', $famous_for, $email_body);
-                $email_body = str_replace('##STATUS##', $travel_status, $email_body);
-                $email_body = str_replace('##FAMILY-MEMBERS##', $family_members, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##FAMOUS-FOR##',
+                    $famous_for,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##STATUS##',
+                    $travel_status,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##FAMILY-MEMBERS##',
+                    $family_members,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_govt_select($document_id_arr, $record_id, $table_bg, $tr_bg, $document_type, $addtext)
-    {
+    public function get_govt_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $document_type,
+        $addtext,
+    ) {
         $record_type_id = 9;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
@@ -1332,11 +2040,17 @@ class Mailrecord_model extends CI_Model
                 $document_type == 'Marriage Certificate' ||
                 $document_type == 'Birth Certificate'
             ) {
-                $email_template = '../../templates/email-personal-govtcert-template.html';
-            } elseif ($document_type == 'PAN Card' || $document_type == 'Employee State Insurance (ESI)') {
-                $email_template = '../../templates/email-personal-govtcert-template1.html';
+                $email_template =
+                    '../../templates/email-personal-govtcert-template.html';
+            } elseif (
+                $document_type == 'PAN Card' ||
+                $document_type == 'Employee State Insurance (ESI)'
+            ) {
+                $email_template =
+                    '../../templates/email-personal-govtcert-template1.html';
             } else {
-                $email_template = '../../templates/email-personal-govtcert-template2.html';
+                $email_template =
+                    '../../templates/email-personal-govtcert-template2.html';
             }
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
@@ -1359,7 +2073,10 @@ class Mailrecord_model extends CI_Model
                 $birth_date = $this->date_format_short($birth_date);
                 $issued_date = $this->date_format_short($issued_date);
                 $valid_to = $this->date_format_short($valid_to);
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -1369,39 +2086,117 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##DOC-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##REFERENCE##', $reference_no, $email_body);
-                $email_body = str_replace('##FATHER-NAME##', $father_name, $email_body);
-                $email_body = str_replace('##HUSBAND-NAME##', $husband_name, $email_body);
-                $email_body = str_replace('##MOTHER-NAME##', $mother_name, $email_body);
-                $email_body = str_replace('##SPOUSE-NAME##', $spouse_name, $email_body);
-                $email_body = str_replace('##BIRTH-DATE##', $birth_date, $email_body);
-                $email_body = str_replace('##BIRTH-PLACE##', $birth_place, $email_body);
-                $email_body = str_replace('##ISSUED-DATE##', $issued_date, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOC-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##REFERENCE##',
+                    $reference_no,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##FATHER-NAME##',
+                    $father_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##HUSBAND-NAME##',
+                    $husband_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##MOTHER-NAME##',
+                    $mother_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##SPOUSE-NAME##',
+                    $spouse_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##BIRTH-DATE##',
+                    $birth_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##BIRTH-PLACE##',
+                    $birth_place,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ISSUED-DATE##',
+                    $issued_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##ADDRESS##', $address, $email_body);
-                $email_body = str_replace('##VALID-TO##', $valid_to, $email_body);
-                $email_body = str_replace('##ISSUED-AUTHORITY##', $issued_by, $email_body);
-                $email_body = str_replace('##STATUS##', $document_status, $email_body);
-                $email_body = str_replace('##ISSUED-PLACE##', $issued_place, $email_body);
-                $email_body = str_replace('##ISSUED-COUNTRY##', $issued_place, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##VALID-TO##',
+                    $valid_to,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ISSUED-AUTHORITY##',
+                    $issued_by,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##STATUS##',
+                    $document_status,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ISSUED-PLACE##',
+                    $issued_place,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ISSUED-COUNTRY##',
+                    $issued_place,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_relation_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
-    {
+    public function get_relation_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+    ) {
         $record_type_id = 10;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_RELATIONSHIP);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-personal-relation-template.html';
+            $email_template =
+                '../../templates/email-personal-relation-template.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
                 $relationship_type = stripslashes($rec['RelationshipType']);
@@ -1420,7 +2215,10 @@ class Mailrecord_model extends CI_Model
                 $living_country = stripslashes($rec['LivingCountry']);
                 $notes = stripslashes($rec['Notes']);
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -1430,38 +2228,104 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
                 $email_body = str_replace('##NAME##', $name, $email_body);
-                $email_body = str_replace('##RELATIONSHIP##', $relationship_type, $email_body);
-                $email_body = str_replace('##CONTACT-MODE##', $contact_mode, $email_body);
+                $email_body = str_replace(
+                    '##RELATIONSHIP##',
+                    $relationship_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CONTACT-MODE##',
+                    $contact_mode,
+                    $email_body,
+                );
                 $email_body = str_replace('##ADDRESS##', $address, $email_body);
-                $email_body = str_replace('##MOBILE##', $mobile_phone_number, $email_body);
-                $email_body = str_replace('##HOME-PHONE##', $home_phone_number, $email_body);
-                $email_body = str_replace('##OFFICE-PHONE##', $office_phone_number, $email_body);
+                $email_body = str_replace(
+                    '##MOBILE##',
+                    $mobile_phone_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##HOME-PHONE##',
+                    $home_phone_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##OFFICE-PHONE##',
+                    $office_phone_number,
+                    $email_body,
+                );
                 $email_body = str_replace('##EMAIL##', $email, $email_body);
-                $email_body = str_replace('##ALT-EMAIL##', $alternate_email, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
-                $email_body = str_replace('##LIVING-PLACE##', $living_place, $email_body);
-                $email_body = str_replace('##COUNTRY##', $living_country, $email_body);
-                $email_body = str_replace('##STATUS##', $document_status, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##ALT-EMAIL##',
+                    $alternate_email,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##LIVING-PLACE##',
+                    $living_place,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##COUNTRY##',
+                    $living_country,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##STATUS##',
+                    $document_status,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_web_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
-    {
+    public function get_web_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+    ) {
         $record_type_id = 11;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_WEBHISTORY);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-personal-web-template.html';
+            $email_template =
+                '../../templates/email-personal-web-template.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
                 $category = stripslashes($rec['Category']);
@@ -1479,7 +2343,10 @@ class Mailrecord_model extends CI_Model
                 $mobile_2 = stripslashes($rec['AlternatePhoneNumber']);
                 $notes = stripslashes($rec['Notes']);
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -1489,23 +2356,71 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
-                $email_body = str_replace('##SITE-NAME##', $site_name, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##SITE-NAME##',
+                    $site_name,
+                    $email_body,
+                );
                 $email_body = str_replace('##USAGE##', $usage, $email_body);
                 $email_body = str_replace('##URL##', $url, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##USER-NAME##', $username, $email_body);
-                $email_body = str_replace('##STATUS##', $document_status, $email_body);
-                $email_body = str_replace('##SERVICE-TYPE##', $service_type, $email_body);
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##USER-NAME##',
+                    $username,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##STATUS##',
+                    $document_status,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##SERVICE-TYPE##',
+                    $service_type,
+                    $email_body,
+                );
                 $email_body = str_replace('##EMAIL-1##', $email_1, $email_body);
                 $email_body = str_replace('##EMAIL-2##', $email_2, $email_body);
-                $email_body = str_replace('##MOBILE-1##', $mobile_1, $email_body);
-                $email_body = str_replace('##MOBILE-2##', $mobile_2, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##MOBILE-1##',
+                    $mobile_1,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##MOBILE-2##',
+                    $mobile_2,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
@@ -1525,17 +2440,27 @@ class Mailrecord_model extends CI_Model
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_TRAVEL);
         if (count($qry ?? []) > 0) {
-            if ($travel_type == 'International' && ($travellers == 'Family' || $travellers == 'Group')) {
-                $email_template = '../../templates/email-personal-travel-template.html';
-            } elseif ($travel_type == 'International' && ($travellers == 'Single' || ($travellers = ''))) {
-                $email_template = '../../templates/email-personal-travel-template1.html';
+            if (
+                $travel_type == 'International' &&
+                ($travellers == 'Family' || $travellers == 'Group')
+            ) {
+                $email_template =
+                    '../../templates/email-personal-travel-template.html';
+            } elseif (
+                $travel_type == 'International' &&
+                ($travellers == 'Single' || ($travellers = ''))
+            ) {
+                $email_template =
+                    '../../templates/email-personal-travel-template1.html';
             } elseif (
                 ($travel_type == 'Domestic' || $travel_type == 'Others') &&
                 ($travellers == 'Family' || $travellers == 'Group')
             ) {
-                $email_template = '../../templates/email-personal-travel-template2.html';
+                $email_template =
+                    '../../templates/email-personal-travel-template2.html';
             } else {
-                $email_template = '../../templates/email-personal-travel-template3.html';
+                $email_template =
+                    '../../templates/email-personal-travel-template3.html';
             }
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
@@ -1575,7 +2500,10 @@ class Mailrecord_model extends CI_Model
                     $members = 'N/A';
                 }
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -1585,49 +2513,145 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##TRAVEL-TYPE##', $travel_type, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TRAVEL-TYPE##',
+                    $travel_type,
+                    $email_body,
+                );
                 $email_body = str_replace('##PURPOSE##', $purpose, $email_body);
-                $email_body = str_replace('##FROM-DATE##', $from_date, $email_body);
+                $email_body = str_replace(
+                    '##FROM-DATE##',
+                    $from_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##TO-DATE##', $to_date, $email_body);
-                $email_body = str_replace('##FROM-PLACE##', $from_place, $email_body);
-                $email_body = str_replace('##ISSUED-DATE##', $issued_date, $email_body);
-                $email_body = str_replace('##ISSUED-PLACE##', $issued_place_place, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
-                $email_body = str_replace('##FROM-ADDRESS##', $from_address, $email_body);
-                $email_body = str_replace('##TRAVELLERS##', $travellers, $email_body);
-                $email_body = str_replace('##TO-PLACE##', $to_place, $email_body);
+                $email_body = str_replace(
+                    '##FROM-PLACE##',
+                    $from_place,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ISSUED-DATE##',
+                    $issued_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ISSUED-PLACE##',
+                    $issued_place_place,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##FROM-ADDRESS##',
+                    $from_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TRAVELLERS##',
+                    $travellers,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TO-PLACE##',
+                    $to_place,
+                    $email_body,
+                );
                 $email_body = str_replace('##MEMBERS##', $members, $email_body);
-                $email_body = str_replace('##TO-ADDRESS##', $to_address, $email_body);
-                $email_body = str_replace('##VISA-TYPE##', $visa_type, $email_body);
-                $email_body = str_replace('##VISA-NUMBER##', $visa_number, $email_body);
-                $email_body = str_replace('##ISSUED-DATE##', $issued_date, $email_body);
-                $email_body = str_replace('##ISSUED-PLACE##', $issued_place, $email_body);
-                $email_body = str_replace('##VALID-TO##', $valid_to, $email_body);
-                $email_body = str_replace('##PORT##', $port_of_entry, $email_body);
-                $email_body = str_replace('##STATUS##', $document_status, $email_body);
+                $email_body = str_replace(
+                    '##TO-ADDRESS##',
+                    $to_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##VISA-TYPE##',
+                    $visa_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##VISA-NUMBER##',
+                    $visa_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ISSUED-DATE##',
+                    $issued_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ISSUED-PLACE##',
+                    $issued_place,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##VALID-TO##',
+                    $valid_to,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PORT##',
+                    $port_of_entry,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##STATUS##',
+                    $document_status,
+                    $email_body,
+                );
                 $email_body = str_replace('##MODE##', $mode, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_warranty_select($document_id_arr, $record_id, $table_bg, $tr_bg, $document_type, $addtext)
-    {
+    public function get_warranty_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $document_type,
+        $addtext,
+    ) {
         $record_type_id = 13;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_DEVICES);
         if (count($qry ?? []) > 0) {
             if ($document_type == 'Warranty') {
-                $email_template = '../../templates/email-personal-devices-template.html';
+                $email_template =
+                    '../../templates/email-personal-devices-template.html';
             } else {
-                $email_template = '../../templates/email-personal-devices-template1.html';
+                $email_template =
+                    '../../templates/email-personal-devices-template1.html';
             }
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
@@ -1651,11 +2675,16 @@ class Mailrecord_model extends CI_Model
                 $warranty_type = stripslashes($rec['WarrantyType']);
                 $warranty_status = stripslashes($rec['WarrantyStatus']);
                 $expiry_date = stripslashes($rec['ExpiryDate']);
-                $contact_phone_number = stripslashes($rec['ContactPhoneNumber']);
+                $contact_phone_number = stripslashes(
+                    $rec['ContactPhoneNumber'],
+                );
                 $contact_email = stripslashes($rec['ContactEmail']);
                 $notes = stripslashes($rec['Notes']);
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -1665,49 +2694,137 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##DEVICE-NAME##', $device_name, $email_body);
-                $email_body = str_replace('##DEVICE-TYPE##', $device_type, $email_body);
-                $email_body = str_replace('##PURCHASE-DATE##', $device_type, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DEVICE-NAME##',
+                    $device_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DEVICE-TYPE##',
+                    $device_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PURCHASE-DATE##',
+                    $device_type,
+                    $email_body,
+                );
                 $email_body = str_replace('##BRAND##', $brand, $email_body);
                 $email_body = str_replace('##MODEL##', $model, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
                 $email_body = str_replace('##PURPOSE##', $purpose, $email_body);
                 $email_body = str_replace('##COST##', $cost, $email_body);
-                $email_body = str_replace('##REFERENCE-NUMBER##', $reference_number, $email_body);
-                $email_body = str_replace('##AGENCY-NAME##', $agency_name, $email_body);
-                $email_body = str_replace('##LOCK-ID##', $lock_user_id, $email_body);
-                $email_body = str_replace('##PASSWORD##', $lock_password, $email_body);
-                $email_body = str_replace('##LOCATION##', $agency_location, $email_body);
+                $email_body = str_replace(
+                    '##REFERENCE-NUMBER##',
+                    $reference_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##AGENCY-NAME##',
+                    $agency_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##LOCK-ID##',
+                    $lock_user_id,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PASSWORD##',
+                    $lock_password,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##LOCATION##',
+                    $agency_location,
+                    $email_body,
+                );
                 $email_body = str_replace('##ADDRESS##', $address, $email_body);
                 $email_body = str_replace('##COUNTRY##', $country, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##OWNERSHIP-TYPE##', $ownership_type, $email_body);
-                $email_body = str_replace('##WARRANTY-TYPE##', $warranty_type, $email_body);
-                $email_body = str_replace('##STATUS##', $warranty_status, $email_body);
-                $email_body = str_replace('##EXPIRY-DATE##', $expiry_date, $email_body);
-                $email_body = str_replace('##CONTACT-NUMBER##', $contact_phone_number, $email_body);
-                $email_body = str_replace('##EMAIL##', $contact_email, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##OWNERSHIP-TYPE##',
+                    $ownership_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##WARRANTY-TYPE##',
+                    $warranty_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##STATUS##',
+                    $warranty_status,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##EXPIRY-DATE##',
+                    $expiry_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CONTACT-NUMBER##',
+                    $contact_phone_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##EMAIL##',
+                    $contact_email,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_events_select($document_id_arr, $record_id, $table_bg, $tr_bg, $event_type, $addtext)
-    {
+    public function get_events_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $event_type,
+        $addtext,
+    ) {
         $record_type_id = 42;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_PERSONALEVENTS);
         if (count($qry ?? []) > 0) {
             if ($event_type == 'Wishes') {
-                $email_template = '../../templates/email-personal-Events-template1.html';
+                $email_template =
+                    '../../templates/email-personal-Events-template1.html';
             } else {
-                $email_template = '../../templates/email-personal-Events-template.html';
+                $email_template =
+                    '../../templates/email-personal-Events-template.html';
             }
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
@@ -1723,7 +2840,10 @@ class Mailrecord_model extends CI_Model
                 $document_type = stripslashes($rec['DocumentType']);
                 $notes = stripslashes($rec['Notes']);
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -1733,21 +2853,57 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
                 $time = $hours . ':' . $minutes;
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##EVENT-TYPE##', $event_type, $email_body);
-                $email_body = str_replace('##EVENT-NAME##', $event_name, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##EVENT-TYPE##',
+                    $event_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##EVENT-NAME##',
+                    $event_name,
+                    $email_body,
+                );
                 $email_body = str_replace('##MESSAGE##', $message, $email_body);
-                $email_body = str_replace('##LOCATION##', $location, $email_body);
+                $email_body = str_replace(
+                    '##LOCATION##',
+                    $location,
+                    $email_body,
+                );
                 $email_body = str_replace('##ADDRESS##', $address, $email_body);
                 $email_body = str_replace('##DATE##', $date, $email_body);
-                $email_body = str_replace('##STATUS##', $document_status, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
+                $email_body = str_replace(
+                    '##STATUS##',
+                    $document_status,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
                 $email_body = str_replace('##TIME##', $time, $email_body);
 
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
@@ -1768,13 +2924,17 @@ class Mailrecord_model extends CI_Model
         $qry = $this->mongodb->get(TBL_CONTACTS);
         if (count($qry ?? []) > 0) {
             if ($contact_type == 'Group' && !($category == 'Personal')) {
-                $email_template = '../../templates/email-professional-contacts-template.html';
+                $email_template =
+                    '../../templates/email-professional-contacts-template.html';
             } elseif (!($contact_type == 'Group') && $category == 'Personal') {
-                $email_template = '../../templates/email-professional-contacts-template3.html';
+                $email_template =
+                    '../../templates/email-professional-contacts-template3.html';
             } elseif ($contact_type == 'Group' && $category == 'Personal') {
-                $email_template = '../../templates/email-professional-contacts-template2.html';
+                $email_template =
+                    '../../templates/email-professional-contacts-template2.html';
             } else {
-                $email_template = '../../templates/email-professional-contacts-template4.html';
+                $email_template =
+                    '../../templates/email-professional-contacts-template4.html';
             }
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
@@ -1799,7 +2959,10 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 $group = stripslashes($rec['GroupName']);
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -1808,38 +2971,117 @@ class Mailrecord_model extends CI_Model
                 } else {
                     $attachments = 'No Attachments';
                 }
-                $medicine_loop_str = $this->get_pro_contact_related_html($document_id_arr, $user_id, $record_id);
+                $medicine_loop_str = $this->get_pro_contact_related_html(
+                    $document_id_arr,
+                    $user_id,
+                    $record_id,
+                );
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##CONTACT-TYPE##', $contact_type, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CONTACT-TYPE##',
+                    $contact_type,
+                    $email_body,
+                );
                 $email_body = str_replace('##NAME##', $name, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
-                $email_body = str_replace('##DESIGNATION##', $designation, $email_body);
-                $email_body = str_replace('##ORGANISATION-NAME##', $organisation_name, $email_body);
-                $email_body = str_replace('##MOBILE-PHONE##', $mobile_phone, $email_body);
-                $email_body = str_replace('##ALTERNATE-PHONE##', $alternate_phone, $email_body);
-                $email_body = str_replace('##OFFICE-PHONE##', $office_phone, $email_body);
-                $email_body = str_replace('##LOCATION##', $location, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DESIGNATION##',
+                    $designation,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ORGANISATION-NAME##',
+                    $organisation_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##MOBILE-PHONE##',
+                    $mobile_phone,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ALTERNATE-PHONE##',
+                    $alternate_phone,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##OFFICE-PHONE##',
+                    $office_phone,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##LOCATION##',
+                    $location,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
                 $email_body = str_replace('##ADDRESS##', $address, $email_body);
-                $email_body = str_replace('##OFFICIAL-EMAIL##', $office_email, $email_body);
-                $email_body = str_replace('##PERSONAL-EMAIL##', $personal_email, $email_body);
-                $email_body = str_replace('##STATUS##', $contact_status, $email_body);
-                $email_body = str_replace('##HOME-ADDRESS##', $home_address, $email_body);
+                $email_body = str_replace(
+                    '##OFFICIAL-EMAIL##',
+                    $office_email,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PERSONAL-EMAIL##',
+                    $personal_email,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##STATUS##',
+                    $contact_status,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##HOME-ADDRESS##',
+                    $home_address,
+                    $email_body,
+                );
                 $email_body = str_replace('##COUNTRY##', $country, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
                 $email_body = str_replace('##GROUP##', $group, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
-                $email_body = str_replace('##MEDICINE-LOOP##', $medicine_loop_str, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##MEDICINE-LOOP##',
+                    $medicine_loop_str,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_pro_contact_related_html($document_id_arr, $user_id, $parent_record_id)
-    {
+    public function get_pro_contact_related_html(
+        $document_id_arr,
+        $user_id,
+        $parent_record_id,
+    ) {
         global $record_type_id, $user_email;
         $html_content = '';
 
@@ -1849,7 +3091,8 @@ class Mailrecord_model extends CI_Model
         $output_str = '';
         if ($res->num_rows() > 0) {
             foreach ($res->result_array() as $rec) {
-                $print_template = '../../templates/email-professional-contacts-template1.html';
+                $print_template =
+                    '../../templates/email-professional-contacts-template1.html';
                 $html_content = read_file($print_template);
 
                 $record_id = $rec['RecordId'];
@@ -1864,31 +3107,54 @@ class Mailrecord_model extends CI_Model
                 if ($document_id_arr == '-1') {
                     get_document_email_links(40, $record_id);
                 } elseif (count($document_id_arr ?? []) > 0) {
-                    $attachments = get_document_email_links_by_id_arr($document_id_arr, 40, $record_id);
+                    $attachments = get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        40,
+                        $record_id,
+                    );
                 } else {
-                    $attachments = '<i>No documents are attached to this record</i>';
+                    $attachments =
+                        '<i>No documents are attached to this record</i>';
                 }
 
                 $html_content = str_replace('##NAME##', $name, $html_content);
-                $html_content = str_replace('##MOBILE##', $mobile, $html_content);
+                $html_content = str_replace(
+                    '##MOBILE##',
+                    $mobile,
+                    $html_content,
+                );
                 $html_content = str_replace('##EMAIL##', $email, $html_content);
                 $html_content = str_replace('##NOTES##', $notes, $html_content);
-                $html_content = str_replace('##HEADER-TITLE##', $header_title, $html_content);
-                $html_content = str_replace('##ATTACHMENTS##', $attachments, $html_content);
+                $html_content = str_replace(
+                    '##HEADER-TITLE##',
+                    $header_title,
+                    $html_content,
+                );
+                $html_content = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $html_content,
+                );
                 $output_str .= $html_content;
             }
         }
         return $output_str;
     }
 
-    public function get_employment_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
-    {
+    public function get_employment_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+    ) {
         $record_type_id = 15;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_EMPLOYMENT);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-professional-employment-template.html';
+            $email_template =
+                '../../templates/email-professional-employment-template.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
                 $document_type = stripslashes($rec['DocumentType']);
@@ -1938,7 +3204,10 @@ class Mailrecord_model extends CI_Model
                     $reference_2 .= ', ' . $ref_mobile_2;
                 }
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -1948,39 +3217,106 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##EMPLOYMENT-TYPE##', $employment_type, $email_body);
-                $email_body = str_replace('##EMPLOYEE-ID##', $employee_id, $email_body);
-                $email_body = str_replace('##DESIGNATION##', $designation, $email_body);
-                $email_body = str_replace('##ORGANISATION-NAME##', $organisation_name, $email_body);
-                $email_body = str_replace('##ISSUED-DATE##', $issued_date, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##EMPLOYMENT-TYPE##',
+                    $employment_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##EMPLOYEE-ID##',
+                    $employee_id,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DESIGNATION##',
+                    $designation,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ORGANISATION-NAME##',
+                    $organisation_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ISSUED-DATE##',
+                    $issued_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##PLACE##', $place, $email_body);
 
                 $email_body = str_replace('##ADDRESS##', $address, $email_body);
-                $email_body = str_replace('##STATUS##', $employment_status, $email_body);
+                $email_body = str_replace(
+                    '##STATUS##',
+                    $employment_status,
+                    $email_body,
+                );
                 $email_body = str_replace('##COUNTRY##', $country, $email_body);
-                $email_body = str_replace('##FROM-DATE##', $from_date, $email_body);
-                $email_body = str_replace('##EFFECTED-DATE##', $to_date, $email_body);
-                $email_body = str_replace('##REFERENCE-1##', $reference_1, $email_body);
-                $email_body = str_replace('##REFERENCE-2##', $reference_2, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##FROM-DATE##',
+                    $from_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##EFFECTED-DATE##',
+                    $to_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##REFERENCE-1##',
+                    $reference_1,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##REFERENCE-2##',
+                    $reference_2,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_proprojects_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext, $sub_id_arr)
-    {
+    public function get_proprojects_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+        $sub_id_arr,
+    ) {
         $record_type_id = 16;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_PROJECTS);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-professional-projects-template.html';
+            $email_template =
+                '../../templates/email-professional-projects-template.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
                 $record_id = $rec['RecordId'];
@@ -2032,7 +3368,10 @@ class Mailrecord_model extends CI_Model
                     $reference_2 .= ', ' . $ref_mobile_2;
                 }
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -2041,43 +3380,126 @@ class Mailrecord_model extends CI_Model
                 } else {
                     $attachments = 'No Attachments';
                 }
-                $task_loop_str = $this->get_project_task_html($document_id_arr, $user_id, $record_id, $sub_id_arr);
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##PROJECT-TYPE##', $project_type, $email_body);
-                $email_body = str_replace('##PROJECT-NAME##', $project_name, $email_body);
-                $email_body = str_replace('##TEAM-SIZE##', $team_size, $email_body);
+                $task_loop_str = $this->get_project_task_html(
+                    $document_id_arr,
+                    $user_id,
+                    $record_id,
+                    $sub_id_arr,
+                );
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PROJECT-TYPE##',
+                    $project_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PROJECT-NAME##',
+                    $project_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TEAM-SIZE##',
+                    $team_size,
+                    $email_body,
+                );
                 $email_body = str_replace('##ROLE##', $role, $email_body);
-                $email_body = str_replace('##CLIENT-NAME##', $client_name, $email_body);
-                $email_body = str_replace('##ORGANISATION##', $organisation, $email_body);
-                $email_body = str_replace('##DESCRIPTION##', $description, $email_body);
-                $email_body = str_replace('##RESPONSIBILITIES##', $responsibilities, $email_body);
-                $email_body = str_replace('##FROM-DATE##', $from_date, $email_body);
+                $email_body = str_replace(
+                    '##CLIENT-NAME##',
+                    $client_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ORGANISATION##',
+                    $organisation,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DESCRIPTION##',
+                    $description,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##RESPONSIBILITIES##',
+                    $responsibilities,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##FROM-DATE##',
+                    $from_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##TO-DATE##', $to_date, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
                 $email_body = str_replace('##STATUS##', $status, $email_body);
-                $email_body = str_replace('##INDUSTRY##', $industry, $email_body);
+                $email_body = str_replace(
+                    '##INDUSTRY##',
+                    $industry,
+                    $email_body,
+                );
                 $email_body = str_replace('##DOMAIN##', $domain, $email_body);
-                $email_body = str_replace('##REFERENCE-1##', $reference_1, $email_body);
-                $email_body = str_replace('##REFERENCE-2##', $reference_2, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##REFERENCE-1##',
+                    $reference_1,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##REFERENCE-2##',
+                    $reference_2,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
-                $email_body = str_replace('##TASK-LOOP##', $task_loop_str, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TASK-LOOP##',
+                    $task_loop_str,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_skills_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
-    {
+    public function get_skills_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+    ) {
         $record_type_id = 17;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_SKILLS);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-professional-skills-template.html';
+            $email_template =
+                '../../templates/email-professional-skills-template.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
                 $skill_type = stripslashes($rec['SkillType']);
@@ -2097,7 +3519,10 @@ class Mailrecord_model extends CI_Model
                 $from_date = $this->date_format_short($from_date);
                 $to_date = $this->date_format_short($to_date);
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -2107,39 +3532,95 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##SKILL-TYPE##', $skill_type, $email_body);
-                $email_body = str_replace('##SKILL-NAME##', $skill_name, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##SKILL-TYPE##',
+                    $skill_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##SKILL-NAME##',
+                    $skill_name,
+                    $email_body,
+                );
                 $email_body = str_replace('##TOOLS##', $tools, $email_body);
                 $email_body = str_replace('##VERSION##', $version, $email_body);
-                $email_body = str_replace('##FROM-DATE##', $from_date, $email_body);
+                $email_body = str_replace(
+                    '##FROM-DATE##',
+                    $from_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##TO-DATE##', $to_date, $email_body);
-                $email_body = str_replace('##PROFICIENCY##', $proficiency, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##PROJECT-NAME##', $project_name, $email_body);
-                $email_body = str_replace('##ORGANISATION##', $organisation, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
+                $email_body = str_replace(
+                    '##PROFICIENCY##',
+                    $proficiency,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PROJECT-NAME##',
+                    $project_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ORGANISATION##',
+                    $organisation,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
                 $email_body = str_replace('##ADDRESS##', $address, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_apps_select($document_id_arr, $record_id, $table_bg, $tr_bg, $password_change_status, $addtext)
-    {
+    public function get_apps_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $password_change_status,
+        $addtext,
+    ) {
         $record_type_id = 18;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_APPS);
         if (count($qry ?? []) > 0) {
             if ($password_change_status == 'Required') {
-                $email_template = '../../templates/email-professional-apps-template.html';
+                $email_template =
+                    '../../templates/email-professional-apps-template.html';
             } else {
-                $email_template = '../../templates/email-professional-apps-template1.html';
+                $email_template =
+                    '../../templates/email-professional-apps-template1.html';
             }
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
@@ -2156,12 +3637,19 @@ class Mailrecord_model extends CI_Model
                 $password = stripslashes($rec['Password']);
                 $alt_email = stripslashes($rec['AlternateEmail']);
                 $alt_mobile = stripslashes($rec['AlternatePhone']);
-                $password_change_status = stripslashes($rec['PasswordChangeStatus']);
-                $new_password_change_date = stripslashes($rec['NextPasswordChangeDate']);
+                $password_change_status = stripslashes(
+                    $rec['PasswordChangeStatus'],
+                );
+                $new_password_change_date = stripslashes(
+                    $rec['NextPasswordChangeDate'],
+                );
                 $period = stripslashes($rec['Period']);
                 $notes = stripslashes($rec['Notes']);
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -2171,40 +3659,110 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##APP-TYPE##', $app_type, $email_body);
-                $email_body = str_replace('##APP-NAME##', $app_name, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##APP-TYPE##',
+                    $app_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##APP-NAME##',
+                    $app_name,
+                    $email_body,
+                );
                 $email_body = str_replace('##USAGE##', $usage, $email_body);
-                $email_body = str_replace('##DESCRIPTION##', $description, $email_body);
+                $email_body = str_replace(
+                    '##DESCRIPTION##',
+                    $description,
+                    $email_body,
+                );
                 $email_body = str_replace('##STATUS##', $status, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
                 $email_body = str_replace('##URL##', $url, $email_body);
-                $email_body = str_replace('##SERVICE-TYPE##', $service_type, $email_body);
-                $email_body = str_replace('##USERNAME##', $username, $email_body);
-                $email_body = str_replace('##PASSWORD##', $password, $email_body);
-                $email_body = str_replace('##ALT-EMAIL##', $alt_email, $email_body);
-                $email_body = str_replace('##ALT-MOBILE##', $alt_mobile, $email_body);
-                $email_body = str_replace('##PASSWORD-CHANGE-STATUS##', $password_change_status, $email_body);
-                $email_body = str_replace('##NEXT-PASSWORD-CHANGE-DATE##', $new_password_change_date, $email_body);
+                $email_body = str_replace(
+                    '##SERVICE-TYPE##',
+                    $service_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##USERNAME##',
+                    $username,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PASSWORD##',
+                    $password,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ALT-EMAIL##',
+                    $alt_email,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ALT-MOBILE##',
+                    $alt_mobile,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PASSWORD-CHANGE-STATUS##',
+                    $password_change_status,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##NEXT-PASSWORD-CHANGE-DATE##',
+                    $new_password_change_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##PERIOD##', $period, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_resume_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
-    {
+    public function get_resume_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+    ) {
         $record_type_id = 38;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_RESUME);
         if (count($rec ?? []) > 0) {
-            $email_template = '../../templates/email-professional-resume-template.html';
+            $email_template =
+                '../../templates/email-professional-resume-template.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
                 $ResumeType = stripslashes($rec['ResumeType']);
@@ -2223,7 +3781,10 @@ class Mailrecord_model extends CI_Model
                 $Mobile = stripslashes($rec['Mobile']);
                 $Summary = stripslashes($rec['Summary']);
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -2233,38 +3794,105 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##ResumeType##', $ResumeType, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ResumeType##',
+                    $ResumeType,
+                    $email_body,
+                );
                 $email_body = str_replace('##Name##', $Name, $email_body);
-                $email_body = str_replace('##FromDate##', $FromDate, $email_body);
+                $email_body = str_replace(
+                    '##FromDate##',
+                    $FromDate,
+                    $email_body,
+                );
                 $email_body = str_replace('##ToDate##', $ToDate, $email_body);
-                $email_body = str_replace('##CurrentRole##', $CurrentRole, $email_body);
-                $email_body = str_replace('##ExpectedRole##', $ExpectedRole, $email_body);
-                $email_body = str_replace('##CurrentCTC##', $CurrentCTC, $email_body);
-                $email_body = str_replace('##FunctionalArea##', $FunctionalArea, $email_body);
-                $email_body = str_replace('##Industry##', $Industry, $email_body);
-                $email_body = str_replace('##ExpectedCTC##', $ExpectedCTC, $email_body);
-                $email_body = str_replace('##ExpectedPlace##', $ExpectedPlace, $email_body);
-                $email_body = str_replace('##KeySkills##', $KeySkills, $email_body);
-                $email_body = str_replace('##AlternateEmail##', $AlternateEmail, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##CurrentRole##',
+                    $CurrentRole,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ExpectedRole##',
+                    $ExpectedRole,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CurrentCTC##',
+                    $CurrentCTC,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##FunctionalArea##',
+                    $FunctionalArea,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##Industry##',
+                    $Industry,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ExpectedCTC##',
+                    $ExpectedCTC,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ExpectedPlace##',
+                    $ExpectedPlace,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##KeySkills##',
+                    $KeySkills,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##AlternateEmail##',
+                    $AlternateEmail,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##Mobile##', $Mobile, $email_body);
                 $email_body = str_replace('##Summary##', $Summary, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_medicaltest_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext, $sub_id_arr)
-    {
+    public function get_medicaltest_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+        $sub_id_arr,
+    ) {
         $record_type_id = 19;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_MEDMEDICALTEST);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-medical-test-template.html';
+            $email_template =
+                '../../templates/email-medical-test-template.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
                 $user_id = stripslashes($rec['UserId']);
@@ -2282,14 +3910,23 @@ class Mailrecord_model extends CI_Model
                 $report_date = stripslashes($rec['ReportDate']);
                 $report_summary = stripslashes($rec['ReportSummary']);
                 $description = stripslashes($rec['DetailedDescription']);
-                $diagnostic_center_name = stripslashes($rec['DiagnosticCenterName']);
-                $diagnostic_center_place = stripslashes($rec['DiagnosticCenterPlace']);
-                $diagnostic_center_address = stripslashes($rec['DiagnosticCenterAddress']);
+                $diagnostic_center_name = stripslashes(
+                    $rec['DiagnosticCenterName'],
+                );
+                $diagnostic_center_place = stripslashes(
+                    $rec['DiagnosticCenterPlace'],
+                );
+                $diagnostic_center_address = stripslashes(
+                    $rec['DiagnosticCenterAddress'],
+                );
                 $status = stripslashes($rec['Status']);
                 $retest_date = stripslashes($rec['StatusDate']);
                 $notes = stripslashes($rec['Notes']);
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -2298,47 +3935,144 @@ class Mailrecord_model extends CI_Model
                 } else {
                     $attachments = 'No Attachments';
                 }
-                $test_loop_str = $this->get_med_test_test_html($document_id_arr, $user_id, $record_id, $sub_id_arr);
+                $test_loop_str = $this->get_med_test_test_html(
+                    $document_id_arr,
+                    $user_id,
+                    $record_id,
+                    $sub_id_arr,
+                );
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##TEST-TYPE##', $test_type, $email_body);
-                $email_body = str_replace('##TEST-NAME##', $test_name, $email_body);
-                $email_body = str_replace('##DOC-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##REF-NUM##', $reference_number, $email_body);
-                $email_body = str_replace('##PATIENT-NAME##', $patient_name, $email_body);
-                $email_body = str_replace('##REF-BY##', $referred_by, $email_body);
-                $email_body = str_replace('##DOC-NAME##', $doctor_name, $email_body);
-                $email_body = str_replace('##DOC-ADDRESS##', $doctor_address, $email_body);
-                $email_body = str_replace('##TEST-DATE##', $test_date, $email_body);
-                $email_body = str_replace('##REPORT-DATE##', $report_date, $email_body);
-                $email_body = str_replace('##REPORT-SUMMARY##', $report_summary, $email_body);
-                $email_body = str_replace('##DESCRIPTION##', $description, $email_body);
-                $email_body = str_replace('##DIAG-NAME##', $diagnostic_center_name, $email_body);
-                $email_body = str_replace('##DIAG-PLACE##', $diagnostic_center_place, $email_body);
-                $email_body = str_replace('##DIAG-ADDRESS##', $diagnostic_center_address, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TEST-TYPE##',
+                    $test_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TEST-NAME##',
+                    $test_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOC-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##REF-NUM##',
+                    $reference_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PATIENT-NAME##',
+                    $patient_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##REF-BY##',
+                    $referred_by,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOC-NAME##',
+                    $doctor_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOC-ADDRESS##',
+                    $doctor_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TEST-DATE##',
+                    $test_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##REPORT-DATE##',
+                    $report_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##REPORT-SUMMARY##',
+                    $report_summary,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DESCRIPTION##',
+                    $description,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DIAG-NAME##',
+                    $diagnostic_center_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DIAG-PLACE##',
+                    $diagnostic_center_place,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DIAG-ADDRESS##',
+                    $diagnostic_center_address,
+                    $email_body,
+                );
                 $email_body = str_replace('##STATUS##', $status, $email_body);
-                $email_body = str_replace('##RETEST-DATE##', $retest_date, $email_body);
+                $email_body = str_replace(
+                    '##RETEST-DATE##',
+                    $retest_date,
+                    $email_body,
+                );
 
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
-                $email_body = str_replace('##TEST-LOOP##', $test_loop_str, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TEST-LOOP##',
+                    $test_loop_str,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_med_test_test_html($document_id_arr, $user_id, $parent_record_id, $sub_id_arr)
-    {
+    public function get_med_test_test_html(
+        $document_id_arr,
+        $user_id,
+        $parent_record_id,
+        $sub_id_arr,
+    ) {
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
             for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
+                $this->mongodb->where([
+                    'RecordId' => mongo_id($sub_id_arr[$i]),
+                    'UserId' => mongo_id($user_id),
+                ]);
                 $qry = $this->mongodb->get('MedMedicalTestRecords');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
-                        $print_template = '../../templates/email-medical-test-test.html';
+                        $print_template =
+                            '../../templates/email-medical-test-test.html';
                         $html_content = $this->read_file($print_template);
 
                         $record_id = $rec['RecordId'];
@@ -2346,31 +4080,86 @@ class Mailrecord_model extends CI_Model
                         $test_type = stripslashes($rec['TestType']);
                         $test_name = stripslashes($rec['TestName']);
                         $test_date = stripslashes($rec['TestDate']);
-                        $diagnostic_center_name = stripslashes($rec['DiagnosticCenterName']);
+                        $diagnostic_center_name = stripslashes(
+                            $rec['DiagnosticCenterName'],
+                        );
                         $diagnostic_center_place = stripslashes($rec['Place']);
-                        $diagnostic_center_address = stripslashes($rec['Address']);
+                        $diagnostic_center_address = stripslashes(
+                            $rec['Address'],
+                        );
                         $report_date = stripslashes($rec['ReportDate']);
                         $notes = stripslashes($rec['Notes']);
                         $header_title = "Medical Test | $test_date | $diagnostic_center_name";
 
                         if ($document_id_arr == '-1') {
-                            $attachments = $this->get_document_email_links(23, $record_id);
-                        } elseif (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                            $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, 23, $record_id);
+                            $attachments = $this->get_document_email_links(
+                                23,
+                                $record_id,
+                            );
+                        } elseif (
+                            !empty($document_id_arr) &&
+                            count($document_id_arr ?? []) > 0
+                        ) {
+                            $attachments = $this->get_document_email_links_by_id_arr(
+                                $document_id_arr,
+                                23,
+                                $record_id,
+                            );
                         } else {
-                            $attachments = '<i>No documents are attached to this record</i>';
+                            $attachments =
+                                '<i>No documents are attached to this record</i>';
                         }
 
-                        $html_content = str_replace('##TEST-TYPE##', $test_type, $html_content);
-                        $html_content = str_replace('##TEST-NAME##', $test_name, $html_content);
-                        $html_content = str_replace('##TEST-DATE##', $test_date, $html_content);
-                        $html_content = str_replace('##DIAG-CENTER-NAME##', $diagnostic_center_name, $html_content);
-                        $html_content = str_replace('##REPORT-DATE##', $report_date, $html_content);
-                        $html_content = str_replace('##PLACE##', $diagnostic_center_place, $html_content);
-                        $html_content = str_replace('##ADDRESS##', $diagnostic_center_address, $html_content);
-                        $html_content = str_replace('##NOTES##', $notes, $html_content);
-                        $html_content = str_replace('##HEADER-TITLE##', $header_title, $html_content);
-                        $html_content = str_replace('##ATTACHMENTS##', $attachments, $html_content);
+                        $html_content = str_replace(
+                            '##TEST-TYPE##',
+                            $test_type,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##TEST-NAME##',
+                            $test_name,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##TEST-DATE##',
+                            $test_date,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##DIAG-CENTER-NAME##',
+                            $diagnostic_center_name,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##REPORT-DATE##',
+                            $report_date,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##PLACE##',
+                            $diagnostic_center_place,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##ADDRESS##',
+                            $diagnostic_center_address,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##NOTES##',
+                            $notes,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##HEADER-TITLE##',
+                            $header_title,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##ATTACHMENTS##',
+                            $attachments,
+                            $html_content,
+                        );
 
                         $output_str .= $html_content;
                     }
@@ -2380,14 +4169,21 @@ class Mailrecord_model extends CI_Model
         return $output_str;
     }
 
-    public function get_prescription_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext, $sub_id_arr)
-    {
+    public function get_prescription_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+        $sub_id_arr,
+    ) {
         $record_type_id = 20;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_MEDPRESCRIPTION);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-medical-prescription-template.html';
+            $email_template =
+                '../../templates/email-medical-prescription-template.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
                 $record_id = $rec['RecordId'];
@@ -2409,7 +4205,10 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 $patient_name = stripslashes($rec['PatientName']);
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -2426,35 +4225,98 @@ class Mailrecord_model extends CI_Model
                     $sub_id_arr,
                 );
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##PRESCRIPTION-TYPE##', $prescription_type, $email_body);
-                $email_body = str_replace('##DISEASE-NAME##', $diesease_name, $email_body);
-                $email_body = str_replace('##MEDICINE-NAME##', $medicine_name, $email_body);
-                $email_body = str_replace('##MEDICINE-TYPE##', $medicine_type, $email_body);
-                $email_body = str_replace('##DOC-NAME##', $doctor_name, $email_body);
-                $email_body = str_replace('##DOC-ADDRESS##', $doctor_address, $email_body);
-                $email_body = str_replace('##FROM-DATE##', $from_date, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PRESCRIPTION-TYPE##',
+                    $prescription_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DISEASE-NAME##',
+                    $diesease_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##MEDICINE-NAME##',
+                    $medicine_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##MEDICINE-TYPE##',
+                    $medicine_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOC-NAME##',
+                    $doctor_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOC-ADDRESS##',
+                    $doctor_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##FROM-DATE##',
+                    $from_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##TO-DATE##', $to_date, $email_body);
                 $email_body = str_replace('##USAGE##', $usage_str, $email_body);
                 $email_body = str_replace('##DOSE##', $dose, $email_body);
-                $email_body = str_replace('##FREQUENCY1##', $frequency1, $email_body);
+                $email_body = str_replace(
+                    '##FREQUENCY1##',
+                    $frequency1,
+                    $email_body,
+                );
                 $email_body = str_replace('##TIMES1##', $times1, $email_body);
-                $email_body = str_replace('##SPECIAL-CONDITIONS##', $special_conditions, $email_body);
+                $email_body = str_replace(
+                    '##SPECIAL-CONDITIONS##',
+                    $special_conditions,
+                    $email_body,
+                );
                 $email_body = str_replace('##SYMPTOM##', $symptom, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##PATIENT-NAME##', $patient_name, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##PATIENT-NAME##',
+                    $patient_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
 
-                $email_body = str_replace('##MEDICINE-LOOP##', $medicine_loop_str, $email_body);
+                $email_body = str_replace(
+                    '##MEDICINE-LOOP##',
+                    $medicine_loop_str,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_med_prescription_prescription_html($document_id_arr, $user_id, $parent_record_id)
-    {
+    public function get_med_prescription_prescription_html(
+        $document_id_arr,
+        $user_id,
+        $parent_record_id,
+    ) {
         global $record_type_id, $user_email;
         $html_content = '';
 
@@ -2463,7 +4325,8 @@ class Mailrecord_model extends CI_Model
         $output_str = '';
         if ($res->num_rows() > 0) {
             foreach ($res->result_array() as $rec) {
-                $print_template = '../../templates/email-medical-prescription-prescription.html';
+                $print_template =
+                    '../../templates/email-medical-prescription-prescription.html';
                 $html_content = $this->read_file($print_template);
 
                 $record_id = $rec['RecordId'];
@@ -2484,46 +4347,113 @@ class Mailrecord_model extends CI_Model
                 $header_title = "Prescription | $medicine_name | $medicine_type";
 
                 if ($document_id_arr == '-1') {
-                    $attachments = $this->get_document_email_links(25, $record_id);
-                } elseif (count($document_id_arr ?? []) > 0 && !empty($document_id_arr)) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, 25, $record_id);
+                    $attachments = $this->get_document_email_links(
+                        25,
+                        $record_id,
+                    );
+                } elseif (
+                    count($document_id_arr ?? []) > 0 &&
+                    !empty($document_id_arr)
+                ) {
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        25,
+                        $record_id,
+                    );
                 } else {
-                    $attachments = '<i>No documents are attached to this record</i>';
+                    $attachments =
+                        '<i>No documents are attached to this record</i>';
                 }
 
-                $html_content = str_replace('##MEDICINE-NAME##', $medicine_name, $html_content);
-                $html_content = str_replace('##MEDICINE-TYPE##', $medicine_type, $html_content);
-                $html_content = str_replace('##DOC-NAME##', $doctor_name, $html_content);
-                $html_content = str_replace('##DOC-ADDRESS##', $doctor_address, $html_content);
-                $html_content = str_replace('##FROM-DATE##', $from_date, $html_content);
-                $html_content = str_replace('##TO-DATE##', $to_date, $html_content);
-                $html_content = str_replace('##FREQUENCY##', $frequency, $html_content);
+                $html_content = str_replace(
+                    '##MEDICINE-NAME##',
+                    $medicine_name,
+                    $html_content,
+                );
+                $html_content = str_replace(
+                    '##MEDICINE-TYPE##',
+                    $medicine_type,
+                    $html_content,
+                );
+                $html_content = str_replace(
+                    '##DOC-NAME##',
+                    $doctor_name,
+                    $html_content,
+                );
+                $html_content = str_replace(
+                    '##DOC-ADDRESS##',
+                    $doctor_address,
+                    $html_content,
+                );
+                $html_content = str_replace(
+                    '##FROM-DATE##',
+                    $from_date,
+                    $html_content,
+                );
+                $html_content = str_replace(
+                    '##TO-DATE##',
+                    $to_date,
+                    $html_content,
+                );
+                $html_content = str_replace(
+                    '##FREQUENCY##',
+                    $frequency,
+                    $html_content,
+                );
                 $html_content = str_replace('##TIMES##', $times, $html_content);
-                $html_content = str_replace('##SYMPTOM##', $symptom, $html_content);
-                $html_content = str_replace('##USAGE##', $usage_str, $html_content);
+                $html_content = str_replace(
+                    '##SYMPTOM##',
+                    $symptom,
+                    $html_content,
+                );
+                $html_content = str_replace(
+                    '##USAGE##',
+                    $usage_str,
+                    $html_content,
+                );
                 $html_content = str_replace('##DOSE##', $dose, $html_content);
-                $html_content = str_replace('##SPECIAL-CONDITIONS##', $special_conditions, $html_content);
+                $html_content = str_replace(
+                    '##SPECIAL-CONDITIONS##',
+                    $special_conditions,
+                    $html_content,
+                );
                 $html_content = str_replace('##NOTES##', $notes, $html_content);
-                $html_content = str_replace('##HEADER-TITLE##', $header_title, $html_content);
-                $html_content = str_replace('##ATTACHMENTS##', $attachments, $html_content);
+                $html_content = str_replace(
+                    '##HEADER-TITLE##',
+                    $header_title,
+                    $html_content,
+                );
+                $html_content = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $html_content,
+                );
                 $output_str .= $html_content;
             }
         }
         return $output_str;
     }
 
-    public function get_med_prescription_medicine_html($document_id_arr, $user_id, $parent_record_id, $sub_id_arr)
-    {
+    public function get_med_prescription_medicine_html(
+        $document_id_arr,
+        $user_id,
+        $parent_record_id,
+        $sub_id_arr,
+    ) {
         global $record_type_id, $user_email;
         $html_content = '';
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
             for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
+                $this->mongodb->where([
+                    'RecordId' => mongo_id($sub_id_arr[$i]),
+                    'UserId' => mongo_id($user_id),
+                ]);
                 $qry = $this->mongodb->get('MedPrescriptionMedicine');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
-                        $print_template = '../../templates/email-medical-prescription-medicine.html';
+                        $print_template =
+                            '../../templates/email-medical-prescription-medicine.html';
                         $html_content = $this->read_file($print_template);
 
                         $record_id = $rec['RecordId'];
@@ -2535,31 +4465,89 @@ class Mailrecord_model extends CI_Model
                         $frequency = stripslashes($rec['Frequency']);
                         $times = stripslashes($rec['Times']);
                         $dose = stripslashes($rec['Dose']);
-                        $special_conditions = stripslashes($rec['SpecialConditions']);
+                        $special_conditions = stripslashes(
+                            $rec['SpecialConditions'],
+                        );
                         $usage_str = stripslashes($rec['Usage']);
                         $notes = stripslashes($rec['Notes']);
                         $header_title = "Medicine | $medicine_name | $medicine_type";
 
                         if ($document_id_arr == '-1') {
                             $this->get_document_email_links(24, $record_id);
-                        } elseif (count($document_id_arr ?? []) > 0 && !empty($document_id_arr)) {
-                            $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, 24, $record_id);
+                        } elseif (
+                            count($document_id_arr ?? []) > 0 &&
+                            !empty($document_id_arr)
+                        ) {
+                            $attachments = $this->get_document_email_links_by_id_arr(
+                                $document_id_arr,
+                                24,
+                                $record_id,
+                            );
                         } else {
-                            $attachments = '<i>No documents are attached to this record</i>';
+                            $attachments =
+                                '<i>No documents are attached to this record</i>';
                         }
 
-                        $html_content = str_replace('##MEDICINE-NAME##', $medicine_name, $html_content);
-                        $html_content = str_replace('##MEDICINE-TYPE##', $medicine_type, $html_content);
-                        $html_content = str_replace('##FROM-DATE##', $from_date, $html_content);
-                        $html_content = str_replace('##TO-DATE##', $to_date, $html_content);
-                        $html_content = str_replace('##FREQUENCY##', $frequency, $html_content);
-                        $html_content = str_replace('##TIMES##', $times, $html_content);
-                        $html_content = str_replace('##USAGE##', $usage_str, $html_content);
-                        $html_content = str_replace('##DOSE##', $dose, $html_content);
-                        $html_content = str_replace('##SPECIAL-CONDITIONS##', $special_conditions, $html_content);
-                        $html_content = str_replace('##NOTES##', $notes, $html_content);
-                        $html_content = str_replace('##HEADER-TITLE##', $header_title, $html_content);
-                        $html_content = str_replace('##ATTACHMENTS##', $attachments, $html_content);
+                        $html_content = str_replace(
+                            '##MEDICINE-NAME##',
+                            $medicine_name,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##MEDICINE-TYPE##',
+                            $medicine_type,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##FROM-DATE##',
+                            $from_date,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##TO-DATE##',
+                            $to_date,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##FREQUENCY##',
+                            $frequency,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##TIMES##',
+                            $times,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##USAGE##',
+                            $usage_str,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##DOSE##',
+                            $dose,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##SPECIAL-CONDITIONS##',
+                            $special_conditions,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##NOTES##',
+                            $notes,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##HEADER-TITLE##',
+                            $header_title,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##ATTACHMENTS##',
+                            $attachments,
+                            $html_content,
+                        );
                         $output_str .= $html_content;
                     }
                 }
@@ -2568,14 +4556,21 @@ class Mailrecord_model extends CI_Model
         return $output_str;
     }
 
-    public function get_familyhealth_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext, $sub_id_arr)
-    {
+    public function get_familyhealth_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+        $sub_id_arr,
+    ) {
         $record_type_id = 21;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_MEDFAMILY);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-medical-family-template.html';
+            $email_template =
+                '../../templates/email-medical-family-template.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
                 $user_id = $rec['UserId'];
@@ -2596,7 +4591,10 @@ class Mailrecord_model extends CI_Model
                 $treatment_type = stripslashes($rec['TreatmentType']);
                 $notes = stripslashes($rec['Notes']);
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -2612,39 +4610,114 @@ class Mailrecord_model extends CI_Model
                     $sub_id_arr,
                 );
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##DISEASE-TYPE##', $disease_type, $email_body);
-                $email_body = str_replace('##DISEASE-NAME##', $disease_name, $email_body);
-                $email_body = str_replace('##REF-NUM##', $reference_number, $email_body);
-                $email_body = str_replace('##PATIENT-NAME##', $patient_name, $email_body);
-                $email_body = str_replace('##PATIENT-ADDRESS##', $patient_address, $email_body);
-                $email_body = str_replace('##FROM-DATE##', $from_date, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DISEASE-TYPE##',
+                    $disease_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DISEASE-NAME##',
+                    $disease_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##REF-NUM##',
+                    $reference_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PATIENT-NAME##',
+                    $patient_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PATIENT-ADDRESS##',
+                    $patient_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##FROM-DATE##',
+                    $from_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##TO-DATE##', $to_date, $email_body);
-                $email_body = str_replace('##HOSPITAL-NAME##', $hospital_name, $email_body);
-                $email_body = str_replace('##HOSPITAL-ADDRESS##', $hospital_address, $email_body);
-                $email_body = str_replace('##TREATMENT-TYPE##', $treatment_type, $email_body);
-                $email_body = str_replace('##DOCTOR-NAME##', $doctor_name, $email_body);
-                $email_body = str_replace('##DOCTOR-ADDRESS##', $doctor_address, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
+                $email_body = str_replace(
+                    '##HOSPITAL-NAME##',
+                    $hospital_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##HOSPITAL-ADDRESS##',
+                    $hospital_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TREATMENT-TYPE##',
+                    $treatment_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOCTOR-NAME##',
+                    $doctor_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOCTOR-ADDRESS##',
+                    $doctor_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
                 $email_body = str_replace('##STATUS##', $status, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
-                $email_body = str_replace('##PATIENT-LOOP##', $patient_loop_str, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PATIENT-LOOP##',
+                    $patient_loop_str,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_healthinsurance_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext, $sub_id_arr)
-    {
+    public function get_healthinsurance_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+        $sub_id_arr,
+    ) {
         $record_type_id = 22;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_MEDHEALTHINSURANCE);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-medical-health-insurance-template.html';
+            $email_template =
+                '../../templates/email-medical-health-insurance-template.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
                 $user_id = $rec['UserId'];
@@ -2668,10 +4741,15 @@ class Mailrecord_model extends CI_Model
                 $relation = stripslashes($rec['Relation']);
                 $tenure = stripslashes($rec['Tenure']);
                 $tenure_amount = stripslashes($rec['TenureAmount']);
-                $percentage_allocation = stripslashes($rec['PercentageAllocation']);
+                $percentage_allocation = stripslashes(
+                    $rec['PercentageAllocation'],
+                );
                 $notes = stripslashes($rec['Notes']);
                 $currency = stripslashes($rec['Currency']);
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -2687,48 +4765,150 @@ class Mailrecord_model extends CI_Model
                     $sub_id_arr,
                 );
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##INSURANCE-TYPE##', $insurance_type, $email_body);
-                $email_body = str_replace('##POLICY-TYPE##', $policy_type, $email_body);
-                $email_body = str_replace('##POLICY-NAME##', $policy_name, $email_body);
-                $email_body = str_replace('##POLICY-NUMBER##', $policy_number, $email_body);
-                $email_body = str_replace('##INSURANCE-NAME##', $insurance_name, $email_body);
-                $email_body = str_replace('##INSURANCE-ADDRESS##', $insurance_address, $email_body);
-                $email_body = str_replace('##FROM-DATE##', $from_date, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##INSURANCE-TYPE##',
+                    $insurance_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##POLICY-TYPE##',
+                    $policy_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##POLICY-NAME##',
+                    $policy_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##POLICY-NUMBER##',
+                    $policy_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##INSURANCE-NAME##',
+                    $insurance_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##INSURANCE-ADDRESS##',
+                    $insurance_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##FROM-DATE##',
+                    $from_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##TO-DATE##', $to_date, $email_body);
-                $email_body = str_replace('##COVERED-PARTY##', $covered_party, $email_body);
-                $email_body = str_replace('##AMOUNT##', $covered_amount, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
+                $email_body = str_replace(
+                    '##COVERED-PARTY##',
+                    $covered_party,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##AMOUNT##',
+                    $covered_amount,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
                 $email_body = str_replace('##STATUS##', $status, $email_body);
-                $email_body = str_replace('##WEBSITE-URL##', $website_url, $email_body);
-                $email_body = str_replace('##LOGIN-USERNAME##', $login_name, $email_body);
-                $email_body = str_replace('##LOGIN-PASSWORD##', $login_password, $email_body);
-                $email_body = str_replace('##COVERAGE-TYPE##', $coverage_type, $email_body);
+                $email_body = str_replace(
+                    '##WEBSITE-URL##',
+                    $website_url,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##LOGIN-USERNAME##',
+                    $login_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##LOGIN-PASSWORD##',
+                    $login_password,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##COVERAGE-TYPE##',
+                    $coverage_type,
+                    $email_body,
+                );
                 $email_body = str_replace('##TENURE##', $tenure, $email_body);
-                $email_body = str_replace('##TENURE-AMOUNT##', $tenure_amount, $email_body);
-                $email_body = str_replace('##BENEFICIARY-NAME##', $beneficiary_name, $email_body);
-                $email_body = str_replace('##RELATION##', $relation, $email_body);
-                $email_body = str_replace('##PERCENTAGE-OF-ALLOCATION##', $percentage_allocation, $email_body);
-                $email_body = str_replace('##CURRENCY##', $currency, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##TENURE-AMOUNT##',
+                    $tenure_amount,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##BENEFICIARY-NAME##',
+                    $beneficiary_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##RELATION##',
+                    $relation,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PERCENTAGE-OF-ALLOCATION##',
+                    $percentage_allocation,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CURRENCY##',
+                    $currency,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
 
-                $email_body = str_replace('##BENEFICIARY-LOOP##', $beneficiary_loop_str, $email_body);
+                $email_body = str_replace(
+                    '##BENEFICIARY-LOOP##',
+                    $beneficiary_loop_str,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_legaldispute_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
-    {
+    public function get_legaldispute_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+    ) {
         $record_type_id = 28;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_LEGALDISPUTE);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-legal-dispute-template.html';
+            $email_template =
+                '../../templates/email-legal-dispute-template.html';
             $email_body = $this->read_file($email_template);
 
             foreach ($qry as $rec) {
@@ -2752,7 +4932,10 @@ class Mailrecord_model extends CI_Model
                 $category = stripslashes($rec['Category']);
                 $status = stripslashes($rec['Status']);
                 $notes = stripslashes($rec['Notes']);
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -2762,42 +4945,132 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##DISPUTE-TYPE##', $dispute_type, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##PARTY-NAME##', $party_name, $email_body);
-                $email_body = str_replace('##PARTY-ADDRESS##', $party_address, $email_body);
-                $email_body = str_replace('##REF-NUM##', $reference_number, $email_body);
-                $email_body = str_replace('##FROM-DATE##', $from_date, $email_body);
-                $email_body = str_replace('##DESCRIPTION##', $description, $email_body);
-                $email_body = str_replace('##ASSET-NAME##', $asset_name, $email_body);
-                $email_body = str_replace('##PLACE##', $asset_place, $email_body);
-                $email_body = str_replace('##ADDRESS##', $asset_address, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
-                $email_body = str_replace('##COURT-NAME##', $court_name, $email_body);
-                $email_body = str_replace('##LAWYER-NAME##', $lawyer_name, $email_body);
-                $email_body = str_replace('##LAWYER-ADDRESS##', $lawyer_address, $email_body);
-                $email_body = str_replace('##EMAIL##', $lawyer_email, $email_body);
-                $email_body = str_replace('##CONTACT-NUM##', $contact_number, $email_body);
-                $email_body = str_replace('##ALT-CONTACT-NUM##', $alt_contact_number, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DISPUTE-TYPE##',
+                    $dispute_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PARTY-NAME##',
+                    $party_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PARTY-ADDRESS##',
+                    $party_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##REF-NUM##',
+                    $reference_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##FROM-DATE##',
+                    $from_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DESCRIPTION##',
+                    $description,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ASSET-NAME##',
+                    $asset_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PLACE##',
+                    $asset_place,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ADDRESS##',
+                    $asset_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##COURT-NAME##',
+                    $court_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##LAWYER-NAME##',
+                    $lawyer_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##LAWYER-ADDRESS##',
+                    $lawyer_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##EMAIL##',
+                    $lawyer_email,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CONTACT-NUM##',
+                    $contact_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ALT-CONTACT-NUM##',
+                    $alt_contact_number,
+                    $email_body,
+                );
                 $email_body = str_replace('##STATUS##', $status, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_ownershiptrnsfr_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
-    {
+    public function get_ownershiptrnsfr_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+    ) {
         $record_type_id = 29;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_LEGALOWNERSHIPTRANSFER);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-legal-ownership-template.html';
+            $email_template =
+                '../../templates/email-legal-ownership-template.html';
             $email_body = $this->read_file($email_template);
 
             foreach ($qry as $rec) {
@@ -2811,7 +5084,9 @@ class Mailrecord_model extends CI_Model
                 $owner2 = stripslashes($rec['Ownership2']);
                 $owner2_address = stripslashes($rec['Ownership2Address']);
                 $rev_office_place = stripslashes($rec['RevenueOfficePlace']);
-                $rev_office_address = stripslashes($rec['RevenueOfficeAddress']);
+                $rev_office_address = stripslashes(
+                    $rec['RevenueOfficeAddress'],
+                );
                 $from_date = stripslashes($rec['ValidFrom']);
                 $duty_amount = stripslashes($rec['DutyAmount']);
                 $chalan = stripslashes($rec['Chelan']);
@@ -2820,15 +5095,24 @@ class Mailrecord_model extends CI_Model
                 $bank_place = stripslashes($rec['BankPlace']);
                 $bank_address = stripslashes($rec['BankAddress']);
                 $receiver1 = stripslashes($rec['ReceiverParty1Name']);
-                $receiver1_address = stripslashes($rec['ReceiverParty1Address']);
+                $receiver1_address = stripslashes(
+                    $rec['ReceiverParty1Address'],
+                );
                 $receiver2 = stripslashes($rec['ReceiverParty2Name']);
-                $receiver2_address = stripslashes($rec['ReceiverParty2Address']);
+                $receiver2_address = stripslashes(
+                    $rec['ReceiverParty2Address'],
+                );
                 $receiver3 = stripslashes($rec['ReceiverParty3Name']);
-                $receiver3_address = stripslashes($rec['ReceiverParty3Address']);
+                $receiver3_address = stripslashes(
+                    $rec['ReceiverParty3Address'],
+                );
                 $category = stripslashes($rec['Category']);
                 $status = stripslashes($rec['Status']);
                 $notes = stripslashes($rec['Notes']);
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -2838,49 +5122,159 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##TRANSFER-TYPE##', $transfer_type, $email_body);
-                $email_body = str_replace('##ASSET-NAME##', $asset_name, $email_body);
-                $email_body = str_replace('##ASSET-PLACE##', $asset_place, $email_body);
-                $email_body = str_replace('##ASSET-ADDRESS##', $asset_address, $email_body);
-                $email_body = str_replace('##OWNERSHIP-1##', $owner1, $email_body);
-                $email_body = str_replace('##OWNERSHIP-1-ADDRESS##', $owner1_address, $email_body);
-                $email_body = str_replace('##OWNERSHIP-2##', $owner2, $email_body);
-                $email_body = str_replace('##OWNERSHIP-2-ADDRESS##', $owner2_address, $email_body);
-                $email_body = str_replace('##REV-OFFICE-PLACE##', $rev_office_place, $email_body);
-                $email_body = str_replace('##REV-OFFICE-ADDRESS##', $rev_office_address, $email_body);
-                $email_body = str_replace('##VALID-FROM##', $from_date, $email_body);
-                $email_body = str_replace('##DUTY-AMOUNT##', $duty_amount, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TRANSFER-TYPE##',
+                    $transfer_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ASSET-NAME##',
+                    $asset_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ASSET-PLACE##',
+                    $asset_place,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ASSET-ADDRESS##',
+                    $asset_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##OWNERSHIP-1##',
+                    $owner1,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##OWNERSHIP-1-ADDRESS##',
+                    $owner1_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##OWNERSHIP-2##',
+                    $owner2,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##OWNERSHIP-2-ADDRESS##',
+                    $owner2_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##REV-OFFICE-PLACE##',
+                    $rev_office_place,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##REV-OFFICE-ADDRESS##',
+                    $rev_office_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##VALID-FROM##',
+                    $from_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DUTY-AMOUNT##',
+                    $duty_amount,
+                    $email_body,
+                );
                 $email_body = str_replace('##CHELAN##', $chalan, $email_body);
                 $email_body = str_replace('##DD##', $dd, $email_body);
-                $email_body = str_replace('##RECEIVER-PARTY-1##', $receiver1, $email_body);
-                $email_body = str_replace('##RECEIVER-PARTY-1-ADDRESS##', $receiver1_address, $email_body);
-                $email_body = str_replace('##RECEIVER-PARTY-2##', $receiver2, $email_body);
-                $email_body = str_replace('##RECEIVER-PARTY-2-ADDRESS##', $receiver2_address, $email_body);
-                $email_body = str_replace('##RECEIVER-PARTY-3##', $receiver3, $email_body);
-                $email_body = str_replace('##RECEIVER-PARTY-3-ADDRESS##', $receiver3_address, $email_body);
-                $email_body = str_replace('##BANK-NAME##', $bank_name, $email_body);
-                $email_body = str_replace('##BANK-PLACE##', $bank_place, $email_body);
-                $email_body = str_replace('##BANK-ADDRESS##', $bank_address, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
+                $email_body = str_replace(
+                    '##RECEIVER-PARTY-1##',
+                    $receiver1,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##RECEIVER-PARTY-1-ADDRESS##',
+                    $receiver1_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##RECEIVER-PARTY-2##',
+                    $receiver2,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##RECEIVER-PARTY-2-ADDRESS##',
+                    $receiver2_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##RECEIVER-PARTY-3##',
+                    $receiver3,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##RECEIVER-PARTY-3-ADDRESS##',
+                    $receiver3_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##BANK-NAME##',
+                    $bank_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##BANK-PLACE##',
+                    $bank_place,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##BANK-ADDRESS##',
+                    $bank_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
                 $email_body = str_replace('##STATUS##', $status, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_finaccounts_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
-    {
+    public function get_finaccounts_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+    ) {
         $record_type_id = 30;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINFINANCIALACCOUNTS);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-financial-accounts-template.html';
+            $email_template =
+                '../../templates/email-financial-accounts-template.html';
             $email_body = $this->read_file($email_template);
 
             foreach ($qry as $rec) {
@@ -2904,7 +5298,10 @@ class Mailrecord_model extends CI_Model
                 $account_status = stripslashes($rec['AccountStatus']);
                 $notes = stripslashes($rec['Notes']);
                 $ifsc = stripslashes($rec['Ifsc']);
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -2914,43 +5311,133 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##ACCOUNT-TYPE##', $account_type, $email_body);
-                $email_body = str_replace('##ACCOUNT-NUMBER##', $account_number, $email_body);
-                $email_body = str_replace('##ORGANIZATION-NAME##', $organization_name, $email_body);
-                $email_body = str_replace('##BRANCH-NAME##', $branch_name, $email_body);
-                $email_body = str_replace('##BRANCH-ADDRESS##', $branch_address, $email_body);
-                $email_body = str_replace('##CUSTOMER-NUMBER##', $customer_number, $email_body);
-                $email_body = str_replace('##ACHOLDER-NAME##', $acholder_name, $email_body);
-                $email_body = str_replace('##ACHOLDER-ADDRESS##', $acholder_address, $email_body);
-                $email_body = str_replace('##VALID-FROM##', $from_date, $email_body);
-                $email_body = str_replace('##WEBSITE-URL##', $website_url, $email_body);
-                $email_body = str_replace('##USERNAME##', $username, $email_body);
-                $email_body = str_replace('##PASSWORD##', $website_password, $email_body);
-                $email_body = str_replace('##TRANS-PASSWORD##', $trans_password, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##SERVICE-TYPE##', $service_type, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
-                $email_body = str_replace('##ACCOUNT-STATUS##', $account_status, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ACCOUNT-TYPE##',
+                    $account_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ACCOUNT-NUMBER##',
+                    $account_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ORGANIZATION-NAME##',
+                    $organization_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##BRANCH-NAME##',
+                    $branch_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##BRANCH-ADDRESS##',
+                    $branch_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CUSTOMER-NUMBER##',
+                    $customer_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ACHOLDER-NAME##',
+                    $acholder_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ACHOLDER-ADDRESS##',
+                    $acholder_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##VALID-FROM##',
+                    $from_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##WEBSITE-URL##',
+                    $website_url,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##USERNAME##',
+                    $username,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PASSWORD##',
+                    $website_password,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TRANS-PASSWORD##',
+                    $trans_password,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##SERVICE-TYPE##',
+                    $service_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ACCOUNT-STATUS##',
+                    $account_status,
+                    $email_body,
+                );
 
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
                 $email_body = str_replace('##IFSC##', $ifsc, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_finassets_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
-    {
+    public function get_finassets_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+    ) {
         $record_type_id = 31;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINASSET);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-financial-assets-template.html';
+            $email_template =
+                '../../templates/email-financial-assets-template.html';
             $email_body = $this->read_file($email_template);
 
             foreach ($qry as $rec) {
@@ -2975,7 +5462,10 @@ class Mailrecord_model extends CI_Model
                 $warrenty_number = stripslashes($rec['WarrantyNo']);
                 $receipt_number = stripslashes($rec['ReceiptNo']);
                 $notes = stripslashes($rec['Notes']);
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -2985,43 +5475,130 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##ASSET-TYPE##', $asset_type, $email_body);
-                $email_body = str_replace('##ASSET-NAME##', $asset_name, $email_body);
-                $email_body = str_replace('##OWNERSHIP-TYPE##', $ownership_type, $email_body);
-                $email_body = str_replace('##REF-NUM##', $reference_number, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ASSET-TYPE##',
+                    $asset_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ASSET-NAME##',
+                    $asset_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##OWNERSHIP-TYPE##',
+                    $ownership_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##REF-NUM##',
+                    $reference_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
                 $email_body = str_replace('##PLACE##', $place, $email_body);
                 $email_body = str_replace('##ADDRESS##', $address, $email_body);
-                $email_body = str_replace('##VALID-FROM##', $from_date, $email_body);
-                $email_body = str_replace('##VALID-TO##', $to_date, $email_body);
-                $email_body = str_replace('##PRESENT-VALUE##', $present_value, $email_body);
-                $email_body = str_replace('##EXPECTED-VALUE##', $expected_value, $email_body);
-                $email_body = str_replace('##LIABILITY-NUM##', $liability_number, $email_body);
-                $email_body = str_replace('##INSURANCE-NUM##', $insurance_number, $email_body);
-                $email_body = str_replace('##LIABILITY-NAMES##', $liability, $email_body);
-                $email_body = str_replace('##POLICY-NAMES##', $policy_names, $email_body);
-                $email_body = str_replace('##WARRENTY-NUM##', $warrenty_number, $email_body);
-                $email_body = str_replace('##RECEIPT-NUM##', $receipt_number, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
+                $email_body = str_replace(
+                    '##VALID-FROM##',
+                    $from_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##VALID-TO##',
+                    $to_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PRESENT-VALUE##',
+                    $present_value,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##EXPECTED-VALUE##',
+                    $expected_value,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##LIABILITY-NUM##',
+                    $liability_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##INSURANCE-NUM##',
+                    $insurance_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##LIABILITY-NAMES##',
+                    $liability,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##POLICY-NAMES##',
+                    $policy_names,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##WARRENTY-NUM##',
+                    $warrenty_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##RECEIPT-NUM##',
+                    $receipt_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
                 $email_body = str_replace('##STATUS##', $status, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_finrevenues_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext, $sub_id_arr)
-    {
+    public function get_finrevenues_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+        $sub_id_arr,
+    ) {
         $record_type_id = 32;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINREVENUE);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-financial-revenues-template.html';
+            $email_template =
+                '../../templates/email-financial-revenues-template.html';
             $email_body = $this->read_file($email_template);
 
             foreach ($qry as $rec) {
@@ -3051,7 +5628,10 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 $due_date = stripslashes($rec['DueDate']);
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -3067,41 +5647,97 @@ class Mailrecord_model extends CI_Model
                     $sub_id_arr,
                 );
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##REVENUE-TYPE##', $revenue_type, $email_body);
-                $email_body = str_replace('##ITEM-NAME##', $item_name, $email_body);
-                $email_body = str_replace('##FROM-DATE##', $from_date, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##REVENUE-TYPE##',
+                    $revenue_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ITEM-NAME##',
+                    $item_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##FROM-DATE##',
+                    $from_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##TO-DATE##', $to_date, $email_body);
                 $email_body = str_replace('##AMOUNT##', $amount, $email_body);
                 $email_body = str_replace('##SOURCE##', $source, $email_body);
                 $email_body = str_replace('##ADDRESS##', $address, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
-                $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOCUMENT-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
                 $email_body = str_replace('##TERM##', $term, $email_body);
-                $email_body = str_replace('##ASSESSMENT-YEAR##', $assessment_year, $email_body);
+                $email_body = str_replace(
+                    '##ASSESSMENT-YEAR##',
+                    $assessment_year,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
-                $email_body = str_replace('##DUEDATE##', $due_date, $email_body);
-                $email_body = str_replace('##MEDICINE-LOOP##', $medicine_loop_str, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DUEDATE##',
+                    $due_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##MEDICINE-LOOP##',
+                    $medicine_loop_str,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_fin_revenue_related_html($document_id_arr, $user_id, $parent_record_id, $sub_id_arr)
-    {
+    public function get_fin_revenue_related_html(
+        $document_id_arr,
+        $user_id,
+        $parent_record_id,
+        $sub_id_arr,
+    ) {
         global $record_type_id, $user_email;
         $html_content = '';
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
             for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
+                $this->mongodb->where([
+                    'RecordId' => mongo_id($sub_id_arr[$i]),
+                    'UserId' => mongo_id($user_id),
+                ]);
                 $qry = $this->mongodb->get('revenue');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
-                        $print_template = '../../templates/email-financial-revenues-template1.html';
+                        $print_template =
+                            '../../templates/email-financial-revenues-template1.html';
                         $html_content = $this->read_file($print_template);
 
                         $record_id = $rec['RecordId'];
@@ -3115,18 +5751,50 @@ class Mailrecord_model extends CI_Model
 
                         if ($document_id_arr == '-1') {
                             $this->get_document_email_links(41, $record_id);
-                        } elseif (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                            $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, 41, $record_id);
+                        } elseif (
+                            !empty($document_id_arr) &&
+                            count($document_id_arr ?? []) > 0
+                        ) {
+                            $attachments = $this->get_document_email_links_by_id_arr(
+                                $document_id_arr,
+                                41,
+                                $record_id,
+                            );
                         } else {
-                            $attachments = '<i>No documents are attached to this record</i>';
+                            $attachments =
+                                '<i>No documents are attached to this record</i>';
                         }
 
-                        $html_content = str_replace('##REVENUE-DATE##', $revenue_date, $html_content);
-                        $html_content = str_replace('##AMOUNT##', $amount, $html_content);
-                        $html_content = str_replace('##DOC-TYPE##', $document_type, $html_content);
-                        $html_content = str_replace('##NOTES##', $notes, $html_content);
-                        $html_content = str_replace('##HEADER-TITLE##', $header_title, $html_content);
-                        $html_content = str_replace('##ATTACHMENTS##', $attachments, $html_content);
+                        $html_content = str_replace(
+                            '##REVENUE-DATE##',
+                            $revenue_date,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##AMOUNT##',
+                            $amount,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##DOC-TYPE##',
+                            $document_type,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##NOTES##',
+                            $notes,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##HEADER-TITLE##',
+                            $header_title,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##ATTACHMENTS##',
+                            $attachments,
+                            $html_content,
+                        );
                         $output_str .= $html_content;
                     }
                 }
@@ -3149,24 +5817,43 @@ class Mailrecord_model extends CI_Model
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINCARDS);
         if (count($qry ?? []) > 0) {
-            if (($card_type == 'Credit' || $card_type == 'Others' || $card_type == '') && $usage_type == 'Joint') {
-                $email_template = '../../templates/email-financial-cards-template.html';
+            if (
+                ($card_type == 'Credit' ||
+                    $card_type == 'Others' ||
+                    $card_type == '') &&
+                $usage_type == 'Joint'
+            ) {
+                $email_template =
+                    '../../templates/email-financial-cards-template.html';
             } elseif (
-                ($card_type == 'Credit' || $card_type == 'Others' || $card_type == '') &&
+                ($card_type == 'Credit' ||
+                    $card_type == 'Others' ||
+                    $card_type == '') &&
                 ($usage_type == 'Self' || $usage_type == 'Others')
             ) {
-                $email_template = '../../templates/email-financial-cards-template1.html';
-            } elseif (($card_type == 'Debit' || $card_type == 'Forex') && $usage_type == 'Joint') {
-                $email_template = '../../templates/email-financial-cards-template2.html';
+                $email_template =
+                    '../../templates/email-financial-cards-template1.html';
+            } elseif (
+                ($card_type == 'Debit' || $card_type == 'Forex') &&
+                $usage_type == 'Joint'
+            ) {
+                $email_template =
+                    '../../templates/email-financial-cards-template2.html';
             } elseif (
                 ($card_type == 'Debit' || $card_type == 'Forex') &&
                 ($usage_type == 'Self' || $usage_type == 'Others')
             ) {
-                $email_template = '../../templates/email-financial-cards-template3.html';
-            } elseif (($card_type == 'Discount' || $card_type == 'Shopping') && $usage_type == 'Joint') {
-                $email_template = '../../templates/email-financial-cards-template4.html';
+                $email_template =
+                    '../../templates/email-financial-cards-template3.html';
+            } elseif (
+                ($card_type == 'Discount' || $card_type == 'Shopping') &&
+                $usage_type == 'Joint'
+            ) {
+                $email_template =
+                    '../../templates/email-financial-cards-template4.html';
             } else {
-                $email_template = '../../templates/email-financial-cards-template5.html';
+                $email_template =
+                    '../../templates/email-financial-cards-template5.html';
             }
             $email_body = $this->read_file($email_template);
 
@@ -3192,7 +5879,10 @@ class Mailrecord_model extends CI_Model
                 $status = stripslashes($rec['Status']);
                 $notes = stripslashes($rec['Notes']);
                 $due_date = stripslashes($rec['DueDate']);
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -3202,43 +5892,129 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##CARD-TYPE##', $card_type, $email_body);
-                $email_body = str_replace('##SERVICE-PROVIDER-NAME##', $service_provider, $email_body);
-                $email_body = str_replace('##CARD-NUMBER##', $card_number, $email_body);
-                $email_body = str_replace('##CARD-PROVIDER##', $card_provider, $email_body);
-                $email_body = str_replace('##BILLING-ADDRESS##', $billing_address, $email_body);
-                $email_body = str_replace('##NAME-ON-CARD##', $name_on_card, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CARD-TYPE##',
+                    $card_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##SERVICE-PROVIDER-NAME##',
+                    $service_provider,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CARD-NUMBER##',
+                    $card_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CARD-PROVIDER##',
+                    $card_provider,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##BILLING-ADDRESS##',
+                    $billing_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##NAME-ON-CARD##',
+                    $name_on_card,
+                    $email_body,
+                );
                 $email_body = str_replace('##CVV##', $cvv, $email_body);
                 $email_body = str_replace('##PIN##', $pin, $email_body);
-                $email_body = str_replace('##VALID-FROM##', $from_date, $email_body);
-                $email_body = str_replace('##VALID-TO##', $to_date, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
-                $email_body = str_replace('##BILLING-DATE##', $billing_date, $email_body);
-                $email_body = str_replace('##PAYMENT-DATE##', $payment_date, $email_body);
-                $email_body = str_replace('##USER-TYPE##', $usage_type, $email_body);
-                $email_body = str_replace('##NUM-USERS##', $number_of_users, $email_body);
-                $email_body = str_replace('##USER-2-NAME##', $user_2_name, $email_body);
-                $email_body = str_replace('##USER-3-NAME##', $user_3_name, $email_body);
+                $email_body = str_replace(
+                    '##VALID-FROM##',
+                    $from_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##VALID-TO##',
+                    $to_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##BILLING-DATE##',
+                    $billing_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PAYMENT-DATE##',
+                    $payment_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##USER-TYPE##',
+                    $usage_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##NUM-USERS##',
+                    $number_of_users,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##USER-2-NAME##',
+                    $user_2_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##USER-3-NAME##',
+                    $user_3_name,
+                    $email_body,
+                );
                 $email_body = str_replace('##STATUS##', $status, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
-                $email_body = str_replace('##DUEDATE##', $due_date, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DUEDATE##',
+                    $due_date,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_finliability_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
-    {
+    public function get_finliability_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+    ) {
         $record_type_id = 34;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINLIABILITY);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-financial-liability-template.html';
+            $email_template =
+                '../../templates/email-financial-liability-template.html';
             $email_body = $this->read_file($email_template);
 
             foreach ($qry as $rec) {
@@ -3262,7 +6038,10 @@ class Mailrecord_model extends CI_Model
                 $status = stripslashes($rec['Status']);
                 $notes = stripslashes($rec['Notes']);
                 $due_date = stripslashes($rec['DueDate']);
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -3272,42 +6051,121 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##LIABILITY-TYPE##', $liability_type, $email_body);
-                $email_body = str_replace('##LIABILITY-NAME##', $liability_name, $email_body);
-                $email_body = str_replace('##REFERENCE-NUMBER##', $reference_number, $email_body);
-                $email_body = str_replace('##PARTY-NAME##', $party_name, $email_body);
-                $email_body = str_replace('##FROM-DATE##', $from_date, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##LIABILITY-TYPE##',
+                    $liability_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##LIABILITY-NAME##',
+                    $liability_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##REFERENCE-NUMBER##',
+                    $reference_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PARTY-NAME##',
+                    $party_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##FROM-DATE##',
+                    $from_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##TO-DATE##', $to_date, $email_body);
-                $email_body = str_replace('##ADDRESS##', $party_address, $email_body);
+                $email_body = str_replace(
+                    '##ADDRESS##',
+                    $party_address,
+                    $email_body,
+                );
                 $email_body = str_replace('##EMI##', $emi, $email_body);
-                $email_body = str_replace('##DURATION##', $duration, $email_body);
-                $email_body = str_replace('##PRINCIPAL-AMOUNT##', $principal_amount, $email_body);
-                $email_body = str_replace('##RATE-TYPE##', $rate_type, $email_body);
-                $email_body = str_replace('##RESET-DATE##', $reset_date, $email_body);
+                $email_body = str_replace(
+                    '##DURATION##',
+                    $duration,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PRINCIPAL-AMOUNT##',
+                    $principal_amount,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##RATE-TYPE##',
+                    $rate_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##RESET-DATE##',
+                    $reset_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##TENURE##', $tenure, $email_body);
-                $email_body = str_replace('##INTEREST##', $interest_rate, $email_body);
+                $email_body = str_replace(
+                    '##INTEREST##',
+                    $interest_rate,
+                    $email_body,
+                );
                 $email_body = str_replace('##STATUS##', $status, $email_body);
-                $email_body = str_replace('##DOC-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
+                $email_body = str_replace(
+                    '##DOC-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
-                $email_body = str_replace('##DUEDATE##', $due_date, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DUEDATE##',
+                    $due_date,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_finpayment_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext, $sub_id_arr)
-    {
+    public function get_finpayment_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+        $sub_id_arr,
+    ) {
         $record_type_id = 35;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINPAYMENT);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-financial-payments-template.html';
+            $email_template =
+                '../../templates/email-financial-payments-template.html';
             $email_body = $this->read_file($email_template);
 
             foreach ($qry as $rec) {
@@ -3338,7 +6196,10 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 $due_date = stripslashes($rec['DueDate']);
 
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -3354,41 +6215,105 @@ class Mailrecord_model extends CI_Model
                     $sub_id_arr,
                 );
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##PAYMENT-TYPE##', $payment_type, $email_body);
-                $email_body = str_replace('##ITEM-NAME##', $item_name, $email_body);
-                $email_body = str_replace('##FROM-DATE##', $from_date, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PAYMENT-TYPE##',
+                    $payment_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ITEM-NAME##',
+                    $item_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##FROM-DATE##',
+                    $from_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##TO-DATE##', $to_date, $email_body);
                 $email_body = str_replace('##AMOUNT##', $amount, $email_body);
-                $email_body = str_replace('##RECEIVER-NAME##', $receiver_name, $email_body);
-                $email_body = str_replace('##RECEIVER-ADDRESS##', $address, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
-                $email_body = str_replace('##DOC-TYPE##', $document_type, $email_body);
+                $email_body = str_replace(
+                    '##RECEIVER-NAME##',
+                    $receiver_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##RECEIVER-ADDRESS##',
+                    $address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOC-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
                 $email_body = str_replace('##TERM##', $term, $email_body);
-                $email_body = str_replace('##ASSESSEMENT-YEAR##', $assessment_year, $email_body);
+                $email_body = str_replace(
+                    '##ASSESSEMENT-YEAR##',
+                    $assessment_year,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
-                $email_body = str_replace('##DUEDATE##', $due_date, $email_body);
-                $email_body = str_replace('##MEDICINE-LOOP##', $medicine_loop_str, $email_body);
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DUEDATE##',
+                    $due_date,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##MEDICINE-LOOP##',
+                    $medicine_loop_str,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_fin_payment_related_html($document_id_arr, $user_id, $parent_record_id, $sub_id_arr)
-    {
+    public function get_fin_payment_related_html(
+        $document_id_arr,
+        $user_id,
+        $parent_record_id,
+        $sub_id_arr,
+    ) {
         global $record_type_id, $user_email;
         $html_content = '';
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
             for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
+                $this->mongodb->where([
+                    'RecordId' => mongo_id($sub_id_arr[$i]),
+                    'UserId' => mongo_id($user_id),
+                ]);
                 $qry = $this->mongodb->get('payments');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
-                        $print_template = '../../templates/email-financial-payments-template1.html';
+                        $print_template =
+                            '../../templates/email-financial-payments-template1.html';
                         $html_content = $this->read_file($print_template);
 
                         $record_id = $rec['RecordId'];
@@ -3402,18 +6327,50 @@ class Mailrecord_model extends CI_Model
 
                         if ($document_id_arr == '-1') {
                             $this->get_document_email_links(39, $record_id);
-                        } elseif (count($document_id_arr ?? []) > 0 && !empty($document_id_arr)) {
-                            $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, 39, $record_id);
+                        } elseif (
+                            count($document_id_arr ?? []) > 0 &&
+                            !empty($document_id_arr)
+                        ) {
+                            $attachments = $this->get_document_email_links_by_id_arr(
+                                $document_id_arr,
+                                39,
+                                $record_id,
+                            );
                         } else {
-                            $attachments = '<i>No documents are attached to this record</i>';
+                            $attachments =
+                                '<i>No documents are attached to this record</i>';
                         }
 
-                        $html_content = str_replace('##PAYMENT-DATE##', $payment_date, $html_content);
-                        $html_content = str_replace('##AMOUNT##', $amount, $html_content);
-                        $html_content = str_replace('##DOC-TYPE##', $document_type, $html_content);
-                        $html_content = str_replace('##NOTES##', $notes, $html_content);
-                        $html_content = str_replace('##HEADER-TITLE##', $header_title, $html_content);
-                        $html_content = str_replace('##ATTACHMENTS##', $attachments, $html_content);
+                        $html_content = str_replace(
+                            '##PAYMENT-DATE##',
+                            $payment_date,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##AMOUNT##',
+                            $amount,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##DOC-TYPE##',
+                            $document_type,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##NOTES##',
+                            $notes,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##HEADER-TITLE##',
+                            $header_title,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##ATTACHMENTS##',
+                            $attachments,
+                            $html_content,
+                        );
                         $output_str .= $html_content;
                     }
                 }
@@ -3422,14 +6379,20 @@ class Mailrecord_model extends CI_Model
         return $output_str;
     }
 
-    public function get_fintax_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
-    {
+    public function get_fintax_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $addtext,
+    ) {
         $record_type_id = 36;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINTAX);
         if (count($qry ?? []) > 0) {
-            $email_template = '../../templates/email-financial-tax-template.html';
+            $email_template =
+                '../../templates/email-financial-tax-template.html';
             $email_body = $this->read_file($email_template);
 
             foreach ($qry as $rec) {
@@ -3452,7 +6415,10 @@ class Mailrecord_model extends CI_Model
                 $org_address = stripslashes($rec['OrganisationAddress']);
                 $category = stripslashes($rec['Category']);
                 $notes = stripslashes($rec['Notes']);
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -3462,44 +6428,120 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##TAX-DOC-TYPE##', $tax_doc_type, $email_body);
-                $email_body = str_replace('##ASSESSMENT-YEAR##', $assessment_year, $email_body);
-                $email_body = str_replace('##TAX-ITEM-TYPE##', $tax_item_type, $email_body);
-                $email_body = str_replace('##ITEM-NAME##', $item_name, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TAX-DOC-TYPE##',
+                    $tax_doc_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ASSESSMENT-YEAR##',
+                    $assessment_year,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TAX-ITEM-TYPE##',
+                    $tax_item_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ITEM-NAME##',
+                    $item_name,
+                    $email_body,
+                );
                 $email_body = str_replace('##DATE##', $date, $email_body);
                 $email_body = str_replace('##PLACE##', $place, $email_body);
-                $email_body = str_replace('##DOC-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
-                $email_body = str_replace('##APPLICABLE-SECTION##', $applicable_section, $email_body);
-                $email_body = str_replace('##APPLICABILITY##', $applicability, $email_body);
+                $email_body = str_replace(
+                    '##DOC-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##APPLICABLE-SECTION##',
+                    $applicable_section,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##APPLICABILITY##',
+                    $applicability,
+                    $email_body,
+                );
                 $email_body = str_replace('##INCOME##', $income, $email_body);
-                $email_body = str_replace('##TAX-AMOUNT##', $tax_amount, $email_body);
-                $email_body = str_replace('##MAX-TAX-BENEFIT##', $max_tax_benefit, $email_body);
-                $email_body = str_replace('##FROM-DATE##', $from_date, $email_body);
+                $email_body = str_replace(
+                    '##TAX-AMOUNT##',
+                    $tax_amount,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##MAX-TAX-BENEFIT##',
+                    $max_tax_benefit,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##FROM-DATE##',
+                    $from_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##TO-DATE##', $to_date, $email_body);
-                $email_body = str_replace('##ORG-NAME##', $org_name, $email_body);
-                $email_body = str_replace('##ORG-ADDRESS##', $org_address, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##ORG-NAME##',
+                    $org_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ORG-ADDRESS##',
+                    $org_address,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
             }
         }
         return $email_body;
     }
 
-    public function get_fininsurance_select($document_id_arr, $record_id, $table_bg, $tr_bg, $insurance_type, $addtext)
-    {
+    public function get_fininsurance_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $insurance_type,
+        $addtext,
+    ) {
         $record_type_id = 37;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FININSURANCE);
         if (count($qry ?? []) > 0) {
             if ($insurance_type == 'Life') {
-                $email_template = '../../templates/email-financial-insurance-template.html';
+                $email_template =
+                    '../../templates/email-financial-insurance-template.html';
             } else {
-                $email_template = '../../templates/email-financial-insurance-template1.html';
+                $email_template =
+                    '../../templates/email-financial-insurance-template1.html';
             }
             $email_body = $this->read_file($email_template);
 
@@ -3524,14 +6566,21 @@ class Mailrecord_model extends CI_Model
                 $claim_amount = stripslashes($rec['ClaimAmount']);
                 $beneficiary_name_1 = stripslashes($rec['BeneficiaryName1']);
                 $relationship_1 = stripslashes($rec['Relationship1']);
-                $percent_allocation_1 = stripslashes($rec['PercentAllocation1']);
+                $percent_allocation_1 = stripslashes(
+                    $rec['PercentAllocation1'],
+                );
                 $beneficiary_name_2 = stripslashes($rec['BeneficiaryName2']);
                 $relationship_2 = stripslashes($rec['Relationship2']);
-                $percent_allocation_2 = stripslashes($rec['PercentAllocation2']);
+                $percent_allocation_2 = stripslashes(
+                    $rec['PercentAllocation2'],
+                );
                 $category = stripslashes($rec['Category']);
                 $notes = stripslashes($rec['Notes']);
                 $due_date = stripslashes($rec['DueDate']);
-                if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
+                if (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
                         $record_type_id,
@@ -3541,36 +6590,140 @@ class Mailrecord_model extends CI_Model
                     $attachments = 'No Attachments';
                 }
 
-                $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
-                $email_body = str_replace('##INSURANCE-TYPE##', $insurance_type, $email_body);
-                $email_body = str_replace('##POLICY-NAME##', $policy_name, $email_body);
-                $email_body = str_replace('##POLICY-TYPE##', $policy_type, $email_body);
-                $email_body = str_replace('##POLICY-NUMBER##', $policy_number, $email_body);
-                $email_body = str_replace('##INSURANCE-COMPANY##', $insurance_company, $email_body);
-                $email_body = str_replace('##FROM-DATE##', $from_date, $email_body);
+                $email_body = str_replace(
+                    '##ADD-TEXT##',
+                    $addtext,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##INSURANCE-TYPE##',
+                    $insurance_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##POLICY-NAME##',
+                    $policy_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##POLICY-TYPE##',
+                    $policy_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##POLICY-NUMBER##',
+                    $policy_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##INSURANCE-COMPANY##',
+                    $insurance_company,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##FROM-DATE##',
+                    $from_date,
+                    $email_body,
+                );
                 $email_body = str_replace('##TO-DATE##', $to_date, $email_body);
-                $email_body = str_replace('##ISSUER-NAME##', $issuer_name, $email_body);
-                $email_body = str_replace('##AGENT-NUMBER##', $agent_number, $email_body);
-                $email_body = str_replace('##AGENT-NAME##', $agent_name, $email_body);
-                $email_body = str_replace('##DOC-TYPE##', $document_type, $email_body);
-                $email_body = str_replace('##CATEGORY##', $category, $email_body);
+                $email_body = str_replace(
+                    '##ISSUER-NAME##',
+                    $issuer_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##AGENT-NUMBER##',
+                    $agent_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##AGENT-NAME##',
+                    $agent_name,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DOC-TYPE##',
+                    $document_type,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CATEGORY##',
+                    $category,
+                    $email_body,
+                );
                 $email_body = str_replace('##TENURE##', $tenure, $email_body);
-                $email_body = str_replace('##TENURE-AMOUNT##', $tenure_amount, $email_body);
+                $email_body = str_replace(
+                    '##TENURE-AMOUNT##',
+                    $tenure_amount,
+                    $email_body,
+                );
                 $email_body = str_replace('##STATUS##', $status, $email_body);
-                $email_body = str_replace('##TOTAL-VALUE##', $total_value, $email_body);
-                $email_body = str_replace('##CLAIM-NUMBER##', $claim_number, $email_body);
-                $email_body = str_replace('##CLAIM-AMOUNT##', $claim_amount, $email_body);
-                $email_body = str_replace('##BENEFICIARY-1##', $beneficiary_name_1, $email_body);
-                $email_body = str_replace('##RELATION-1##', $relationship_1, $email_body);
-                $email_body = str_replace('##PERCENT-ALLOCATION-1##', $percent_allocation_1, $email_body);
-                $email_body = str_replace('##BENEFICIARY-2##', $beneficiary_name_2, $email_body);
-                $email_body = str_replace('##RELATION-2##', $relationship_2, $email_body);
-                $email_body = str_replace('##PERCENT-ALLOCATION-2##', $percent_allocation_2, $email_body);
-                $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
+                $email_body = str_replace(
+                    '##TOTAL-VALUE##',
+                    $total_value,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CLAIM-NUMBER##',
+                    $claim_number,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##CLAIM-AMOUNT##',
+                    $claim_amount,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##BENEFICIARY-1##',
+                    $beneficiary_name_1,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##RELATION-1##',
+                    $relationship_1,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PERCENT-ALLOCATION-1##',
+                    $percent_allocation_1,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##BENEFICIARY-2##',
+                    $beneficiary_name_2,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##RELATION-2##',
+                    $relationship_2,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##PERCENT-ALLOCATION-2##',
+                    $percent_allocation_2,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##ATTACHMENTS##',
+                    $attachments,
+                    $email_body,
+                );
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
-                $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
-                $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
-                $email_body = str_replace('##DUEDATE##', $due_date, $email_body);
+                $email_body = str_replace(
+                    '##TABLE_BGCOLOR##',
+                    $table_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##TR_BGCOLOR##',
+                    $tr_bg,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##DUEDATE##',
+                    $due_date,
+                    $email_body,
+                );
             }
         }
         return $email_body;
@@ -3592,7 +6745,10 @@ class Mailrecord_model extends CI_Model
     {
         ob_start();
 
-        $qry = 'SELECT * FROM ' . TBL_DOCUMENTS . " WHERE RecordTypeId = '$record_type_id' AND RecordId = '$record_id'";
+        $qry =
+            'SELECT * FROM ' .
+            TBL_DOCUMENTS .
+            " WHERE RecordTypeId = '$record_type_id' AND RecordId = '$record_id'";
         $res = $this->db->query($qry);
 
         if ($res->num_rows() > 0) {
@@ -3612,13 +6768,18 @@ class Mailrecord_model extends CI_Model
                     $doc_tag = "$file_tag";
                 }
 
-                $doc_icon = 'https://www.publishat.com/' . $this->get_document_icon($file_type);
+                $doc_icon =
+                    'https://www.publishat.com/' .
+                    $this->get_document_icon($file_type);
                 $key = $user_id . '###' . $document_id . '###email-attachment';
                 $doc_link_url =
-                    'https://www.publishat.com/mobile_ws/GlobalController/viewattachment?key=' . $this->encript($key);
+                    'https://www.publishat.com/mobile_ws/GlobalController/viewattachment?key=' .
+                    $this->encript($key);
                 ?>
       <a target="_blank" href="<?= $doc_link_url ?>"><img src="<?= $doc_icon ?>" width="20" height="20" border="0" align="absmiddle" /></a>&nbsp;
-            <a target="_blank" href="<?= $doc_link_url ?>"><?= strtoupper($doc_tag) ?></a><?php
+            <a target="_blank" href="<?= $doc_link_url ?>"><?= strtoupper(
+    $doc_tag,
+) ?></a><?php
             }
         } else {
             echo '<i>No documents are attached to this record</i>';
@@ -3629,8 +6790,11 @@ class Mailrecord_model extends CI_Model
         return $content;
     }
 
-    public function get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id)
-    {
+    public function get_document_email_links_by_id_arr(
+        $document_id_arr,
+        $record_type_id,
+        $record_id,
+    ) {
         ob_start();
         if (count($document_id_arr ?? []) > 0) {
             for ($i = 0; $i < count($document_id_arr ?? []); $i++) {
@@ -3652,15 +6816,24 @@ class Mailrecord_model extends CI_Model
                         $fid = $rec['_id'];
                         if (empty($filename)) {
                             $filename = basename($doc_path);
-                            $filename = substr($filename, strpos($filename, '-') + 1);
+                            $filename = substr(
+                                $filename,
+                                strpos($filename, '-') + 1,
+                            );
                         }
 
                         if (empty($doc_tag)) {
                             $doc_tag = "$filename";
                         }
                         $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                        $doc_icon = 'https://www.publishat.com/' . $this->get_document_icon($ext);
-                        $key = $user_id . '###' . $document_id . '###email-attachment';
+                        $doc_icon =
+                            'https://www.publishat.com/' .
+                            $this->get_document_icon($ext);
+                        $key =
+                            $user_id .
+                            '###' .
+                            $document_id .
+                            '###email-attachment';
                         $doc_link_url =
                             'https://www.publishat.com/mobile_ws/GlobalController/viewattachment?key=' .
                             $this->encript($key);
@@ -3758,8 +6931,13 @@ class Mailrecord_model extends CI_Model
         return $data;
     }
 
-    public function phpmail_nocc($from_email, $to_email, $subject, $message, $type = 'html')
-    {
+    public function phpmail_nocc(
+        $from_email,
+        $to_email,
+        $subject,
+        $message,
+        $type = 'html',
+    ) {
         $this->load->library('email');
         $config = [
             'protocol' => protocol,
@@ -3787,7 +6965,11 @@ class Mailrecord_model extends CI_Model
 
         if ($this->email->send()) {
         } else {
-            log_message('debug', 'Email Error Response: ' . json_encode($this->email->print_debugger()));
+            log_message(
+                'debug',
+                'Email Error Response: ' .
+                    json_encode($this->email->print_debugger()),
+            );
 
             return $this->email->print_debugger();
         }
@@ -3802,8 +6984,12 @@ class Mailrecord_model extends CI_Model
         return $date;
     }
 
-    public function get_med_test_test_html1($document_id_arr, $user_id, $parent_record_id, $path)
-    {
+    public function get_med_test_test_html1(
+        $document_id_arr,
+        $user_id,
+        $parent_record_id,
+        $path,
+    ) {
         $qry = "SELECT * FROM MedMedicalTestRecords WHERE ParentRecordId = '$parent_record_id' AND UserId = '$user_id'";
         $res = $this->db->query($qry);
         $output_str = '';
@@ -3812,17 +6998,31 @@ class Mailrecord_model extends CI_Model
                 $record_id = $rec['RecordId'];
                 $parent_record_id = $rec['ParentRecordId'];
                 if ($document_id_arr == '-1') {
-                    $attachments = $this->get_document_email_links1(23, $record_id);
-                } elseif (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr1($document_id_arr, 23, $record_id, $path);
+                    $attachments = $this->get_document_email_links1(
+                        23,
+                        $record_id,
+                    );
+                } elseif (
+                    !empty($document_id_arr) &&
+                    count($document_id_arr ?? []) > 0
+                ) {
+                    $attachments = $this->get_document_email_links_by_id_arr1(
+                        $document_id_arr,
+                        23,
+                        $record_id,
+                        $path,
+                    );
                 }
             }
         }
         return $output_str;
     }
 
-    public function get_document_email_links1($record_type_id, $record_id, $path)
-    {
+    public function get_document_email_links1(
+        $record_type_id,
+        $record_id,
+        $path,
+    ) {
         ob_start();
 
         $qry = "SELECT * FROM Documents WHERE RecordTypeId = '$record_type_id' AND RecordId = '$record_id'";
@@ -3859,8 +7059,12 @@ class Mailrecord_model extends CI_Model
         return $content;
     }
 
-    public function get_document_email_links_by_id_arr1($document_id_arr, $record_type_id, $record_id, $path)
-    {
+    public function get_document_email_links_by_id_arr1(
+        $document_id_arr,
+        $record_type_id,
+        $record_id,
+        $path,
+    ) {
         ob_start();
 
         if (count($document_id_arr ?? []) > 0) {
@@ -3908,18 +7112,26 @@ class Mailrecord_model extends CI_Model
         return $content;
     }
 
-    public function get_project_task_html($document_id_arr, $user_id, $parent_record_id, $sub_id_arr)
-    {
+    public function get_project_task_html(
+        $document_id_arr,
+        $user_id,
+        $parent_record_id,
+        $sub_id_arr,
+    ) {
         global $record_type_id, $user_email;
         $html_content = '';
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
             for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
+                $this->mongodb->where([
+                    'RecordId' => mongo_id($sub_id_arr[$i]),
+                    'UserId' => mongo_id($user_id),
+                ]);
                 $qry = $this->mongodb->get('projectinclude');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
-                        $print_template = '../../templates/email-professional-projects-task.html';
+                        $print_template =
+                            '../../templates/email-professional-projects-task.html';
                         $html_content = $this->read_file($print_template);
                         $record_id = $rec['RecordId'];
                         $task_name = stripslashes($rec['TaskName']);
@@ -3930,19 +7142,54 @@ class Mailrecord_model extends CI_Model
                         $header_title = "Projects | Task | $task_name";
 
                         if ($document_id_arr == '-1') {
-                            $attachments = $this->get_document_email_links(45, $record_id);
-                        } elseif (count($document_id_arr ?? []) > 0 && !empty($document_id_arr)) {
-                            $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, 45, $record_id);
+                            $attachments = $this->get_document_email_links(
+                                45,
+                                $record_id,
+                            );
+                        } elseif (
+                            count($document_id_arr ?? []) > 0 &&
+                            !empty($document_id_arr)
+                        ) {
+                            $attachments = $this->get_document_email_links_by_id_arr(
+                                $document_id_arr,
+                                45,
+                                $record_id,
+                            );
                         } else {
-                            $attachments = '<i>No documents are attached to this record</i>';
+                            $attachments =
+                                '<i>No documents are attached to this record</i>';
                         }
 
-                        $html_content = str_replace('##TASK-NAME##', $task_name, $html_content);
-                        $html_content = str_replace('##STATUS##', $status, $html_content);
-                        $html_content = str_replace('##FROM-DATE##', $fromdate, $html_content);
-                        $html_content = str_replace('##DURATION##', $duration, $html_content);
-                        $html_content = str_replace('##NOTES##', $notes, $html_content);
-                        $html_content = str_replace('##ATTACHMENTS##', $attachments, $html_content);
+                        $html_content = str_replace(
+                            '##TASK-NAME##',
+                            $task_name,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##STATUS##',
+                            $status,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##FROM-DATE##',
+                            $fromdate,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##DURATION##',
+                            $duration,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##NOTES##',
+                            $notes,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##ATTACHMENTS##',
+                            $attachments,
+                            $html_content,
+                        );
 
                         $output_str .= $html_content;
                     }
@@ -3952,18 +7199,26 @@ class Mailrecord_model extends CI_Model
         return $output_str;
     }
 
-    public function get_ug_marksmemo_html($document_id_arr, $user_id, $parent_record_id, $sub_id_arr)
-    {
+    public function get_ug_marksmemo_html(
+        $document_id_arr,
+        $user_id,
+        $parent_record_id,
+        $sub_id_arr,
+    ) {
         global $record_type_id, $user_email;
         $html_content = '';
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
             for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
+                $this->mongodb->where([
+                    'RecordId' => mongo_id($sub_id_arr[$i]),
+                    'UserId' => mongo_id($user_id),
+                ]);
                 $qry = $this->mongodb->get('UndergraduateSub');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
-                        $print_template = '../../templates/email-academic-ug-marksmemo.html';
+                        $print_template =
+                            '../../templates/email-academic-ug-marksmemo.html';
                         $html_content = $this->read_file($print_template);
                         $record_id = $rec['RecordId'];
                         $academic_year = stripslashes($rec['AcademicYear']);
@@ -3975,20 +7230,63 @@ class Mailrecord_model extends CI_Model
                         $notes = stripslashes($rec['Notes']);
                         $header_title = "UG | MarksMemo | $yop";
                         if ($document_id_arr == '-1') {
-                            $attachments = $this->get_document_email_links(43, $record_id);
-                        } elseif (count($document_id_arr ?? []) > 0 && !empty($document_id_arr)) {
-                            $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, 43, $record_id);
+                            $attachments = $this->get_document_email_links(
+                                43,
+                                $record_id,
+                            );
+                        } elseif (
+                            count($document_id_arr ?? []) > 0 &&
+                            !empty($document_id_arr)
+                        ) {
+                            $attachments = $this->get_document_email_links_by_id_arr(
+                                $document_id_arr,
+                                43,
+                                $record_id,
+                            );
                         } else {
-                            $attachments = '<i>No documents are attached to this record</i>';
+                            $attachments =
+                                '<i>No documents are attached to this record</i>';
                         }
-                        $html_content = str_replace('##ACADEMIC-YEAR##', $academic_year, $html_content);
-                        $html_content = str_replace('##TERM##', $term, $html_content);
-                        $html_content = str_replace('##YEAR-OF-PASSING##', $yop, $html_content);
-                        $html_content = str_replace('##MARKS##', $marks, $html_content);
-                        $html_content = str_replace('##MAX-MARKS##', $max_marks, $html_content);
-                        $html_content = str_replace('##GRADE##', $grade, $html_content);
-                        $html_content = str_replace('##NOTES##', $notes, $html_content);
-                        $html_content = str_replace('##ATTACHMENTS##', $attachments, $html_content);
+                        $html_content = str_replace(
+                            '##ACADEMIC-YEAR##',
+                            $academic_year,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##TERM##',
+                            $term,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##YEAR-OF-PASSING##',
+                            $yop,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##MARKS##',
+                            $marks,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##MAX-MARKS##',
+                            $max_marks,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##GRADE##',
+                            $grade,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##NOTES##',
+                            $notes,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##ATTACHMENTS##',
+                            $attachments,
+                            $html_content,
+                        );
 
                         $output_str .= $html_content;
                     }
@@ -3998,18 +7296,26 @@ class Mailrecord_model extends CI_Model
 
         return $output_str;
     }
-    public function get_pg_marksmemo_html($document_id_arr, $user_id, $parent_record_id, $sub_id_arr)
-    {
+    public function get_pg_marksmemo_html(
+        $document_id_arr,
+        $user_id,
+        $parent_record_id,
+        $sub_id_arr,
+    ) {
         global $record_type_id, $user_email;
         $html_content = '';
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
             for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
+                $this->mongodb->where([
+                    'RecordId' => mongo_id($sub_id_arr[$i]),
+                    'UserId' => mongo_id($user_id),
+                ]);
                 $qry = $this->mongodb->get('PostgraduateSub');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
-                        $print_template = '../../templates/email-academic-pg-marksmemo.html';
+                        $print_template =
+                            '../../templates/email-academic-pg-marksmemo.html';
                         $html_content = $this->read_file($print_template);
                         $record_id = $rec['RecordId'];
                         $academic_year = stripslashes($rec['AcademicYear']);
@@ -4021,20 +7327,63 @@ class Mailrecord_model extends CI_Model
                         $notes = stripslashes($rec['Notes']);
                         $header_title = "UG | MarksMemo | $yop";
                         if ($document_id_arr == '-1') {
-                            $attachments = $this->get_document_email_links(44, $record_id);
-                        } elseif (count($document_id_arr ?? []) > 0 && !empty($document_id_arr)) {
-                            $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, 44, $record_id);
+                            $attachments = $this->get_document_email_links(
+                                44,
+                                $record_id,
+                            );
+                        } elseif (
+                            count($document_id_arr ?? []) > 0 &&
+                            !empty($document_id_arr)
+                        ) {
+                            $attachments = $this->get_document_email_links_by_id_arr(
+                                $document_id_arr,
+                                44,
+                                $record_id,
+                            );
                         } else {
-                            $attachments = '<i>No documents are attached to this record</i>';
+                            $attachments =
+                                '<i>No documents are attached to this record</i>';
                         }
-                        $html_content = str_replace('##ACADEMIC-YEAR##', $academic_year, $html_content);
-                        $html_content = str_replace('##TERM##', $term, $html_content);
-                        $html_content = str_replace('##YEAR-OF-PASSING##', $yop, $html_content);
-                        $html_content = str_replace('##MARKS##', $marks, $html_content);
-                        $html_content = str_replace('##MAX-MARKS##', $max_marks, $html_content);
-                        $html_content = str_replace('##GRADE##', $grade, $html_content);
-                        $html_content = str_replace('##NOTES##', $notes, $html_content);
-                        $html_content = str_replace('##ATTACHMENTS##', $attachments, $html_content);
+                        $html_content = str_replace(
+                            '##ACADEMIC-YEAR##',
+                            $academic_year,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##TERM##',
+                            $term,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##YEAR-OF-PASSING##',
+                            $yop,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##MARKS##',
+                            $marks,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##MAX-MARKS##',
+                            $max_marks,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##GRADE##',
+                            $grade,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##NOTES##',
+                            $notes,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##ATTACHMENTS##',
+                            $attachments,
+                            $html_content,
+                        );
 
                         $output_str .= $html_content;
                     }
@@ -4043,18 +7392,26 @@ class Mailrecord_model extends CI_Model
         }
         return $output_str;
     }
-    public function get_med_family_patient_html($document_id_arr, $user_id, $parent_record_id, $sub_id_arr)
-    {
+    public function get_med_family_patient_html(
+        $document_id_arr,
+        $user_id,
+        $parent_record_id,
+        $sub_id_arr,
+    ) {
         global $record_type_id, $user_email;
         $html_content = '';
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
             for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
+                $this->mongodb->where([
+                    'RecordId' => mongo_id($sub_id_arr[$i]),
+                    'UserId' => mongo_id($user_id),
+                ]);
                 $qry = $this->mongodb->get('MedFamilyMember');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
-                        $print_template = '../../templates/email-medical-family-patient.html';
+                        $print_template =
+                            '../../templates/email-medical-family-patient.html';
                         $html_content = $this->read_file($print_template);
 
                         $record_id = $rec['RecordId'];
@@ -4071,24 +7428,79 @@ class Mailrecord_model extends CI_Model
                         $header_title = "Patient & Family Health | Patient | $patient_name";
 
                         if ($document_id_arr == '-1') {
-                            $attachments = $this->get_document_email_links(26, $record_id);
-                        } elseif (count($document_id_arr ?? []) > 0 && !empty($document_id_arr)) {
-                            $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, 26, $record_id);
+                            $attachments = $this->get_document_email_links(
+                                26,
+                                $record_id,
+                            );
+                        } elseif (
+                            count($document_id_arr ?? []) > 0 &&
+                            !empty($document_id_arr)
+                        ) {
+                            $attachments = $this->get_document_email_links_by_id_arr(
+                                $document_id_arr,
+                                26,
+                                $record_id,
+                            );
                         } else {
-                            $attachments = '<i>No documents are attached to this record</i>';
+                            $attachments =
+                                '<i>No documents are attached to this record</i>';
                         }
 
-                        $html_content = str_replace('##PATIENT-NAME##', $patient_name, $html_content);
-                        $html_content = str_replace('##TREATMENT-TYPE##', $treatment_type, $html_content);
-                        $html_content = str_replace('##PLACE##', $place, $html_content);
-                        $html_content = str_replace('##ADDRESS##', $address, $html_content);
-                        $html_content = str_replace('##FROM-DATE##', $from_date, $html_content);
-                        $html_content = str_replace('##TO-DATE##', $to_date, $html_content);
-                        $html_content = str_replace('##DOC-NAME##', $doctor_name, $html_content);
-                        $html_content = str_replace('##DOC-ADDRESS##', $doctor_address, $html_content);
-                        $html_content = str_replace('##STATUS##', $status, $html_content);
-                        $html_content = str_replace('##NOTES##', $notes, $html_content);
-                        $html_content = str_replace('##ATTACHMENTS##', $attachments, $html_content);
+                        $html_content = str_replace(
+                            '##PATIENT-NAME##',
+                            $patient_name,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##TREATMENT-TYPE##',
+                            $treatment_type,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##PLACE##',
+                            $place,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##ADDRESS##',
+                            $address,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##FROM-DATE##',
+                            $from_date,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##TO-DATE##',
+                            $to_date,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##DOC-NAME##',
+                            $doctor_name,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##DOC-ADDRESS##',
+                            $doctor_address,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##STATUS##',
+                            $status,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##NOTES##',
+                            $notes,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##ATTACHMENTS##',
+                            $attachments,
+                            $html_content,
+                        );
 
                         $output_str .= $html_content;
                     }
@@ -4098,23 +7510,35 @@ class Mailrecord_model extends CI_Model
         return $output_str;
     }
 
-    public function get_med_insurance_beneficiary_html($document_id_arr, $user_id, $parent_record_id, $sub_id_arr)
-    {
+    public function get_med_insurance_beneficiary_html(
+        $document_id_arr,
+        $user_id,
+        $parent_record_id,
+        $sub_id_arr,
+    ) {
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
             for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
+                $this->mongodb->where([
+                    'RecordId' => mongo_id($sub_id_arr[$i]),
+                    'UserId' => mongo_id($user_id),
+                ]);
                 $qry = $this->mongodb->get('MedHealthInsuranceBeneficiary');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
-                        $print_template = '../../templates/email-medical-health-insurance-beneficiary.html';
+                        $print_template =
+                            '../../templates/email-medical-health-insurance-beneficiary.html';
                         $html_content = $this->read_file($print_template);
 
                         $record_id = $rec['RecordId'];
-                        $beneficiary_name = stripslashes($rec['BeneficiaryName']);
+                        $beneficiary_name = stripslashes(
+                            $rec['BeneficiaryName'],
+                        );
                         $relation = stripslashes($rec['Relation']);
                         $coverage_type = stripslashes($rec['CoverageType']);
-                        $percentage_allocation = stripslashes($rec['PercentageAllocation']);
+                        $percentage_allocation = stripslashes(
+                            $rec['PercentageAllocation'],
+                        );
                         $tenure = stripslashes($rec['Tenure']);
                         $tenure_amount = stripslashes($rec['TenureAmount']);
                         $status = stripslashes($rec['Status']);
@@ -4122,23 +7546,74 @@ class Mailrecord_model extends CI_Model
                         $header_title = "Health Insurance Beneficiary | $beneficiary_name";
 
                         if ($document_id_arr == '-1') {
-                            $attachments = $this->get_document_email_links(27, $record_id);
-                        } elseif (count($document_id_arr ?? []) > 0 && !empty($document_id_arr)) {
-                            $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, 27, $record_id);
+                            $attachments = $this->get_document_email_links(
+                                27,
+                                $record_id,
+                            );
+                        } elseif (
+                            count($document_id_arr ?? []) > 0 &&
+                            !empty($document_id_arr)
+                        ) {
+                            $attachments = $this->get_document_email_links_by_id_arr(
+                                $document_id_arr,
+                                27,
+                                $record_id,
+                            );
                         } else {
-                            $attachments = '<i>No documents are attached to this record</i>';
+                            $attachments =
+                                '<i>No documents are attached to this record</i>';
                         }
 
-                        $html_content = str_replace('##HEADER-TITLE##', $header_title, $html_content);
-                        $html_content = str_replace('##BENEFICIARY-NAME##', $beneficiary_name, $html_content);
-                        $html_content = str_replace('##RELATIONSHIP##', $relation, $html_content);
-                        $html_content = str_replace('##COVERAGE-TYPE##', $coverage_type, $html_content);
-                        $html_content = str_replace('##PERC-ALLOCATION##', $percentage_allocation, $html_content);
-                        $html_content = str_replace('##TENURE##', $tenure, $html_content);
-                        $html_content = str_replace('##TENURE-AMOUNT##', $tenure_amount, $html_content);
-                        $html_content = str_replace('##STATUS##', $status, $html_content);
-                        $html_content = str_replace('##NOTES##', $notes, $html_content);
-                        $html_content = str_replace('##ATTACHMENTS##', $attachments, $html_content);
+                        $html_content = str_replace(
+                            '##HEADER-TITLE##',
+                            $header_title,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##BENEFICIARY-NAME##',
+                            $beneficiary_name,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##RELATIONSHIP##',
+                            $relation,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##COVERAGE-TYPE##',
+                            $coverage_type,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##PERC-ALLOCATION##',
+                            $percentage_allocation,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##TENURE##',
+                            $tenure,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##TENURE-AMOUNT##',
+                            $tenure_amount,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##STATUS##',
+                            $status,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##NOTES##',
+                            $notes,
+                            $html_content,
+                        );
+                        $html_content = str_replace(
+                            '##ATTACHMENTS##',
+                            $attachments,
+                            $html_content,
+                        );
 
                         $output_str .= $html_content;
                     }

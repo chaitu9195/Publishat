@@ -23,11 +23,25 @@ class Message_model extends CI_Model
                 $email_body = $this->read_file($email_template);
 
                 $type = 'html';
-                $email_body = str_replace('##Event-Type##', $eventtype, $email_body);
-                $email_body = str_replace('##Event-Name##', $eventname, $email_body);
+                $email_body = str_replace(
+                    '##Event-Type##',
+                    $eventtype,
+                    $email_body,
+                );
+                $email_body = str_replace(
+                    '##Event-Name##',
+                    $eventname,
+                    $email_body,
+                );
                 $email_body = str_replace('##Message##', $message, $email_body);
 
-                $mailStatus = $this->publishmail($from_email, $to_email, $subject, $email_body, $type);
+                $mailStatus = $this->publishmail(
+                    $from_email,
+                    $to_email,
+                    $subject,
+                    $email_body,
+                    $type,
+                );
             }
             return ['status' => 'success'];
         }
@@ -44,8 +58,13 @@ class Message_model extends CI_Model
             return '';
         }
     }
-    public function publishmail($from_email, $to_email, $subject, $message, $type)
-    {
+    public function publishmail(
+        $from_email,
+        $to_email,
+        $subject,
+        $message,
+        $type,
+    ) {
         $config = [
             'smtp_host' => smtp_host,
             'smtp_port' => smtp_port,

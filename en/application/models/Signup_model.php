@@ -44,7 +44,8 @@ class Signup_model extends CI_Model
 
             if ($query) {
                 $user_id = $this->db->insert_id();
-                $email_template = 'mailtemplates/account-verification-template.html';
+                $email_template =
+                    'mailtemplates/account-verification-template.html';
                 $to_email = $uemail;
                 $from_email = admin_from_email;
                 $subject = 'Publishat.com Account Verification';
@@ -55,7 +56,13 @@ class Signup_model extends CI_Model
                 $email_body = str_replace('##vc##', $unhashpwd, $email_body);
                 $email_body = str_replace('##usermail##', $uemail, $email_body);
 
-                $mailStatus = $this->publishmail($from_email, $to_email, $subject, $email_body, $type);
+                $mailStatus = $this->publishmail(
+                    $from_email,
+                    $to_email,
+                    $subject,
+                    $email_body,
+                    $type,
+                );
                 $this->initialise_user_settings($user_id);
                 return ['status' => 'success', 'data' => $user_id];
             } else {
@@ -68,7 +75,11 @@ class Signup_model extends CI_Model
 
     public function validate_parameters($params)
     {
-        if (!empty($params['DateOfBirth']) && !empty($params['ContactName']) && !empty($params['PersonalEmail'])) {
+        if (
+            !empty($params['DateOfBirth']) &&
+            !empty($params['ContactName']) &&
+            !empty($params['PersonalEmail'])
+        ) {
             return true;
         } else {
             return false;
@@ -85,8 +96,13 @@ class Signup_model extends CI_Model
             return '';
         }
     }
-    public function publishmail($from_email, $to_email, $subject, $message, $type)
-    {
+    public function publishmail(
+        $from_email,
+        $to_email,
+        $subject,
+        $message,
+        $type,
+    ) {
         $config = [
             'smtp_host' => smtp_host,
             'smtp_port' => smtp_port,
@@ -137,7 +153,9 @@ class Signup_model extends CI_Model
 
     public function initialise_user_settings($user_id)
     {
-        $qry = $this->db->query('SELECT * FROM ' . TBL_ACCOUNTSETTINGS . " WHERE UserId = $user_id");
+        $qry = $this->db->query(
+            'SELECT * FROM ' . TBL_ACCOUNTSETTINGS . " WHERE UserId = $user_id",
+        );
         if ($qry->num_rows() == 0) {
             $query = $this->db->query(
                 'INSERT INTO ' .

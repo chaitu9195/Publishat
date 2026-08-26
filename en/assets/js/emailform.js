@@ -44,7 +44,8 @@ $(document).ready(function () {
               border: '1px solid #ccc',
               background: '#f9f9f9',
               'box-shadow': 'inset 0 1px 1px rgba(0,0,0,.075)',
-              transition: 'border-color ease-in-out .15s,box-shadow ease-in-out .15s',
+              transition:
+                'border-color ease-in-out .15s,box-shadow ease-in-out .15s',
             });
             setTimeout(function () {
               $('#main_content').show();

@@ -33,7 +33,8 @@ class Articles_model extends CI_Model
         if (!empty($imageName)) {
             $tmp_path = $_FILES['articleimg']['tmp_name'];
             $article_image_folder = '../../articleImages';
-            $image_filename = date('YmdHis') . '-' . str_replace(' ', '-', $imageName);
+            $image_filename =
+                date('YmdHis') . '-' . str_replace(' ', '-', $imageName);
             $target_file_name = $article_image_folder . '/' . $image_filename;
             $image_path = str_replace('../..', '', $target_file_name);
             $moveResult = move_uploaded_file($tmp_path, $target_file_name);

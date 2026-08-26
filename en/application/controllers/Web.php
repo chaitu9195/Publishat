@@ -40,7 +40,10 @@ class Web extends REST_Controller
                 $this->load->view('index');
             }
         } else {
-            $this->load->view('index', ['failed' => 1, 'data' => $result['data']]);
+            $this->load->view('index', [
+                'failed' => 1,
+                'data' => $result['data'],
+            ]);
         }
     }
 
@@ -138,7 +141,11 @@ class Web extends REST_Controller
         $tabName = $this->Common_model->get_tabName($recTypeId);
         $moduleName = $this->Common_model->get_moduleName($recTypeId);
         $this->load->model('Getallfields_model');
-        $fields = $this->Getallfields_model->get_allfields($recTypeId, $this->user_id, 0);
+        $fields = $this->Getallfields_model->get_allfields(
+            $recTypeId,
+            $this->user_id,
+            0,
+        );
         $file_name = 'create';
         $folder_files = $this->Common_model->folderfiles($recTypeId);
         $fileURL = $this->input->post('fileURL');
@@ -176,7 +183,11 @@ class Web extends REST_Controller
         $tabName = $this->Common_model->get_tabName($recTypeId);
         $moduleName = $this->Common_model->get_moduleName($recTypeId);
         $this->load->model('Getallfields_model');
-        $fields = $this->Getallfields_model->get_allfields($recTypeId, $this->user_id, 1);
+        $fields = $this->Getallfields_model->get_allfields(
+            $recTypeId,
+            $this->user_id,
+            1,
+        );
 
         $file_name = 'addrelated';
         $folder_files = $this->Common_model->folderfiles($recTypeId);
@@ -324,9 +335,16 @@ class Web extends REST_Controller
         $tabName = $this->Common_model->get_tabName($record_type_id);
         $moduleName = $this->Common_model->get_moduleName($record_type_id);
         $this->load->model('Getallfields_model');
-        $fields = $this->Getallfields_model->get_allfields($record_type_id, $this->user_id, 0);
+        $fields = $this->Getallfields_model->get_allfields(
+            $record_type_id,
+            $this->user_id,
+            0,
+        );
         if (!empty($tableName) && $tableName != 'failed') {
-            $result = $this->Common_model->get_editrecord_data($record_id, $record_type_id);
+            $result = $this->Common_model->get_editrecord_data(
+                $record_id,
+                $record_type_id,
+            );
             $folder_files = $this->Common_model->folderfiles($record_type_id);
             $data['data'] = $result['data'][0];
             $data['files'] = $result['files'];
@@ -361,11 +379,20 @@ class Web extends REST_Controller
             if ($result1['data'] == 'Success') {
                 $tableName = $this->Common_model->get_table($record_type_id);
                 $tabName = $this->Common_model->get_tabName($record_type_id);
-                $moduleName = $this->Common_model->get_moduleName($record_type_id);
+                $moduleName = $this->Common_model->get_moduleName(
+                    $record_type_id,
+                );
                 $this->load->model('Getallfields_model');
-                $fields = $this->Getallfields_model->get_allfields($record_type_id, $this->user_id, 0);
+                $fields = $this->Getallfields_model->get_allfields(
+                    $record_type_id,
+                    $this->user_id,
+                    0,
+                );
                 if (!empty($tableName) && $tableName != 'failed') {
-                    $result = $this->Common_model->get_editrecord_data($record_id, $record_type_id);
+                    $result = $this->Common_model->get_editrecord_data(
+                        $record_id,
+                        $record_type_id,
+                    );
                     $data['data'] = $result['data'][0];
                     $data['files'] = $result['files'];
                     $data['fields'] = $fields;
@@ -393,11 +420,20 @@ class Web extends REST_Controller
             if ($del_status['status'] == 'Success') {
                 $tableName = $this->Common_model->get_table($record_type_id);
                 $tabName = $this->Common_model->get_tabName($record_type_id);
-                $moduleName = $this->Common_model->get_moduleName($record_type_id);
+                $moduleName = $this->Common_model->get_moduleName(
+                    $record_type_id,
+                );
                 $this->load->model('Getallfields_model');
-                $fields = $this->Getallfields_model->get_allfields($record_type_id, $this->user_id, 0);
+                $fields = $this->Getallfields_model->get_allfields(
+                    $record_type_id,
+                    $this->user_id,
+                    0,
+                );
                 if (!empty($tableName) && $tableName != 'failed') {
-                    $result = $this->Common_model->get_editrecord_data($record_id, $record_type_id);
+                    $result = $this->Common_model->get_editrecord_data(
+                        $record_id,
+                        $record_type_id,
+                    );
                     $data['data'] = $result['data'][0];
                     $data['files'] = $result['files'];
                     $data['fields'] = $fields;
@@ -454,7 +490,10 @@ class Web extends REST_Controller
         $tableName = $this->Common_model->get_table($record_type_id);
         if (!empty($tableName) && $tableName != 'failed') {
             $this->load->model('Common/Cart_model');
-            $result = $this->Cart_model->getkart_data($record_id, $record_type_id);
+            $result = $this->Cart_model->getkart_data(
+                $record_id,
+                $record_type_id,
+            );
             $tabName = $this->Common_model->get_tabName($record_type_id);
             $moduleName = $this->Common_model->get_moduleName($record_type_id);
             if ($params['rel_type_id']) {
@@ -613,7 +652,11 @@ class Web extends REST_Controller
         $this->load->model('Global/Folder_model');
         $result = $this->Folder_model->uploadfile($params);
         $this->load->model('Global/Folder_model');
-        $data = $this->Folder_model->getfolderfilesdata($folder_id, $type_id, $module);
+        $data = $this->Folder_model->getfolderfilesdata(
+            $folder_id,
+            $type_id,
+            $module,
+        );
         $filesData['files'] = $data['ff'];
         $filesData['fpath'] = $data['fdetails'];
         $filesData['param'] = $data;
@@ -675,7 +718,9 @@ class Web extends REST_Controller
         $params = $this->sanitize($this->input->post());
         if (count($params ?? [])) {
             $this->load->model('Global/Mailfolderfiles_model');
-            $result = $this->Mailfolderfiles_model->mail_from_bookmarks($params);
+            $result = $this->Mailfolderfiles_model->mail_from_bookmarks(
+                $params,
+            );
             if ($result['status'] == 'success') {
                 echo $result['status'];
             } elseif ($result['status'] == 'failed') {
@@ -785,7 +830,10 @@ class Web extends REST_Controller
         $this->session->set_userdata(['user_id' => $user_id]);
         $module = $this->sanitize($this->input->get('module'));
         $recTypeId = $this->sanitize($this->input->get('rid'));
-        $this->load->view('template', ['module' => $module, 'rid' => $recTypeId]);
+        $this->load->view('template', [
+            'module' => $module,
+            'rid' => $recTypeId,
+        ]);
     }
 
     public function createfolder_post()
@@ -797,7 +845,11 @@ class Web extends REST_Controller
         $module = $params['module'];
         $this->load->model('Global/Folder_model');
         $result = $this->Folder_model->createfolder($params);
-        $data = $this->Folder_model->getfolderfilesdata($folder_id, $type_id, $module);
+        $data = $this->Folder_model->getfolderfilesdata(
+            $folder_id,
+            $type_id,
+            $module,
+        );
         $folderData['files'] = $data['ff'];
         $folderData['fpath'] = $data['fdetails'];
         $folderData['param'] = $data;
@@ -810,7 +862,11 @@ class Web extends REST_Controller
         $type_id = $this->input->get('typeId');
         $module = $this->input->get('module');
         $this->load->model('Global/Folder_model');
-        $data = $this->Folder_model->getfolderfilesdata($folder_id, $type_id, $module);
+        $data = $this->Folder_model->getfolderfilesdata(
+            $folder_id,
+            $type_id,
+            $module,
+        );
         $folderData['files'] = $data['ff'];
         $folderData['fpath'] = $data['fdetails'];
         $folderData['param'] = $data;
@@ -958,10 +1014,17 @@ class Web extends REST_Controller
         $tabName = $this->Common_model->get_tabName($recTypeId);
         $moduleName = $this->Common_model->get_moduleName($recTypeId);
         $this->load->model('Getallfields_model');
-        $fields = $this->Getallfields_model->get_allfields($recTypeId, $user_id, 0);
+        $fields = $this->Getallfields_model->get_allfields(
+            $recTypeId,
+            $user_id,
+            0,
+        );
         $file_name = 'create';
 
-        $this->load->view('template', ['module' => $moduleName, 'rid' => $recTypeId]);
+        $this->load->view('template', [
+            'module' => $moduleName,
+            'rid' => $recTypeId,
+        ]);
     }
 
     public function OcrReader($fileURL)
@@ -970,7 +1033,11 @@ class Web extends REST_Controller
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://api.ocr.space/Parse/Image');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "isOverlayRequired=true&url=$fileURL&language=eng");
+        curl_setopt(
+            $ch,
+            CURLOPT_POSTFIELDS,
+            "isOverlayRequired=true&url=$fileURL&language=eng",
+        );
         curl_setopt($ch, CURLOPT_POST, 1);
         $headers = [];
         $headers[] = 'Apikey: a75232244b88957';
@@ -1047,7 +1114,9 @@ class Web extends REST_Controller
 
         $cc = $this->input->get('cc');
         $subject = $this->input->get('subject') ?: 'Publishat mail test';
-        $message = $this->input->get('message') ?: 'This is a test email from Publishat.';
+        $message =
+            $this->input->get('message') ?:
+            'This is a test email from Publishat.';
 
         $this->email->to('chaithanyakondragunta@gmail.com');
         if ($cc) {

@@ -49,10 +49,14 @@ $("#documentForm").submit(function ( e ) {
 				$("#success").show();
 			      setTimeout(function(){ sub_view('<?= $main_record_type_id ?>','<?= $record_type_id ?>','<?= $data[
     'RecordId'
-] ?>','<?= $data['ParentRecordId'] ?>','<?= strtolower($moduleName) ?>') },3000);
+] ?>','<?= $data['ParentRecordId'] ?>','<?= strtolower(
+    $moduleName,
+) ?>') },3000);
 			      setTimeout(function(){ sub_view('<?= $main_record_type_id ?>','<?= $record_type_id ?>','<?= $data[
     'RecordId'
-] ?>','<?= $data['ParentRecordId'] ?>','<?= strtolower($moduleName) ?>') },3000);
+] ?>','<?= $data['ParentRecordId'] ?>','<?= strtolower(
+    $moduleName,
+) ?>') },3000);
 				}
 			});
 		
@@ -129,7 +133,9 @@ $("#hide_error").click(function(){
        $("#error").hide();
 });
 
-document.title="New Record | <?= $tabName ?> | <?= ucfirst($moduleName) ?> | Publishat";
+document.title="New Record | <?= $tabName ?> | <?= ucfirst(
+     $moduleName,
+ ) ?> | Publishat";
 $('.doc_id').click(function(e){
 	e.stopPropagation();
 	

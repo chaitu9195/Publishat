@@ -78,7 +78,9 @@ setcookie('TotalAmount', $cost, time() + 86400 * 30, '/');
                 <input type="hidden" name="longitude" value="<?= $longitude ?>">
                 <input type="hidden" name="filename" value="<?= $filename ?>">
                 <input type="hidden" name="description" value="<?= $description ?>">
-                <input type="hidden" name="idUser" value="<?= $this->session->userdata('user_id') ?>">
+                <input type="hidden" name="idUser" value="<?= $this->session->userdata(
+                    'user_id',
+                ) ?>">
                 <input type="hidden" name="PaymentFrom" value="Print">
                 <input type="hidden" name="print_type" value="<?php echo $print_type; ?>">
                 <button type="submit" class="btn btn-success pull-right">CheckOut</button>

@@ -12,7 +12,11 @@ class Login_model extends CI_Model
         if ($validationCheck) {
             $uemail = $params['userlogin'];
             $pwd = md5($params['userpassword']);
-            $query = $this->db->query('SELECT * FROM  ' . TBL_USER . " WHERE Email = '$uemail' AND Password = '$pwd' ");
+            $query = $this->db->query(
+                'SELECT * FROM  ' .
+                    TBL_USER .
+                    " WHERE Email = '$uemail' AND Password = '$pwd' ",
+            );
             if ($query->num_rows() > 0) {
                 $result = $query->row_array();
                 return ['status' => 'success', 'data' => $result];

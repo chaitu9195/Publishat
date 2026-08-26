@@ -7,7 +7,10 @@ if (!defined('BASEPATH')) {
 use Google\Client as GoogleClient;
 
 if (!defined('GOOGLE_OAUTH_CLIENT_ID')) {
-    define('GOOGLE_OAUTH_CLIENT_ID', '353601870016-48gv97ldi3m2p2vap4kfsjveboaj6vut.apps.googleusercontent.com');
+    define(
+        'GOOGLE_OAUTH_CLIENT_ID',
+        '353601870016-48gv97ldi3m2p2vap4kfsjveboaj6vut.apps.googleusercontent.com',
+    );
     define('GOOGLE_OAUTH_CLIENT_SECRET', 'HV-QcFNKRapbrPdeR2pdJ0EZ');
 }
 
