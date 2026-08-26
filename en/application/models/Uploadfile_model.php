@@ -26,7 +26,9 @@ class Uploadfile_model extends CI_Model
             }
             $uploaded_filename = $this->upload_thumbnail($params);
             if ($uploaded_filename == '') {
-                return ['data' => 'File size is too high. Document should not be more than ' . max_document_file_size_text];
+                return [
+                    'data' => 'File size is too high. Document should not be more than ' . max_document_file_size_text,
+                ];
             }
         }
         if (strlen($uploaded_filename) > 0) {
@@ -52,7 +54,15 @@ class Uploadfile_model extends CI_Model
                     $Status = 'SUCCESS';
                 }
             } else {
-                $qry = $gridfs->storeUpload('uploadImage', ['_id' => $mid, 'DocumentId' => $mid, 'UserId' => $user_id, 'RecordId' => mongo_id($record_id), 'RecordTypeId' => $RecordTypeId,'FileType' => $file_extension, 'Notes' => $label]);
+                $qry = $gridfs->storeUpload('uploadImage', [
+                    '_id' => $mid,
+                    'DocumentId' => $mid,
+                    'UserId' => $user_id,
+                    'RecordId' => mongo_id($record_id),
+                    'RecordTypeId' => $RecordTypeId,
+                    'FileType' => $file_extension,
+                    'Notes' => $label,
+                ]);
             }
             return ['data' => 'Success'];
         } else {
@@ -65,7 +75,24 @@ class Uploadfile_model extends CI_Model
         $document = $_FILES['uploadImage']['name'];
         $dot_index = strrpos($document, '.');
         $file_type = substr($document, $dot_index + 1);
-        if ($file_type == 'pdf' || $file_type == 'doc' || $file_type == 'ppt' || $file_type == 'xls' || $file_type == 'txt' || $file_type == 'pptx' || $file_type == 'xlsx' || $file_type == 'docx' || $file_type == 'jpg' || $file_type == 'JPG' || $file_type == 'jpeg' || $file_type == 'JPEG' || $file_type == 'gif' || $file_type == 'png' || $file_type == '' || $file_type == 'PNG') {
+        if (
+            $file_type == 'pdf' ||
+            $file_type == 'doc' ||
+            $file_type == 'ppt' ||
+            $file_type == 'xls' ||
+            $file_type == 'txt' ||
+            $file_type == 'pptx' ||
+            $file_type == 'xlsx' ||
+            $file_type == 'docx' ||
+            $file_type == 'jpg' ||
+            $file_type == 'JPG' ||
+            $file_type == 'jpeg' ||
+            $file_type == 'JPEG' ||
+            $file_type == 'gif' ||
+            $file_type == 'png' ||
+            $file_type == '' ||
+            $file_type == 'PNG'
+        ) {
             return $file_type;
         } else {
             return '';

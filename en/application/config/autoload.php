@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
@@ -40,8 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-$autoload['packages'] = array();
-
+$autoload['packages'] = [];
 
 /*
 | -------------------------------------------------------------------
@@ -60,8 +59,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
 
-$autoload['libraries'] = array('session');
-
+$autoload['libraries'] = ['session'];
 
 /*
 | -------------------------------------------------------------------
@@ -76,8 +74,7 @@ $autoload['libraries'] = array('session');
 |	$autoload['drivers'] = array('cache');
 */
 
-$autoload['drivers'] = array();
-
+$autoload['drivers'] = [];
 
 /*
 | -------------------------------------------------------------------
@@ -88,8 +85,7 @@ $autoload['drivers'] = array();
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'legacy_crypto', 'google_oauth');
-
+$autoload['helper'] = ['url', 'legacy_crypto', 'google_oauth'];
 
 /*
 | -------------------------------------------------------------------
@@ -104,8 +100,7 @@ $autoload['helper'] = array('url', 'legacy_crypto', 'google_oauth');
 |
 */
 
-$autoload['config'] = array();
-
+$autoload['config'] = [];
 
 /*
 | -------------------------------------------------------------------
@@ -120,8 +115,7 @@ $autoload['config'] = array();
 |
 */
 
-$autoload['language'] = array();
-
+$autoload['language'] = [];
 
 /*
 | -------------------------------------------------------------------
@@ -137,4 +131,4 @@ $autoload['language'] = array();
 |	$autoload['model'] = array('first_model' => 'first');
 */
 
-$autoload['model'] = array();
+$autoload['model'] = [];

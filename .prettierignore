@@ -1,0 +1,23 @@
+# --- Never format third-party / generated / vendored code ---
+node_modules/
+en/vendor/
+en/system/
+en/system_old_3.0rc3/
+en/third_party/
+en/application/third_party/
+en_backup_pre_php84_*/
+_ci3_php84_tmp/
+_mongodb_ext/
+tools/
+
+# Third-party libraries (kept in upstream/PSR style; not ours to restyle)
+en/application/libraries/
+
+# Stock CodeIgniter error templates
+en/application/views/errors/
+
+# Minified and vendored JavaScript
+**/*.min.js
+en/js/vendor/
+en/assets/js/trash/
+en/assets/js/gmaps.js

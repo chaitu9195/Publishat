@@ -25,7 +25,12 @@ class Thirdpartylogin_model extends CI_Model
             $data = $this->mongodb->get('UserLoginHistory');
             if (count($data ?? []) > 0) {
                 $this->mongodb->where(['UserId' => mongo_id($user_id)]);
-                $this->mongodb->set(['PrevLoginTime' => $joined_on,'PrevIP' => $ipaddress,'LatestLoginTime' => $joined_on,'LatestIP' => $ipaddress]);
+                $this->mongodb->set([
+                    'PrevLoginTime' => $joined_on,
+                    'PrevIP' => $ipaddress,
+                    'LatestLoginTime' => $joined_on,
+                    'LatestIP' => $ipaddress,
+                ]);
                 $this->mongodb->update('UserLoginHistory');
                 $date = date('Y-m-d');
                 $this->mongodb->where(['Date' => $date]);
@@ -36,32 +41,53 @@ class Thirdpartylogin_model extends CI_Model
                     $this->mongodb->insert('login', ['Date' => $date]);
                 }
             } else {
-                $this->mongodb->insert('UserLoginHistory', ['UserId' => mongo_id($user_id),'PrevLoginTime' => $joined_on, 'InitialIP' => $ipaddress, 'PrevIP' => $ipaddress, 'LatestLoginTime' => $joined_on,'LatestIP' => $ipaddress]);
+                $this->mongodb->insert('UserLoginHistory', [
+                    'UserId' => mongo_id($user_id),
+                    'PrevLoginTime' => $joined_on,
+                    'InitialIP' => $ipaddress,
+                    'PrevIP' => $ipaddress,
+                    'LatestLoginTime' => $joined_on,
+                    'LatestIP' => $ipaddress,
+                ]);
             }
-            $result = ['UserId' => $user_id, 'Name' => $name, 'Email' => $email, 'Address' => $address, 'Upgraded' => $Upgraded];
-            return ['status' => 'success','data' => $result];
+            $result = [
+                'UserId' => $user_id,
+                'Name' => $name,
+                'Email' => $email,
+                'Address' => $address,
+                'Upgraded' => $Upgraded,
+            ];
+            return ['status' => 'success', 'data' => $result];
         } else {
             $joined_on = date('Y-m-d H:i:s');
             $user_id = mongo_id();
-            $user_details = ['_id' => $user_id,
-                                            'UserId' => $user_id,
-                                            'Name' => $name,
-                                            'Email' => $email,
-                                            'Gender' => $gender,
-                                            'EmailVerified' => 'Y',
-                                            'Status' => 'Active',
-                                            'JoinedOn' => $joined_on,
-                                            'UserLoginType' => '2',
-                                            'FirstLogin' => '0',
-                                            'Password' => '',
-                                            'PhotoPath' => '',
-                             ];
+            $user_details = [
+                '_id' => $user_id,
+                'UserId' => $user_id,
+                'Name' => $name,
+                'Email' => $email,
+                'Gender' => $gender,
+                'EmailVerified' => 'Y',
+                'Status' => 'Active',
+                'JoinedOn' => $joined_on,
+                'UserLoginType' => '2',
+                'FirstLogin' => '0',
+                'Password' => '',
+                'PhotoPath' => '',
+            ];
 
             $this->mongodb->insert(TBL_USER, $user_details);
             $this->initialise_user_settings($user_id);
             $result = ['UserId' => $user_id, 'Name' => $name, 'Email' => $email];
-            $this->mongodb->insert('UserLoginHistory', ['UserId' => mongo_id($user_id),'PrevLoginTime' => $joined_on, 'InitialIP' => $ipaddress, 'PrevIP' => $ipaddress, 'LatestLoginTime' => $joined_on,'LatestIP' => $ipaddress]);
-            return ['status' => 'oauth','data' => $result];
+            $this->mongodb->insert('UserLoginHistory', [
+                'UserId' => mongo_id($user_id),
+                'PrevLoginTime' => $joined_on,
+                'InitialIP' => $ipaddress,
+                'PrevIP' => $ipaddress,
+                'LatestLoginTime' => $joined_on,
+                'LatestIP' => $ipaddress,
+            ]);
+            return ['status' => 'oauth', 'data' => $result];
         }
     }
 
@@ -69,17 +95,17 @@ class Thirdpartylogin_model extends CI_Model
     {
         $user_id = $this->session->userdata('user_id');
         $name = str_replace("'", '', $name);
-        $this->mongodb->where(['UserId' => mongo_id($user_id),'PersonalEmail' => $email]);
+        $this->mongodb->where(['UserId' => mongo_id($user_id), 'PersonalEmail' => $email]);
         $qry = $this->mongodb->get(TBL_CONTACTS);
         if (count($qry ?? []) == 0) {
             $mid = mongo_id();
             $contacts = [
-                      'UserId' => mongo_id($user_id),
-                      'ContactName' => $name,
-                      'ContactType' => 'Google Contacts',
-                      'PersonalEmail' => $email,
-                      'TS' => TimeStamp,
-                      'RecordId' => $mid,
+                'UserId' => mongo_id($user_id),
+                'ContactName' => $name,
+                'ContactType' => 'Google Contacts',
+                'PersonalEmail' => $email,
+                'TS' => TimeStamp,
+                'RecordId' => $mid,
             ];
             $this->mongodb->insert(TBL_CONTACTS, $contacts);
         }
@@ -92,13 +118,11 @@ class Thirdpartylogin_model extends CI_Model
         $oAuthToken = $params['token'];
         $file_name = $params['file_name'];
         $getUrl = 'https://www.googleapis.com/drive/v2/files/' . $fileId . '?alt=media';
-        $authHeader = 'Authorization: Bearer ' . $oAuthToken ;
+        $authHeader = 'Authorization: Bearer ' . $oAuthToken;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $getUrl);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-         $authHeader ,
-  ]);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [$authHeader]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
         $data = curl_exec($ch);
@@ -129,16 +153,16 @@ class Thirdpartylogin_model extends CI_Model
 
         if (file_put_contents($target_file_name, $data)) {
             $file = [
-                             'UserId' => mongo_id($user_id),
-                             'RecordTypeId' => $record_type_id,
-                             'DocumentPath' => $db_document_filename,
-                             'FileType' => $file_extension,
-                             'length' => $file_size,
-                             'Type' => 'File',
-                             'UploadedFrom' => 'Folder',
-                             'ParentId' => $fold_id,
-                             'TS' => $date,
-                   ];
+                'UserId' => mongo_id($user_id),
+                'RecordTypeId' => $record_type_id,
+                'DocumentPath' => $db_document_filename,
+                'FileType' => $file_extension,
+                'length' => $file_size,
+                'Type' => 'File',
+                'UploadedFrom' => 'Folder',
+                'ParentId' => $fold_id,
+                'TS' => $date,
+            ];
             $query = $this->mongodb->insert('fs.files', $file);
         }
     }
@@ -176,17 +200,18 @@ class Thirdpartylogin_model extends CI_Model
                 $ts = TimeStamp;
                 $mongo_id = mongo_id();
 
-                $acc_setting = ['_id' => $mongo_id,
-                                     'AccountSettingId' => $mongo_id,
-                                     'UserId' => $user_id,
-                                     'SettingId' => $setting_id,
-                                     'Setting' => $setting_name,
-                                     'SettingValue' => $setting_value,
-                                     'PaymentStatus' => $payment_status,
-                                     'Module' => $module,
-                                     'RecordTypeId' => $record_type_id,
-                                     'DisplaySequence' => $display_sequence,
-                                     'TS' => $ts,
+                $acc_setting = [
+                    '_id' => $mongo_id,
+                    'AccountSettingId' => $mongo_id,
+                    'UserId' => $user_id,
+                    'SettingId' => $setting_id,
+                    'Setting' => $setting_name,
+                    'SettingValue' => $setting_value,
+                    'PaymentStatus' => $payment_status,
+                    'Module' => $module,
+                    'RecordTypeId' => $record_type_id,
+                    'DisplaySequence' => $display_sequence,
+                    'TS' => $ts,
                 ];
                 $this->mongodb->insert(TBL_ACCOUNTSETTINGS, $acc_setting);
             }

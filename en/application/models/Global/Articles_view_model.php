@@ -32,6 +32,8 @@ class Articles_view_model extends CI_Model
         $articledes = $params['ArticleDescription'];
         $art_heading = $params['articleheading'];
         $art_url = $params['articleurl'];
-        $query = $this->db->query("UPDATE `Articles` SET `ArticleDescription`='$articledes',`ArticleHeading`='$art_heading',`ArticleUrl`='$art_url' WHERE id = '$id'");
+        $query = $this->db->query(
+            "UPDATE `Articles` SET `ArticleDescription`='$articledes',`ArticleHeading`='$art_heading',`ArticleUrl`='$art_url' WHERE id = '$id'",
+        );
     }
 }

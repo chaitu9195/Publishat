@@ -1,6 +1,6 @@
 <?php
 
-require(APPPATH . '/libraries/REST_Controller.php');
+require APPPATH . '/libraries/REST_Controller.php';
 class Thirdparty extends REST_Controller
 {
     public function __construct()
@@ -24,12 +24,12 @@ class Thirdparty extends REST_Controller
         $auth_code = $_GET['code'];
 
         $fields = [
-                             'code' => urlencode($auth_code),
-                             'client_id' => urlencode($client_id),
-                             'client_secret' => urlencode($client_secret),
-                             'redirect_uri' => urlencode($redirect_uri),
-                             'grant_type' => urlencode('authorization_code'),
-                         ];
+            'code' => urlencode($auth_code),
+            'client_id' => urlencode($client_id),
+            'client_secret' => urlencode($client_secret),
+            'redirect_uri' => urlencode($redirect_uri),
+            'grant_type' => urlencode('authorization_code'),
+        ];
         $post = '';
         foreach ($fields as $key => $value) {
             $post .= $key . '=' . $value . '&';
@@ -61,7 +61,11 @@ class Thirdparty extends REST_Controller
             unset($_SESSION['access_token']);
         }
 
-        $url = 'https://www.google.com/m8/feeds/contacts/default/full?max-results=' . $max_results . '&alt=json&v=3.0&oauth_token=' . $accesstoken;
+        $url =
+            'https://www.google.com/m8/feeds/contacts/default/full?max-results=' .
+            $max_results .
+            '&alt=json&v=3.0&oauth_token=' .
+            $accesstoken;
         $xmlresponse = $this->curl_file_get_contents($url);
 
         $contacts = json_decode($xmlresponse, true);
@@ -104,7 +108,13 @@ class Thirdparty extends REST_Controller
         $result = $this->Thirdpartylogin_model->gpicker($params);
         $this->load->model('Global/Folder_model');
         $data = $this->Folder_model->getfolderfilesdata($folder_id, $type_id, $module);
-        $this->load->view('includes/folder', ['files' => $data['ff'],'fpath' => $data['fdetails'],'param' => $data,'status' => 'success','folid' => $folder_id]);
+        $this->load->view('includes/folder', [
+            'files' => $data['ff'],
+            'fpath' => $data['fdetails'],
+            'param' => $data,
+            'status' => 'success',
+            'folid' => $folder_id,
+        ]);
     }
     public function curl_file_get_contents($url)
     {

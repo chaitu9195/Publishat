@@ -13,7 +13,7 @@ class Settings_model extends CI_Model
         foreach ($qry as $key) {
             $settings[] = $key;
         }
-        return ['module' => $module,'data' => $settings];
+        return ['module' => $module, 'data' => $settings];
     }
 
     public function updateSettings($params)
@@ -29,7 +29,11 @@ class Settings_model extends CI_Model
             for ($i = 0; $i < count($account_setting_id_arr ?? []); $i++) {
                 $account_setting_id = $account_setting_id_arr[$i];
                 $this->mongodb->set(['SettingValue' => 'Y']);
-                $this->mongodb->where(['AccountSettingId' => mongo_id($account_setting_id), 'Module' => $module, 'UserId' => mongo_id($user_id)]);
+                $this->mongodb->where([
+                    'AccountSettingId' => mongo_id($account_setting_id),
+                    'Module' => $module,
+                    'UserId' => mongo_id($user_id),
+                ]);
                 $qry = $this->mongodb->update('AccountSettings');
             }
             if ($qry) {

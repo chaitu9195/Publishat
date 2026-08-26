@@ -1,6 +1,6 @@
 <?php
 
-require(APPPATH . '/libraries/REST_Controller.php');
+require APPPATH . '/libraries/REST_Controller.php';
 class Related extends REST_Controller
 {
     protected $user_id;
@@ -30,7 +30,16 @@ class Related extends REST_Controller
         if (!empty($tableName) && $tableName != 'failed') {
             $result = $this->Common_model->get_editrecord_data($record_id, $record_type_id);
             $folder_files = $this->Common_model->folderfiles($parent_record_type_id);
-            $this->load->view('edit-related', ['data' => $result['data'][0],'files' => $result['files'],'folder' => $folder_files['folder'], 'fields' => $fields, 'tabName' => $tabName, 'moduleName' => $moduleName, 'recTypeId' => $record_type_id, 'parentRecTypeId' => $parent_record_type_id]);
+            $this->load->view('edit-related', [
+                'data' => $result['data'][0],
+                'files' => $result['files'],
+                'folder' => $folder_files['folder'],
+                'fields' => $fields,
+                'tabName' => $tabName,
+                'moduleName' => $moduleName,
+                'recTypeId' => $record_type_id,
+                'parentRecTypeId' => $parent_record_type_id,
+            ]);
         } else {
             $this->load->view('edit-related', ['data' => 'No Data']);
         }
@@ -54,7 +63,15 @@ class Related extends REST_Controller
                 $fields = $this->Getallfields_model->get_allfields($parent_record_type_id, $this->user_id, 1);
                 if (!empty($tableName) && $tableName != 'failed') {
                     $result = $this->Common_model->get_editrecord_data($record_id, $record_type_id);
-                    $this->load->view('edit-related', ['data' => $result['data'][0],'files' => $result['files'], 'fields' => $fields, 'tabName' => $tabName, 'moduleName' => $moduleName, 'recTypeId' => $record_type_id, 'parentRecTypeId' => $parent_record_type_id]);
+                    $this->load->view('edit-related', [
+                        'data' => $result['data'][0],
+                        'files' => $result['files'],
+                        'fields' => $fields,
+                        'tabName' => $tabName,
+                        'moduleName' => $moduleName,
+                        'recTypeId' => $record_type_id,
+                        'parentRecTypeId' => $parent_record_type_id,
+                    ]);
                 }
             } else {
                 echo 'Failed';
@@ -82,7 +99,15 @@ class Related extends REST_Controller
                 $tableName = $this->Common_model->get_table($parent_record_type_id);
                 if (!empty($tableName) && $tableName != 'failed') {
                     $result = $this->Common_model->get_editrecord_data($record_id, $record_type_id);
-                    $this->load->view('edit-related', ['data' => $result['data'][0],'files' => $result['files'], 'fields' => $fields, 'tabName' => $tabName, 'moduleName' => $moduleName, 'recTypeId' => $record_type_id, 'parentRecTypeId' => $parent_record_type_id]);
+                    $this->load->view('edit-related', [
+                        'data' => $result['data'][0],
+                        'files' => $result['files'],
+                        'fields' => $fields,
+                        'tabName' => $tabName,
+                        'moduleName' => $moduleName,
+                        'recTypeId' => $record_type_id,
+                        'parentRecTypeId' => $parent_record_type_id,
+                    ]);
                 }
             } else {
                 echo $del_status['status'];

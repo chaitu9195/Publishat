@@ -47,26 +47,36 @@ class Message_model extends CI_Model
     public function publishmail($from_email, $to_email, $subject, $message, $type)
     {
         $config = [
-          'smtp_host' => smtp_host,
-          'smtp_port' => smtp_port,
-          'smtp_user' => smtp_user,
-          'smtp_pass' => smtp_pass,
-          'mailpath' => mailpath,
-          'charset' => charset,
-          'wordwrap' => wordwrap,
+            'smtp_host' => smtp_host,
+            'smtp_port' => smtp_port,
+            'smtp_user' => smtp_user,
+            'smtp_pass' => smtp_pass,
+            'mailpath' => mailpath,
+            'charset' => charset,
+            'wordwrap' => wordwrap,
         ];
 
         if ($type == 'html') {
-            $mailheaders = 'From:' . admin_from_email . "\r\n" .
-                           "MIME-Version:1.0\r\n" .
-                           "Content-type:text/html\r\n" .
-                           "Content-Transfer-Encoding:7bit\n" .
-                           'Reply-To: ' . admin_from_email . "\n";
+            $mailheaders =
+                'From:' .
+                admin_from_email .
+                "\r\n" .
+                "MIME-Version:1.0\r\n" .
+                "Content-type:text/html\r\n" .
+                "Content-Transfer-Encoding:7bit\n" .
+                'Reply-To: ' .
+                admin_from_email .
+                "\n";
         } else {
-            $mailheaders = 'From:' . admin_from_email . "\r\nMIME-Version: 1.0\r\nContent-type:" .
-                           "text/plain\r\nContent-Transfer-" .
-                           "Encoding: 7bit\n" .
-                           'Reply-To: ' . admin_from_email . "\n";
+            $mailheaders =
+                'From:' .
+                admin_from_email .
+                "\r\nMIME-Version: 1.0\r\nContent-type:" .
+                "text/plain\r\nContent-Transfer-" .
+                "Encoding: 7bit\n" .
+                'Reply-To: ' .
+                admin_from_email .
+                "\n";
         }
 
         $this->load->library('email', $config);

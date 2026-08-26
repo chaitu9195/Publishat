@@ -9,11 +9,11 @@ $config['mongo_db']['newdb']['database'] = 'publisha_dbase';
 // otherwise builds a credentialed URI, which fails against a no-auth server.
 // Set to FALSE (and provide username/password above) when connecting to an
 // auth-enabled production MongoDB.
-$config['mongo_db']['newdb']['no_auth'] = TRUE;
-$config['mongo_db']['newdb']['db_debug'] = TRUE;
-$config['mongo_db']['newdb']['write_concerns'] = (int)1;
-$config['mongo_db']['newdb']['journal'] = TRUE;
-$config['mongo_db']['newdb']['read_preference'] = NULL;
-$config['mongo_db']['newdb']['read_preference_tags'] = NULL;
+$config['mongo_db']['newdb']['no_auth'] = true;
+$config['mongo_db']['newdb']['db_debug'] = true;
+$config['mongo_db']['newdb']['write_concerns'] = (int) 1;
+$config['mongo_db']['newdb']['journal'] = true;
+$config['mongo_db']['newdb']['read_preference'] = null;
+$config['mongo_db']['newdb']['read_preference_tags'] = null;
 
 ?>

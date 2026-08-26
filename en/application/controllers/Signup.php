@@ -1,6 +1,6 @@
 <?php
 
-require(APPPATH . '/libraries/REST_Controller.php');
+require APPPATH . '/libraries/REST_Controller.php';
 class Signup extends REST_Controller
 {
     public function __construct()

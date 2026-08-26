@@ -1,6 +1,6 @@
 <?php
 
-require(APPPATH . '/libraries/REST_Controller.php');
+require APPPATH . '/libraries/REST_Controller.php';
 class Web extends REST_Controller
 {
     protected $user_id;
@@ -40,7 +40,7 @@ class Web extends REST_Controller
                 $this->load->view('index');
             }
         } else {
-            $this->load->view('index', ['failed' => 1,'data' => $result['data']]);
+            $this->load->view('index', ['failed' => 1, 'data' => $result['data']]);
         }
     }
 
@@ -54,7 +54,7 @@ class Web extends REST_Controller
             $this->session->set_userdata(['Upgraded' => $Upgraded]);
         }
 
-        if (empty(trim((string)$user_id)) || $user_id === '') {
+        if (empty(trim((string) $user_id)) || $user_id === '') {
             $this->load->view('index');
         } else {
             $this->load->view('template');
@@ -73,9 +73,7 @@ class Web extends REST_Controller
         }
     }
 
-    public function recordsCount1_post()
-    {
-    }
+    public function recordsCount1_post() {}
 
     public function header_post()
     {
@@ -126,7 +124,7 @@ class Web extends REST_Controller
         $tableName = $this->Common_model->get_table($recTypeId);
         if ($result['status'] == 'success') {
             $file_name = 'allrecords';
-            echo  mongo_json_encode($result['data']);
+            echo mongo_json_encode($result['data']);
         } else {
             echo $result['status'];
         }
@@ -152,7 +150,7 @@ class Web extends REST_Controller
             $string = str_replace(' ,', '', $string);
             $wordData = explode(' ', $string);
             $ocrData['FromDate'] = $wordData[0];
-            for ($i = 1; $i < (count($wordData ?? []) - 2); $i++) {
+            for ($i = 1; $i < count($wordData ?? []) - 2; $i++) {
                 $ocrData['ReceiverName'] .= $wordData[$i] . ' ';
             }
             $ocrData['Amount'] = $wordData[count($wordData ?? []) - 2];
@@ -1034,14 +1032,14 @@ class Web extends REST_Controller
     {
         $this->load->library('email');
         $config = [
-          'protocol' => protocol,
-          'smtp_host' => smtp_host,
-          'smtp_port' => smtp_port,
-          'smtp_user' => smtp_user,
-          'smtp_pass' => smtp_pass,
-          'mailpath' => mailpath,
-          'charset' => charset,
-          'wordwrap' => wordwrap,
+            'protocol' => protocol,
+            'smtp_host' => smtp_host,
+            'smtp_port' => smtp_port,
+            'smtp_user' => smtp_user,
+            'smtp_pass' => smtp_pass,
+            'mailpath' => mailpath,
+            'charset' => charset,
+            'wordwrap' => wordwrap,
         ];
         $this->email->initialize($config);
         $this->email->set_mailtype('html');
@@ -1063,7 +1061,7 @@ class Web extends REST_Controller
         } else {
             echo '<pre>';
             print_r($this->email->print_debugger());
-            die;
+            die();
         }
     }
 }

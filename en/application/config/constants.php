@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +47,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT', 'x+b');
 | of this setting
 |
 */
-define('SHOW_DEBUG_BACKTRACE', TRUE);
+define('SHOW_DEBUG_BACKTRACE', true);
 
 /*
 |--------------------------------------------------------------------------
@@ -85,39 +85,40 @@ define('EXIT_DATABASE', 8); // database error
 define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-
 /**
  * General constants used in code
  */
-define ('prime_multiplier',379);
-define ('admin_from_email','admin@publishat.com');
-define ('noreply','no-reply@publishat.com');
-define ('page_redirect_intervel', 3); //3 seconds
-define ('max_photo_file_size', 150 * 1024);  //150 KB
-define ('max_photo_file_size_text', '150 KB');
-define ('max_document_file_size', 5 * 1024 * 1024);  //2 MB
-define ('max_document_file_size_text', '5 MB');
-define ('admin_page_size', 25);
-define ('protocol','smtp');
-define ('smtp_host','ssl://smtp.zoho.com');
+define('prime_multiplier', 379);
+define('admin_from_email', 'admin@publishat.com');
+define('noreply', 'no-reply@publishat.com');
+define('page_redirect_intervel', 3); //3 seconds
+define('max_photo_file_size', 150 * 1024); //150 KB
+define('max_photo_file_size_text', '150 KB');
+define('max_document_file_size', 5 * 1024 * 1024); //2 MB
+define('max_document_file_size_text', '5 MB');
+define('admin_page_size', 25);
+define('protocol', 'smtp');
+define('smtp_host', 'ssl://smtp.zoho.com');
 //define ('smtp_host','relay-hosting.secureserver.net');
-define ('encryption','ssl');
+define('encryption', 'ssl');
 //define ('encryption','tls');
-define ('smtp_port',465);
+define('smtp_port', 465);
 //define ('smtp_port',25);
 // define ('smtp_user','ipublishats@gmail.com');
-define ('smtp_user','admin@publishat.com');
+define('smtp_user', 'admin@publishat.com');
 //define ('smtp_pass','Publish@20');
-define ('smtp_pass','Vijaya@123');
-define ('mailpath','');
-define ('charset','iso-8859-1');
-define ('wordwrap',TRUE);
+define('smtp_pass', 'Vijaya@123');
+define('mailpath', '');
+define('charset', 'iso-8859-1');
+define('wordwrap', true);
 
 /*used for mailing*/
 /*<tr>
   <td align="left" valign="bottom" height="32" colspan="2"  style="padding:6px;font-size:13px; font-weight:normal" ></td>  
  </tr>*/
-define ('header_top','<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 0px solid #E0E9ED; border-collapse:collapse;">
+define(
+    'header_top',
+    '<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 0px solid #E0E9ED; border-collapse:collapse;">
   <tr>
     <td height="75" align="left" valign="middle" bgcolor="#004E83" style="padding-left:5px;"><div style="float:left;"><a href="http://www.publishat.com"><img src="http://www.publishat.com/templates/logo.png" alt="Publishat.com" width="252" height="61" border="0" title="Publistat.com"/></a></div>
     <div style="float:right; padding-top:25px; padding-right:10px; color:#FFFFFF;"><a href="https://www.publishat.com/login.php" style="padding-top:25px; padding-right:10px; color:#FFFFFF; text-decoration:none; font-weight:bold; font-size:13px; font-family:Arial;">Manage Account</a></div></td>
@@ -129,8 +130,11 @@ define ('header_top','<table width="100%" border="0" cellspacing="0" cellpadding
     <td align="left" valign="top" colspan="2"  style="padding:6px;"><u><b>Attachments</b></u></td> 
   </tr>
 </table>
-<div style="height:5px; width:600px;"></div>');
-define ('header_top_user_details','<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 0px solid #E0E9ED; border-collapse:collapse;">
+<div style="height:5px; width:600px;"></div>',
+);
+define(
+    'header_top_user_details',
+    '<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 0px solid #E0E9ED; border-collapse:collapse;">
   <tr>
     <td height="75" align="left" valign="middle" bgcolor="#004E83" style="padding-left:5px;"><div style="float:left;"><a href="http://www.publishat.com"><img src="http://www.publishat.com/templates/logo.png" alt="Publishat.com" width="252" height="61" border="0" title="Publistat.com"/></a></div>
     <div style="float:right; padding-top:25px; padding-right:10px; color:#FFFFFF;"><a href="https://www.publishat.com/login.php" style="padding-top:25px; padding-right:10px; color:#FFFFFF; text-decoration:none; font-weight:bold; font-size:13px; font-family:Arial;">Manage Account</a></div></td>
@@ -165,18 +169,24 @@ define ('header_top_user_details','<table width="100%" border="0" cellspacing="0
     <td align="left" valign="top" colspan="2"  style="padding:6px;"><u><b>Attachments</b></u></td> 
   </tr>
 </table>
-<div style="height:5px; width:600px;"></div>');
+<div style="height:5px; width:600px;"></div>',
+);
 
-define ('header_top_record_mail','<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 0px solid #E0E9ED; border-collapse:collapse;">
+define(
+    'header_top_record_mail',
+    '<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 0px solid #E0E9ED; border-collapse:collapse;">
   <tr>
     <td height="75" align="left" valign="middle" bgcolor="#004E83" style="padding-left:5px;"><div style="float:left;"><a href="http://www.publishat.com"><img src="http://www.publishat.com/templates/logo.png" alt="Publishat.com" width="252" height="61" border="0" title="Publistat.com"/></a></div>
     <div style="float:right; padding-top:25px; padding-right:10px; color:#FFFFFF;"><a href="https://www.publishat.com/login.php" style="padding-top:25px; padding-right:10px; color:#FFFFFF; text-decoration:none; font-weight:bold; font-size:13px; font-family:Arial;">Manage Account</a></div></td>
   </tr>
     
 </table>
-<div style="height:5px; width:600px;"></div>');
+<div style="height:5px; width:600px;"></div>',
+);
 
-define ('header_bottom','<div style="height:15px; width:600px;"></div>
+define(
+    'header_bottom',
+    '<div style="height:15px; width:600px;"></div>
 <tr>
    <td align="left" valign="top" style="padding:6px; font-size:13px; font-weight:normal; line-height:16px;">Thanks & Regards<br>
 ##HEADER-NAME##,<br>
@@ -205,166 +215,354 @@ define ('header_bottom','<div style="height:15px; width:600px;"></div>
   </tr>
 </table>
 <div style="height:15px; width:600px;"></div>
-');
-
-
-
-
-
-
-
+',
+);
 
 /**
  * Database TableNames
  * @var unknown
  */
-define ('TBL_USER','User');
-define ('TBL_SETTINGS','Settings');
-define ('TBL_SCHOOL','School');
-define ('TBL_CERTIFICATION','Certification');
-define ('TBL_DOCUMENTS','Documents');
-define ('TBL_EXAM','Exam');
-define ('TBL_PHD','Phd');
-define ('TBL_POSTGRADUATE','Postgraduate');
-define ('TBL_PROJECT','Project');
-define ('TBL_UNDERGRADUATE','Undergraduate');
-define ('TBL_SECURITYSETTINGS','SecuritySettings');
-define ('TBL_ACCOUNTSETTINGS','AccountSettings');
-define ('TBL_RECORDTYPE','RecordType');
-define ('TBL_EVENTS','events');
-define ('TBL_PERSONALEVENTS','Wishes');
-define ('TBL_KARTNAME','kartname');
-define ('TBL_KART','kart');
-define ('TBL_SUGGESTEMAILS','SuggestEmails');
-define ('TBL_DYNAMIC','dynamicfeilds');
-define ('TBL_DROPDOWNFIELDS','dropdownfeilds');
-define ('TBL_LOCATIONHISTORY', 'LocationHistory');
-define ('TBL_GOVERNMENTCERTIFICATES', 'GovernmentCertificates');
-define ('TBL_RELATIONSHIP', 'Relationship');
-define ('TBL_WEBHISTORY', 'WebHistory');
-define ('TBL_TRAVEL', 'Travel');
-define ('TBL_DEVICES', 'Devices');
-define ('TBL_CONTACTS', 'Contacts');
-define ('TBL_EMPLOYMENT', 'Employment');
-define ('TBL_PROJECTS', 'Projects');
-define ('TBL_SKILLS', 'Skills');
-define ('TBL_APPS', 'Apps');
-define ('TBL_MEDMEDICALTEST', 'MedMedicalTest');
-define ('TBL_MEDPRESCRIPTION', 'MedPrescription');
-define ('TBL_MEDFAMILY', 'MedFamily');
-define ('TBL_MEDHEALTHINSURANCE', 'MedHealthInsurance');
-define ('TBL_MEDMEDICALTESTRECORDS', 'MedMedicalTestRecords');
-define ('TBL_MEDPRESCRIPTIONMEDICINE', 'MedPrescriptionMedicine');
-define ('TBL_MEDPRESCRIPTIONPRESCRIPTION', 'MedPrescriptionPrescription');
-define ('TBL_MEDFAMILYMEMBER', 'MedFamilyMember');
-define ('TBL_MEDHEALTHINSURANCEBENEFICIARY', 'MedHealthInsuranceBeneficiary');
-define ('TBL_LEGALDISPUTE', 'LegalDispute');
-define ('TBL_LEGALOWNERSHIPTRANSFER', 'LegalOwnershipTransfer');
-define ('TBL_FINFINANCIALACCOUNTS', 'FinFinancialAccounts');
-define ('TBL_FINASSET', 'FinAsset');
-define ('TBL_FINREVENUE', 'FinRevenue');
-define ('TBL_FINCARDS', 'FinCards');
-define ('TBL_FINLIABILITY', 'FinLiability');
-define ('TBL_FINPAYMENT', 'FinPayment');
-define ('TBL_FINTAX', 'FinTax');
-define ('TBL_FININSURANCE', 'FinInsurance');
-define ('TBL_RESUME', 'Resume');
-define ('TBL_USERLOGINHISTORY', 'UserLoginHistory');
-define ('TBL_GROUPNAMES', 'groupname');
-define ('TBL_REVENUE', 'revenue');
-define ('TBL_PAYMENTS', 'payments');
-define ('TBL_VENDORS', 'vendors');
-define ('TBL_USER_VENDOR', 'user_vendor');
-define ('TBL_CLIENTCONTACTS', 'ClientContacts');
-
-
+define('TBL_USER', 'User');
+define('TBL_SETTINGS', 'Settings');
+define('TBL_SCHOOL', 'School');
+define('TBL_CERTIFICATION', 'Certification');
+define('TBL_DOCUMENTS', 'Documents');
+define('TBL_EXAM', 'Exam');
+define('TBL_PHD', 'Phd');
+define('TBL_POSTGRADUATE', 'Postgraduate');
+define('TBL_PROJECT', 'Project');
+define('TBL_UNDERGRADUATE', 'Undergraduate');
+define('TBL_SECURITYSETTINGS', 'SecuritySettings');
+define('TBL_ACCOUNTSETTINGS', 'AccountSettings');
+define('TBL_RECORDTYPE', 'RecordType');
+define('TBL_EVENTS', 'events');
+define('TBL_PERSONALEVENTS', 'Wishes');
+define('TBL_KARTNAME', 'kartname');
+define('TBL_KART', 'kart');
+define('TBL_SUGGESTEMAILS', 'SuggestEmails');
+define('TBL_DYNAMIC', 'dynamicfeilds');
+define('TBL_DROPDOWNFIELDS', 'dropdownfeilds');
+define('TBL_LOCATIONHISTORY', 'LocationHistory');
+define('TBL_GOVERNMENTCERTIFICATES', 'GovernmentCertificates');
+define('TBL_RELATIONSHIP', 'Relationship');
+define('TBL_WEBHISTORY', 'WebHistory');
+define('TBL_TRAVEL', 'Travel');
+define('TBL_DEVICES', 'Devices');
+define('TBL_CONTACTS', 'Contacts');
+define('TBL_EMPLOYMENT', 'Employment');
+define('TBL_PROJECTS', 'Projects');
+define('TBL_SKILLS', 'Skills');
+define('TBL_APPS', 'Apps');
+define('TBL_MEDMEDICALTEST', 'MedMedicalTest');
+define('TBL_MEDPRESCRIPTION', 'MedPrescription');
+define('TBL_MEDFAMILY', 'MedFamily');
+define('TBL_MEDHEALTHINSURANCE', 'MedHealthInsurance');
+define('TBL_MEDMEDICALTESTRECORDS', 'MedMedicalTestRecords');
+define('TBL_MEDPRESCRIPTIONMEDICINE', 'MedPrescriptionMedicine');
+define('TBL_MEDPRESCRIPTIONPRESCRIPTION', 'MedPrescriptionPrescription');
+define('TBL_MEDFAMILYMEMBER', 'MedFamilyMember');
+define('TBL_MEDHEALTHINSURANCEBENEFICIARY', 'MedHealthInsuranceBeneficiary');
+define('TBL_LEGALDISPUTE', 'LegalDispute');
+define('TBL_LEGALOWNERSHIPTRANSFER', 'LegalOwnershipTransfer');
+define('TBL_FINFINANCIALACCOUNTS', 'FinFinancialAccounts');
+define('TBL_FINASSET', 'FinAsset');
+define('TBL_FINREVENUE', 'FinRevenue');
+define('TBL_FINCARDS', 'FinCards');
+define('TBL_FINLIABILITY', 'FinLiability');
+define('TBL_FINPAYMENT', 'FinPayment');
+define('TBL_FINTAX', 'FinTax');
+define('TBL_FININSURANCE', 'FinInsurance');
+define('TBL_RESUME', 'Resume');
+define('TBL_USERLOGINHISTORY', 'UserLoginHistory');
+define('TBL_GROUPNAMES', 'groupname');
+define('TBL_REVENUE', 'revenue');
+define('TBL_PAYMENTS', 'payments');
+define('TBL_VENDORS', 'vendors');
+define('TBL_USER_VENDOR', 'user_vendor');
+define('TBL_CLIENTCONTACTS', 'ClientContacts');
 
 define('USERID', '373');
 
 /*constants for vendor names*/
 
-define ('VendorName', 'BloodDonation');
-define('TimeStamp', date("Y-m-d H:i:s")); 
+define('VendorName', 'BloodDonation');
+define('TimeStamp', date('Y-m-d H:i:s'));
 
+define(
+    'School',
+    json_encode([
+        'query' => 'School',
+        'headers' => ['key1' => 'Class', 'key2' => 'SchoolName', 'key3' => 'DocumentType'],
+    ]),
+);
 
+define(
+    'Undergraduate',
+    json_encode([
+        'query' => 'Undergraduate',
+        'headers' => ['key1' => 'Degree', 'key2' => 'Term', 'key3' => 'DocumentType'],
+    ]),
+);
 
+define(
+    'Postgraduate',
+    json_encode([
+        'query' => 'Postgraduate',
+        'headers' => ['key1' => 'Degree', 'key2' => 'Term', 'key3' => 'DocumentType'],
+    ]),
+);
 
+define(
+    'Phd',
+    json_encode([
+        'query' => 'Phd',
+        'headers' => ['key1' => 'Degree', 'key2' => 'AcademicYear', 'key3' => 'DocumentType'],
+    ]),
+);
 
+define(
+    'Exam',
+    json_encode([
+        'query' => 'Exam',
+        'headers' => ['key1' => 'ExamType', 'key2' => 'ExamName', 'key3' => 'DocumentType'],
+    ]),
+);
 
+define(
+    'Certification',
+    json_encode([
+        'query' => 'Certification',
+        'headers' => ['key1' => 'CertificationType', 'key2' => 'CertificateName', 'key3' => 'ValidFrom'],
+    ]),
+);
 
+define(
+    'Project',
+    json_encode([
+        'query' => 'Project',
+        'headers' => ['key1' => 'ProjectType', 'key2' => 'Title', 'key3' => 'DocumentType'],
+    ]),
+);
 
-define ("School",json_encode(array("query"=>"School",'headers'=>array('key1'=>'Class','key2'=>'SchoolName','key3'=>'DocumentType'))));
+define(
+    'LocationHistory',
+    json_encode([
+        'query' => 'LocationHistory',
+        'headers' => ['key1' => 'Location', 'key2' => 'Purpose', 'key3' => 'FromDate'],
+    ]),
+);
 
-define ("Undergraduate",json_encode(array("query"=>"Undergraduate",'headers'=>array('key1'=>'Degree','key2'=>'Term','key3'=>'DocumentType'))));
+define(
+    'GovernmentCertificates',
+    json_encode([
+        'query' => 'GovernmentCertificates',
+        'headers' => ['key1' => 'DocumentType', 'key2' => 'ValidTo', 'key3' => 'ReferenceNo'],
+    ]),
+);
 
-define ("Postgraduate",json_encode(array("query"=>"Postgraduate",'headers'=>array('key1'=>'Degree','key2'=>'Term','key3'=>'DocumentType'))));
+define(
+    'Relationship',
+    json_encode([
+        'query' => 'Relationship',
+        'headers' => ['key1' => 'Name', 'key2' => 'RelationshipType', 'key3' => 'ContactMode'],
+    ]),
+);
 
-define ("Phd",json_encode(array("query"=>"Phd",'headers'=>array('key1'=>'Degree','key2'=>'AcademicYear','key3'=>'DocumentType'))));
+define(
+    'WebHistory',
+    json_encode([
+        'query' => 'WebHistory',
+        'headers' => ['key1' => 'SiteName', 'key2' => 'Usage', 'key3' => 'DocumentType '],
+    ]),
+);
 
-define ("Exam",json_encode(array("query"=>"Exam",'headers'=>array('key1'=>'ExamType','key2'=>'ExamName','key3'=>'DocumentType'))));
+define(
+    'Travel',
+    json_encode([
+        'query' => 'Travel',
+        'headers' => ['key1' => 'TravelType', 'key2' => 'FromDate', 'key3' => 'ToPlace'],
+    ]),
+);
 
-define ("Certification",json_encode(array("query"=>"Certification",'headers'=>array('key1'=>'CertificationType','key2'=>'CertificateName','key3'=>'ValidFrom'))));
+define(
+    'Devices',
+    json_encode([
+        'query' => 'Devices',
+        'headers' => ['key1' => 'DiviceName', 'key2' => 'Brand', 'key3' => 'ReferenceNumber'],
+    ]),
+);
 
-define ("Project",json_encode(array("query"=>"Project",'headers'=>array('key1'=>'ProjectType','key2'=>'Title','key3'=>'DocumentType'))));
+define(
+    'Wishes',
+    json_encode(['query' => 'Wishes', 'headers' => ['key1' => 'EventType', 'key2' => 'EventName', 'key3' => 'Date']]),
+);
 
-define ("LocationHistory",json_encode(array("query"=>"LocationHistory",'headers'=>array('key1'=>'Location','key2'=>'Purpose','key3'=>'FromDate'))));
+define(
+    'Contacts',
+    json_encode([
+        'query' => 'Contacts',
+        'headers' => ['key1' => 'ContactName', 'key2' => 'PersonalEmail', 'key3' => 'MobilePhoneNumber'],
+    ]),
+);
 
-define ("GovernmentCertificates",json_encode(array("query"=>"GovernmentCertificates",'headers'=>array('key1'=>'DocumentType','key2'=>'ValidTo','key3'=>'ReferenceNo'))));
+define(
+    'Employment',
+    json_encode([
+        'query' => 'Employment',
+        'headers' => ['key1' => 'DocumentType', 'key2' => 'OrganisationName', 'key3' => 'IssuedDate'],
+    ]),
+);
 
-define ("Relationship",json_encode(array("query"=>"Relationship",'headers'=>array('key1'=>'Name','key2'=>'RelationshipType','key3'=>'ContactMode'))));
+define(
+    'Projects',
+    json_encode([
+        'query' => 'Projects',
+        'headers' => ['key1' => 'ProjectName', 'key2' => 'ProjectType', 'key3' => 'FromDate'],
+        'subheaders' => ['key1' => 'TaskName', 'key2' => 'FromDate', 'key3' => 'ToDate'],
+    ]),
+);
 
-define ("WebHistory",json_encode(array("query"=>"WebHistory",'headers'=>array('key1'=>'SiteName','key2'=>'Usage','key3'=>'DocumentType '))));
+define(
+    'Skills',
+    json_encode([
+        'query' => 'Skills',
+        'headers' => ['key1' => 'SkillType', 'key2' => 'SkillName', 'key3' => 'FromDate'],
+    ]),
+);
 
-define ("Travel",json_encode(array("query"=>"Travel",'headers'=>array('key1'=>'TravelType','key2'=>'FromDate','key3'=>'ToPlace'))));
+define(
+    'Apps',
+    json_encode([
+        'query' => 'Apps',
+        'headers' => ['key1' => 'AppType', 'key2' => 'AppName', 'key3' => 'PasswordChangeStatus'],
+    ]),
+);
 
-define ("Devices",json_encode(array("query"=>"Devices",'headers'=>array('key1'=>'DiviceName','key2'=>'Brand','key3'=>'ReferenceNumber'))));
+define(
+    'Resume',
+    json_encode([
+        'query' => 'Resume',
+        'headers' => ['key1' => 'ResumeType', 'key2' => 'Name', 'key3' => 'FunctionalArea'],
+    ]),
+);
 
-define ("Wishes",json_encode(array("query"=>"Wishes",'headers'=>array('key1'=>'EventType','key2'=>'EventName','key3'=>'Date'))));
+define(
+    'LegalDispute',
+    json_encode([
+        'query' => 'LegalDispute',
+        'headers' => ['key1' => 'DisputeType', 'key2' => 'PartyName', 'key3' => 'FromDate'],
+    ]),
+);
 
-define ("Contacts",json_encode(array("query"=>"Contacts",'headers'=>array('key1'=>'ContactName','key2'=>'PersonalEmail','key3'=>'MobilePhoneNumber'))));
+define(
+    'LegalOwnershipTransfer',
+    json_encode([
+        'query' => 'LegalOwnershipTransfer',
+        'headers' => ['key1' => 'TransferType', 'key2' => 'AssetName', 'key3' => 'ValidFrom'],
+    ]),
+);
 
-define ("Employment",json_encode(array("query"=>"Employment",'headers'=>array('key1'=>'DocumentType','key2'=>'OrganisationName','key3'=>'IssuedDate'))));
+define(
+    'MedMedicalTest',
+    json_encode([
+        'query' => 'MedMedicalTest',
+        'headers' => ['key1' => 'TestName', 'key2' => 'TestType', 'key3' => 'TestDate'],
+        'subheaders' => ['key1' => 'DiagnosticCenterName', 'key2' => 'Address', 'key3' => 'TestDate'],
+    ]),
+);
 
-define ("Projects",json_encode(array("query"=>"Projects",'headers'=>array('key1'=>'ProjectName','key2'=>'ProjectType','key3'=>'FromDate'), 'subheaders'=>array('key1'=>'TaskName','key2'=>'FromDate','key3'=>'ToDate'))));
+define(
+    'MedPrescription',
+    json_encode([
+        'query' => 'MedPrescription',
+        'headers' => ['key1' => 'PrescriptionType', 'key2' => 'DiseaseName', 'key3' => 'MedicineName'],
+        'subheaders' => ['key1' => 'MedicineName', 'key2' => 'Tenure', 'key3' => 'MedicineType'],
+    ]),
+);
 
-define ("Skills",json_encode(array("query"=>"Skills",'headers'=>array('key1'=>'SkillType','key2'=>'SkillName','key3'=>'FromDate'))));
+define(
+    'MedFamily',
+    json_encode([
+        'query' => 'MedFamily',
+        'headers' => ['key1' => 'DiseaseType', 'key2' => 'TreatmentType', 'key3' => 'FromDate'],
+        'subheaders' => ['key1' => 'PatientName', 'key2' => 'Address', 'key3' => 'FromDate'],
+    ]),
+);
 
-define ("Apps",json_encode(array("query"=>"Apps",'headers'=>array('key1'=>'AppType','key2'=>'AppName','key3'=>'PasswordChangeStatus'))));
+define(
+    'MedHealthInsurance',
+    json_encode([
+        'query' => 'MedHealthInsurance',
+        'headers' => ['key1' => 'PolicyType', 'key2' => 'PolicyNumber', 'key3' => 'FromDate'],
+        'subheaders' => ['key1' => 'BeneficiaryName', 'key2' => 'Relation', 'key3' => ''],
+    ]),
+);
 
-define ("Resume",json_encode(array("query"=>"Resume",'headers'=>array('key1'=>'ResumeType','key2'=>'Name','key3'=>'FunctionalArea'))));
+define(
+    'FinFinancialAccounts',
+    json_encode([
+        'query' => 'FinFinancialAccounts',
+        'headers' => ['key1' => 'AccountType', 'key2' => 'AccountNumber', 'key3' => 'BranchName'],
+    ]),
+);
 
-define ("LegalDispute",json_encode(array("query"=>"LegalDispute",'headers'=>array('key1'=>'DisputeType','key2'=>'PartyName','key3'=>'FromDate'))));
+define(
+    'FinAsset',
+    json_encode([
+        'query' => 'FinAsset',
+        'headers' => ['key1' => 'AssetType', 'key2' => 'AssetName', 'key3' => 'ValidFrom'],
+    ]),
+);
 
-define ("LegalOwnershipTransfer",json_encode(array("query"=>"LegalOwnershipTransfer",'headers'=>array('key1'=>'TransferType','key2'=>'AssetName','key3'=>'ValidFrom'))));
+define(
+    'FinRevenue',
+    json_encode([
+        'query' => 'FinRevenue',
+        'headers' => ['key1' => 'RevenueType', 'key2' => 'ItemName', 'key3' => 'Term'],
+        'subheaders' => ['key1' => 'Amount', 'key2' => 'Notes', 'key3' => 'RevenueDate'],
+    ]),
+);
 
-define ("MedMedicalTest",json_encode(array("query"=>"MedMedicalTest",'headers'=>array('key1'=>'TestName','key2'=>'TestType','key3'=>'TestDate'), 'subheaders'=>array('key1'=>'DiagnosticCenterName','key2'=>'Address','key3'=>'TestDate'))));
+define(
+    'FinCards',
+    json_encode([
+        'query' => 'FinCards',
+        'headers' => ['key1' => 'CardType', 'key2' => 'ServiceProviderName', 'key3' => 'CardNumber'],
+    ]),
+);
 
-define ("MedPrescription",json_encode(array("query"=>"MedPrescription",'headers'=>array('key1'=>'PrescriptionType','key2'=>'DiseaseName','key3'=>'MedicineName'), 'subheaders'=>array('key1'=>'MedicineName','key2'=>'Tenure','key3'=>'MedicineType'))));
+define(
+    'FinLiability',
+    json_encode([
+        'query' => 'FinLiability',
+        'headers' => ['key1' => 'LiabilityType', 'key2' => 'LiabilityName', 'key3' => 'FromDate'],
+    ]),
+);
 
-define ("MedFamily",json_encode(array("query"=>"MedFamily",'headers'=>array('key1'=>'DiseaseType','key2'=>'TreatmentType','key3'=>'FromDate'), 'subheaders'=>array('key1'=>'PatientName','key2'=>'Address','key3'=>'FromDate'))));
+define(
+    'FinPayment',
+    json_encode([
+        'query' => 'FinPayment',
+        'headers' => ['key1' => 'PaymentType', 'key2' => 'ItemName', 'key3' => 'Term'],
+        'subheaders' => ['key1' => 'Amount', 'key2' => 'Notes', 'key3' => 'PaymentDate'],
+    ]),
+);
 
-define ("MedHealthInsurance",json_encode(array("query"=>"MedHealthInsurance",'headers'=>array('key1'=>'PolicyType','key2'=>'PolicyNumber','key3'=>'FromDate'), 'subheaders'=>array('key1'=>'BeneficiaryName','key2'=>'Relation','key3'=>''))));
+define(
+    'FinTax',
+    json_encode([
+        'query' => 'FinTax',
+        'headers' => ['key1' => 'TaxDocumentType', 'key2' => 'Date', 'key3' => 'AssessmentYear'],
+    ]),
+);
 
-define ("FinFinancialAccounts",json_encode(array("query"=>"FinFinancialAccounts",'headers'=>array('key1'=>'AccountType','key2'=>'AccountNumber','key3'=>'BranchName'))));
+define(
+    'FinInsurance',
+    json_encode([
+        'query' => 'FinInsurance',
+        'headers' => ['key1' => 'InsuranceType', 'key2' => 'PolicyNumber', 'key3' => 'FromDate'],
+    ]),
+);
 
-define ("FinAsset",json_encode(array("query"=>"FinAsset",'headers'=>array('key1'=>'AssetType','key2'=>'AssetName','key3'=>'ValidFrom'))));
-
-define ("FinRevenue",json_encode(array("query"=>"FinRevenue",'headers'=>array('key1'=>'RevenueType','key2'=>'ItemName','key3'=>'Term'), 'subheaders'=>array('key1'=>'Amount','key2'=>'Notes','key3'=>'RevenueDate'))));
-
-define ("FinCards",json_encode(array("query"=>"FinCards",'headers'=>array('key1'=>'CardType','key2'=>'ServiceProviderName','key3'=>'CardNumber'))));
-
-define ("FinLiability",json_encode(array("query"=>"FinLiability",'headers'=>array('key1'=>'LiabilityType','key2'=>'LiabilityName','key3'=>'FromDate'))));
-
-define ("FinPayment",json_encode(array("query"=>"FinPayment",'headers'=>array('key1'=>'PaymentType','key2'=>'ItemName','key3'=>'Term'), 'subheaders'=>array('key1'=>'Amount','key2'=>'Notes','key3'=>'PaymentDate'))));
-
-define ("FinTax",json_encode(array("query"=>"FinTax",'headers'=>array('key1'=>'TaxDocumentType','key2'=>'Date','key3'=>'AssessmentYear'))));
-
-define ("FinInsurance",json_encode(array("query"=>"FinInsurance",'headers'=>array('key1'=>'InsuranceType','key2'=>'PolicyNumber','key3'=>'FromDate'))));
-
-
-
-
-
-
-define ('AccountUpgradeAmonut',500);
-define ('recordsPerPage', 50);
+define('AccountUpgradeAmonut', 500);
+define('recordsPerPage', 50);

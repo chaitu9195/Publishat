@@ -1,0 +1,19 @@
+{
+  "tabWidth": 2,
+  "printWidth": 120,
+  "singleQuote": true,
+  "endOfLine": "lf",
+  "plugins": ["@prettier/plugin-php"],
+  "overrides": [
+    {
+      "files": "*.php",
+      "options": {
+        "tabWidth": 4,
+        "phpVersion": "8.4",
+        "singleQuote": true,
+        "trailingCommaPHP": true,
+        "braceStyle": "psr-2"
+      }
+    }
+  ]
+}

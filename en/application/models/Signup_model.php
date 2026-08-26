@@ -57,7 +57,7 @@ class Signup_model extends CI_Model
 
                 $mailStatus = $this->publishmail($from_email, $to_email, $subject, $email_body, $type);
                 $this->initialise_user_settings($user_id);
-                return ['status' => 'success','data' => $user_id];
+                return ['status' => 'success', 'data' => $user_id];
             } else {
                 return ['status' => 'failed'];
             }
@@ -71,7 +71,7 @@ class Signup_model extends CI_Model
         if (!empty($params['DateOfBirth']) && !empty($params['ContactName']) && !empty($params['PersonalEmail'])) {
             return true;
         } else {
-            return  false;
+            return false;
         }
     }
     public function read_file($filename)
@@ -88,26 +88,36 @@ class Signup_model extends CI_Model
     public function publishmail($from_email, $to_email, $subject, $message, $type)
     {
         $config = [
-          'smtp_host' => smtp_host,
-          'smtp_port' => smtp_port,
-          'smtp_user' => smtp_user,
-          'smtp_pass' => smtp_pass,
-          'mailpath' => mailpath,
-          'charset' => charset,
-          'wordwrap' => wordwrap,
+            'smtp_host' => smtp_host,
+            'smtp_port' => smtp_port,
+            'smtp_user' => smtp_user,
+            'smtp_pass' => smtp_pass,
+            'mailpath' => mailpath,
+            'charset' => charset,
+            'wordwrap' => wordwrap,
         ];
 
         if ($type == 'html') {
-            $mailheaders = 'From:' . admin_from_email . "\r\n" .
-                           "MIME-Version:1.0\r\n" .
-                           "Content-type:text/html\r\n" .
-                           "Content-Transfer-Encoding:7bit\n" .
-                           'Reply-To: ' . admin_from_email . "\n";
+            $mailheaders =
+                'From:' .
+                admin_from_email .
+                "\r\n" .
+                "MIME-Version:1.0\r\n" .
+                "Content-type:text/html\r\n" .
+                "Content-Transfer-Encoding:7bit\n" .
+                'Reply-To: ' .
+                admin_from_email .
+                "\n";
         } else {
-            $mailheaders = 'From:' . admin_from_email . "\r\nMIME-Version: 1.0\r\nContent-type:" .
-                           "text/plain\r\nContent-Transfer-" .
-                           "Encoding: 7bit\n" .
-                           'Reply-To: ' . admin_from_email . "\n";
+            $mailheaders =
+                'From:' .
+                admin_from_email .
+                "\r\nMIME-Version: 1.0\r\nContent-type:" .
+                "text/plain\r\nContent-Transfer-" .
+                "Encoding: 7bit\n" .
+                'Reply-To: ' .
+                admin_from_email .
+                "\n";
         }
 
         $this->load->library('email', $config);
@@ -129,8 +139,14 @@ class Signup_model extends CI_Model
     {
         $qry = $this->db->query('SELECT * FROM ' . TBL_ACCOUNTSETTINGS . " WHERE UserId = $user_id");
         if ($qry->num_rows() == 0) {
-            $query = $this->db->query('INSERT INTO ' . TBL_ACCOUNTSETTINGS . "(UserId, SettingId, SettingValue) 
-					(SELECT $user_id, SettingId, InitialValue FROM " . TBL_SETTINGS . ' ORDER BY SettingId)');
+            $query = $this->db->query(
+                'INSERT INTO ' .
+                    TBL_ACCOUNTSETTINGS .
+                    "(UserId, SettingId, SettingValue) 
+					(SELECT $user_id, SettingId, InitialValue FROM " .
+                    TBL_SETTINGS .
+                    ' ORDER BY SettingId)',
+            );
         }
     }
 }

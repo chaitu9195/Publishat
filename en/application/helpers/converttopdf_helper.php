@@ -1,5 +1,3 @@
 <?php
 
-function converttopdf($filePath)
-{
-}
+function converttopdf($filePath) {}

@@ -1,6 +1,6 @@
 <?php
 
-require(APPPATH . '/libraries/REST_Controller.php');
+require APPPATH . '/libraries/REST_Controller.php';
 class Login extends REST_Controller
 {
     public function __construct()
@@ -33,7 +33,7 @@ class Login extends REST_Controller
 
             redirect('web/index');
         } else {
-            $this->load->view('index', ['failed' => 1,'data' => $result['data']]);
+            $this->load->view('index', ['failed' => 1, 'data' => $result['data']]);
         }
     }
 

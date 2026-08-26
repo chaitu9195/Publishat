@@ -31,6 +31,9 @@ print.doc
 tools/php-cs-fixer.phar
 .php-cs-fixer.cache
 
+# Node tooling (Prettier); config + lockfile are tracked, deps are not
+node_modules/
+
 # OS / editor cruft
 Thumbs.db
 .DS_Store

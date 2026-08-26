@@ -11,7 +11,7 @@ class Log_model extends CI_Model
         if (empty($page)) {
             $page = 1;
         }
-        $start = ($page * recordsPerPage) - recordsPerPage;
+        $start = $page * recordsPerPage - recordsPerPage;
         $end = recordsPerPage;
 
         $user_id = $this->session->userdata('user_id');
@@ -28,8 +28,8 @@ class Log_model extends CI_Model
 
         if (count($qry ?? []) > 0) {
             foreach ($qry as $log) {
-                $user_id = (string)$log['UserId'];
-                $id = (string)$log['_id'];
+                $user_id = (string) $log['UserId'];
+                $id = (string) $log['_id'];
                 unset($log['_id']);
                 unset($log['UserId']);
                 $log['UserId'] = $user_id;

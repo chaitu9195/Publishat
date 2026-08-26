@@ -7,7 +7,11 @@ class Cart_model extends CI_Model
     public function getkart_data($record_id, $record_type_id)
     {
         $user_id = $this->session->userdata('user_id');
-        $this->mongodb->where(['UserId' => mongo_id($user_id), 'RecordId' => mongo_id($record_id), 'RecordTypeId' => $record_type_id]);
+        $this->mongodb->where([
+            'UserId' => mongo_id($user_id),
+            'RecordId' => mongo_id($record_id),
+            'RecordTypeId' => $record_type_id,
+        ]);
         $file_qry = $this->mongodb->get('fs.files');
         if (count($file_qry ?? []) > 0) {
             foreach ($file_qry as $key) {
@@ -21,9 +25,9 @@ class Cart_model extends CI_Model
             }
 
             $kartNames = array_keys(array_flip($kartNames ?? []));
-            return ['status' => 'success','files' => $file_data,'kartNames' => $kartNames];
+            return ['status' => 'success', 'files' => $file_data, 'kartNames' => $kartNames];
         } else {
-            return ['status' => 'failed','data' => 'Add files to record before adding to kart'];
+            return ['status' => 'failed', 'data' => 'Add files to record before adding to kart'];
         }
     }
 
@@ -59,25 +63,29 @@ class Cart_model extends CI_Model
                     $ext = $this->get_file_extension($filename);
                 }
                 $label = $doc[0]['Notes'];
-                $label = (!empty($label)) ? $label : ucfirst(strtolower(substr(strstr(pathinfo($doc_path, PATHINFO_FILENAME), '-'), 1, 15)));
+                $label = !empty($label)
+                    ? $label
+                    : ucfirst(strtolower(substr(strstr(pathinfo($doc_path, PATHINFO_FILENAME), '-'), 1, 15)));
                 if ($doc_path) {
-                    $kart_data = ['DocumentId' => mongo_id($doc_id),
+                    $kart_data = [
+                        'DocumentId' => mongo_id($doc_id),
                         'UserId' => mongo_id($user_id),
                         'KartName' => $name,
                         'DocumentPath' => $doc_path,
                         'FileType' => $ext,
                         'Notes' => $label,
                         'Path' => $path,
-                      ];
+                    ];
                 } else {
-                    $kart_data = ['DocumentId' => mongo_id($doc_id),
+                    $kart_data = [
+                        'DocumentId' => mongo_id($doc_id),
                         'UserId' => mongo_id($user_id),
                         'KartName' => $name,
                         'filename' => $filename,
                         'DocumentPath' => '',
                         'FileType' => $ext,
                         'Path' => $path,
-                      ];
+                    ];
                 }
                 $cartqry = $this->mongodb->insert('kart', $kart_data);
                 if ($cartqry) {
@@ -112,7 +120,7 @@ class Cart_model extends CI_Model
         foreach ($qry as $val) {
             $cartdata[] = $val;
         }
-        return ['status' => 'success','cart_names' => $kartNames,'data' => $cartdata];
+        return ['status' => 'success', 'cart_names' => $kartNames, 'data' => $cartdata];
     }
 
     public function cname_data($cartName)
@@ -125,7 +133,7 @@ class Cart_model extends CI_Model
             $cartdata[] = $val;
         }
 
-        return ['status' => 'success','data' => $cartdata];
+        return ['status' => 'success', 'data' => $cartdata];
     }
 
     public function delete_record($params)
@@ -138,7 +146,7 @@ class Cart_model extends CI_Model
                 if (empty($cartname)) {
                     $this->mongodb->where(['DocumentId' => mongo_id($id)]);
                 } else {
-                    $this->mongodb->where(['DocumentId' => mongo_id($id),'KartName' => $cartname]);
+                    $this->mongodb->where(['DocumentId' => mongo_id($id), 'KartName' => $cartname]);
                 }
 
                 $qry = $this->mongodb->delete('kart');
@@ -158,7 +166,7 @@ class Cart_model extends CI_Model
     {
         $user_id = $this->session->userdata('user_id');
         $cartname = $params['cart_name'];
-        $this->mongodb->where(['UserId' => mongo_id($user_id),'KartName' => $cartname]);
+        $this->mongodb->where(['UserId' => mongo_id($user_id), 'KartName' => $cartname]);
         $qry = $this->mongodb->delete('kart');
         if ($qry) {
             $status = 'success';

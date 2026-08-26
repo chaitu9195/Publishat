@@ -15,12 +15,12 @@ class Login_model extends CI_Model
             $query = $this->db->query('SELECT * FROM  ' . TBL_USER . " WHERE Email = '$uemail' AND Password = '$pwd' ");
             if ($query->num_rows() > 0) {
                 $result = $query->row_array();
-                return ['status' => 'success','data' => $result];
+                return ['status' => 'success', 'data' => $result];
             } else {
-                return ['status' => 'failed','data' => 'Invalid Credentials'];
+                return ['status' => 'failed', 'data' => 'Invalid Credentials'];
             }
         } else {
-            return ['status' => 'failed','data' => 'All fields are mandatory'];
+            return ['status' => 'failed', 'data' => 'All fields are mandatory'];
         }
     }
 
@@ -29,7 +29,7 @@ class Login_model extends CI_Model
         if (!empty($params['userlogin']) && !empty($params['userpassword'])) {
             return true;
         } else {
-            return  false;
+            return false;
         }
     }
 
@@ -41,7 +41,7 @@ class Login_model extends CI_Model
         $res = $this->db->query($sql);
         if ($res->num_rows() > 0) {
             $userdata = $res->row_array();
-            return ['status' => 'success','data' => $userdata['UserId']];
+            return ['status' => 'success', 'data' => $userdata['UserId']];
         }
         return ['status' => 'failed'];
     }

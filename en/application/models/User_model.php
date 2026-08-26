@@ -10,14 +10,22 @@ class User_model extends CI_Model
         $useridsqry = $this->db->query('SELECT UserId FROM ' . TBL_USER_VENDOR . " WHERE VendorId = '2' ");
         if ($useridsqry->num_rows() > 0) {
             foreach ($useridsqry->result_array() as $singleUserId) {
-                $contctsrecqry = $this->db->query('SELECT UserId,ContactName,ContactType,TS as CreatedDate FROM ' . TBL_CONTACTS . " WHERE UserId = '$singleUserId[UserId]' ");
+                $contctsrecqry = $this->db->query(
+                    'SELECT UserId,ContactName,ContactType,TS as CreatedDate FROM ' .
+                        TBL_CONTACTS .
+                        " WHERE UserId = '$singleUserId[UserId]' ",
+                );
                 if ($contctsrecqry->num_rows() > 0) {
                     foreach ($contctsrecqry->result_array() as $singleContact) {
                         $tempArr[] = $singleContact;
                     }
                 }
                 $user_vendor = $this->session->userdata('user_id');
-                $contctsrecqry = $this->db->query('SELECT * FROM ' . TBL_CLIENTCONTACTS . " WHERE OrgId = '$user_vendor' AND Email !='' AND Email = '$user_table_email'");
+                $contctsrecqry = $this->db->query(
+                    'SELECT * FROM ' .
+                        TBL_CLIENTCONTACTS .
+                        " WHERE OrgId = '$user_vendor' AND Email !='' AND Email = '$user_table_email'",
+                );
                 if ($contctsrecqry->num_rows() > 0) {
                     foreach ($contctsrecqry->result_array() as $singleContact1) {
                         $tempArr1[] = $singleContact1;
@@ -26,12 +34,12 @@ class User_model extends CI_Model
             }
 
             if (count($tempArr ?? []) > 0) {
-                return ['status' => 'success','data' => $tempArr,'data1' => $tempArr1];
+                return ['status' => 'success', 'data' => $tempArr, 'data1' => $tempArr1];
             } else {
-                return ['status' => 'failed','data' => 'No data available','data1' => $tempArr1];
+                return ['status' => 'failed', 'data' => 'No data available', 'data1' => $tempArr1];
             }
         } else {
-            return ['status' => 'failed','data' => 'No users available'];
+            return ['status' => 'failed', 'data' => 'No users available'];
         }
     }
 
@@ -42,9 +50,15 @@ class User_model extends CI_Model
         $getvendorqry = $this->db->query('SELECT VendorId FROM ' . TBL_VENDORS . " WHERE VendorName = '$vendorname' ");
         if ($getvendorqry->num_rows() > 0) {
             $vendordtls = $getvendorqry->row_array();
-            $checkuserrelqry = $this->db->query('SELECT * FROM ' . TBL_USER_VENDOR . " WHERE UserId = '$params' AND VendorId = '$vendordtls[VendorId]' ");
+            $checkuserrelqry = $this->db->query(
+                'SELECT * FROM ' .
+                    TBL_USER_VENDOR .
+                    " WHERE UserId = '$params' AND VendorId = '$vendordtls[VendorId]' ",
+            );
             if ($checkuserrelqry->num_rows() == 0) {
-                $relateuservendor = $this->db->query('INSERT INTO ' . TBL_USER_VENDOR . " (UserId,VendorId) VALUES ('$params','$vendordtls[VendorId]') ");
+                $relateuservendor = $this->db->query(
+                    'INSERT INTO ' . TBL_USER_VENDOR . " (UserId,VendorId) VALUES ('$params','$vendordtls[VendorId]') ",
+                );
             }
         }
     }
@@ -112,7 +126,7 @@ class User_model extends CI_Model
             $email[] = strtolower($email_data['PersonalEmail']);
         }
 
-        $emailid = (array)$email + (array)$emailids;
+        $emailid = (array) $email + (array) $emailids;
         $emailids = array_keys(array_flip($emailid ?? []));
         return ['Email' => $emailids];
     }

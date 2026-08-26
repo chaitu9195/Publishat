@@ -32,7 +32,7 @@ class Mailrecord_model extends CI_Model
                 $phone = $userData['Phone'];
             }
         } else {
-            return ['status' => 'failed','data' => 'invalid user'];
+            return ['status' => 'failed', 'data' => 'invalid user'];
         }
 
         if (count($record_id_arr ?? []) > 0) {
@@ -40,7 +40,7 @@ class Mailrecord_model extends CI_Model
 
             $table_bg_color = '#99CCCC';
             foreach ($record_id_arr as $l_record_id) {
-                $table_bg_color = ($table_bg_color == '#CCCC99') ? '#99CCCC' : '#99CCCC';
+                $table_bg_color = $table_bg_color == '#CCCC99' ? '#99CCCC' : '#99CCCC';
                 if (empty($selective_attach)) {
                 } else {
                     $this->mongodb->where(['RecordId' => mongo_id($l_record_id)]);
@@ -51,146 +51,551 @@ class Mailrecord_model extends CI_Model
                         $subject = '';
                         if ($RecordTypeId == 1) {
                             $document_type = $tmp_rec['DocumentType'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . $tmp_rec['Class'] . ' | ' . $tmp_rec['DocumentType'] ;
-                            $email_content .= $this->get_school_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $document_type, $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                $tmp_rec['Class'] .
+                                ' | ' .
+                                $tmp_rec['DocumentType'];
+                            $email_content .= $this->get_school_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $document_type,
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 2) {
                             $document_type = $tmp_rec['DocumentType'];
-                            $subject = "$user_fullname | " . 'UG / Graduate' . ' | ' . $tmp_rec['Degree'] . ' | ' . $tmp_rec['DocumentType'] ;
-                            $email_content .= $this->get_ug_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $document_type, $addtext, $sub_id_arr);
+                            $subject =
+                                "$user_fullname | " .
+                                'UG / Graduate' .
+                                ' | ' .
+                                $tmp_rec['Degree'] .
+                                ' | ' .
+                                $tmp_rec['DocumentType'];
+                            $email_content .= $this->get_ug_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $document_type,
+                                $addtext,
+                                $sub_id_arr,
+                            );
                         } elseif ($RecordTypeId == 3) {
                             $document_type = $tmp_rec['DocumentType'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . $tmp_rec['Degree'] . ' | ' . $tmp_rec['DocumentType'];
-                            $email_content .= $this->get_pg_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $document_type, $addtext, $sub_id_arr);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                $tmp_rec['Degree'] .
+                                ' | ' .
+                                $tmp_rec['DocumentType'];
+                            $email_content .= $this->get_pg_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $document_type,
+                                $addtext,
+                                $sub_id_arr,
+                            );
                         } elseif ($RecordTypeId == 4) {
                             $document_type = $tmp_rec['DocumentType'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . $tmp_rec['Degree'] . ' | ' . $tmp_rec['DocumentType'];
-                            $email_content .= $this->get_phd_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $document_type, $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                $tmp_rec['Degree'] .
+                                ' | ' .
+                                $tmp_rec['DocumentType'];
+                            $email_content .= $this->get_phd_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $document_type,
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 5) {
                             $document_type = $tmp_rec['DocumentType'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . $tmp_rec['CertificateName'] . ' | ' . $tmp_rec['DocumentType'];
-                            $email_content .= $this->get_certification_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                $tmp_rec['CertificateName'] .
+                                ' | ' .
+                                $tmp_rec['DocumentType'];
+                            $email_content .= $this->get_certification_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 6) {
                             $document_type = $tmp_rec['DocumentType'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . $tmp_rec['ExamName'] . ' | ' . $tmp_rec['DocumentType'];
-                            $email_content .= $this->get_exam_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                $tmp_rec['ExamName'] .
+                                ' | ' .
+                                $tmp_rec['DocumentType'];
+                            $email_content .= $this->get_exam_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 7) {
                             $document_type = $tmp_rec['DocumentType'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . $tmp_rec['Title'] . ' | ' . $tmp_rec['DocumentType'];
-                            $email_content .= $this->get_projects_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                $tmp_rec['Title'] .
+                                ' | ' .
+                                $tmp_rec['DocumentType'];
+                            $email_content .= $this->get_projects_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 8) {
                             $travel_status = $tmp_rec['TravelStatus'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . stripslashes($tmp_rec['Location']) . ' | ' . stripslashes($tmp_rec['Purpose']);
-                            $email_content .= $this->get_location_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $travel_status, $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                stripslashes($tmp_rec['Location']) .
+                                ' | ' .
+                                stripslashes($tmp_rec['Purpose']);
+                            $email_content .= $this->get_location_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $travel_status,
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 9) {
                             $document_type = $tmp_rec['DocumentType'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . stripslashes($tmp_rec['DocumentType']) . ' | ' . stripslashes($tmp_rec['ReferenceNo']);
-                            $email_content .= $this->get_govt_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $document_type, $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                stripslashes($tmp_rec['DocumentType']) .
+                                ' | ' .
+                                stripslashes($tmp_rec['ReferenceNo']);
+                            $email_content .= $this->get_govt_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $document_type,
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 10) {
                             $document_type = $tmp_rec['RelationshipType'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . stripslashes($tmp_rec['RelationshipType']) . ' | ' . stripslashes($tmp_rec['ContactMode']);
-                            $email_content .= $this->get_relation_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                stripslashes($tmp_rec['RelationshipType']) .
+                                ' | ' .
+                                stripslashes($tmp_rec['ContactMode']);
+                            $email_content .= $this->get_relation_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 11) {
                             $document_type = $tmp_rec['SiteName'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . stripslashes($tmp_rec['SiteName']) . ' | ' . stripslashes($tmp_rec['Usage']);
-                            $email_content .= $this->get_web_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                stripslashes($tmp_rec['SiteName']) .
+                                ' | ' .
+                                stripslashes($tmp_rec['Usage']);
+                            $email_content .= $this->get_web_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 12) {
                             $travel_type = $tmp_rec['TravelType'];
                             $travellers = $tmp_rec['Travellers'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . stripslashes($tmp_rec['TravelType']) . ' | ' . stripslashes($tmp_rec['ToPlace']);
-                            $email_content .= $this->get_travel_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $travel_type, $travellers, $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                stripslashes($tmp_rec['TravelType']) .
+                                ' | ' .
+                                stripslashes($tmp_rec['ToPlace']);
+                            $email_content .= $this->get_travel_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $travel_type,
+                                $travellers,
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 13) {
                             $document_type = $tmp_rec['DocumentType'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . stripslashes($tmp_rec['DiviceName']) . ' | ' . stripslashes($tmp_rec['Brand']);
-                            $email_content .= $this->get_warranty_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $document_type, $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                stripslashes($tmp_rec['DiviceName']) .
+                                ' | ' .
+                                stripslashes($tmp_rec['Brand']);
+                            $email_content .= $this->get_warranty_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $document_type,
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 14) {
                             $document_type = $tmp_rec['ContactType'];
                             $contact_type = $tmp_rec['ContactType'];
                             $category = $tmp_rec['Category'];
-                            $subject = "$user_fullname | " . 'Contacts' . ' Record | ' . stripslashes($tmp_rec['ContactName']) . ' | ' . stripslashes($tmp_rec['MobilePhoneNumber']);
-                            $email_content .= $this->get_contacts_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $contact_type, $category, $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                'Contacts' .
+                                ' Record | ' .
+                                stripslashes($tmp_rec['ContactName']) .
+                                ' | ' .
+                                stripslashes($tmp_rec['MobilePhoneNumber']);
+                            $email_content .= $this->get_contacts_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $contact_type,
+                                $category,
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 15) {
                             $document_type = $tmp_rec['DocumentType'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . stripslashes($tmp_rec['DocumentType']) . ' | ' . stripslashes($tmp_rec['OrganisationName']);
-                            $email_content .= $this->get_employment_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                stripslashes($tmp_rec['DocumentType']) .
+                                ' | ' .
+                                stripslashes($tmp_rec['OrganisationName']);
+                            $email_content .= $this->get_employment_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 16) {
                             $document_type = $tmp_rec['ProjectName'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . stripslashes($tmp_rec['ProjectName']) . ' | ' . stripslashes($tmp_rec['Organisation']);
-                            $email_content .= $this->get_proprojects_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext, $sub_id_arr);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                stripslashes($tmp_rec['ProjectName']) .
+                                ' | ' .
+                                stripslashes($tmp_rec['Organisation']);
+                            $email_content .= $this->get_proprojects_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                                $sub_id_arr,
+                            );
                         } elseif ($RecordTypeId == 17) {
                             $document_type = $tmp_rec['SkillType'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . stripslashes($tmp_rec['SkillType']) . ' | ' . stripslashes($tmp_rec['SkillName']);
-                            $email_content .= $this->get_skills_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                stripslashes($tmp_rec['SkillType']) .
+                                ' | ' .
+                                stripslashes($tmp_rec['SkillName']);
+                            $email_content .= $this->get_skills_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 18) {
                             $document_type = $tmp_rec['AppType'];
                             $password_change_status = $tmp_rec['PasswordChangeStatus'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . stripslashes($tmp_rec['AppType']) . ' | ' . stripslashes($tmp_rec['AppName']);
-                            $email_content .= $this->get_apps_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $password_change_status, $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                stripslashes($tmp_rec['AppType']) .
+                                ' | ' .
+                                stripslashes($tmp_rec['AppName']);
+                            $email_content .= $this->get_apps_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $password_change_status,
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 38) {
                             $document_type = $tmp_rec['Name'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . stripslashes($tmp_rec['Name']) . ' | ' . stripslashes($tmp_rec['KeySkills']);
-                            $email_content .= $this->get_resume_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' | ' .
+                                stripslashes($tmp_rec['Name']) .
+                                ' | ' .
+                                stripslashes($tmp_rec['KeySkills']);
+                            $email_content .= $this->get_resume_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 19) {
                             $document_type = $tmp_rec['TestType'];
-                            $subject = "$user_fullname | Medical Test Record | " . $tmp_rec['TestType'] . ' | ' . $tmp_rec['TestName'];
-                            $email_content .= $this->get_medicaltest_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext, $sub_id_arr);
+                            $subject =
+                                "$user_fullname | Medical Test Record | " .
+                                $tmp_rec['TestType'] .
+                                ' | ' .
+                                $tmp_rec['TestName'];
+                            $email_content .= $this->get_medicaltest_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                                $sub_id_arr,
+                            );
                         } elseif ($RecordTypeId == 20) {
                             $document_type = $tmp_rec['PrescriptionType'];
-                            $subject = "$user_fullname | Prescription Record | " . $tmp_rec['PrescriptionType'] . ' | ' . $tmp_rec['DiseaseName'];
-                            $email_content .= $this->get_prescription_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext, $sub_id_arr);
+                            $subject =
+                                "$user_fullname | Prescription Record | " .
+                                $tmp_rec['PrescriptionType'] .
+                                ' | ' .
+                                $tmp_rec['DiseaseName'];
+                            $email_content .= $this->get_prescription_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                                $sub_id_arr,
+                            );
                         } elseif ($RecordTypeId == 21) {
                             $document_type = $tmp_rec['DiseaseType'];
-                            $subject = "$user_fullname | Family Health Record | " . $tmp_rec['DiseaseType'] . ' | ' . $tmp_rec['DiseaseName'];
-                            $email_content .= $this->get_familyhealth_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext, $sub_id_arr);
+                            $subject =
+                                "$user_fullname | Family Health Record | " .
+                                $tmp_rec['DiseaseType'] .
+                                ' | ' .
+                                $tmp_rec['DiseaseName'];
+                            $email_content .= $this->get_familyhealth_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                                $sub_id_arr,
+                            );
                         } elseif ($RecordTypeId == 22) {
                             $document_type = $tmp_rec['PolicyType'];
-                            $subject = "$user_fullname | Health Insurance Record | " . $tmp_rec['PolicyType'] . ' | ' . $tmp_rec['PolicyNumber'];
-                            $email_content .= $this->get_healthinsurance_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext, $sub_id_arr);
+                            $subject =
+                                "$user_fullname | Health Insurance Record | " .
+                                $tmp_rec['PolicyType'] .
+                                ' | ' .
+                                $tmp_rec['PolicyNumber'];
+                            $email_content .= $this->get_healthinsurance_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                                $sub_id_arr,
+                            );
                         } elseif ($RecordTypeId == 28) {
                             $document_type = $tmp_rec['DisputeType'];
-                            $subject = "$user_fullname | Legal Dispute Record | " . $tmp_rec['DisputeType'] . ' | ' . $tmp_rec['PartyName'] ;
-                            $email_content .= $this->get_legaldispute_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext);
+                            $subject =
+                                "$user_fullname | Legal Dispute Record | " .
+                                $tmp_rec['DisputeType'] .
+                                ' | ' .
+                                $tmp_rec['PartyName'];
+                            $email_content .= $this->get_legaldispute_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 29) {
                             $document_type = $tmp_rec['TransferType'];
-                            $subject = "$user_fullname | Ownership Transfer Record | " . $tmp_rec['TransferType'] . ' | ' . $tmp_rec['AssetName'] ;
-                            $email_content .= $this->get_ownershiptrnsfr_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext);
+                            $subject =
+                                "$user_fullname | Ownership Transfer Record | " .
+                                $tmp_rec['TransferType'] .
+                                ' | ' .
+                                $tmp_rec['AssetName'];
+                            $email_content .= $this->get_ownershiptrnsfr_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 30) {
                             $document_type = $tmp_rec['OrganizationName'];
-                            $subject = "$user_fullname | Bank Accounts Record | " . $tmp_rec['OrganizationName'] . ' | ' . $tmp_rec['AccountNumber'] ;
-                            $email_content .= $this->get_finaccounts_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext);
+                            $subject =
+                                "$user_fullname | Bank Accounts Record | " .
+                                $tmp_rec['OrganizationName'] .
+                                ' | ' .
+                                $tmp_rec['AccountNumber'];
+                            $email_content .= $this->get_finaccounts_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 31) {
                             $document_type = $tmp_rec['AssetType'];
-                            $subject = "$user_fullname | Assets Record | " . $tmp_rec['AssetType'] . ' | ' . $tmp_rec['AssetName'] ;
-                            $email_content .= $this->get_finassets_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext);
+                            $subject =
+                                "$user_fullname | Assets Record | " .
+                                $tmp_rec['AssetType'] .
+                                ' | ' .
+                                $tmp_rec['AssetName'];
+                            $email_content .= $this->get_finassets_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 32) {
                             $document_type = $tmp_rec['RevenueType'];
-                            $subject = "$user_fullname | Income Record | " . $tmp_rec['RevenueType'] . ' | ' . $tmp_rec['ItemName'] ;
-                            $email_content .= $this->get_finrevenues_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext, $sub_id_arr);
+                            $subject =
+                                "$user_fullname | Income Record | " .
+                                $tmp_rec['RevenueType'] .
+                                ' | ' .
+                                $tmp_rec['ItemName'];
+                            $email_content .= $this->get_finrevenues_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                                $sub_id_arr,
+                            );
                         } elseif ($RecordTypeId == 33) {
                             $card_type = $tmp_rec['CardType'];
                             $usage_type = $tmp_rec['UsageType'];
 
-                            $subject = "$user_fullname | Cards Record | " . $tmp_rec['CardType'] . ' | ' . $tmp_rec['ServiceProviderName'] ;
-                            $email_content .= $this->get_fincards_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $card_type, $usage_type, $addtext);
+                            $subject =
+                                "$user_fullname | Cards Record | " .
+                                $tmp_rec['CardType'] .
+                                ' | ' .
+                                $tmp_rec['ServiceProviderName'];
+                            $email_content .= $this->get_fincards_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $card_type,
+                                $usage_type,
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 34) {
                             $document_type = $tmp_rec['LiabilityType'];
-                            $subject = "$user_fullname | Loan Record | " . $tmp_rec['LiabilityType'] . ' | ' . $tmp_rec['LiabilityName'] ;
-                            $email_content .= $this->get_finliability_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext);
+                            $subject =
+                                "$user_fullname | Loan Record | " .
+                                $tmp_rec['LiabilityType'] .
+                                ' | ' .
+                                $tmp_rec['LiabilityName'];
+                            $email_content .= $this->get_finliability_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 35) {
                             $document_type = $tmp_rec['PaymentType'];
-                            $subject = "$user_fullname | Expense Record | " . $tmp_rec['PaymentType'] . ' | ' . $tmp_rec['ItemName'] ;
-                            $email_content .= $this->get_finpayment_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext, $sub_id_arr);
+                            $subject =
+                                "$user_fullname | Expense Record | " .
+                                $tmp_rec['PaymentType'] .
+                                ' | ' .
+                                $tmp_rec['ItemName'];
+                            $email_content .= $this->get_finpayment_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                                $sub_id_arr,
+                            );
                         } elseif ($RecordTypeId == 36) {
                             $document_type = $tmp_rec['TaxDocumentType'];
-                            $subject = "$user_fullname | Tax Record | " . $tmp_rec['TaxDocumentType'] . ' | ' . $tmp_rec['AssessmentYear'] ;
-                            $email_content .= $this->get_fintax_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext);
+                            $subject =
+                                "$user_fullname | Tax Record | " .
+                                $tmp_rec['TaxDocumentType'] .
+                                ' | ' .
+                                $tmp_rec['AssessmentYear'];
+                            $email_content .= $this->get_fintax_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 37) {
                             $insurance_type = $tmp_rec['InsuranceType'];
-                            $subject = "$user_fullname | Insurance Record | " . $tmp_rec['InsuranceType'] . ' | ' . $tmp_rec['PolicyNumber'] ;
-                            $email_content .= $this->get_fininsurance_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $insurance_type, $addtext);
+                            $subject =
+                                "$user_fullname | Insurance Record | " .
+                                $tmp_rec['InsuranceType'] .
+                                ' | ' .
+                                $tmp_rec['PolicyNumber'];
+                            $email_content .= $this->get_fininsurance_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $insurance_type,
+                                $addtext,
+                            );
                         } elseif ($RecordTypeId == 42) {
                             $document_type = $tmp_rec['EventType'];
-                            $subject = "$user_fullname | " . ucwords($record_type) . ' Record | ' . stripslashes($tmp_rec['EventType']) . ' | ' . stripslashes($tmp_rec['Location']);
-                            $email_content .= $this->get_events_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $document_type, $addtext);
+                            $subject =
+                                "$user_fullname | " .
+                                ucwords($record_type) .
+                                ' Record | ' .
+                                stripslashes($tmp_rec['EventType']) .
+                                ' | ' .
+                                stripslashes($tmp_rec['Location']);
+                            $email_content .= $this->get_events_select(
+                                $doc_id_arr,
+                                $l_record_id,
+                                $table_bg_color,
+                                '#FFFFFF',
+                                $document_type,
+                                $addtext,
+                            );
                         }
                     }
                 }
@@ -221,126 +626,127 @@ class Mailrecord_model extends CI_Model
                 $status_message = 'Emails have been sent with the record details';
 
                 if ($RecordTypeId == 1) {
-                    $headers = ['key1' => 'Class','key2' => 'SchoolName','key3' => 'DocumentType'];
+                    $headers = ['key1' => 'Class', 'key2' => 'SchoolName', 'key3' => 'DocumentType'];
                 }
                 if ($RecordTypeId == 2) {
-                    $headers = ['key1' => 'Degree','key2' => 'Term','key3' => 'DocumentType'];
+                    $headers = ['key1' => 'Degree', 'key2' => 'Term', 'key3' => 'DocumentType'];
                 }
                 if ($RecordTypeId == 3) {
-                    $headers = ['key1' => 'Degree','key2' => 'Term','key3' => 'DocumentType'];
+                    $headers = ['key1' => 'Degree', 'key2' => 'Term', 'key3' => 'DocumentType'];
                 }
                 if ($RecordTypeId == 4) {
-                    $headers = ['key1' => 'Degree','key2' => 'Term','key3' => 'DocumentType'];
+                    $headers = ['key1' => 'Degree', 'key2' => 'Term', 'key3' => 'DocumentType'];
                 }
                 if ($RecordTypeId == 5) {
-                    $headers = ['key1' => 'CertificationType','key2' => 'CertificateName','key3' => 'ValidFrom'];
+                    $headers = ['key1' => 'CertificationType', 'key2' => 'CertificateName', 'key3' => 'ValidFrom'];
                 }
                 if ($RecordTypeId == 6) {
-                    $headers = ['key1' => 'ExamType','key2' => 'ExamName','key3' => 'DocumentType'];
+                    $headers = ['key1' => 'ExamType', 'key2' => 'ExamName', 'key3' => 'DocumentType'];
                 }
                 if ($RecordTypeId == 7) {
-                    $headers = ['key1' => 'ProjectType','key2' => 'Title','key3' => 'DocumentType'];
+                    $headers = ['key1' => 'ProjectType', 'key2' => 'Title', 'key3' => 'DocumentType'];
                 }
                 if ($RecordTypeId == 8) {
-                    $headers = ['key1' => 'Location','key2' => 'Purpose','key3' => 'FromDate'];
+                    $headers = ['key1' => 'Location', 'key2' => 'Purpose', 'key3' => 'FromDate'];
                 }
                 if ($RecordTypeId == 9) {
-                    $headers = ['key1' => 'DocumentType','key2' => 'IssuedDate','key3' => 'ReferenceNo'];
+                    $headers = ['key1' => 'DocumentType', 'key2' => 'IssuedDate', 'key3' => 'ReferenceNo'];
                 }
                 if ($RecordTypeId == 10) {
-                    $headers = ['key1' => 'Name','key2' => 'RelationshipType','key3' => 'ContactMode'];
+                    $headers = ['key1' => 'Name', 'key2' => 'RelationshipType', 'key3' => 'ContactMode'];
                 }
                 if ($RecordTypeId == 11) {
-                    $headers = ['key1' => 'SiteName','key2' => 'Usage','key3' => 'DocumentStatus'];
+                    $headers = ['key1' => 'SiteName', 'key2' => 'Usage', 'key3' => 'DocumentStatus'];
                 }
                 if ($RecordTypeId == 12) {
-                    $headers = ['key1' => 'TravelType','key2' => 'FromDate','key3' => 'ToPlace'];
+                    $headers = ['key1' => 'TravelType', 'key2' => 'FromDate', 'key3' => 'ToPlace'];
                 }
                 if ($RecordTypeId == 13) {
-                    $headers = ['key1' => 'DeviceName','key2' => 'Brand','key3' => 'ReferenceNumber'];
+                    $headers = ['key1' => 'DeviceName', 'key2' => 'Brand', 'key3' => 'ReferenceNumber'];
                 }
                 if ($RecordTypeId == 14) {
-                    $headers = ['key1' => 'ContactName','key2' => 'MobileNumber','key3' => 'PersonalEmail'];
+                    $headers = ['key1' => 'ContactName', 'key2' => 'MobileNumber', 'key3' => 'PersonalEmail'];
                 }
                 if ($RecordTypeId == 15) {
-                    $headers = ['key1' => 'DocumentType','key2' => 'OrganisationName','key3' => 'IssuedDate'];
+                    $headers = ['key1' => 'DocumentType', 'key2' => 'OrganisationName', 'key3' => 'IssuedDate'];
                 }
                 if ($RecordTypeId == 16) {
-                    $headers = ['key1' => 'ProjectName','key2' => 'FromDate','key3' => 'ToDate'];
+                    $headers = ['key1' => 'ProjectName', 'key2' => 'FromDate', 'key3' => 'ToDate'];
                 }
                 if ($RecordTypeId == 17) {
-                    $headers = ['key1' => 'SkillType','key2' => 'SkillName','key3' => 'DocumentType'];
+                    $headers = ['key1' => 'SkillType', 'key2' => 'SkillName', 'key3' => 'DocumentType'];
                 }
                 if ($RecordTypeId == 18) {
-                    $headers = ['key1' => 'AppType','key2' => 'AppName','key3' => 'PasswordChangeStatus'];
+                    $headers = ['key1' => 'AppType', 'key2' => 'AppName', 'key3' => 'PasswordChangeStatus'];
                 }
                 if ($RecordTypeId == 38) {
-                    $headers = ['key1' => 'ResumeType','key2' => 'Name','key3' => 'FunctionalArea'];
+                    $headers = ['key1' => 'ResumeType', 'key2' => 'Name', 'key3' => 'FunctionalArea'];
                 }
                 if ($RecordTypeId == 19) {
-                    $headers = ['key1' => 'TestName','key2' => 'TestType','key3' => 'TestDate'];
+                    $headers = ['key1' => 'TestName', 'key2' => 'TestType', 'key3' => 'TestDate'];
                 }
                 if ($RecordTypeId == 20) {
-                    $headers = ['key1' => 'PrescriptionType','key2' => 'DiseaseName','key3' => 'MedicineType'];
+                    $headers = ['key1' => 'PrescriptionType', 'key2' => 'DiseaseName', 'key3' => 'MedicineType'];
                 }
                 if ($RecordTypeId == 21) {
-                    $headers = ['key1' => 'DiseaseType','key2' => 'TreatmentType','key3' => 'FromDate'];
+                    $headers = ['key1' => 'DiseaseType', 'key2' => 'TreatmentType', 'key3' => 'FromDate'];
                 }
                 if ($RecordTypeId == 22) {
-                    $headers = ['key1' => 'PolicyType','key2' => 'PolicyName','key3' => 'FromDate'];
+                    $headers = ['key1' => 'PolicyType', 'key2' => 'PolicyName', 'key3' => 'FromDate'];
                 }
                 if ($RecordTypeId == 28) {
-                    $headers = ['key1' => 'DisputeType','key2' => 'PartyName','key3' => 'FromDate'];
+                    $headers = ['key1' => 'DisputeType', 'key2' => 'PartyName', 'key3' => 'FromDate'];
                 }
                 if ($RecordTypeId == 29) {
-                    $headers = ['key1' => 'TransferType','key2' => 'AssetName','key3' => 'ValidFrom'];
+                    $headers = ['key1' => 'TransferType', 'key2' => 'AssetName', 'key3' => 'ValidFrom'];
                 }
                 if ($RecordTypeId == 30) {
-                    $headers = ['key1' => 'AccountType','key2' => 'AccountNumber','key3' => 'BranchName'];
+                    $headers = ['key1' => 'AccountType', 'key2' => 'AccountNumber', 'key3' => 'BranchName'];
                 }
                 if ($RecordTypeId == 31) {
-                    $headers = ['key1' => 'AssetType','key2' => 'AssetName','key3' => 'ValidFrom'];
+                    $headers = ['key1' => 'AssetType', 'key2' => 'AssetName', 'key3' => 'ValidFrom'];
                 }
                 if ($RecordTypeId == 32) {
-                    $headers = ['key1' => 'RevenueType','key2' => 'ItemName','key3' => 'Term'];
+                    $headers = ['key1' => 'RevenueType', 'key2' => 'ItemName', 'key3' => 'Term'];
                 }
                 if ($RecordTypeId == 33) {
-                    $headers = ['key1' => 'CardType','key2' => 'ServiceProviderName','key3' => 'CardNumber'];
+                    $headers = ['key1' => 'CardType', 'key2' => 'ServiceProviderName', 'key3' => 'CardNumber'];
                 }
                 if ($RecordTypeId == 34) {
-                    $headers = ['key1' => 'LiabilityType','key2' => 'LiabilityName','key3' => 'FromDate'];
+                    $headers = ['key1' => 'LiabilityType', 'key2' => 'LiabilityName', 'key3' => 'FromDate'];
                 }
                 if ($RecordTypeId == 35) {
-                    $headers = ['key1' => 'PaymentType','key2' => 'ItemName','key3' => 'Term'];
+                    $headers = ['key1' => 'PaymentType', 'key2' => 'ItemName', 'key3' => 'Term'];
                 }
                 if ($RecordTypeId == 36) {
-                    $headers = ['key1' => 'TaxDocumentType','key2' => 'Date','key3' => 'AssessmentYear'];
+                    $headers = ['key1' => 'TaxDocumentType', 'key2' => 'Date', 'key3' => 'AssessmentYear'];
                 }
                 if ($RecordTypeId == 37) {
-                    $headers = ['key1' => 'InsuranceType','key2' => 'PolicyName','key3' => 'FromDate'];
+                    $headers = ['key1' => 'InsuranceType', 'key2' => 'PolicyName', 'key3' => 'FromDate'];
                 }
                 if ($RecordTypeId == 42) {
-                    $headers = ['key1' => 'Event Type','key2' => 'Event Name','key3' => 'Date'];
+                    $headers = ['key1' => 'Event Type', 'key2' => 'Event Name', 'key3' => 'Date'];
                 }
 
                 $document_type = $headers['key3'];
                 $record_name = $headers['key1'];
 
-                $eventdata = ['UserId' => $user_id,
-                 'EventType' => 'Shared',
-                 'Module' => $module_name,
-                 'RecordName' => $record_name,
-                 'RecordType' => $record_type,
-                 'DocumentType' => $document_type,
-                 'Receiver' => $email_list,
-                 'Date' => TimeStamp,
-                  ];
+                $eventdata = [
+                    'UserId' => $user_id,
+                    'EventType' => 'Shared',
+                    'Module' => $module_name,
+                    'RecordName' => $record_name,
+                    'RecordType' => $record_type,
+                    'DocumentType' => $document_type,
+                    'Receiver' => $email_list,
+                    'Date' => TimeStamp,
+                ];
                 $qry = $this->mongodb->insert(TBL_EVENTS, $eventdata);
 
-                return ['status' => 'success','data' => 'Mail has been sent.'];
+                return ['status' => 'success', 'data' => 'Mail has been sent.'];
             } else {
                 $status_message = 'Error: No emails have been sent. Please try again. ';
-                return ['status' => 'failed','data' => 'No mails sent'];
+                return ['status' => 'failed', 'data' => 'No mails sent'];
             }
         }
     }
@@ -379,7 +785,11 @@ class Mailrecord_model extends CI_Model
                 $hall_ticket_number = stripslashes($rec['HallTicketNumber']);
                 $notes = stripslashes($rec['Notes']);
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -408,8 +818,15 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    public function get_ug_select($document_id_arr, $record_id, $table_bg, $tr_bg, $document_type, $addtext, $sub_id_arr)
-    {
+    public function get_ug_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $document_type,
+        $addtext,
+        $sub_id_arr,
+    ) {
         $record_type_id = 2;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
@@ -444,7 +861,11 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -477,8 +898,15 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    public function get_pg_select($document_id_arr, $record_id, $table_bg, $tr_bg, $document_type, $addtext, $sub_id_arr)
-    {
+    public function get_pg_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $document_type,
+        $addtext,
+        $sub_id_arr,
+    ) {
         $record_type_id = 3;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
@@ -511,7 +939,11 @@ class Mailrecord_model extends CI_Model
                 $hall_ticket_number = stripslashes($rec['HallTicketNumber']);
                 $notes = stripslashes($rec['Notes']);
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                     $attachments .= $this->get_document_email_links_by_id_arr($document_id_arr, '44', $record_id);
                 } else {
                     $attachments = 'No Attachments';
@@ -577,7 +1009,11 @@ class Mailrecord_model extends CI_Model
                 $hall_ticket_number = stripslashes($rec['HallTicketNumber']);
                 $notes = stripslashes($rec['Notes']);
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -642,7 +1078,11 @@ class Mailrecord_model extends CI_Model
                     $username_password .= '/' . $password;
                 }
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -699,7 +1139,11 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 $exam_date = $this->date_format_short($exam_date);
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -764,7 +1208,11 @@ class Mailrecord_model extends CI_Model
                     $username_password .= '/' . $password;
                 }
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -838,7 +1286,11 @@ class Mailrecord_model extends CI_Model
                 $family_members = trim($family_members, ' ,');
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -875,7 +1327,11 @@ class Mailrecord_model extends CI_Model
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_GOVERNMENTCERTIFICATES);
         if (count($qry ?? []) > 0) {
-            if ($document_type == 'Passport' || $document_type == 'Marriage Certificate' || $document_type == 'Birth Certificate') {
+            if (
+                $document_type == 'Passport' ||
+                $document_type == 'Marriage Certificate' ||
+                $document_type == 'Birth Certificate'
+            ) {
                 $email_template = '../../templates/email-personal-govtcert-template.html';
             } elseif ($document_type == 'PAN Card' || $document_type == 'Employee State Insurance (ESI)') {
                 $email_template = '../../templates/email-personal-govtcert-template1.html';
@@ -904,7 +1360,11 @@ class Mailrecord_model extends CI_Model
                 $issued_date = $this->date_format_short($issued_date);
                 $valid_to = $this->date_format_short($valid_to);
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -961,7 +1421,11 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -1016,7 +1480,11 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -1043,18 +1511,28 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    public function get_travel_select($document_id_arr, $record_id, $table_bg, $tr_bg, $travel_type, $travellers, $addtext)
-    {
+    public function get_travel_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $travel_type,
+        $travellers,
+        $addtext,
+    ) {
         $record_type_id = 12;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_TRAVEL);
         if (count($qry ?? []) > 0) {
-            if (($travel_type == 'International') && ($travellers == 'Family' || $travellers == 'Group')) {
+            if ($travel_type == 'International' && ($travellers == 'Family' || $travellers == 'Group')) {
                 $email_template = '../../templates/email-personal-travel-template.html';
-            } elseif (($travel_type == 'International') && ($travellers == 'Single' || $travellers = '')) {
+            } elseif ($travel_type == 'International' && ($travellers == 'Single' || ($travellers = ''))) {
                 $email_template = '../../templates/email-personal-travel-template1.html';
-            } elseif (($travel_type == 'Domestic' || $travel_type == 'Others') && ($travellers == 'Family' || $travellers == 'Group')) {
+            } elseif (
+                ($travel_type == 'Domestic' || $travel_type == 'Others') &&
+                ($travellers == 'Family' || $travellers == 'Group')
+            ) {
                 $email_template = '../../templates/email-personal-travel-template2.html';
             } else {
                 $email_template = '../../templates/email-personal-travel-template3.html';
@@ -1098,7 +1576,11 @@ class Mailrecord_model extends CI_Model
                 }
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -1174,7 +1656,11 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -1238,7 +1724,11 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -1263,8 +1753,15 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    public function get_contacts_select($document_id_arr, $record_id, $table_bg, $tr_bg, $contact_type, $category, $addtext)
-    {
+    public function get_contacts_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $contact_type,
+        $category,
+        $addtext,
+    ) {
         $record_type_id = 14;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
@@ -1303,7 +1800,11 @@ class Mailrecord_model extends CI_Model
                 $group = stripslashes($rec['GroupName']);
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -1438,7 +1939,11 @@ class Mailrecord_model extends CI_Model
                 }
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -1528,7 +2033,11 @@ class Mailrecord_model extends CI_Model
                 }
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -1589,7 +2098,11 @@ class Mailrecord_model extends CI_Model
                 $to_date = $this->date_format_short($to_date);
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -1649,7 +2162,11 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -1707,7 +2224,11 @@ class Mailrecord_model extends CI_Model
                 $Summary = stripslashes($rec['Summary']);
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -1769,7 +2290,11 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -1808,8 +2333,8 @@ class Mailrecord_model extends CI_Model
     {
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0;$i < count($sub_id_arr ?? []);$i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]),'UserId' => mongo_id($user_id)]);
+            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
                 $qry = $this->mongodb->get('MedMedicalTestRecords');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
@@ -1885,12 +2410,21 @@ class Mailrecord_model extends CI_Model
                 $patient_name = stripslashes($rec['PatientName']);
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
 
-                $medicine_loop_str = $this->get_med_prescription_medicine_html($document_id_arr, $user_id, $record_id, $sub_id_arr);
+                $medicine_loop_str = $this->get_med_prescription_medicine_html(
+                    $document_id_arr,
+                    $user_id,
+                    $record_id,
+                    $sub_id_arr,
+                );
 
                 $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
                 $email_body = str_replace('##PRESCRIPTION-TYPE##', $prescription_type, $email_body);
@@ -1984,8 +2518,8 @@ class Mailrecord_model extends CI_Model
         $html_content = '';
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0;$i < count($sub_id_arr ?? []);$i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]),'UserId' => mongo_id($user_id)]);
+            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
                 $qry = $this->mongodb->get('MedPrescriptionMedicine');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
@@ -2063,11 +2597,20 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
-                $patient_loop_str = $this->get_med_family_patient_html($document_id_arr, $user_id, $record_id, $sub_id_arr);
+                $patient_loop_str = $this->get_med_family_patient_html(
+                    $document_id_arr,
+                    $user_id,
+                    $record_id,
+                    $sub_id_arr,
+                );
 
                 $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
                 $email_body = str_replace('##DISEASE-TYPE##', $disease_type, $email_body);
@@ -2129,11 +2672,20 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 $currency = stripslashes($rec['Currency']);
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
-                $beneficiary_loop_str = $this->get_med_insurance_beneficiary_html($document_id_arr, $user_id, $record_id, $sub_id_arr);
+                $beneficiary_loop_str = $this->get_med_insurance_beneficiary_html(
+                    $document_id_arr,
+                    $user_id,
+                    $record_id,
+                    $sub_id_arr,
+                );
 
                 $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
                 $email_body = str_replace('##INSURANCE-TYPE##', $insurance_type, $email_body);
@@ -2201,7 +2753,11 @@ class Mailrecord_model extends CI_Model
                 $status = stripslashes($rec['Status']);
                 $notes = stripslashes($rec['Notes']);
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -2273,7 +2829,11 @@ class Mailrecord_model extends CI_Model
                 $status = stripslashes($rec['Status']);
                 $notes = stripslashes($rec['Notes']);
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -2345,7 +2905,11 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 $ifsc = stripslashes($rec['Ifsc']);
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -2412,7 +2976,11 @@ class Mailrecord_model extends CI_Model
                 $receipt_number = stripslashes($rec['ReceiptNo']);
                 $notes = stripslashes($rec['Notes']);
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -2484,11 +3052,20 @@ class Mailrecord_model extends CI_Model
                 $due_date = stripslashes($rec['DueDate']);
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
-                $medicine_loop_str = $this->get_fin_revenue_related_html($document_id_arr, $user_id, $record_id, $sub_id_arr);
+                $medicine_loop_str = $this->get_fin_revenue_related_html(
+                    $document_id_arr,
+                    $user_id,
+                    $record_id,
+                    $sub_id_arr,
+                );
 
                 $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
                 $email_body = str_replace('##REVENUE-TYPE##', $revenue_type, $email_body);
@@ -2519,8 +3096,8 @@ class Mailrecord_model extends CI_Model
         $html_content = '';
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0;$i < count($sub_id_arr ?? []);$i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]),'UserId' => mongo_id($user_id)]);
+            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
                 $qry = $this->mongodb->get('revenue');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
@@ -2558,22 +3135,35 @@ class Mailrecord_model extends CI_Model
         return $output_str;
     }
 
-    public function get_fincards_select($document_id_arr, $record_id, $table_bg, $tr_bg, $card_type, $usage_type, $addtext)
-    {
+    public function get_fincards_select(
+        $document_id_arr,
+        $record_id,
+        $table_bg,
+        $tr_bg,
+        $card_type,
+        $usage_type,
+        $addtext,
+    ) {
         $record_type_id = 33;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINCARDS);
         if (count($qry ?? []) > 0) {
-            if (($card_type == 'Credit' || $card_type == 'Others' || $card_type == '') && ($usage_type == 'Joint')) {
+            if (($card_type == 'Credit' || $card_type == 'Others' || $card_type == '') && $usage_type == 'Joint') {
                 $email_template = '../../templates/email-financial-cards-template.html';
-            } elseif (($card_type == 'Credit' || $card_type == 'Others' || $card_type == '') && ($usage_type == 'Self' || $usage_type == 'Others')) {
+            } elseif (
+                ($card_type == 'Credit' || $card_type == 'Others' || $card_type == '') &&
+                ($usage_type == 'Self' || $usage_type == 'Others')
+            ) {
                 $email_template = '../../templates/email-financial-cards-template1.html';
-            } elseif (($card_type == 'Debit' || $card_type == 'Forex') && ($usage_type == 'Joint')) {
+            } elseif (($card_type == 'Debit' || $card_type == 'Forex') && $usage_type == 'Joint') {
                 $email_template = '../../templates/email-financial-cards-template2.html';
-            } elseif (($card_type == 'Debit' || $card_type == 'Forex') && ($usage_type == 'Self' || $usage_type == 'Others')) {
+            } elseif (
+                ($card_type == 'Debit' || $card_type == 'Forex') &&
+                ($usage_type == 'Self' || $usage_type == 'Others')
+            ) {
                 $email_template = '../../templates/email-financial-cards-template3.html';
-            } elseif (($card_type == 'Discount' || $card_type == 'Shopping') && ($usage_type == 'Joint')) {
+            } elseif (($card_type == 'Discount' || $card_type == 'Shopping') && $usage_type == 'Joint') {
                 $email_template = '../../templates/email-financial-cards-template4.html';
             } else {
                 $email_template = '../../templates/email-financial-cards-template5.html';
@@ -2603,7 +3193,11 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 $due_date = stripslashes($rec['DueDate']);
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -2669,7 +3263,11 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 $due_date = stripslashes($rec['DueDate']);
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -2741,11 +3339,20 @@ class Mailrecord_model extends CI_Model
                 $due_date = stripslashes($rec['DueDate']);
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
-                $medicine_loop_str = $this->get_fin_payment_related_html($document_id_arr, $user_id, $record_id, $sub_id_arr);
+                $medicine_loop_str = $this->get_fin_payment_related_html(
+                    $document_id_arr,
+                    $user_id,
+                    $record_id,
+                    $sub_id_arr,
+                );
 
                 $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
                 $email_body = str_replace('##PAYMENT-TYPE##', $payment_type, $email_body);
@@ -2776,8 +3383,8 @@ class Mailrecord_model extends CI_Model
         $html_content = '';
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0;$i < count($sub_id_arr ?? []);$i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]),'UserId' => mongo_id($user_id)]);
+            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
                 $qry = $this->mongodb->get('payments');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
@@ -2846,7 +3453,11 @@ class Mailrecord_model extends CI_Model
                 $category = stripslashes($rec['Category']);
                 $notes = stripslashes($rec['Notes']);
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -2921,7 +3532,11 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 $due_date = stripslashes($rec['DueDate']);
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
+                    $attachments = $this->get_document_email_links_by_id_arr(
+                        $document_id_arr,
+                        $record_type_id,
+                        $record_id,
+                    );
                 } else {
                     $attachments = 'No Attachments';
                 }
@@ -2982,6 +3597,7 @@ class Mailrecord_model extends CI_Model
 
         if ($res->num_rows() > 0) {
             foreach ($res->result_array() as $rec) {
+
                 $document_id = $rec['DocumentId'];
 
                 $user_id = $rec['UserId'];
@@ -2998,12 +3614,11 @@ class Mailrecord_model extends CI_Model
 
                 $doc_icon = 'https://www.publishat.com/' . $this->get_document_icon($file_type);
                 $key = $user_id . '###' . $document_id . '###email-attachment';
-                $doc_link_url = 'https://www.publishat.com/mobile_ws/GlobalController/viewattachment?key=' . $this->encript($key);
-
+                $doc_link_url =
+                    'https://www.publishat.com/mobile_ws/GlobalController/viewattachment?key=' . $this->encript($key);
                 ?>
       <a target="_blank" href="<?= $doc_link_url ?>"><img src="<?= $doc_icon ?>" width="20" height="20" border="0" align="absmiddle" /></a>&nbsp;
             <a target="_blank" href="<?= $doc_link_url ?>"><?= strtoupper($doc_tag) ?></a><?php
-
             }
         } else {
             echo '<i>No documents are attached to this record</i>';
@@ -3018,12 +3633,16 @@ class Mailrecord_model extends CI_Model
     {
         ob_start();
         if (count($document_id_arr ?? []) > 0) {
-            for ($i = 0;$i < count($document_id_arr ?? []);$i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($record_id),'DocumentId' => mongo_id($document_id_arr[$i])]);
+            for ($i = 0; $i < count($document_id_arr ?? []); $i++) {
+                $this->mongodb->where([
+                    'RecordId' => mongo_id($record_id),
+                    'DocumentId' => mongo_id($document_id_arr[$i]),
+                ]);
                 $qry = $this->mongodb->get('fs.files');
 
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
+
                         $document_id = $rec['DocumentId'];
                         $user_id = $rec['UserId'];
                         $file_type = $rec['FileType'];
@@ -3042,12 +3661,16 @@ class Mailrecord_model extends CI_Model
                         $ext = pathinfo($filename, PATHINFO_EXTENSION);
                         $doc_icon = 'https://www.publishat.com/' . $this->get_document_icon($ext);
                         $key = $user_id . '###' . $document_id . '###email-attachment';
-                        $doc_link_url = 'https://www.publishat.com/mobile_ws/GlobalController/viewattachment?key=' . $this->encript($key);
-
+                        $doc_link_url =
+                            'https://www.publishat.com/mobile_ws/GlobalController/viewattachment?key=' .
+                            $this->encript($key);
                         ?>
-        <a target="_blank" href="https://www.publishat.com/digital/en/web/docviewer?fid=<?=$fid;?>&type=<?=strtolower($ext);?>"><img src="<?= $doc_icon ?>" width="20" height="20" border="0" align="absmiddle" /></a>&nbsp;
-        <a target="_blank" href="https://www.publishat.com/digital/en/web/docviewer?fid=<?=$fid;?>&type=<?=strtolower($ext);?>"><?= strtoupper($filename) ?></a><?php
-
+        <a target="_blank" href="https://www.publishat.com/digital/en/web/docviewer?fid=<?= $fid ?>&type=<?= strtolower(
+    $ext,
+) ?>"><img src="<?= $doc_icon ?>" width="20" height="20" border="0" align="absmiddle" /></a>&nbsp;
+        <a target="_blank" href="https://www.publishat.com/digital/en/web/docviewer?fid=<?= $fid ?>&type=<?= strtolower(
+    $ext,
+) ?>"><?= strtoupper($filename) ?></a><?php
                     }
                 }
             }
@@ -3064,37 +3687,53 @@ class Mailrecord_model extends CI_Model
     {
         $file_type = strtolower($file_type);
         switch ($file_type) {
-            case 'pdf': $icon = 'graphics/icon_pdf.png';
+            case 'pdf':
+                $icon = 'graphics/icon_pdf.png';
                 break;
-            case 'doc': $icon = 'graphics/icon_doc.png';
+            case 'doc':
+                $icon = 'graphics/icon_doc.png';
                 break;
-            case 'docx': $icon = 'graphics/icon_doc.png';
+            case 'docx':
+                $icon = 'graphics/icon_doc.png';
                 break;
-            case 'jpg': $icon = 'graphics/icon_jpg.png';
+            case 'jpg':
+                $icon = 'graphics/icon_jpg.png';
                 break;
-            case 'jpe': $icon = 'graphics/icon_jpg.png';
+            case 'jpe':
+                $icon = 'graphics/icon_jpg.png';
                 break;
-            case 'jpeg': $icon = 'graphics/icon_jpg.png';
+            case 'jpeg':
+                $icon = 'graphics/icon_jpg.png';
                 break;
-            case 'gif': $icon = 'graphics/icon_gif.png';
+            case 'gif':
+                $icon = 'graphics/icon_gif.png';
                 break;
-            case 'png': $icon = 'graphics/icon_png.png';
+            case 'png':
+                $icon = 'graphics/icon_png.png';
                 break;
-            case 'txt': $icon = 'graphics/icon_txt.png';
+            case 'txt':
+                $icon = 'graphics/icon_txt.png';
                 break;
-            case 'xls': $icon = 'graphics/icon_xls.png';
+            case 'xls':
+                $icon = 'graphics/icon_xls.png';
                 break;
-            case 'xlsx': $icon = 'graphics/icon_xls.png';
+            case 'xlsx':
+                $icon = 'graphics/icon_xls.png';
                 break;
-            case 'xps': $icon = 'graphics/icon_xps.png';
+            case 'xps':
+                $icon = 'graphics/icon_xps.png';
                 break;
-            case 'zip': $icon = 'graphics/icon_zip.png';
+            case 'zip':
+                $icon = 'graphics/icon_zip.png';
                 break;
-            case 'rar': $icon = 'graphics/icon_rar.png';
+            case 'rar':
+                $icon = 'graphics/icon_rar.png';
                 break;
-            case 'ppt': $icon = 'graphics/icon_ppt.png';
+            case 'ppt':
+                $icon = 'graphics/icon_ppt.png';
                 break;
-            default: $icon = 'graphics/icon_pdf.png';
+            default:
+                $icon = 'graphics/icon_pdf.png';
                 break;
         }
         return $icon;
@@ -3115,7 +3754,7 @@ class Mailrecord_model extends CI_Model
     public function safe_b64encode($string)
     {
         $data = base64_encode($string);
-        $data = str_replace(['+','/','='], ['-','_',''], $data);
+        $data = str_replace(['+', '/', '='], ['-', '_', ''], $data);
         return $data;
     }
 
@@ -3123,14 +3762,14 @@ class Mailrecord_model extends CI_Model
     {
         $this->load->library('email');
         $config = [
-          'protocol' => protocol,
-          'smtp_host' => smtp_host,
-          'smtp_port' => smtp_port,
-          'smtp_user' => smtp_user,
-          'smtp_pass' => smtp_pass,
-          'mailpath' => mailpath,
-          'charset' => charset,
-          'wordwrap' => wordwrap,
+            'protocol' => protocol,
+            'smtp_host' => smtp_host,
+            'smtp_port' => smtp_port,
+            'smtp_user' => smtp_user,
+            'smtp_pass' => smtp_pass,
+            'mailpath' => mailpath,
+            'charset' => charset,
+            'wordwrap' => wordwrap,
         ];
 
         $this->email->initialize($config);
@@ -3225,7 +3864,7 @@ class Mailrecord_model extends CI_Model
         ob_start();
 
         if (count($document_id_arr ?? []) > 0) {
-            $ $kartname = $_POST['kart'];
+            $$kartname = $_POST['kart'];
             $kartname1 = $_POST['kart1'];
             if ($kartname1) {
                 $kart_name = $_POST['kart1'];
@@ -3275,8 +3914,8 @@ class Mailrecord_model extends CI_Model
         $html_content = '';
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0;$i < count($sub_id_arr ?? []);$i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]),'UserId' => mongo_id($user_id)]);
+            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
                 $qry = $this->mongodb->get('projectinclude');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
@@ -3319,8 +3958,8 @@ class Mailrecord_model extends CI_Model
         $html_content = '';
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0;$i < count($sub_id_arr ?? []);$i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]),'UserId' => mongo_id($user_id)]);
+            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
                 $qry = $this->mongodb->get('UndergraduateSub');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
@@ -3365,8 +4004,8 @@ class Mailrecord_model extends CI_Model
         $html_content = '';
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0;$i < count($sub_id_arr ?? []);$i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]),'UserId' => mongo_id($user_id)]);
+            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
                 $qry = $this->mongodb->get('PostgraduateSub');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
@@ -3410,8 +4049,8 @@ class Mailrecord_model extends CI_Model
         $html_content = '';
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0;$i < count($sub_id_arr ?? []);$i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]),'UserId' => mongo_id($user_id)]);
+            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
                 $qry = $this->mongodb->get('MedFamilyMember');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
@@ -3463,8 +4102,8 @@ class Mailrecord_model extends CI_Model
     {
         $output_str = '';
         if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0;$i < count($sub_id_arr ?? []);$i++) {
-                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]),'UserId' => mongo_id($user_id)]);
+            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+                $this->mongodb->where(['RecordId' => mongo_id($sub_id_arr[$i]), 'UserId' => mongo_id($user_id)]);
                 $qry = $this->mongodb->get('MedHealthInsuranceBeneficiary');
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {

@@ -46,21 +46,22 @@ class Summary_model extends CI_Model
         $blood_group = $params['blood_group'];
         $bmi = $params['bmi'];
         $bloodpressure = $params['bloodpressure'];
-        $user_details_arr = ['Name' => $name,
-                                  'UID' => $uid,
-                                  'Gender' => $gender,
-                                  'DateOfBirth' => $dob,
-                                  'Phone' => $phone,
-                                  'Address' => $address,
-                                  'State' => $stat,
-                                  'Weight' => $weight,
-                                  'Height' => $height,
-                                  'HeightMeasure' => $height_measurement,
-                                  'BloodGroup' => $blood_group,
-                                  'BMI' => $bmi,
-                                  'BloodPressure' => $bloodpressure,
-                                  'PhotoPath' => $uploaded_filename,
-                              ];
+        $user_details_arr = [
+            'Name' => $name,
+            'UID' => $uid,
+            'Gender' => $gender,
+            'DateOfBirth' => $dob,
+            'Phone' => $phone,
+            'Address' => $address,
+            'State' => $stat,
+            'Weight' => $weight,
+            'Height' => $height,
+            'HeightMeasure' => $height_measurement,
+            'BloodGroup' => $blood_group,
+            'BMI' => $bmi,
+            'BloodPressure' => $bloodpressure,
+            'PhotoPath' => $uploaded_filename,
+        ];
 
         $this->mongodb->where(['UserId' => mongo_id($user_id)]);
         $this->mongodb->set($user_details_arr);
@@ -72,7 +73,24 @@ class Summary_model extends CI_Model
         $document = $_FILES['UpdProfilePhoto']['name'];
         $dot_index = strrpos($document, '.');
         $file_type = substr($document, $dot_index + 1);
-        if ($file_type == 'pdf' || $file_type == 'doc' || $file_type == 'ppt' || $file_type == 'xls' || $file_type == 'txt' || $file_type == 'pptx' || $file_type == 'xlsx' || $file_type == 'docx' || $file_type == 'jpg' || $file_type == 'JPG' || $file_type == 'jpeg' || $file_type == 'JPEG' || $file_type == 'gif' || $file_type == 'png' || $file_type == '' || $file_type == 'PNG') {
+        if (
+            $file_type == 'pdf' ||
+            $file_type == 'doc' ||
+            $file_type == 'ppt' ||
+            $file_type == 'xls' ||
+            $file_type == 'txt' ||
+            $file_type == 'pptx' ||
+            $file_type == 'xlsx' ||
+            $file_type == 'docx' ||
+            $file_type == 'jpg' ||
+            $file_type == 'JPG' ||
+            $file_type == 'jpeg' ||
+            $file_type == 'JPEG' ||
+            $file_type == 'gif' ||
+            $file_type == 'png' ||
+            $file_type == '' ||
+            $file_type == 'PNG'
+        ) {
             return $file_type;
         } else {
             return '';

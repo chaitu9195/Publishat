@@ -5,7 +5,7 @@
     $('#health').removeClass('active');
     $('#financial').removeClass('active');
     $('#legal').removeClass('active');
-	$('#<?=$moduleName;?>').addClass('active');
+	$('#<?= $moduleName ?>').addClass('active');
 
 function pickCalender(id){
 	$( "#"+id ).datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true,}).datepicker("show");
@@ -47,8 +47,12 @@ $("#documentForm").submit(function ( e ) {
 				$("#load").html('Updated <i class="fa fa-check"></i>');
 				$("#msg1").html("Successfully Updated. Redirecting <i class='fa fa-spinner fa-spin'></i>");
 				$("#success").show();
-			      setTimeout(function(){ sub_view('<?=$main_record_type_id;?>','<?=$record_type_id;?>','<?=$data['RecordId']?>','<?=$data['ParentRecordId']?>','<?=strtolower($moduleName);?>') },3000);
-			      setTimeout(function(){ sub_view('<?=$main_record_type_id;?>','<?=$record_type_id;?>','<?=$data['RecordId']?>','<?=$data['ParentRecordId']?>','<?=strtolower($moduleName);?>') },3000);
+			      setTimeout(function(){ sub_view('<?= $main_record_type_id ?>','<?= $record_type_id ?>','<?= $data[
+    'RecordId'
+] ?>','<?= $data['ParentRecordId'] ?>','<?= strtolower($moduleName) ?>') },3000);
+			      setTimeout(function(){ sub_view('<?= $main_record_type_id ?>','<?= $record_type_id ?>','<?= $data[
+    'RecordId'
+] ?>','<?= $data['ParentRecordId'] ?>','<?= strtolower($moduleName) ?>') },3000);
 				}
 			});
 		
@@ -86,7 +90,7 @@ $('#view_file,.folder_img').click(function() {
 $('#uploadFile').change(function(){ 
      //   var file = $(this).attr("id");
     //fileutils(file);
-	var Upgraded = '<?=$Upgraded;?>';
+	var Upgraded = '<?= $Upgraded ?>';
    if($("#uploadFile").val() != "" && fileutils("uploadFile", Upgraded) != "success" ){ 
       fileutils("uploadFile", Upgraded); 
    } else {
@@ -125,7 +129,7 @@ $("#hide_error").click(function(){
        $("#error").hide();
 });
 
-document.title="New Record | <?=$tabName;?> | <?=ucfirst($moduleName);?> | Publishat";
+document.title="New Record | <?= $tabName ?> | <?= ucfirst($moduleName) ?> | Publishat";
 $('.doc_id').click(function(e){
 	e.stopPropagation();
 	

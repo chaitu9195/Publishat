@@ -18,7 +18,11 @@ class Signup_model extends CI_Model
         $prime_multiplier = 379;
         $qry = $this->db->query('SELECT * FROM ' . TBL_USER . " WHERE Email = '$email'");
         if ($qry->num_rows() == 0) {
-            $this->db->query('INSERT INTO ' . TBL_USER . " (Name, Email, Password, Gender, DateOfBirth, EmailVerified, Status, JoinedOn,UserLoginType) VALUES ('$name', '$email', '$password', '$gender', '$dob', 'N', 'Inactive', '$joined_on','1')");
+            $this->db->query(
+                'INSERT INTO ' .
+                    TBL_USER .
+                    " (Name, Email, Password, Gender, DateOfBirth, EmailVerified, Status, JoinedOn,UserLoginType) VALUES ('$name', '$email', '$password', '$gender', '$dob', 'N', 'Inactive', '$joined_on','1')",
+            );
 
             $user_id = $this->db->insert_id();
 
@@ -28,7 +32,7 @@ class Signup_model extends CI_Model
             $subject = 'Publishat.com Account Verification';
 
             $email_body = $this->read_file($email_template);
-            $vc = ($user_id * $prime_multiplier) . '!' . $password;
+            $vc = $user_id * $prime_multiplier . '!' . $password;
             $email_body = str_replace('##name##', $fullname, $email_body);
             $email_body = str_replace('##vc##', $vc, $email_body);
             $this->phpmail_nocc($from_email, $to_email, $subject, $email_body, 'html');
@@ -45,7 +49,11 @@ class Signup_model extends CI_Model
         $country_code = $params['country_code'];
         $phone = $params['phone'];
         $user_id = $this->session->userdata('user_id');
-        $qry = $this->db->query('UPDATE ' . TBL_USER . " SET DateOfBirth = '$dob', Fbid = '$fbid', Country = '$country_code', Phone = '$phone' WHERE UserId = '$user_id'");
+        $qry = $this->db->query(
+            'UPDATE ' .
+                TBL_USER .
+                " SET DateOfBirth = '$dob', Fbid = '$fbid', Country = '$country_code', Phone = '$phone' WHERE UserId = '$user_id'",
+        );
         if ($qry) {
             return ['status' => 'success'];
         }
@@ -66,16 +74,18 @@ class Signup_model extends CI_Model
     public function phpmail_nocc($from_email, $to_email, $subject, $message, $type = 'html')
     {
         if ($type == 'html') {
-            $mailheaders = "From:$from_email\r\n" .
-                              "MIME-Version:1.0\r\n" .
-                              "Content-type:text/html\r\n" .
-                              "Content-Transfer-Encoding:7bit\n" .
-                              "Reply-To: $from_email\n";
+            $mailheaders =
+                "From:$from_email\r\n" .
+                "MIME-Version:1.0\r\n" .
+                "Content-type:text/html\r\n" .
+                "Content-Transfer-Encoding:7bit\n" .
+                "Reply-To: $from_email\n";
         } else {
-            $mailheaders = "From:$from_email\r\nMIME-Version: 1.0\r\nContent-type:" .
-                           "text/plain\r\nContent-Transfer-" .
-                           "Encoding: 7bit\n" .
-                           "Reply-To: $from_email\n";
+            $mailheaders =
+                "From:$from_email\r\nMIME-Version: 1.0\r\nContent-type:" .
+                "text/plain\r\nContent-Transfer-" .
+                "Encoding: 7bit\n" .
+                "Reply-To: $from_email\n";
         }
         mail($to_email, $subject, $message, $mailheaders);
     }

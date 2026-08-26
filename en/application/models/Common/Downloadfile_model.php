@@ -7,7 +7,7 @@ class Downloadfile_model extends CI_Model
     public function download($params)
     {
         $label = '';
-        $name = 'povendor' ;
+        $name = 'povendor';
         $user_id = $this->session->userdata('user_id');
         $filename = FCPATH . 'pwdocs/' . $user_id . '/' . $params;
         $file_extension = strtolower(substr(strrchr($filename, '.'), 1));
@@ -33,7 +33,7 @@ class Downloadfile_model extends CI_Model
     public function download_file($params, $recordid)
     {
         $label = '';
-        $name = 'povendor' ;
+        $name = 'povendor';
         $user_id = $this->session->userdata('user_id');
         $qry = $this->db->query("SELECT * FROM Projects where RecordId = '$recordid'");
         $result = $qry->result_array();
@@ -67,45 +67,65 @@ class Downloadfile_model extends CI_Model
     {
         $file_extension = strtolower($file_extension);
         switch ($file_extension) {
-            case 'pdf':  $ctype = 'application/pdf';
+            case 'pdf':
+                $ctype = 'application/pdf';
                 break;
-            case 'exe':  $ctype = 'application/octet-stream';
+            case 'exe':
+                $ctype = 'application/octet-stream';
                 break;
-            case 'zip':  $ctype = 'application/x-zip-compressed';
+            case 'zip':
+                $ctype = 'application/x-zip-compressed';
                 break;
-            case 'doc':  $ctype = 'application/msword';
+            case 'doc':
+                $ctype = 'application/msword';
                 break;
-            case 'doc':  $ctype = 'application/doc';
+            case 'doc':
+                $ctype = 'application/doc';
                 break;
-            case 'xls':  $ctype = 'application/vnd.ms-excel';
+            case 'xls':
+                $ctype = 'application/vnd.ms-excel';
                 break;
-            case 'ppt':  $ctype = 'application/vnd.ms-powerpoint';
+            case 'ppt':
+                $ctype = 'application/vnd.ms-powerpoint';
                 break;
-            case 'gif':  $ctype = 'image/gif';
+            case 'gif':
+                $ctype = 'image/gif';
                 break;
-            case 'png':  $ctype = 'image/png';
+            case 'png':
+                $ctype = 'image/png';
                 break;
-            case 'jpe':  $ctype = 'image/jpg';
+            case 'jpe':
+                $ctype = 'image/jpg';
                 break;
-            case 'jpeg': $ctype = 'image/jpg';
+            case 'jpeg':
+                $ctype = 'image/jpg';
                 break;
-            case 'jpg':  $ctype = 'image/jpg';
+            case 'jpg':
+                $ctype = 'image/jpg';
                 break;
-            case 'docx': $ctype = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+            case 'docx':
+                $ctype = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
                 break;
-            case 'xlsx': $ctype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            case 'xlsx':
+                $ctype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
                 break;
-            case 'txt':  $ctype = 'text/plain';
+            case 'txt':
+                $ctype = 'text/plain';
                 break;
-            case 'xps':  $ctype = 'application/vnd.ms-xpsdocument';
+            case 'xps':
+                $ctype = 'application/vnd.ms-xpsdocument';
                 break;
-            case 'rar':  $ctype = 'application/x-rar-compressed';
+            case 'rar':
+                $ctype = 'application/x-rar-compressed';
                 break;
-            case 'ppt':  $ctype = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+            case 'ppt':
+                $ctype = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
                 break;
-            case 'pptx': $ctype = 'application/vnd.ms-powerpoint';
+            case 'pptx':
+                $ctype = 'application/vnd.ms-powerpoint';
                 break;
-            default: $ctype = 'application/force-download';
+            default:
+                $ctype = 'application/force-download';
         }
         return $ctype;
     }
@@ -137,7 +157,7 @@ class Downloadfile_model extends CI_Model
             $path = $filedetails['DocumentPath'];
             $uploadedFrom = $filedetails['UploadedFrom'];
 
-            $filename = FCPATH . ltrim((string)$path, '/');
+            $filename = FCPATH . ltrim((string) $path, '/');
             $ctype = $this->get_mime($file_extension);
         }
         if (empty($path)) {
@@ -157,7 +177,7 @@ class Downloadfile_model extends CI_Model
             ob_clean();
             flush();
             echo $file->getBytes();
-            die;
+            die();
         } else {
             if (file_exists($filename)) {
                 header('Content-Description: File Transfer');

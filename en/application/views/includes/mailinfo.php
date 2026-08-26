@@ -1,6 +1,6 @@
 <table class="table">
-	<tr>
-		<td>data</td>
-	</tr>
+    <tr>
+        <td>data</td>
+    </tr>
 
 </table>

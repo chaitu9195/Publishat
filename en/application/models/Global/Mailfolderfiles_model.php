@@ -29,14 +29,20 @@ class Mailfolderfiles_model extends CI_Model
             $user_fullname = $userData[0]['Name'];
             $user_phone = $userData[0]['Phone'];
             if (count($document_ids ?? []) > 0) {
-                if ($user_type == 'undefined' || $group == 'undefined' || $category == 'undefined' || $Sub_Category == 'undefined' || $Issue_Status == 'undefined') {
+                if (
+                    $user_type == 'undefined' ||
+                    $group == 'undefined' ||
+                    $category == 'undefined' ||
+                    $Sub_Category == 'undefined' ||
+                    $Issue_Status == 'undefined'
+                ) {
                     $email_content = header_top;
                 } else {
                     $email_content = header_top_user_details;
                 }
                 $table_bg_color = '#99CCCC';
                 foreach ($document_ids as $document_id) {
-                    $table_bg_color = ($table_bg_color == '#CCCC99') ? '#99CCCC' : '#99CCCC';
+                    $table_bg_color = $table_bg_color == '#CCCC99' ? '#99CCCC' : '#99CCCC';
                     $email_content .= $this->get_record_table_html($document_id, $addtext, $table_bg_color, '#FFFFFF');
                 }
                 $email_content .= header_bottom;
@@ -61,25 +67,26 @@ class Mailfolderfiles_model extends CI_Model
                             $mailStatus = $this->sendcartmail($from_email, trim($out_email), $subject, $email_content);
                             $status_code = 1;
                         }
-                        $eventdata = ['UserId' => mongo_id($user_id),
-                     'EventType' => 'Shared',
-                     'Module' => $user_fullname,
-                     'Receiver' => $email_list,
-                     'Date' => TimeStamp,
-                  ];
+                        $eventdata = [
+                            'UserId' => mongo_id($user_id),
+                            'EventType' => 'Shared',
+                            'Module' => $user_fullname,
+                            'Receiver' => $email_list,
+                            'Date' => TimeStamp,
+                        ];
                         $qry = $this->mongodb->insert(TBL_EVENTS, $eventdata);
                     }
                 }
                 if ($status_code == 1) {
                     $status_message = 'Emails have been sent with the Files';
-                    return ['status' => 'success','data' => $status_message];
+                    return ['status' => 'success', 'data' => $status_message];
                 } else {
                     $status_message = 'Error: No emails have been sent. Please try again. ';
-                    return ['status' => 'failed','data' => $status_message];
+                    return ['status' => 'failed', 'data' => $status_message];
                 }
             }
         } else {
-            return ['status' => 'failed','data' => 'invalid user'];
+            return ['status' => 'failed', 'data' => 'invalid user'];
         }
     }
 
@@ -124,8 +131,16 @@ class Mailfolderfiles_model extends CI_Model
                 $email_content = header_top;
                 $table_bg_color = '#99CCCC';
                 foreach ($document_ids as $document_id) {
-                    $table_bg_color = ($table_bg_color == '#CCCC99') ? '#99CCCC' : '#99CCCC';
-                    $email_content .= $this->get_bookmark_data_html($document_id, $addtext, $module, $submodule, $issues, $table_bg_color, '#FFFFFF');
+                    $table_bg_color = $table_bg_color == '#CCCC99' ? '#99CCCC' : '#99CCCC';
+                    $email_content .= $this->get_bookmark_data_html(
+                        $document_id,
+                        $addtext,
+                        $module,
+                        $submodule,
+                        $issues,
+                        $table_bg_color,
+                        '#FFFFFF',
+                    );
                 }
                 $email_content .= header_bottom;
                 $header_title = str_replace('Publishat.com | ', '', $subject);
@@ -151,14 +166,14 @@ class Mailfolderfiles_model extends CI_Model
                 }
                 if ($status_code == 1) {
                     $status_message = 'Emails have been sent with the Files';
-                    return ['status' => 'success','data' => $status_message];
+                    return ['status' => 'success', 'data' => $status_message];
                 } else {
                     $status_message = 'Error: No emails have been sent. Please try again. ';
-                    return ['status' => 'failed','data' => $status_message];
+                    return ['status' => 'failed', 'data' => $status_message];
                 }
             }
         } else {
-            return ['status' => 'failed','data' => 'invalid user'];
+            return ['status' => 'failed', 'data' => 'invalid user'];
         }
     }
 
@@ -213,7 +228,8 @@ class Mailfolderfiles_model extends CI_Model
             $documenticon = $this->get_document_icon(strtolower($file_type));
             $doc_icon = 'https://www.publishat.com/' . $documenticon;
 
-            $doc_link_url = 'https://www.publishat.com/digital/en/web/docviewer?fid=' . $id . '&type=' . strtolower($ext);
+            $doc_link_url =
+                'https://www.publishat.com/digital/en/web/docviewer?fid=' . $id . '&type=' . strtolower($ext);
             $templink = "<a target='_blank' href='$doc_link_url'><img src='$doc_icon' width='20' height='20' border='0' align='absmiddle' /></a>&nbsp;
 	            <a target='_blank' href='$doc_link_url'>$filename</a>";
         } else {
@@ -238,14 +254,14 @@ class Mailfolderfiles_model extends CI_Model
     {
         $this->load->library('email');
         $config = [
-          'protocol' => protocol,
-          'smtp_host' => smtp_host,
-          'smtp_port' => smtp_port,
-          'smtp_user' => smtp_user,
-          'smtp_pass' => smtp_pass,
-          'mailpath' => mailpath,
-          'charset' => charset,
-          'wordwrap' => wordwrap,
+            'protocol' => protocol,
+            'smtp_host' => smtp_host,
+            'smtp_port' => smtp_port,
+            'smtp_user' => smtp_user,
+            'smtp_pass' => smtp_pass,
+            'mailpath' => mailpath,
+            'charset' => charset,
+            'wordwrap' => wordwrap,
         ];
 
         $this->email->initialize($config);
@@ -271,35 +287,50 @@ class Mailfolderfiles_model extends CI_Model
     {
         $file_type = strtolower($file_type);
         switch ($file_type) {
-            case 'pdf': $icon = 'graphics/icon_pdf.png';
+            case 'pdf':
+                $icon = 'graphics/icon_pdf.png';
                 break;
-            case 'doc': $icon = 'graphics/icon_doc.png';
+            case 'doc':
+                $icon = 'graphics/icon_doc.png';
                 break;
-            case 'docx': $icon = 'graphics/icon_doc.png';
+            case 'docx':
+                $icon = 'graphics/icon_doc.png';
                 break;
-            case 'jpg': $icon = 'graphics/icon_jpg.png';
+            case 'jpg':
+                $icon = 'graphics/icon_jpg.png';
                 break;
-            case 'jpe': $icon = 'graphics/icon_jpg.png';
+            case 'jpe':
+                $icon = 'graphics/icon_jpg.png';
                 break;
-            case 'jpeg': $icon = 'graphics/icon_jpg.png';
+            case 'jpeg':
+                $icon = 'graphics/icon_jpg.png';
                 break;
-            case 'gif': $icon = 'graphics/icon_gif.png';
+            case 'gif':
+                $icon = 'graphics/icon_gif.png';
                 break;
-            case 'png': $icon = 'graphics/icon_png.png';
+            case 'png':
+                $icon = 'graphics/icon_png.png';
                 break;
-            case 'txt': $icon = 'graphics/icon_txt.png';
+            case 'txt':
+                $icon = 'graphics/icon_txt.png';
                 break;
-            case 'xls': $icon = 'graphics/icon_xls.png';
+            case 'xls':
+                $icon = 'graphics/icon_xls.png';
                 break;
-            case 'xlsx': $icon = 'graphics/icon_xls.png';
+            case 'xlsx':
+                $icon = 'graphics/icon_xls.png';
                 break;
-            case 'xps': $icon = 'graphics/icon_xps.png';
+            case 'xps':
+                $icon = 'graphics/icon_xps.png';
                 break;
-            case 'zip': $icon = 'graphics/icon_zip.png';
+            case 'zip':
+                $icon = 'graphics/icon_zip.png';
                 break;
-            case 'rar': $icon = 'graphics/icon_rar.png';
+            case 'rar':
+                $icon = 'graphics/icon_rar.png';
                 break;
-            default: $icon = 'graphics/icon_pdf.png';
+            default:
+                $icon = 'graphics/icon_pdf.png';
                 break;
         }
         return $icon;
@@ -320,7 +351,7 @@ class Mailfolderfiles_model extends CI_Model
     public function safe_b64encode($string)
     {
         $data = base64_encode($string);
-        $data = str_replace(['+','/','='], ['-','_',''], $data);
+        $data = str_replace(['+', '/', '='], ['-', '_', ''], $data);
         return $data;
     }
     public function get_file_extension($file_name)

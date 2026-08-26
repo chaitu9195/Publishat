@@ -9,7 +9,12 @@ class Folder_model extends CI_Model
         $user_id = $this->session->userdata('user_id');
         $typeId = $params['typeId'];
         $this->mongodb->order_by(['TS' => 'DESC']);
-        $this->mongodb->where(['UserId' => mongo_id($user_id), 'RecordTypeId' => $typeId, 'ParentId' => '', 'UploadedFrom' => 'Folder']);
+        $this->mongodb->where([
+            'UserId' => mongo_id($user_id),
+            'RecordTypeId' => $typeId,
+            'ParentId' => '',
+            'UploadedFrom' => 'Folder',
+        ]);
         $qry = $this->mongodb->get('fs.files');
         if (count($qry ?? []) > 0) {
             foreach ($qry as $file) {
@@ -42,7 +47,9 @@ class Folder_model extends CI_Model
 
     public function uploadfile($params)
     {
-        $user_id = $this->session->userdata('user_id') ? mongo_id($this->session->userdata('user_id')) : mongo_id($params['UserId']);
+        $user_id = $this->session->userdata('user_id')
+            ? mongo_id($this->session->userdata('user_id'))
+            : mongo_id($params['UserId']);
         $record_type_id = $params['typeId'];
         $folder_id = $params['foldid'];
         if ($folder_id) {
@@ -56,7 +63,15 @@ class Folder_model extends CI_Model
         if (count($_FILES['uploadedfile']['name']) > 0) {
             $mongo_connection = new MongoClient();
             $gridfs = $mongo_connection->selectDB('publisha_dbase')->getGridFS();
-            $gridfs->storeUpload('uploadedfile', ['UserId' => $user_id, 'RecordTypeId' => $record_type_id, 'FolderName' => $folder_name, 'ParentId' => $folder_id,'Type' => 'File', 'TS' => $date, 'UploadedFrom' => 'Folder']);
+            $gridfs->storeUpload('uploadedfile', [
+                'UserId' => $user_id,
+                'RecordTypeId' => $record_type_id,
+                'FolderName' => $folder_name,
+                'ParentId' => $folder_id,
+                'Type' => 'File',
+                'TS' => $date,
+                'UploadedFrom' => 'Folder',
+            ]);
             $status = 'success';
         } else {
             $status = 'failed';
@@ -77,7 +92,11 @@ class Folder_model extends CI_Model
                     $rec = $qry;
                     $filetype = $rec[0]['Type'];
                     if ($filetype == 'Folder') {
-                        $this->mongodb->where(['RecordTypeId' => $typeId,'UserId' => mongo_id($user_id),'ParentId' => mongo_id($id)]);
+                        $this->mongodb->where([
+                            'RecordTypeId' => $typeId,
+                            'UserId' => mongo_id($user_id),
+                            'ParentId' => mongo_id($id),
+                        ]);
                         $qry = $this->mongodb->get('fs.files');
                         if (count($qry ?? []) > 0) {
                             $status = 'FolderData';
@@ -137,13 +156,26 @@ class Folder_model extends CI_Model
         if ($folder_id) {
             $folder_id = mongo_id($folder_id);
         }
-        $this->mongodb->where(['FolderName' => $folder_name, 'ParentId' => $folder_id, 'UserId' => mongo_id($user_id), 'Type' => 'Folder', 'RecordTypeId' => $record_type_id]);
+        $this->mongodb->where([
+            'FolderName' => $folder_name,
+            'ParentId' => $folder_id,
+            'UserId' => mongo_id($user_id),
+            'Type' => 'Folder',
+            'RecordTypeId' => $record_type_id,
+        ]);
         $qry = $this->mongodb->get('fs.files');
         if (count($qry ?? []) == 0) {
-            $folder_data = ['UserId' => mongo_id($user_id), 'RecordTypeId' => $record_type_id, 'FolderName' => $folder_name, 'Type' => 'Folder', 'ParentId' => $folder_id,
-            'UploadedFrom' => 'Folder', 'TS' => $date];
+            $folder_data = [
+                'UserId' => mongo_id($user_id),
+                'RecordTypeId' => $record_type_id,
+                'FolderName' => $folder_name,
+                'Type' => 'Folder',
+                'ParentId' => $folder_id,
+                'UploadedFrom' => 'Folder',
+                'TS' => $date,
+            ];
             $res = $this->mongodb->insert('fs.files', $folder_data);
-            return ['status' => 'success' , 'typeId' => $record_type_id];
+            return ['status' => 'success', 'typeId' => $record_type_id];
         } else {
             return ['status' => 'failure'];
         }
@@ -157,7 +189,12 @@ class Folder_model extends CI_Model
             $fid = mongo_id($fid);
         }
         $this->mongodb->order_by(['TS' => 'DESC']);
-        $this->mongodb->where(['UserId' => mongo_id($user_id), 'ParentId' => $fid, 'RecordTypeId' => $type_id, 'UploadedFrom' => 'Folder']);
+        $this->mongodb->where([
+            'UserId' => mongo_id($user_id),
+            'ParentId' => $fid,
+            'RecordTypeId' => $type_id,
+            'UploadedFrom' => 'Folder',
+        ]);
         $qry = $this->mongodb->get('fs.files');
         foreach ($qry as $folderfile) {
             $ff[] = $folderfile;
@@ -176,7 +213,7 @@ class Folder_model extends CI_Model
         }
         $ff = $this->msort($ff, ['Type', 'TS']);
         $data = $this->msort($data, ['Type', 'TS'], SORT_REGULAR, SORT_ASC);
-        return ['ff' => $ff, 'fdetails' => $data,'typeId' => $type_id,'module' => $module];
+        return ['ff' => $ff, 'fdetails' => $data, 'typeId' => $type_id, 'module' => $module];
     }
     public function getmapsdata()
     {
@@ -246,7 +283,7 @@ class Folder_model extends CI_Model
     {
         $location = $params['location'];
         $regex = new MongoRegex("/$location/i");
-        $where = ['$or' => [['address' => $regex],['name' => new MongoRegex("/$location/i")]]];
+        $where = ['$or' => [['address' => $regex], ['name' => new MongoRegex("/$location/i")]]];
 
         $m = new MongoClient();
         $db = $m->jobs;
@@ -257,7 +294,7 @@ class Folder_model extends CI_Model
             $data[] = $result;
             $loc[] = $result['name'];
         }
-        return ['data' => $data,'location' => $loc];
+        return ['data' => $data, 'location' => $loc];
     }
 
     public function document_validation($user_id)
@@ -266,9 +303,12 @@ class Folder_model extends CI_Model
         if (!empty($_FILES['uploadImage']['name'])) {
             $uploaded_filename = $this->upload_thumbnail($user_id);
             if (!$uploaded_filename) {
-                return ['status' => 'failed','data' => 'File size is too high. Document should not be more than ' . max_document_file_size_text];
+                return [
+                    'status' => 'failed',
+                    'data' => 'File size is too high. Document should not be more than ' . max_document_file_size_text,
+                ];
             }
-            $docs = ['ext' => $file_extension,'filename' => $uploaded_filename];
+            $docs = ['ext' => $file_extension, 'filename' => $uploaded_filename];
         }
         return $docs;
     }
@@ -277,7 +317,24 @@ class Folder_model extends CI_Model
         $document = $_FILES['uploadImage']['name'];
         $dot_index = strrpos($document, '.');
         $file_type = substr($document, $dot_index + 1);
-        if ($file_type == 'pdf' || $file_type == 'doc' || $file_type == 'ppt' || $file_type == 'xls' || $file_type == 'txt' || $file_type == 'pptx' || $file_type == 'xlsx' || $file_type == 'docx' || $file_type == 'jpg' || $file_type == 'JPG' || $file_type == 'jpeg' || $file_type == 'JPEG' || $file_type == 'gif' || $file_type == 'png' || $file_type == '' || $file_type == 'PNG') {
+        if (
+            $file_type == 'pdf' ||
+            $file_type == 'doc' ||
+            $file_type == 'ppt' ||
+            $file_type == 'xls' ||
+            $file_type == 'txt' ||
+            $file_type == 'pptx' ||
+            $file_type == 'xlsx' ||
+            $file_type == 'docx' ||
+            $file_type == 'jpg' ||
+            $file_type == 'JPG' ||
+            $file_type == 'jpeg' ||
+            $file_type == 'JPEG' ||
+            $file_type == 'gif' ||
+            $file_type == 'png' ||
+            $file_type == '' ||
+            $file_type == 'PNG'
+        ) {
             return $file_type;
         } else {
             return false;
