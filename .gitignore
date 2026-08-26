@@ -27,6 +27,9 @@ en/pwdocs/
 converted.pdf
 print.doc
 
+# Local tooling binaries (config .php-cs-fixer.dist.php is tracked; phar is not)
+tools/php-cs-fixer.phar
+
 # OS / editor cruft
 Thumbs.db
 .DS_Store
