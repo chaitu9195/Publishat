@@ -33,15 +33,15 @@
   	<table class="table table-responsive table-stripped" id="log_data">
   		<thead>
   			<tr>
-                          <?php  if($e_name != '' && $e_name == "All"){ ?>
+                          <?php  if($e_name != '' && $e_name == 'All'){ ?>
   			   <th>Event Type</th>
                           <?php } ?>
   			   <th>Module</th>
 			   <th>Record Type</th>	
 		     	   <th>Record Name</th>
-				    <?php 
-					
-					if($e_name == "Shared" || $e_name == "All"){?>
+				    <?php
+
+					if($e_name == 'Shared' || $e_name == 'All'){?>
 				   <th>Email</th>
 					<?php } ?>
                            <th>Date</th>
@@ -52,17 +52,17 @@
 					$receiver = $event['Receiver'];
 					$recid = $event['_id'];
 					$rest = substr("$receiver", 0, 10);
-					 $name_drivers = str_replace(",", "<br /><br/>", $receiver);
+					 $name_drivers = str_replace(',', '<br /><br/>', $receiver);
 		 ?>
   	       		<tr>
-                         <?php  if($e_name != '' && $e_name == "All"){ ?>
+                         <?php  if($e_name != '' && $e_name == 'All'){ ?>
   	       		 <td><?=$event['EventType']?> </td>
                          <?php } ?>
   	       		 <td><?=$event['Module']?> </td>
   	       		 <td><?=$event['RecordType']?> </td>
                          <td><?=$event['RecordName']?> </td>
-						 <?php 
-					if($e_name == "Shared" || $e_name == "All"){?>
+						 <?php
+					if($e_name == 'Shared' || $e_name == 'All'){?>
 				   <td><span style="cursor:pointer;" data-toggle="modal" data-target="#emaillist<?=$recid;?>"><?=$rest;?>
 				   <?php if(!empty($receiver)){?>...<?php } ?></span></td>
 					<?php } ?>

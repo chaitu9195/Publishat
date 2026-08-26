@@ -1,5 +1,5 @@
 <?php
-include("includes/header_index_view.php");
+include('includes/header_index_view.php');
 ?>
 <style>
 p, li{
@@ -68,5 +68,5 @@ p, li{
         </div>
 
 <?php
-include("includes/footer_index_view.php");
+include('includes/footer_index_view.php');
 ?>

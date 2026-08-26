@@ -14,17 +14,17 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php if($PrintHistory){ 
+		<?php if($PrintHistory){
 			foreach($PrintHistory as $rowData){ ?>
 			<tr>
-				<td><?php echo $rowData["datetime"]; ?></td>
-				<td><?php echo $rowData["jobid"]; ?></td>
-				<td><?php echo $rowData["Nos"]; ?></td>
-				<td><?php echo $rowData["EachCopyPrice"]; ?></td>
-				<td><?php echo $rowData["amount"]; ?></td>
-				<td><?php echo $rowData["Mode"]; ?></td>
-				<td><?php echo $rowData["status"]; ?></td>
-				<td><?php echo $rowData["DelType"]; ?></td>
+				<td><?php echo $rowData['datetime']; ?></td>
+				<td><?php echo $rowData['jobid']; ?></td>
+				<td><?php echo $rowData['Nos']; ?></td>
+				<td><?php echo $rowData['EachCopyPrice']; ?></td>
+				<td><?php echo $rowData['amount']; ?></td>
+				<td><?php echo $rowData['Mode']; ?></td>
+				<td><?php echo $rowData['status']; ?></td>
+				<td><?php echo $rowData['DelType']; ?></td>
 			</tr>
 		<?php } } else { ?>
 			<tr>

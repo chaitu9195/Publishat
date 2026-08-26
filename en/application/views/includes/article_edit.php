@@ -31,12 +31,12 @@ height: 46px ;
 </style>
 </head>
 <body>
-<?php 
-foreach($data as $articleinfo){ 
-$id = $articleinfo['id']; 
+<?php
+foreach($data as $articleinfo){
+$id = $articleinfo['id'];
 $userid = $articleinfo['UserId'];
 $imagepath = $articleinfo['ArticleImage'];
-$articledes= $articleinfo['ArticleDescription'];
+$articledes = $articleinfo['ArticleDescription'];
 $art_heading = $articleinfo['ArticleHeading'];
 $art_url = $articleinfo['ArticleUrl'];
 

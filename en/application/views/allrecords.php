@@ -1,16 +1,16 @@
 <?php
       // Coerce controller-supplied values to arrays so count()/for loops below
       // never receive null (fatal on PHP 8).
-      $data = (isset($data) && is_array($data)) ? $data : array();
-      $shared_result = (isset($shared_result) && is_array($shared_result)) ? $shared_result : array();
+      $data = (isset($data) && is_array($data)) ? $data : [];
+      $shared_result = (isset($shared_result) && is_array($shared_result)) ? $shared_result : [];
       $constants = get_defined_constants();
       $headers = json_decode($constants[$tableName], true);
-	  $key1 = $headers["headers"]["key1"];
-	  $key2 = $headers["headers"]["key2"];
-	  $key3 = $headers["headers"]["key3"];
-	  
-	  if(strtolower($moduleName) == "medical"){
-		  $modName = "health";
+	  $key1 = $headers['headers']['key1'];
+	  $key2 = $headers['headers']['key2'];
+	  $key3 = $headers['headers']['key3'];
+
+	  if(strtolower($moduleName) == 'medical'){
+		  $modName = 'health';
 	  }
 	  else{
 		  $modName = strtolower($moduleName);
@@ -35,8 +35,8 @@
 	}
 	if($recTypeId == 16){
 		$sub_record_type_id = 45;
-	}	
-	  
+	}
+
 ?>
 <input type="hidden" name="page" id="page_num" value="1">
 <input type="hidden" name="rec_id" id="rec_id" value="<?=$recTypeId;?>">
@@ -83,8 +83,8 @@
                         <!--<th  class='col-sm-1 hidden-xs'></th>-->
 	     </thead>
 	     <tbody id="searchable_data"> 
-                 <?php  for($i=0;$i<=count($data ?? array())-1;$i++){ ?>
-                <tr onclick='displayView("<?=$recTypeId;?>","<?=$data[$i]['RecordId'];?>","<?=strtolower($moduleName);?>","<?=$sub_record_type_id;?>")' id='<?=$data[$i]["RecordId"];?>'>
+                 <?php  for($i = 0;$i <= count($data ?? []) - 1;$i++){ ?>
+                <tr onclick='displayView("<?=$recTypeId;?>","<?=$data[$i]['RecordId'];?>","<?=strtolower($moduleName);?>","<?=$sub_record_type_id;?>")' id='<?=$data[$i]['RecordId'];?>'>
                  <td><?=$data[$i][$key1];?></td>
                  <td><?=$data[$i][$key2];?></td>
                  <td><?=$data[$i][$key3]?></td>
@@ -97,7 +97,7 @@
 	     </tbody>
 	 </table>
 	 <?php
-if(count($shared_result ?? array())>0 && $recTypeId == 16){
+if(count($shared_result ?? []) > 0 && $recTypeId == 16){
 ?>
 <div class="col-sm-12 collaboration"><span>Collaboration Data</span></div>
 	  <table class="table table-responsive table-striped table-hover">
@@ -110,8 +110,8 @@ if(count($shared_result ?? array())>0 && $recTypeId == 16){
                   <!--<th  class='col-sm-1 hidden-xs'></th>-->
 	    </thead>
 	     <tbody id="searchable_data">
-                 <?php  for($i=0;$i<=count($shared_result ?? array())-1;$i++){ ?>
-				 <tr onclick='displayView("<?=$recTypeId;?>","<?=$shared_result[$i]['RecordId'];?>","<?=strtolower($moduleName);?>","<?=$sub_record_type_id;?>")' id='<?=$shared_result[$i]["RecordId"];?>'>
+                 <?php  for($i = 0;$i <= count($shared_result ?? []) - 1;$i++){ ?>
+				 <tr onclick='displayView("<?=$recTypeId;?>","<?=$shared_result[$i]['RecordId'];?>","<?=strtolower($moduleName);?>","<?=$sub_record_type_id;?>")' id='<?=$shared_result[$i]['RecordId'];?>'>
                  <td><?=$shared_result[$i][$key1];?></td>
                  <td><?=$shared_result[$i][$key2];?> </td>
                  <td><?=$shared_result[$i][$key3];?></td>
@@ -150,7 +150,7 @@ id = $(this).closest('tr').attr('id');
 $('#share'+id).hide();
 }); 
 $(document).ready(function () {
-$("#count1,#mcount1").html("(<?=count($data ?? array());?>)");
+$("#count1,#mcount1").html("(<?=count($data ?? []);?>)");
     (function ($) {
 
         $('#filter_table').keyup(function () {

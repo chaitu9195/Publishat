@@ -27,18 +27,18 @@ $(document).ready(function() {
 });
 </script>
 <?php
-$images =array("jpg","png","jpeg","bmp","gif");
-$path = base_url()."web/viewfile?fid=$fid";
+$images = ['jpg','png','jpeg','bmp','gif'];
+$path = base_url() . "web/viewfile?fid=$fid";
 ?>
 
 <div id="image_content">
 <?php
 
-if(in_array(strtolower($type), $images ?? array())){
+if(in_array(strtolower($type), $images ?? [])){
 ?>
 
    <img src="<?=$path;?>" style="object-fit: cover; max-height: 100vh">
-<?php } else if(strtolower($type) == "pdf"){ ?>
+<?php } else if(strtolower($type) == 'pdf'){ ?>
    <!-- PDFs render natively (Google gView can't reach a local URL). -->
    <iframe src="<?=$path;?>" width="100%" height="90%" style="padding: 0px" frameborder="0"></iframe>
 <?php } else{ ?>

@@ -1,5 +1,5 @@
 <?php
-include("includes/header_index_view.php");
+include('includes/header_index_view.php');
 ?>
 <div class="container">
 <section class="maindiv">
@@ -43,7 +43,7 @@ include("includes/header_index_view.php");
 </div>
 
 <?php
-include("includes/footer_index_view.php");
+include('includes/footer_index_view.php');
 ?>
 <style>
 p, li{

@@ -1,10 +1,10 @@
 <?php
-$Upgraded = $this->session->userdata("Upgraded");
-$record_type_id = $fields["data"][0]["RecordTypeId"];
+$Upgraded = $this->session->userdata('Upgraded');
+$record_type_id = $fields['data'][0]['RecordTypeId'];
 $moduleName = strtolower($moduleName);
 $modName = $moduleName;
-if($moduleName == "medical"){
-	$moduleName = "health";
+if($moduleName == 'medical'){
+	$moduleName = 'health';
 }
 
 ?>
@@ -35,39 +35,39 @@ if($moduleName == "medical"){
       </div>
    </div>
  <input type="hidden" name="record_type_id" value="<?=$record_type_id;?>">
-<?php 
+<?php
 
-foreach($fields["data"] as $field){
+foreach($fields['data'] as $field){
 	//echo json_encode($field);
-	$fieldType = $field["FieldType"];
-	$isFeildMandatoty = $field["isFeildMandatoty"];
-	$typeId = $field["RecordTypeId"];
-	$fieldId = $field["Id"];
-	$fieldName = $field["RequestParamenter"];
+	$fieldType = $field['FieldType'];
+	$isFeildMandatoty = $field['isFeildMandatoty'];
+	$typeId = $field['RecordTypeId'];
+	$fieldId = $field['Id'];
+	$fieldName = $field['RequestParamenter'];
 	if($isFeildMandatoty == 1){
-		$isMandatory = "required";
+		$isMandatory = 'required';
 	}
 	else{
-		$isMandatory = "";
+		$isMandatory = '';
 	}
 	if($fieldType == 3 && $fieldId != '558'){ ?>
 		<div class="col-md-6 field">
-			<label class="col-sm-4 hidden-xs noheight"><?=$field["FieldLable"];?>
+			<label class="col-sm-4 hidden-xs noheight"><?=$field['FieldLable'];?>
 			   <?php if($isFeildMandatoty == '1'){ ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
 			</label>
 			<select class="col-sm-8 col-xs-12 <?=$isMandatory;?>" name="<?=$fieldName;?>" id ="<?=$fieldName;?>">
-				    <option value="">Select <?=$field["FieldLable"];?></option>
-					<?php foreach($field["dropDownValues"] as $option){ ?>
-						<option value='<?=$option["DropdownValues"];?>'><?=$option["DropdownValues"];?></option>
+				    <option value="">Select <?=$field['FieldLable'];?></option>
+					<?php foreach($field['dropDownValues'] as $option){ ?>
+						<option value='<?=$option['DropdownValues'];?>'><?=$option['DropdownValues'];?></option>
 					<?php } ?>
 				
 			</select>
 		</div>
-	<?php } 
+	<?php }
 	if($fieldType == 2 && $fieldId != '560'){ ?>
 		<div class="col-md-6 field">
 			<label class="col-sm-4 hidden-xs noheight">
-			   <?=$field["FieldLable"]; ?>
+			   <?=$field['FieldLable']; ?>
 			   <?php if($isFeildMandatoty == '1'){ ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
 			</label>
 			<input type="text" class="col-sm-8 col-xs-12 <?=$isMandatory;?>" placeholder="Enter <?=$field['FieldLable'];?>" name="<?=$fieldName;?>" id ="<?=$fieldName;?>" value="<?=$ocrData[$fieldName];?>">
@@ -76,7 +76,7 @@ foreach($fields["data"] as $field){
 	if($fieldType == 5 || $fieldType == 11){ ?>
 		<div class="col-md-6 field">
 			<label class="col-sm-4 hidden-xs noheight">
-			   <?=$field["FieldLable"];?>
+			   <?=$field['FieldLable'];?>
 			   <?php if($isFeildMandatoty == '1'){ ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
 			</label>
 			<input type="text" class="col-sm-8 col-xs-12 timepicker <?=$isMandatory;?>" name="<?=$fieldName;?>" placeholder="YYYY-MM-DD"  id="<?=$fieldName;?>" onclick="pickCalender('<?=$fieldName;?>')" value="<?=$ocrData[$fieldName];?>">
@@ -86,12 +86,12 @@ foreach($fields["data"] as $field){
 	if($fieldType == 8){ ?>
 	    <div class="col-md-6 field">
 			<label class="col-sm-4 hidden-xs noheight">
-			   <?=$field["FieldLable"];?>
+			   <?=$field['FieldLable'];?>
 			   <?php if($isFeildMandatoty == '1'){ ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
 			</label>
 			<select name="<?=$fieldName;?>" class="col-sm-8 col-xs-12 <?=$isMandatory;?>" id ="<?=$fieldName;?>">
                   <option value="">Select Year</option>
-                  <?php for($d=date("Y");$d >= 1970;$d--){ ?>
+                  <?php for($d = date('Y');$d >= 1970;$d--){ ?>
                   <option><?=$d;?> </option>
                   <?php } ?>
             </select>
@@ -101,21 +101,21 @@ foreach($fields["data"] as $field){
     if($fieldType == 6){ ?>
 	    
 	        <div class='col-sm-6 field'>
-				<label class="col-sm-4 hidden-xs"><?=$field["FieldLable"];?></label>
-				<textarea class="col-sm-8 col-xs-12 <?=$isMandatory;?>" name="<?=$fieldName;?>" placeholder="Enter <?=$field["FieldLable"];?>" id ="<?=$fieldName;?>"><?=$ocrData[$fieldName];?></textarea>
+				<label class="col-sm-4 hidden-xs"><?=$field['FieldLable'];?></label>
+				<textarea class="col-sm-8 col-xs-12 <?=$isMandatory;?>" name="<?=$fieldName;?>" placeholder="Enter <?=$field['FieldLable'];?>" id ="<?=$fieldName;?>"><?=$ocrData[$fieldName];?></textarea>
 			</div>
-    <?php } 
+    <?php }
 	if($fieldType == 7){ ?>
 		<div class='col-sm-6 field'>
-		    <label class="col-sm-5 col-xs-12" style="padding-right: 0px"><a href="#" id ="addrelaetd"> <i class="fa fa-file"></i> <?=str_replace("#", "",$field["FieldLable"]);?></a></label>
+		    <label class="col-sm-5 col-xs-12" style="padding-right: 0px"><a href="#" id ="addrelaetd"> <i class="fa fa-file"></i> <?=str_replace('#', '',$field['FieldLable']);?></a></label>
             <span class="col-sm-7 col-xs-12"> Related Records not yet added.</span>
 		</div>
 	
     <?php }
 	if($fieldType == 4){ ?>
 			<div class='col-sm-6 field'>    
-				<label class="col-sm-4 hidden-xs"><?=$field["FieldLable"];?> / Upload File </label>
-					<input class="col-sm-4 col-xs-6 half" type="text" name="uploadedfile_tag" id="uploadedfile_tag" placeholder="Enter <?=$field["FieldLable"];?>">
+				<label class="col-sm-4 hidden-xs"><?=$field['FieldLable'];?> / Upload File </label>
+					<input class="col-sm-4 col-xs-6 half" type="text" name="uploadedfile_tag" id="uploadedfile_tag" placeholder="Enter <?=$field['FieldLable'];?>">
 					<span class="gap">&nbsp</span>
 					<label class="btn-bs-file btn btn-primary col-sm-4 col-xs-6 half">
 							<i class="fa fa-upload" aria-hidden="true"></i> Upload
@@ -123,7 +123,7 @@ foreach($fields["data"] as $field){
 					</label>
 			</div>
 		
-	<?php } 
+	<?php }
  	}
 ?>
 	<div class="row">
@@ -151,53 +151,53 @@ foreach($fields["data"] as $field){
 			</thead>
               <form name="folderForm" id="folderForm" method="POST" action"#">
 				 <tbody id="searchable_data">
-				<?php foreach($files as $file){ 
-					 $doc_id = $file['_id'];		
+				<?php foreach($files as $file){
+					 $doc_id = $file['_id'];
 					 $path = $file['DocumentPath'];
 					 $type = strtolower($file['FileType']);
-					 $filename = $file["filename"];
+					 $filename = $file['filename'];
 					 if(empty($type)){
 						 $type = strtolower(get_file_extension($filename));
 					 }
-					 $images = array("jpg", "png", "jpeg", "gif", "");
-					 $fileextension = array("zip","rar");
-					 
+					 $images = ['jpg', 'png', 'jpeg', 'gif', ''];
+					 $fileextension = ['zip','rar'];
+
 					 $not_image = get_folder_document_icon($type);
 					 $fol_type = $file['Type'];
-						if(in_array($type, $images ?? array())){
-							$url = base_url()."web/viewfile?fid=$doc_id&type=png";
+						if(in_array($type, $images ?? [])){
+							$url = base_url() . "web/viewfile?fid=$doc_id&type=png";
 							$view_file = "<img src='$url' alt='$filename;' width='30px' height='30px'>";
 						}
-						else { $view_file = '<img src="../../../'.$not_image.'" id="img" class="img-responsive img imag" width="30px" height="30px" >'; }
-					 
-					 
+						else { $view_file = '<img src="../../../' . $not_image . '" id="img" class="img-responsive img imag" width="30px" height="30px" >'; }
+
+
 					 $size = filesize_formatted($file['length']);
-					 $date = date("d-M-Y", strtotime($file['TS'])); 
-					 
+					 $date = date('d-M-Y', strtotime($file['TS']));
+
 					 if(empty($filename)){
 						//$filename = ucfirst(strtolower(substr(strstr(pathinfo($file['DocumentPath'], PATHINFO_FILENAME),"-"),1,20)));
-						$doc_path = $file["DocumentPath"];
+						$doc_path = $file['DocumentPath'];
 						$filename = basename($doc_path);
 						$filename = end(explode('-',$filename));
 					 }
 					 $ext = pathinfo($filename, PATHINFO_EXTENSION);
-					 $path = base_url()."web/viewfile?fid=".$id;
+					 $path = base_url() . 'web/viewfile?fid=' . $id;
 					 ?>
 					
 					   <tr onClick="viewfile('docviewer?fid=<?=$file['_id'];?>&type=<?=strtolower($ext);?>')">
 					<td>
-					<input type="checkbox" name="fileids[]" class="doc_id" value="<?=$doc_id;?>" <? if(in_array($doc_id, $fileids ?? array())) { echo "checked"; } ?>>
+					<input type="checkbox" name="fileids[]" class="doc_id" value="<?=$doc_id;?>" <? if(in_array($doc_id, $fileids ?? [])) { echo 'checked'; } ?>>
 					<input type="hidden" name="filename[]" id="fname" value="<?=$filename;?>">
 					
 					</td>
 						<td><?=$view_file?></td>
-						<td><?php if($fol_type == "File"){
+						<td><?php if($fol_type == 'File'){
 								echo $filename;
 							} else{
 								echo $fol_name;
 						}?></td>
-						<td><?php if($fol_type == "File"){ echo $type; } else{ echo "-"; }?></td>
-						<td><?php if($fol_type == "File"){ echo $size; } else{ echo "-"; }?></td>
+						<td><?php if($fol_type == 'File'){ echo $type; } else{ echo '-'; }?></td>
+						<td><?php if($fol_type == 'File'){ echo $size; } else{ echo '-'; }?></td>
 						<td><?=$date?></td>
 					</tr>
 					
@@ -212,8 +212,8 @@ foreach($fields["data"] as $field){
     
 
 <?php
-   include("createjs.php");
-   include("UpgradeAccount.php");
+   include('createjs.php');
+   include('UpgradeAccount.php');
 ?>
 <style>
 div.folder_img{
@@ -246,45 +246,45 @@ div.folder_img_border{
 
 <?php
 
-function get_folder_document_icon($file_type){  
+function get_folder_document_icon($file_type){
     $file_type = strtolower($file_type);
   switch($file_type){
-	case "jpg": $icon = "/graphics/foldericons/icon-jpg.png"; break;
-	case "png": $icon = "/graphics/foldericons/icon-png.png"; break;
-    case "jpeg": $icon = "/graphics/foldericons/icon-jpeg.png"; break;	
-    case "pdf": $icon = "/graphics/foldericons/icon-pdf.jpg"; break;
-    case "doc": $icon = "/graphics/foldericons/icon-word.jpg"; break;
-    case "docx": $icon = "/graphics/foldericons/icon-word.jpg"; break;
-    case "odt": $icon = "/graphics/foldericons/icon-word-odt.png"; break;
-    case "ods": $icon = "/graphics/foldericons/icon-ods.jpg"; break;
-    case "odp": $icon = "/graphics/foldericons/icon-odp.jpg"; break;
-    case "txt": $icon = "/graphics/foldericons/icon-text.png"; break;
-    case "rtf": $icon = "/graphics/foldericons/icon-text.png"; break;
-    case "xls": $icon = "/graphics/foldericons/icon-xls.png"; break;
-    case "xlsx": $icon = "/graphics/foldericons/icon-xls.png"; break;
-    case "xps": $icon = "/graphics/foldericons/icon-xps.png"; break;
-    case "zip": $icon = "/graphics/foldericons/icon-zip.png"; break;
-    case "rar": $icon = "/graphics/foldericons/icon-rar.png"; break;
-    case "mp3": $icon = "/graphics/foldericons/icon-mp3.jpg"; break;
-    case "html": $icon = "/graphics/foldericons/icon-html.png"; break;
-    case "css": $icon = "/graphics/foldericons/icon-html.png"; break;
-    case "htm": $icon = "/graphics/foldericons/icon-html.png"; break;
-    case "js": $icon = "/graphics/foldericons/icon-js.gif"; break;
-    case "xml": $icon = "/graphics/foldericons/icon-xml.png"; break;
-    case "php": $icon = "/graphics/foldericons/icon-php.png"; break;
-    case "ppt": $icon = "/graphics/foldericons/icon-ppt.png"; break;
-    case "pptm": $icon = "/graphics/foldericons/icon-ppt.png"; break;
-    case "pptx": $icon = "/graphics/foldericons/icon-ppt.png"; break;
-  default: $icon = "/graphics/icon_pdf.png"; break;
+	case 'jpg': $icon = '/graphics/foldericons/icon-jpg.png'; break;
+	case 'png': $icon = '/graphics/foldericons/icon-png.png'; break;
+    case 'jpeg': $icon = '/graphics/foldericons/icon-jpeg.png'; break;
+    case 'pdf': $icon = '/graphics/foldericons/icon-pdf.jpg'; break;
+    case 'doc': $icon = '/graphics/foldericons/icon-word.jpg'; break;
+    case 'docx': $icon = '/graphics/foldericons/icon-word.jpg'; break;
+    case 'odt': $icon = '/graphics/foldericons/icon-word-odt.png'; break;
+    case 'ods': $icon = '/graphics/foldericons/icon-ods.jpg'; break;
+    case 'odp': $icon = '/graphics/foldericons/icon-odp.jpg'; break;
+    case 'txt': $icon = '/graphics/foldericons/icon-text.png'; break;
+    case 'rtf': $icon = '/graphics/foldericons/icon-text.png'; break;
+    case 'xls': $icon = '/graphics/foldericons/icon-xls.png'; break;
+    case 'xlsx': $icon = '/graphics/foldericons/icon-xls.png'; break;
+    case 'xps': $icon = '/graphics/foldericons/icon-xps.png'; break;
+    case 'zip': $icon = '/graphics/foldericons/icon-zip.png'; break;
+    case 'rar': $icon = '/graphics/foldericons/icon-rar.png'; break;
+    case 'mp3': $icon = '/graphics/foldericons/icon-mp3.jpg'; break;
+    case 'html': $icon = '/graphics/foldericons/icon-html.png'; break;
+    case 'css': $icon = '/graphics/foldericons/icon-html.png'; break;
+    case 'htm': $icon = '/graphics/foldericons/icon-html.png'; break;
+    case 'js': $icon = '/graphics/foldericons/icon-js.gif'; break;
+    case 'xml': $icon = '/graphics/foldericons/icon-xml.png'; break;
+    case 'php': $icon = '/graphics/foldericons/icon-php.png'; break;
+    case 'ppt': $icon = '/graphics/foldericons/icon-ppt.png'; break;
+    case 'pptm': $icon = '/graphics/foldericons/icon-ppt.png'; break;
+    case 'pptx': $icon = '/graphics/foldericons/icon-ppt.png'; break;
+  default: $icon = '/graphics/icon_pdf.png'; break;
   }
   return $icon;
 }
 
 
 function get_file_extension($file_name){
-		$dot_index = strrpos($file_name, ".");
+		$dot_index = strrpos($file_name, '.');
 		$file_type = substr($file_name, $dot_index + 1);
-		return $file_type;		
+		return $file_type;
 	}
 function filesize_formatted($bytes)
 {
@@ -303,5 +303,5 @@ function filesize_formatted($bytes)
     } else {
         return '0 bytes';
     }
-}	
+}
 ?>

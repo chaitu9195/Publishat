@@ -1,11 +1,11 @@
 <?php
-	if(strtolower($moduleName) == "medical"){
-		  $modName = "health";
+	if(strtolower($moduleName) == 'medical'){
+		  $modName = 'health';
 	}
 	else{
 		$modName = strtolower($moduleName);
 	}
-	
+
 	$record_type_id = $recTypeId;
 	if($record_type_id == 19){
 		$sub_type_id = 23;
@@ -28,7 +28,7 @@
 	if($record_type_id == 16){
 		$sub_type_id = 45;
 	}
-	
+
 ?>
 	<div class="center_wrapper">
 
@@ -52,7 +52,7 @@
 		   <a href='#' id="collaboration_rec">  <i class="fa fa-users fa-2x" aria-hidden="true"></i></a>
 	   <?php }?>
            <a href='#' id="addKart">  <i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i>  </a>
-	   <a href="#/" onclick="getedit('<?=$data["RecordId"];?>','<?=$recTypeId;?>','<?=strtolower($moduleName);?>')"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a>
+	   <a href="#/" onclick="getedit('<?=$data['RecordId'];?>','<?=$recTypeId;?>','<?=strtolower($moduleName);?>')"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a>
  	  <a href="#/" id= 'share_button'><i class="fa fa-share-alt fa-2x" aria-hidden="true"></i></a>
  	    <a href="#/" id= 'delete_button'><i class="fa fa-trash fa-2x" aria-hidden="true"></i> </a> 
 	 </div>
@@ -71,7 +71,7 @@
             </button>
         </div>
        <div class="delete_body">
-          <?php  $code=rand(100000,999999);
+          <?php  $code = rand(100000,999999);
              $this->session->set_userdata('captcha', $code);
               ?>     
       <div class="alert alert-danger" id ="error" style="display:none">
@@ -174,21 +174,21 @@
        </div>
        <form class="form-horizontal col-sm-12 pad" name="emailForm" id ='emailForm'>    
         <div class="form-group">
-           <?php if(count($files ?? array())) {
-               for($i=0;$i<=count($files ?? array())-1; $i++){ 
+           <?php if(count($files ?? [])) {
+               for($i = 0;$i <= count($files ?? []) - 1; $i++){
                 $label = $files[$i]['Notes'];
                 $doc_id = $files[$i]['DocumentId'];
-                $path =  $files[$i]['DocumentPath'];
-                $filename = $files[$i]["filename"];
+                $path = $files[$i]['DocumentPath'];
+                $filename = $files[$i]['filename'];
                 if(empty($filename)){
-                     $filename =  pathinfo($path, PATHINFO_FILENAME);
-                     $filename =  substr(strstr($filename, "-"),1,15);
+                     $filename = pathinfo($path, PATHINFO_FILENAME);
+                     $filename = substr(strstr($filename, '-'),1,15);
                 }
                 $filename = substr($filename, 0, 11);
-                $ext = $files[$i]["FileType"];  ?>  
+                $ext = $files[$i]['FileType'];  ?>  
                 <div class="attchdocuments">
                  <input type="checkbox" name="document_id[]" class='' id="document_id_arr" value="<?=$doc_id;?>">
-                 <a href="./docviewer?fid=<?=$doc_id;?>" target="_blank" title ='View / Download File'><span class="files"> <?=(!empty($label))? $label : ucfirst($filename); ?> </span></a>
+                 <a href="./docviewer?fid=<?=$doc_id;?>" target="_blank" title ='View / Download File'><span class="files"> <?=(!empty($label)) ? $label : ucfirst($filename); ?> </span></a>
                 </div>
 			</div>
 			<div class="form-group">
@@ -197,13 +197,13 @@
                   foreach($sub_rec as $sub_rec_idr){
 					$constants = get_defined_constants();
 					$headers = json_decode($constants[$tableName], true);
-					$key1 = $headers["subheaders"]["key1"];
-					$key2 = $headers["subheaders"]["key2"];
-					$key3 = $headers["subheaders"]["key3"];
-                    $key_value1 = $sub_rec_idr[$key1]; 
+					$key1 = $headers['subheaders']['key1'];
+					$key2 = $headers['subheaders']['key2'];
+					$key3 = $headers['subheaders']['key3'];
+                    $key_value1 = $sub_rec_idr[$key1];
                     $key_value2 = $sub_rec_idr[$key2];
                     $key_value3 = $sub_rec_idr[$key3];
-					$sub_rec_id = $sub_rec_idr["RecordId"];
+					$sub_rec_id = $sub_rec_idr['RecordId'];
                   ?>
                
                 <div class="col-md-11 col-xs-12 subrec">
@@ -211,22 +211,22 @@
                   <label><?=$key_value1;?> | <?=$key_value2; ?> | <?=$key_value3;?></label>
                  </div>
                  <div class="col-md-11 col-md-offset-1 col-xs-12">
-				 <?php if(count($sub_files ?? array())) { 
-				        for($i=0;$i<=count($sub_files ?? array())-1; $i++){ 
+				 <?php if(count($sub_files ?? [])) {
+				        for($i = 0;$i <= count($sub_files ?? []) - 1; $i++){
 						    if($sub_files[$i]['RecordId'] == $sub_rec_id) {
 								$label = $sub_files[$i]['Notes'];
 								$doc_id = $sub_files[$i]['DocumentId'];
 								$path = $sub_files[$i]['DocumentPath'];
-								$filename = $sub_files[$i]["filename"];
+								$filename = $sub_files[$i]['filename'];
 								if(empty($filename)){
-									 $filename = explode("-", $path);
-                                     $filename = $filename[1];									 
+									 $filename = explode('-', $path);
+                                     $filename = $filename[1];
 								}
-								
+
 							?> 
 								<div class="attchdocuments">
 								 <input type="checkbox" name="document_id[]" class='' id="document_id_arr" value="<?=$doc_id;?>">
-								 <a href="./docviewer?fid=<?=$doc_id;?>" target="_blank" title ='View / Download File'><span class="files"> <?=(!empty($label))? $label : $filename; ?> </span></a>
+								 <a href="./docviewer?fid=<?=$doc_id;?>" target="_blank" title ='View / Download File'><span class="files"> <?=(!empty($label)) ? $label : $filename; ?> </span></a>
 								</div>
 				<?php } } } ?></div><?php } ?>
 		</div>
@@ -263,18 +263,18 @@
      </div>
 <div class='row content'>
          <div class="col-sm-8 col-xs-12 left_wrapper"> 
-            <?php  
+            <?php
 			$record_id = $data['RecordId'];
-			unset($data['_id']); 
+			unset($data['_id']);
 			unset($data['UserId']);
 			unset($data['RecordId']);
 			unset($data['RecordId1']);
 			unset($data['filename']);
-			foreach($data as $label=>$fieldDetails){ 
-			$na = "NA"; ?>
+			foreach($data as $label => $fieldDetails){
+			$na = 'NA'; ?>
             <div class="col-sm-12 col-xs-12 metadata">
              <span class="col-sm-5 col-xs-5"> <strong><?=$label;?> </strong> <span style="float:right"> : </span> </span>
-             <span class="col-sm-7 col-xs-7"> <?=(!empty($fieldDetails))? $fieldDetails : $na;?></span>
+             <span class="col-sm-7 col-xs-7"> <?=(!empty($fieldDetails)) ? $fieldDetails : $na;?></span>
             </div>
 			
           <?php } ?>
@@ -286,13 +286,13 @@
                 <button class="btn btn-primary btn-sm" href="#" title="Add new record" onclick="addrelated('<?=$record_id;?>','<?=$recTypeId;?>','<?=strtolower($moduleName);?>')"> Add <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
                 </span>
              </div> 
-              <?php  if($sub_data != 'failed' && count($sub_data ?? array()) > 0){ 
+              <?php  if($sub_data != 'failed' && count($sub_data ?? []) > 0){
 			    $constants = get_defined_constants();
 				$headers = json_decode($constants[$tableName], true);
-				$key1 = $headers["subheaders"]["key1"];
-				$key2 = $headers["subheaders"]["key2"];
-				$key3 = $headers["subheaders"]["key3"];
-                 for($i=0;$i<=count($sub_data ?? array())-1;$i++){
+				$key1 = $headers['subheaders']['key1'];
+				$key2 = $headers['subheaders']['key2'];
+				$key3 = $headers['subheaders']['key3'];
+                 for($i = 0;$i <= count($sub_data ?? []) - 1;$i++){
                     $rec_id = $sub_data[$i]['RecordId'];
                      ?> 
 					<div class='sub_rec_wrapper'>
@@ -315,17 +315,17 @@
          </div>
           <div class="col-sm-4 col-xs-12">
             <h3> Attachments </h3>
-            <?php if(count($files ?? array())) {
-               for($i=0;$i<=count($files ?? array())-1; $i++){ 
-			    
-			    $doc_id = $files[$i]["DocumentId"];
+            <?php if(count($files ?? [])) {
+               for($i = 0;$i <= count($files ?? []) - 1; $i++){
+
+			    $doc_id = $files[$i]['DocumentId'];
                 $label = $files[$i]['Notes'];
                 //$label = substr_replace($label ,"",-7);
-                $path =  $files[$i]['DocumentPath'];
-				$filename = $files[$i]["filename"];
+                $path = $files[$i]['DocumentPath'];
+				$filename = $files[$i]['filename'];
 				if(empty($filename)){
                     $filename = basename($path);
-					//$filename = substr($filename, strpos($filename, "-") + 1);  
+					//$filename = substr($filename, strpos($filename, "-") + 1);
 					$filename = end(explode('-',$filename));
 				}
 				  $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
@@ -336,9 +336,9 @@
              
             <div class="col-sm-4 col-xs-4 ext_type"> 
 				<?php
-				$images = array("jpg", "png", "jpeg", "gif", "");
-					if(in_array($ext, $images ?? array())){
-						$url = base_url()."web/viewfile?fid=$doc_id&type=png";
+				$images = ['jpg', 'png', 'jpeg', 'gif', ''];
+					if(in_array($ext, $images ?? [])){
+						$url = base_url() . "web/viewfile?fid=$doc_id&type=png";
 						echo "<img src='$url' alt='$filename;' width='50px' height='50px' style='padding: 2px'>";
 					}
 					else{ ?>
@@ -346,17 +346,17 @@
 					<?php } ?>
             </div>
             <div class='col-sm-8 col-xs-8 filename'> 
-			<input type="hidden" name="fileids[]" id="fname" value="<?=(!empty($label))? $label : ucfirst($filename); ?>">
+			<input type="hidden" name="fileids[]" id="fname" value="<?=(!empty($label)) ? $label : ucfirst($filename); ?>">
              <span>
-              <?=(!empty($label))? $label : ucfirst($file_name.".".$ext); ?>
+              <?=(!empty($label)) ? $label : ucfirst($file_name . '.' . $ext); ?>
              </span>                 
             </div> 
              <a href="./docviewer?fid=<?=$doc_id;?>&type=<?=strtolower($ext);?>" target="_blank" class="downloadpop1"><i class="fa fa-download"></i>
-               <?=($ext == 'jpeg' || $ext == 'png' || $ext = 'jpg' || $ext=='pdf' || $ext == 'gif') ?  "View" : "Download"; ?>   </a>
+               <?=($ext == 'jpeg' || $ext == 'png' || $ext = 'jpg' || $ext == 'pdf' || $ext == 'gif') ? 'View' : 'Download'; ?>   </a>
              </div> 
              <?php
                }//for close
-             } else {  echo "Files not found"; }
+             } else {  echo 'Files not found'; }
            ?>
                  
          </div>
@@ -387,8 +387,8 @@ $('.fa-download,.filename, .file_wrapper_view').hover(function(){
 });
 /* Get add cart page */ 
 $("#addKart").click(function(){
-     var file_count = "<?=count($files ?? array())?>";
-	 var sub_file_count = "<?=count($sub_files ?? array());?>";
+     var file_count = "<?=count($files ?? [])?>";
+	 var sub_file_count = "<?=count($sub_files ?? []);?>";
 	 if(file_count > 0 || sub_file_count > 0) {
           getkart('<?=$record_id;?>','<?=$recTypeId;?>','<?=strtolower($moduleName);?>','<?=$sub_type_id;?>');
      } else {
@@ -716,46 +716,46 @@ a:hover { text-decoration:none; }
 }
 </style>
 
-<?php 
+<?php
 function get_icon($ext){
                switch ($ext) {
-                       case "jpeg":
+                       case 'jpeg':
                              echo '<i class="fa fa-file-image-o fa-4x" aria-hidden="true"></i>';
                              break;
-                       case "png":
+                       case 'png':
                              echo '<i class="fa fa-file-image-o fa-4x" aria-hidden="true"></i>';
                              break;
-                       case "jpg":
+                       case 'jpg':
                              echo '<i class="fa fa-file-image-o fa-4x" aria-hidden="true"></i>';
                              break;
-                       case "doc":
+                       case 'doc':
                              echo '<i class="fa fa-file-word-o fa-4x" aria-hidden="true"></i>';
                              break;
-                       case "docx":
+                       case 'docx':
                              echo '<i class="fa fa-file-word-o fa-4x" aria-hidden="true"></i>';
                              break;
-                       case "pdf":
+                       case 'pdf':
                              echo '<i class="fa fa-file-pdf-o fa-4x" aria-hidden="true"></i>';
                              break;
-                       case "xls":
+                       case 'xls':
                              echo '<i class="fa fa-file-excel-o fa-4x" aria-hidden="true"></i>';
                              break;
-                       case "xlsx":
+                       case 'xlsx':
                              echo '<i class="fa fa-file-excel-o fa-4x" aria-hidden="true"></i>';
                              break;
-                       case "ppt":
+                       case 'ppt':
                              echo '<i class="fa fa-file-powerpoint-o fa-4x" aria-hidden="true"></i>';
                              break;
-                       case "pptx":
+                       case 'pptx':
                              echo '<i class="fa fa-file-powerpoint-o fa-4x" aria-hidden="true"></i>';
                              break;
-                       case "txt":
+                       case 'txt':
                              echo '<i class="fa fa-file-text-o fa-4x" aria-hidden="true"></i>';
                              break;
-                       case "zip":
+                       case 'zip':
                              echo '<i class="fa fa-file-archive-o fa-4x" aria-hidden="true"></i>';
                              break;
-                       case "rar":
+                       case 'rar':
                              echo '<i class="fa fa-file-archive-o fa-4x" aria-hidden="true"></i>';
                              break;
                       default:

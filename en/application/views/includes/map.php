@@ -7,31 +7,31 @@
 						</div>
 						<?php /* === MAP DATA === */ ?>
 						<?php
-						
-						$locations = array();
+
+						$locations = [];
 						$i = 1;
-						foreach ($data as $row)  
-							{  
-							  
-							  $name = $row['name']; 
+						foreach ($data as $row)
+							{
+
+							  $name = $row['name'];
 								//$name =$row->LocationName;
-                                $lattitude =$row['latitude'];
-								$longitude =$row['longitude'];
+                                $lattitude = $row['latitude'];
+								$longitude = $row['longitude'];
 								$id = $i;
-								$code = $row["code"];
-								$location_address = $row["address"];
-                                //$lat = $data[$i]['LocationName']; 
-                                $locations[] = array('google_map' => array(
+								$code = $row['code'];
+								$location_address = $row['address'];
+                                //$lat = $data[$i]['LocationName'];
+                                $locations[] = ['google_map' => [
                                     'lat' => $lattitude,
                                     'lng' => $longitude,
-									),
+									],
                                     'location_address' => $location_address,
                                     'location_name' => $name,
 									'id' => $id
-                                );
+                                ];
 							?>
                                 <input type="hidden" id="<?=$i;?>" value="<?=$code;?>">
-							<?php      
+							<?php
                                 $i++;
 							}
 						?>

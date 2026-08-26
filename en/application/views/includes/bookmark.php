@@ -109,7 +109,7 @@ foreach($bookmark as $data){
             <button type="button" id="del_close" class="pull-right btn btn-danger btn-xs"><i class="fa fa-remove" aria-hidden="true"></i>   
             </button>
         </div>
-          <?php  $code=rand(100000,999999);
+          <?php  $code = rand(100000,999999);
              $this->session->set_userdata('folder_captcha', $code);  ?>     
 	  <div class="alert alert-danger alert-dismissable fade in err" id="del_error" style="display:none">
 	    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

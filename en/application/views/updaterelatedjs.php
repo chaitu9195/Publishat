@@ -47,8 +47,8 @@ $("#documentForm").submit(function ( e ) {
 				$("#load").html('Updated <i class="fa fa-check"></i>');
 				$("#msg1").html("Successfully Updated. Redirecting <i class='fa fa-spinner fa-spin'></i>");
 				$("#success").show();
-			      setTimeout(function(){ sub_view('<?=$main_record_type_id;?>','<?=$record_type_id;?>','<?=$data["RecordId"]?>','<?=$data["ParentRecordId"]?>','<?=strtolower($moduleName);?>') },3000);
-			      setTimeout(function(){ sub_view('<?=$main_record_type_id;?>','<?=$record_type_id;?>','<?=$data["RecordId"]?>','<?=$data["ParentRecordId"]?>','<?=strtolower($moduleName);?>') },3000);
+			      setTimeout(function(){ sub_view('<?=$main_record_type_id;?>','<?=$record_type_id;?>','<?=$data['RecordId']?>','<?=$data['ParentRecordId']?>','<?=strtolower($moduleName);?>') },3000);
+			      setTimeout(function(){ sub_view('<?=$main_record_type_id;?>','<?=$record_type_id;?>','<?=$data['RecordId']?>','<?=$data['ParentRecordId']?>','<?=strtolower($moduleName);?>') },3000);
 				}
 			});
 		

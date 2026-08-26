@@ -113,7 +113,7 @@ $(document).ready(function(){
      <h3><span class="signuplogo"></span>Signup With Publishat</h3>
      <hr/>
       <?php
-        if($status == "error"){
+        if($status == 'error'){
        ?>
             <div class="alert alert-danger">The email you entered has already been registered on Publishat.com...</div>
       <?  }

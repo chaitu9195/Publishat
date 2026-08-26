@@ -1,9 +1,9 @@
 <?php
-$record_type_id = $fields["data"][0]["RecordTypeId"];
+$record_type_id = $fields['data'][0]['RecordTypeId'];
 $moduleName = strtolower($moduleName);
 $modName = $moduleName;
-if($moduleName == "medical"){
-	$moduleName = "health";
+if($moduleName == 'medical'){
+	$moduleName = 'health';
 }
 
 $main_record_type_id = $record_type_id;
@@ -29,7 +29,7 @@ $main_record_type_id = $record_type_id;
 	if($record_type_id == 16){
 		$record_type_id = 45;
 	}
-	
+
 
 ?>
 <div class="row">
@@ -44,7 +44,7 @@ $main_record_type_id = $record_type_id;
       </span>
   </div>
     <div class="right-heading col-md-6">
-           <a class="pull-right" href="#" onclick = "sub_view('<?=$parentRecTypeId;?>','<?=$record_type_id;?>','<?=$data["RecordId"]?>','<?=$data["ParentRecordId"]?>','<?=strtolower($moduleName);?>')"> Back </a>
+           <a class="pull-right" href="#" onclick = "sub_view('<?=$parentRecTypeId;?>','<?=$record_type_id;?>','<?=$data['RecordId']?>','<?=$data['ParentRecordId']?>','<?=strtolower($moduleName);?>')"> Back </a>
         </div>
     </div>
 <form class="form-horizontal" id="documentForm" name="documentForm" method="post" action=""  enctype="multipart/form-data">
@@ -63,40 +63,40 @@ $main_record_type_id = $record_type_id;
 	<input type="hidden" name="RecordId" value="<?=$data['RecordId'];?>">
 	<input type="hidden" name="ParentRecordId" value="<?=$data['ParentRecordId'];?>">
 	<input type="hidden" name = 'module' value="<?=strtolower($moduleName);?>" >
-<?php 
-foreach($fields["data"] as $field){
+<?php
+foreach($fields['data'] as $field){
 	//echo json_encode($field);
-	$fieldType = $field["FieldType"];
-	$isFeildMandatoty = $field["isFeildMandatoty"];
-	$typeId = $field["RecordTypeId"];
-	$fieldId = $field["Id"];
-	$fieldName = $field["RequestParamenter"];
+	$fieldType = $field['FieldType'];
+	$isFeildMandatoty = $field['isFeildMandatoty'];
+	$typeId = $field['RecordTypeId'];
+	$fieldId = $field['Id'];
+	$fieldName = $field['RequestParamenter'];
 	if($isFeildMandatoty == 1){
-		$isMandatory = "required";
+		$isMandatory = 'required';
 	}
 	else{
-		$isMandatory = "";
+		$isMandatory = '';
 	}
 	if($fieldType == 3 && $fieldId != '558'){ ?>
 		<div class="col-md-6 field">
-			<label class="col-sm-4 hidden-xs noheight"><?=$field["FieldLable"];?>
+			<label class="col-sm-4 hidden-xs noheight"><?=$field['FieldLable'];?>
 			   <?php if($isFeildMandatoty == '1'){ ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
 			</label>
 			<select class="col-sm-8 col-xs-12 <?=$isMandatory;?>" name="<?=$fieldName;?>" id ="<?=$fieldName;?>">
-				    <option value="">Select <?=$field["FieldLable"];?></option>
-					<?php foreach($field["dropDownValues"] as $option){ ?>
-						<option value='<?=$option["DropdownValues"];?>' <?=($option["DropdownValues"] == $data[$fieldName])? 'selected=selected':'' ?>>
-						   <?=$option["DropdownValues"];?>
+				    <option value="">Select <?=$field['FieldLable'];?></option>
+					<?php foreach($field['dropDownValues'] as $option){ ?>
+						<option value='<?=$option['DropdownValues'];?>' <?=($option['DropdownValues'] == $data[$fieldName]) ? 'selected=selected' : '' ?>>
+						   <?=$option['DropdownValues'];?>
 						</option>
 					<?php } ?>
 				
 			</select>
 		</div>
-	<?php } 
+	<?php }
 	if($fieldType == 2 && $fieldId != '560'){ ?>
 		<div class="col-md-6 field">
 			<label class="col-sm-4 hidden-xs noheight">
-			   <?=$field["FieldLable"];?>
+			   <?=$field['FieldLable'];?>
 			   <?php if($isFeildMandatoty == '1'){ ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
 			</label>
 			<input type="text" class="col-sm-8 col-xs-12 <?=$isMandatory;?>" placeholder="Enter <?=$field['FieldLable'];?>" name="<?=$fieldName;?>" id ="<?=$fieldName;?>" value="<?=$data[$fieldName];?>">
@@ -105,7 +105,7 @@ foreach($fields["data"] as $field){
 	if($fieldType == 5 || $fieldType == 11){ ?>
 		<div class="col-md-6 field">
 			<label class="col-sm-4 hidden-xs noheight">
-			   <?=$field["FieldLable"];?>
+			   <?=$field['FieldLable'];?>
 			   <?php if($isFeildMandatoty == '1'){ ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
 			</label>
 			<input type="text" class="col-sm-8 col-xs-12 timepicker <?=$isMandatory;?>" name="<?=$fieldName;?>" placeholder="YYYY-MM-DD"  id="<?=$fieldName;?>" onclick="pickCalender('<?=$fieldName;?>')" value="<?=$data[$fieldName];?>">
@@ -115,13 +115,13 @@ foreach($fields["data"] as $field){
 	if($fieldType == 8){ ?>
 	    <div class="col-md-6 field">
 			<label class="col-sm-4 hidden-xs noheight">
-			   <?=$field["FieldLable"];?>
+			   <?=$field['FieldLable'];?>
 			   <?php if($isFeildMandatoty == '1'){ ?><i class="fa fa-asterisk star" aria-hidden="true"></i><?php } ?>
 			</label>
 			<select name="<?=$fieldName;?>" class="col-sm-8 col-xs-12 <?=$isMandatory;?>" id ="<?=$fieldName;?>">
                   <option value="">Select Year</option>
-                  <?php for($d=date("Y");$d >= 1970;$d--){ ?>
-                  <option <?=($d == $data[$fieldName])? 'selected=selected':'' ?>><?=$d;?> </option>
+                  <?php for($d = date('Y');$d >= 1970;$d--){ ?>
+                  <option <?=($d == $data[$fieldName]) ? 'selected=selected' : '' ?>><?=$d;?> </option>
                   <?php } ?>
             </select>
 			
@@ -130,24 +130,24 @@ foreach($fields["data"] as $field){
     if($fieldType == 6){ ?>
 	    
 	        <div class='col-sm-6 field'>
-				<label class="col-sm-4 hidden-xs"><?=$field["FieldLable"];?></label>
-				<textarea class="col-sm-8 col-xs-12 <?=$isMandatory;?>" name="<?=$fieldName;?>" placeholder="Enter <?=$field["FieldLable"];?>" id ="<?=$fieldName;?>"><?=$data[$fieldName];?></textarea>
+				<label class="col-sm-4 hidden-xs"><?=$field['FieldLable'];?></label>
+				<textarea class="col-sm-8 col-xs-12 <?=$isMandatory;?>" name="<?=$fieldName;?>" placeholder="Enter <?=$field['FieldLable'];?>" id ="<?=$fieldName;?>"><?=$data[$fieldName];?></textarea>
 			</div>
-    <?php } 
+    <?php }
 	if($fieldType == 7){ ?>
 		<div class='col-sm-6 field'>
-		    <label class="col-sm-5 col-xs-12" style="padding-right: 0px"><a href="#" id ="addrelaetd"> <i class="fa fa-file"></i> <?=str_replace("#", "",$field["FieldLable"]);?></a></label>
+		    <label class="col-sm-5 col-xs-12" style="padding-right: 0px"><a href="#" id ="addrelaetd"> <i class="fa fa-file"></i> <?=str_replace('#', '',$field['FieldLable']);?></a></label>
             <span class="col-sm-7 col-xs-12"> Related Records not yet added.</span>
 		</div>
 	
     <?php }
 	}
-	
+
 ?>
 	<div class="row">
 	        <span class="col-sm-6 col-xs-12 text-center pull-right">
 				<button class="btn btn-success" type="submit" id="save"> <span id="sub">Submit</span> <span class="" id="load"></span></button> &nbsp; &nbsp;
-				<input class="btn btn-danger" type="button" value="Cancel" id="reset" onclick="sub_view('<?=$parentRecTypeId;?>','<?=$record_type_id;?>','<?=$data["RecordId"]?>','<?=$data["ParentRecordId"]?>','<?=strtolower($moduleName);?>')"> 
+				<input class="btn btn-danger" type="button" value="Cancel" id="reset" onclick="sub_view('<?=$parentRecTypeId;?>','<?=$record_type_id;?>','<?=$data['RecordId']?>','<?=$data['ParentRecordId']?>','<?=strtolower($moduleName);?>')"> 
             </span>
     </div>
 </form>
@@ -171,20 +171,20 @@ foreach($fields["data"] as $field){
              <div class="attach_left col-xs-12">
                 <div class='attach_title'>  <span class="">View / Delete Existing Documents</span></div>
                 <div class="upload_input"> 
-                <?php if(count($files ?? array())) {
-               for($i=0;$i<=count($files ?? array())-1; $i++){ 
-                $doc_id = $files[$i]["DocumentId"];
+                <?php if(count($files ?? [])) {
+               for($i = 0;$i <= count($files ?? []) - 1; $i++){
+                $doc_id = $files[$i]['DocumentId'];
                 $label = $files[$i]['Notes'];
-                $label = substr_replace($label ,"",-7);
-                $path =  $files[$i]['DocumentPath'];
-                $filename = $files[$i]["filename"];
+                $label = substr_replace($label ,'',-7);
+                $path = $files[$i]['DocumentPath'];
+                $filename = $files[$i]['filename'];
                 if(empty($filename)){
 					$filename = basename($path);
-					$filename = substr($filename, strpos($filename, "-") + 1); 
+					$filename = substr($filename, strpos($filename, '-') + 1);
                 }
               $ext = pathinfo($filename, PATHINFO_EXTENSION);
 			  $file_name = basename($filename, $ext);
-			  $file_name = substr($file_name, 0, 5); 
+			  $file_name = substr($file_name, 0, 5);
 			  ?>
            <div class="col-sm-8 col-xs-12 file_wrapper">
               
@@ -193,14 +193,14 @@ foreach($fields["data"] as $field){
             </div>
             <div class='col-sm-8 col-xs-8 filename'> 
              <span class="hidden-xs">
-              <?=(!empty($label))? $file_name.".".$ext : ucfirst($file_name.".".$ext); ?>
+              <?=(!empty($label)) ? $file_name . '.' . $ext : ucfirst($file_name . '.' . $ext); ?>
              </span>                 
             </div> 
              <a href="./viewfile?fid=<?=$doc_id;?>" target="_blank" class="downloadpop " ><i class="fa fa-download" ></i> </a>
 
-             <a href="#/delete?module=&id=" class="downloadpop" onclick= "deleterecord('<?=$record_type_id;?>','<?=strtolower($moduleName);?>','<?=$files[$i]["RecordId"]?>','<?=$files[$i]["DocumentId"]?>','<?=$parentRecTypeId;?>')"><i class="fa fa-remove" ></i>          </a>
+             <a href="#/delete?module=&id=" class="downloadpop" onclick= "deleterecord('<?=$record_type_id;?>','<?=strtolower($moduleName);?>','<?=$files[$i]['RecordId']?>','<?=$files[$i]['DocumentId']?>','<?=$parentRecTypeId;?>')"><i class="fa fa-remove" ></i>          </a>
              </div> 
-             <?php 
+             <?php
                }//for close
              } else {  echo "<div class='file_nt_fnd'>Files not found</div>"; }
            ?>
@@ -226,25 +226,25 @@ foreach($fields["data"] as $field){
 			</thead>
               <form name="folderForm" id="folderForm" method="POST" action"#">
 				 <tbody id="searchable_data">
-				<?php foreach($folder as $file){ 
-					 $doc_id = $file['_id'];		
+				<?php foreach($folder as $file){
+					 $doc_id = $file['_id'];
 					 $path = $file['DocumentPath'];
 					 $type = strtolower($file['FileType']);
-					 $filename = $file["filename"];
+					 $filename = $file['filename'];
 					 if(empty($type)){
 						 $type = strtolower(get_file_extension($filename));
 					 }
-					 $images = array("jpg", "png", "jpeg", "gif", "");
-					 $fileextension = array("zip","rar");
-					 
+					 $images = ['jpg', 'png', 'jpeg', 'gif', ''];
+					 $fileextension = ['zip','rar'];
+
 					 $not_image = get_folder_document_icon($type);
 					 $fol_type = $file['Type'];
-						if(in_array($type, $images ?? array())){
+						if(in_array($type, $images ?? [])){
 							if($path){
 								$view_file = "<img src='https://publishat.com/$path' alt='$filename;' width='30px' height='30px'>";
 							}
 							else{
-								$filesrc = base_url()."web/viewfile?fid=".$id;
+								$filesrc = base_url() . 'web/viewfile?fid=' . $id;
 								$ch = curl_init();
 								$timeout = 5;
 								curl_setopt($ch, CURLOPT_URL, $filesrc);
@@ -252,39 +252,39 @@ foreach($fields["data"] as $field){
 								curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
 								$src = curl_exec($ch);
 								curl_close($ch);
-								$view_file = "<img src='data:image/jpg;base64,".base64_encode($src)."' alt='$filename;' width='30px'>"; 
+								$view_file = "<img src='data:image/jpg;base64," . base64_encode($src) . "' alt='$filename;' width='30px'>";
 							}
 						}
-						else { $view_file = '<img src="../../../'.$not_image.'" id="img" class="img-responsive img imag" width="30px" height="30px" >'; }
-					 
-					 
+						else { $view_file = '<img src="../../../' . $not_image . '" id="img" class="img-responsive img imag" width="30px" height="30px" >'; }
+
+
 					 $size = filesize_formatted($file['length']);
-					 $date = date("d-M-Y", strtotime($file['TS'])); 
-					 
+					 $date = date('d-M-Y', strtotime($file['TS']));
+
 					 if(empty($filename)){
 						//$filename = ucfirst(strtolower(substr(strstr(pathinfo($file['DocumentPath'], PATHINFO_FILENAME),"-"),1,20)));
-						$doc_path = $file["DocumentPath"];
+						$doc_path = $file['DocumentPath'];
 						$filename = basename($doc_path);
 						$filename = end(explode('-',$filename));
 					 }
 					 $ext = pathinfo($filename, PATHINFO_EXTENSION);
-					 $path = base_url()."web/viewfile?fid=".$id;
+					 $path = base_url() . 'web/viewfile?fid=' . $id;
 					 ?>
 					
 					   <tr onClick="viewfile('docviewer?fid=<?=$file['_id'];?>&type=<?=strtolower($ext);?>')">
 					<td>
-					<input type="checkbox" name="fileids[]" class="doc_id" value="<?=$doc_id;?>" <? if(in_array($doc_id, $fileids ?? array())) { echo "checked"; } ?>>
+					<input type="checkbox" name="fileids[]" class="doc_id" value="<?=$doc_id;?>" <? if(in_array($doc_id, $fileids ?? [])) { echo 'checked'; } ?>>
 					<input type="hidden" name="filename[]" id="fname" value="<?=$filename;?>">
 					
 					</td>
 						<td><?=$view_file?></td>
-						<td><?php if($fol_type == "File"){
+						<td><?php if($fol_type == 'File'){
 								echo $filename;
 							} else{
 								echo $fol_name;
 						}?></td>
-						<td><?php if($fol_type == "File"){ echo $type; } else{ echo "-"; }?></td>
-						<td><?php if($fol_type == "File"){ echo $size; } else{ echo "-"; }?></td>
+						<td><?php if($fol_type == 'File'){ echo $type; } else{ echo '-'; }?></td>
+						<td><?php if($fol_type == 'File'){ echo $size; } else{ echo '-'; }?></td>
 						<td><?=$date?></td>
 					</tr>
 					
@@ -296,8 +296,8 @@ foreach($fields["data"] as $field){
 <script type="text/javascript" src="../assets/js/form.min.js"></script>
 
 <?php
-   include("updaterelatedjs.php");
-   include("UpgradeAccount.php");
+   include('updaterelatedjs.php');
+   include('UpgradeAccount.php');
 ?>
 
 <style>
@@ -329,46 +329,46 @@ div.folder_img_border{
 }
 </style>
 
-<?php 
+<?php
 function get_icon($ext){
                switch ($ext) {
-                       case "jpeg":
+                       case 'jpeg':
                              echo '<i class="fa fa-file-image-o fa-3x" aria-hidden="true"></i>';
                              break;
-                       case "png":
+                       case 'png':
                              echo '<i class="fa fa-file-image-o fa-3x" aria-hidden="true"></i>';
                              break;
-                       case "jpg":
+                       case 'jpg':
                              echo '<i class="fa fa-file-image-o fa-3x" aria-hidden="true"></i>';
                              break;
-                       case "doc":
+                       case 'doc':
                              echo '<i class="fa fa-file-word-o fa-3x" aria-hidden="true"></i>';
                              break;
-                       case "docx":
+                       case 'docx':
                              echo '<i class="fa fa-file-word-o fa-3x" aria-hidden="true"></i>';
                              break;
-                       case "pdf":
+                       case 'pdf':
                              echo '<i class="fa fa-file-pdf-o fa-3x" aria-hidden="true"></i>';
                              break;
-                       case "xls":
+                       case 'xls':
                              echo '<i class="fa fa-file-excel-o fa-3x" aria-hidden="true"></i>';
                              break;
-                       case "xlsx":
+                       case 'xlsx':
                              echo '<i class="fa fa-file-excel-o fa-3x" aria-hidden="true"></i>';
                              break;
-                       case "ppt":
+                       case 'ppt':
                              echo '<i class="fa fa-file-powerpoint-o fa-3x" aria-hidden="true"></i>';
                              break;
-                       case "pptx":
+                       case 'pptx':
                              echo '<i class="fa fa-file-powerpoint-o fa-3x" aria-hidden="true"></i>';
                              break;
-                       case "txt":
+                       case 'txt':
                              echo '<i class="fa fa-file-text-o fa-3x" aria-hidden="true"></i>';
                              break;
-                       case "zip":
+                       case 'zip':
                              echo '<i class="fa fa-file-archive-o fa-3x" aria-hidden="true"></i>';
                              break;
-                       case "rar":
+                       case 'rar':
                              echo '<i class="fa fa-file-archive-o fa-3x" aria-hidden="true"></i>';
                              break;
                       default:
@@ -377,43 +377,43 @@ function get_icon($ext){
 
 }
 
-function get_folder_document_icon($file_type){  
+function get_folder_document_icon($file_type){
     $file_type = strtolower($file_type);
   switch($file_type){
-	case "jpg": $icon = "/graphics/foldericons/icon-jpg.png"; break;
-	case "png": $icon = "/graphics/foldericons/icon-png.png"; break;
-    case "jpeg": $icon = "/graphics/foldericons/icon-jpeg.png"; break;	
-    case "pdf": $icon = "/graphics/foldericons/icon-pdf.jpg"; break;
-    case "doc": $icon = "/graphics/foldericons/icon-word.jpg"; break;
-    case "docx": $icon = "/graphics/foldericons/icon-word.jpg"; break;
-    case "odt": $icon = "/graphics/foldericons/icon-word-odt.png"; break;
-    case "ods": $icon = "/graphics/foldericons/icon-ods.jpg"; break;
-    case "odp": $icon = "/graphics/foldericons/icon-odp.jpg"; break;
-    case "txt": $icon = "/graphics/foldericons/icon-text.png"; break;
-    case "rtf": $icon = "/graphics/foldericons/icon-text.png"; break;
-    case "xls": $icon = "/graphics/foldericons/icon-xls.png"; break;
-    case "xlsx": $icon = "/graphics/foldericons/icon-xls.png"; break;
-    case "xps": $icon = "/graphics/foldericons/icon-xps.png"; break;
-    case "zip": $icon = "/graphics/foldericons/icon-zip.png"; break;
-    case "rar": $icon = "/graphics/foldericons/icon-rar.png"; break;
-    case "mp3": $icon = "/graphics/foldericons/icon-mp3.jpg"; break;
-    case "html": $icon = "/graphics/foldericons/icon-html.png"; break;
-    case "css": $icon = "/graphics/foldericons/icon-html.png"; break;
-    case "htm": $icon = "/graphics/foldericons/icon-html.png"; break;
-    case "js": $icon = "/graphics/foldericons/icon-js.gif"; break;
-    case "xml": $icon = "/graphics/foldericons/icon-xml.png"; break;
-    case "php": $icon = "/graphics/foldericons/icon-php.png"; break;
-    case "ppt": $icon = "/graphics/foldericons/icon-ppt.png"; break;
-    case "pptm": $icon = "/graphics/foldericons/icon-ppt.png"; break;
-    case "pptx": $icon = "/graphics/foldericons/icon-ppt.png"; break;
-  default: $icon = "/graphics/icon_pdf.png"; break;
+	case 'jpg': $icon = '/graphics/foldericons/icon-jpg.png'; break;
+	case 'png': $icon = '/graphics/foldericons/icon-png.png'; break;
+    case 'jpeg': $icon = '/graphics/foldericons/icon-jpeg.png'; break;
+    case 'pdf': $icon = '/graphics/foldericons/icon-pdf.jpg'; break;
+    case 'doc': $icon = '/graphics/foldericons/icon-word.jpg'; break;
+    case 'docx': $icon = '/graphics/foldericons/icon-word.jpg'; break;
+    case 'odt': $icon = '/graphics/foldericons/icon-word-odt.png'; break;
+    case 'ods': $icon = '/graphics/foldericons/icon-ods.jpg'; break;
+    case 'odp': $icon = '/graphics/foldericons/icon-odp.jpg'; break;
+    case 'txt': $icon = '/graphics/foldericons/icon-text.png'; break;
+    case 'rtf': $icon = '/graphics/foldericons/icon-text.png'; break;
+    case 'xls': $icon = '/graphics/foldericons/icon-xls.png'; break;
+    case 'xlsx': $icon = '/graphics/foldericons/icon-xls.png'; break;
+    case 'xps': $icon = '/graphics/foldericons/icon-xps.png'; break;
+    case 'zip': $icon = '/graphics/foldericons/icon-zip.png'; break;
+    case 'rar': $icon = '/graphics/foldericons/icon-rar.png'; break;
+    case 'mp3': $icon = '/graphics/foldericons/icon-mp3.jpg'; break;
+    case 'html': $icon = '/graphics/foldericons/icon-html.png'; break;
+    case 'css': $icon = '/graphics/foldericons/icon-html.png'; break;
+    case 'htm': $icon = '/graphics/foldericons/icon-html.png'; break;
+    case 'js': $icon = '/graphics/foldericons/icon-js.gif'; break;
+    case 'xml': $icon = '/graphics/foldericons/icon-xml.png'; break;
+    case 'php': $icon = '/graphics/foldericons/icon-php.png'; break;
+    case 'ppt': $icon = '/graphics/foldericons/icon-ppt.png'; break;
+    case 'pptm': $icon = '/graphics/foldericons/icon-ppt.png'; break;
+    case 'pptx': $icon = '/graphics/foldericons/icon-ppt.png'; break;
+  default: $icon = '/graphics/icon_pdf.png'; break;
   }
   return $icon;
-}			
+}
 function get_file_extension($file_name){
-		$dot_index = strrpos($file_name, ".");
+		$dot_index = strrpos($file_name, '.');
 		$file_type = substr($file_name, $dot_index + 1);
-		return $file_type;		
+		return $file_type;
 	}
 function filesize_formatted($bytes)
 {
@@ -432,6 +432,6 @@ function filesize_formatted($bytes)
     } else {
         return '0 bytes';
     }
-}		
+}
 ?>
 

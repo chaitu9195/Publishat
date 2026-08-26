@@ -34,8 +34,8 @@
     <div class="collapse navbar-collapse" id="main_navbar">
       <ul class="nav navbar-nav">           
 
-<?php foreach($data as $mod){ 
-$module = ucfirst($mod['Module']); 
+<?php foreach($data as $mod){
+$module = ucfirst($mod['Module']);
 ?>
         <li class="dropdown" id = "<?=strtolower($module);?>" >
           <a href="#/<?=strtolower($module);?>" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,20 +47,20 @@ $module = ucfirst($mod['Module']);
             else if($module == 'Legal') { ?> <i class="fa fa-gavel" aria-hidden="true"></i> <?php } ?>
                 <span class="hidden-xs"><?=$module;?></span> <span class="caret"></span></a>
           <ul class="dropdown-menu" id = "<?=strtolower($module);?>_child">
-          <?php foreach($submod as $nav){ 
-           if($mod['Module'] == $nav['Module']){  
+          <?php foreach($submod as $nav){
+           if($mod['Module'] == $nav['Module']){
              $module = $nav['Module'];
-                 if(lcfirst($module) == 'health') { $module ='medical'; }  ?>
+                 if(lcfirst($module) == 'health') { $module = 'medical'; }  ?>
             <li id = "<?=$nav['Setting'];?>">
                <span class="add-icon">
-              <a href="javascript:void(0)" class="text" onclick = "getVal('<?=$nav["RecordTypeId"];?>','<?=strtolower($module);?>')"> <?=$nav['Setting'];?>  
+              <a href="javascript:void(0)" class="text" onclick = "getVal('<?=$nav['RecordTypeId'];?>','<?=strtolower($module);?>')"> <?=$nav['Setting'];?>  
                 <b title="No of files" id="count<?=$nav['RecordTypeId'];?>">(0)</b>
               </a>
-              <a href="javascript:void(0)" title="New Record" class="icon" onclick = "getNew('<?=$nav["RecordTypeId"];?>','<?=strtolower($module);?>')"> 
+              <a href="javascript:void(0)" title="New Record" class="icon" onclick = "getNew('<?=$nav['RecordTypeId'];?>','<?=strtolower($module);?>')"> 
                   <i class="fa fa-plus-square" aria-hidden="true"></i>
-                  </a> <a href="javascript:void(0)" class="icon" onclick = "getFolder('<?=$nav["RecordTypeId"];?>','<?=$nav["Setting"];?>')"><i class="fa fa-folder " aria-hidden="true"></i></a>
+                  </a> <a href="javascript:void(0)" class="icon" onclick = "getFolder('<?=$nav['RecordTypeId'];?>','<?=$nav['Setting'];?>')"><i class="fa fa-folder " aria-hidden="true"></i></a>
                </span>
-              <script>  rec_count('<?=$nav["RecordTypeId"];?>');  </script>
+              <script>  rec_count('<?=$nav['RecordTypeId'];?>');  </script>
             </li>
           <?php   } } ?>
          </ul>
@@ -87,8 +87,8 @@ $module = ucfirst($mod['Module']);
     <div class="formobile">
       <ul class="menu">   
        
-<?php foreach($data as $mod){ 
-$module = ucfirst($mod['Module']); 
+<?php foreach($data as $mod){
+$module = ucfirst($mod['Module']);
 ?>
         <li>
          <a href="#" >  
@@ -100,18 +100,18 @@ $module = ucfirst($mod['Module']);
             else if($module == 'Legal') { ?> <i class="fa fa-gavel" aria-hidden="true"></i> <?php } ?>
             <h6><?=$module;?></h6></a>
           <ul>
-        <?php foreach($submod as $nav){ 
-          if($mod['Module'] == $nav['Module']){  
+        <?php foreach($submod as $nav){
+          if($mod['Module'] == $nav['Module']){
              $module = $nav['Module'];
-                 if(lcfirst($module) == 'health') { $module ='medical'; }  ?>
+                 if(lcfirst($module) == 'health') { $module = 'medical'; }  ?>
             <li>
-              <span href="#" onclick ="getVal('<?=$nav["RecordTypeId"];?>','<?=strtolower($module);?>')">
+              <span href="#" onclick ="getVal('<?=$nav['RecordTypeId'];?>','<?=strtolower($module);?>')">
                      <?=$nav['Setting'];?>  <b title="No of files" id="mcount<?=$nav['RecordTypeId'];?>">(0)</b>
                   </span>
-                  <span href="#" title="New Record" class="icon" onclick="getNew('<?=$nav["RecordTypeId"];?>','<?=strtolower($module);?>')"> 
+                  <span href="#" title="New Record" class="icon" onclick="getNew('<?=$nav['RecordTypeId'];?>','<?=strtolower($module);?>')"> 
                   <i class="fa fa-plus-square" aria-hidden="true"></i>
-                  </span>  <span href="#" class="icon" style='margin-right:20px' onclick="getFolder('<?=$nav["RecordTypeId"];?>','<?=$nav["Setting"];?>')"><i class="fa fa-folder " aria-hidden="true"></i></span>
-              <script> rec_count('<?=$nav["RecordTypeId"];?>');  </script>
+                  </span>  <span href="#" class="icon" style='margin-right:20px' onclick="getFolder('<?=$nav['RecordTypeId'];?>','<?=$nav['Setting'];?>')"><i class="fa fa-folder " aria-hidden="true"></i></span>
+              <script> rec_count('<?=$nav['RecordTypeId'];?>');  </script>
             </li>
           <?php   } } ?> </ul>
 </li>

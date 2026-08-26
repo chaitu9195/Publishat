@@ -6,20 +6,20 @@ $papersize = $paymentdata['papersize'];
 $pagescount = $paymentdata['pagescount'];
 $copies = $paymentdata['copies'];
 $user_id = trim($this->session->userdata('user_id'));
-$orderid = $user_id."-".date('YmdHis')."_P";
-$id = $paymentdata["id"];
-$code = $paymentdata["code"];
-$user_name = $paymentdata["name"];
-$address = $paymentdata["address"];
+$orderid = $user_id . '-' . date('YmdHis') . '_P';
+$id = $paymentdata['id'];
+$code = $paymentdata['code'];
+$user_name = $paymentdata['name'];
+$address = $paymentdata['address'];
 
 $m = new MongoClient();
 $db = $m->jobs;
 $collection = $db->printers;
-$data = $collection->findOne(array("code"=>$code));
+$data = $collection->findOne(['code' => $code]);
 $latitude = $data['latitude'];
 $longitude = $data['longitude'];
-setcookie("OrderID", $orderid, time() + (86400 * 30), "/");
-setcookie("TotalAmount", $cost, time() + (86400 * 30), "/");
+setcookie('OrderID', $orderid, time() + (86400 * 30), '/');
+setcookie('TotalAmount', $cost, time() + (86400 * 30), '/');
 ?>
 <body>
 <div class="container">
@@ -48,10 +48,10 @@ setcookie("TotalAmount", $cost, time() + (86400 * 30), "/");
 				<td>No.Of Pages</td>
 				<td><?=$pagescount;?></td>
 		    </tr>
-			<?php if($print_type == "Project"){ ?>
+			<?php if($print_type == 'Project'){ ?>
 			<tr>
 				<td>Color Pages</td>
-				<td><?php echo count($ProjectPageNos ?? array());?></td>
+				<td><?php echo count($ProjectPageNos ?? []);?></td>
 			</tr>
 			<?php } ?>
 			<tr>

@@ -1,37 +1,37 @@
 <?php
-$images =array("jpg","png","jpeg","bmp","gif");
+$images = ['jpg','png','jpeg','bmp','gif'];
 $filetype = strtolower($filetype);
 function count_pages($pdfname) {
   $pdftext = file_get_contents($pdfname);
   $num = preg_match_all("/\/Page\W/", $pdftext, $dummy);
   return $num;
 }
-if(strtolower($filetype) == "pdf"){
+if(strtolower($filetype) == 'pdf'){
 	$num_pages = count_pages($path);
 }
-else if($filetype == "docx"){
+else if($filetype == 'docx'){
 	$content = file_get_contents($path);
-	$file = file_put_contents("../../../print.".$filetype, $content);
-	$num_pages = PageCount_DOCX("../../../print.".$filetype);
-	unlink("../../../print.".$filetype);
+	$file = file_put_contents('../../../print.' . $filetype, $content);
+	$num_pages = PageCount_DOCX('../../../print.' . $filetype);
+	unlink('../../../print.' . $filetype);
 }
-else if($filetype == "doc"){
+else if($filetype == 'doc'){
 	$content = file_get_contents($path);
-	$file = file_put_contents("/var/www/html/print.".$filetype, $content);
-	$this->load->helper("converttopdf");
-	$convertedPath = converttopdf(base_url()."print.".$filetype);
+	$file = file_put_contents('/var/www/html/print.' . $filetype, $content);
+	$this->load->helper('converttopdf');
+	$convertedPath = converttopdf(base_url() . 'print.' . $filetype);
 	$num_pages = count_pages($convertedPath);
 	unlink($convertedPath);
 	unlink($file);
 }
-else if($filetype == "pptx"){
+else if($filetype == 'pptx'){
 	$content = file_get_contents($path);
-	$file = file_put_contents("../../../print.".$filetype, $content);
-	$num_pages = PageCount_PPTX("../../../print.".$filetype);
-	unlink("../../../print.".$filetype);
+	$file = file_put_contents('../../../print.' . $filetype, $content);
+	$num_pages = PageCount_PPTX('../../../print.' . $filetype);
+	unlink('../../../print.' . $filetype);
 }
 else{
-	
+
 }
 
 function PageCount_PPTX($file) {
@@ -149,8 +149,8 @@ var loc = $(this).val();
  <div id="confirmation">
 <div class="row">
 	<div class="col-md-8">
-	<?php if(in_array($filetype, $images ?? array())){
-		  $num_pages = "1";
+	<?php if(in_array($filetype, $images ?? [])){
+		  $num_pages = '1';
 		?>
 		<iframe name="iframetoprint" id="iframetoprint" src="<?=$path;?>"></iframe>
 	<?php } else { ?>
@@ -232,28 +232,28 @@ var loc = $(this).val();
 						</div>-->
 						<?php /* === MAP DATA === */ ?>
 						<?php
-						$locations = array();
+						$locations = [];
                         $i = 1;
-						foreach ($data as $row)  
-							{ 
-							  
-								$name =$row["name"];
-                                $lattitude =$row["latitude"];
-								$longitude =$row["longitude"];
+						foreach ($data as $row)
+							{
+
+								$name = $row['name'];
+                                $lattitude = $row['latitude'];
+								$longitude = $row['longitude'];
 								$id = $i;
-								$code = $row["code"];
-								$location_address = $row["address"];
-                                $locations[] = array('google_map' => array(
+								$code = $row['code'];
+								$location_address = $row['address'];
+                                $locations[] = ['google_map' => [
                                     'lat' => $lattitude,
                                     'lng' => $longitude,
-									),
+									],
                                     'location_address' => $location_address,
                                     'location_name' => $name,
 									'id' => $id
-                                );
+                                ];
                                 ?>
                                 <input type="hidden" id="<?=$id;?>" value="<?=$code;?>">
-                         <?php      
+                         <?php
                                 $i++;
 							}
 							//print_r($locations);

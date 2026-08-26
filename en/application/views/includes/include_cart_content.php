@@ -1,14 +1,14 @@
-              <?php foreach($cdata as $data){ 
+              <?php foreach($cdata as $data){
                $label = $data['Notes'];
                $doc_path = $data['DocumentPath'];
-               $filename = $data["filename"];
-               $fid = $data["_id"];
+               $filename = $data['filename'];
+               $fid = $data['_id'];
                if(empty($filename)){
-                     $filename =  pathinfo($doc_path, PATHINFO_FILENAME);
-                      $filename =  substr(strstr($filename, "-"),1,15);
+                     $filename = pathinfo($doc_path, PATHINFO_FILENAME);
+                      $filename = substr(strstr($filename, '-'),1,15);
                 }
                 $filename = substr($filename, 0, 11);
-                $ext = $data["FileType"];
+                $ext = $data['FileType'];
               ?>
                  <tr>
                    <td class="col-xs-1"><input type="checkbox" name="document_id" id="doc_id" value="<?=$data['DocumentId']?>"></td>
@@ -23,46 +23,46 @@
 
 
 
-<?php 
+<?php
 function get_icon($ext){
                switch ($ext) {
-                       case "jpeg":
+                       case 'jpeg':
                              echo '<i class="fa fa-file-image-o " aria-hidden="true"></i>';
                              break;
-                       case "png":
+                       case 'png':
                              echo '<i class="fa fa-file-image-o " aria-hidden="true"></i>';
                              break;
-                       case "jpg":
+                       case 'jpg':
                              echo '<i class="fa fa-file-image-o" aria-hidden="true"></i>';
                              break;
-                       case "doc":
+                       case 'doc':
                              echo '<i class="fa fa-file-word-o" aria-hidden="true"></i>';
                              break;
-                       case "docx":
+                       case 'docx':
                              echo '<i class="fa fa-file-word-o" aria-hidden="true"></i>';
                              break;
-                       case "pdf":
+                       case 'pdf':
                              echo '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>';
                              break;
-                       case "xls":
+                       case 'xls':
                              echo '<i class="fa fa-file-excel-o" aria-hidden="true"></i>';
                              break;
-                       case "xlsx":
+                       case 'xlsx':
                              echo '<i class="fa fa-file-excel-o" aria-hidden="true"></i>';
                              break;
-                       case "ppt":
+                       case 'ppt':
                              echo '<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>';
                              break;
-                       case "pptx":
+                       case 'pptx':
                              echo '<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>';
                              break;
-                       case "txt":
+                       case 'txt':
                              echo '<i class="fa fa-file-text-o" aria-hidden="true"></i>';
                              break;
-                       case "zip":
+                       case 'zip':
                              echo '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
                              break;
-                       case "rar":
+                       case 'rar':
                              echo '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
                              break;
                       default:

@@ -1,5 +1,5 @@
 <?php
-include("includes/header_index_view.php");
+include('includes/header_index_view.php');
 ?>
 <div class="container">
 <section class="maindiv">
@@ -62,7 +62,7 @@ However the internet is an ever evolving medium. We may change our Privacy Polic
 </div>
 
 <?php
-include("includes/footer_index_view.php");
+include('includes/footer_index_view.php');
 ?>
 <style>
 p, li{

@@ -2,7 +2,7 @@
 $authUrl = google_login_url();
 $user_id = $this->session->userdata('user_id');
    if(!empty(trim((string)$user_id))){
-      header("Location:".base_url()."en/web/records");
+      header('Location:' . base_url() . 'en/web/records');
    }
 ?>
 <!doctype html>
@@ -337,12 +337,12 @@ $user_id = $this->session->userdata('user_id');
                 </div>
 			     <div class="row menuclass blogs">
          <?php
-            $query = $this->mongodb->get("Articles");
-                if(count($query ?? array()) > 0){
+            $query = $this->mongodb->get('Articles');
+                if(count($query ?? []) > 0){
                 foreach ($query as $data){
                       $id = $data['_id'];
                       $heading = $data['articleheading'];
-                      $articledes= $data['ArticleDescription'];
+                      $articledes = $data['ArticleDescription'];
                       $string = strip_tags($articledes);
                         if (strlen($string) > 500) {
                             $stringCut = substr($string, 0, 500);
@@ -350,9 +350,9 @@ $user_id = $this->session->userdata('user_id');
                         }
                       $user_id = $data['UserId'];
                       $date = $data['Date'];
-                      $this->mongodb->where(array("UserId"=>$user_id));
-                      $res = $this->mongodb->get("User");
-                      if(count($res ?? array()) > 0){
+                      $this->mongodb->where(['UserId' => $user_id]);
+                      $res = $this->mongodb->get('User');
+                      if(count($res ?? []) > 0){
                       foreach ($res as $data) {
                         $name = $data['Name'];
                         }

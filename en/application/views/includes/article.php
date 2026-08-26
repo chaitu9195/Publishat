@@ -60,13 +60,13 @@ height: 46px ;
 </div>
 </form>
 <div class="col-md-12">
-<?php 
+<?php
 $data = $data['articleinfo'];
-foreach($data as $articleinfo){ 
-$id = $articleinfo['_id']; 
+foreach($data as $articleinfo){
+$id = $articleinfo['_id'];
 $userid = $articleinfo['UserId'];
 $imagepath = $articleinfo['ArticleImage'];
-$articledes= $articleinfo['ArticleDescription'];
+$articledes = $articleinfo['ArticleDescription'];
 $art_heading = $articleinfo['articleheading'];
 $art_url = $articleinfo['ArticleUrl'];
 //$article_heading = base64_decode($art_heading );

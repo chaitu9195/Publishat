@@ -77,8 +77,8 @@ $(document).ready(function() {
 });
 </script>
 <?php
-$images =array("jpg","png","jpeg","bmp","gif");
-$path = base_url()."web/viewfile?fid=$fid";
+$images = ['jpg','png','jpeg','bmp','gif'];
+$path = base_url() . "web/viewfile?fid=$fid";
 ?>
 
  <div class="container-fluid" style="padding: 0px;">
@@ -93,10 +93,10 @@ $path = base_url()."web/viewfile?fid=$fid";
 		</div> 
 	</div>
 <div id="image_content">
-<?php if(in_array(strtolower($type), $images ?? array())){ ?>
+<?php if(in_array(strtolower($type), $images ?? [])){ ?>
 
 	<img src="<?=$path;?>" style="object-fit: cover; max-height: 100vh">
-<?php } else if(strtolower($type) == "pdf"){ ?>
+<?php } else if(strtolower($type) == 'pdf'){ ?>
     <!-- PDFs render natively in the browser (Google gView can't reach a local URL). -->
     <iframe src="<?=$path;?>" width="100%" height="90%" style="padding: 0px" frameborder="0"></iframe>
 <?php } else{ ?>
@@ -109,7 +109,7 @@ $path = base_url()."web/viewfile?fid=$fid";
 </div>			
 <script>
 $(document).ready(function(){
-	<?php if($isPrint == "Y"){ ?>
+	<?php if($isPrint == 'Y'){ ?>
 		$(".modal_data").click();
 	<?php } ?>
 });
@@ -118,7 +118,7 @@ $('.modal_data').one('click',function(e){
     var id = this.id;  
 	var path = '<?=$path;?>';
 	var filetype = '<?=$type;?>';
-	var filename = '<?=$filename.$type;?>';
+	var filename = '<?=$filename . $type;?>';
 	var typeId  = '<?=$typeId;?>'; 
 	var module = '<?=$module;?>';
     $.ajax({

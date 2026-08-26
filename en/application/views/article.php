@@ -1,11 +1,11 @@
 <?php
-$id = $_GET["id"];
-$this->mongodb->where(array("_id"=>mongo_id($id)));
-$qry = $this->mongodb->get("Articles");
+$id = $_GET['id'];
+$this->mongodb->where(['_id' => mongo_id($id)]);
+$qry = $this->mongodb->get('Articles');
 foreach($qry as $res){
-$title = $res["articleheading"];
-$url = $res["ArticleUrl"];
-$description = $res["ArticleDescription"];
+$title = $res['articleheading'];
+$url = $res['ArticleUrl'];
+$description = $res['ArticleDescription'];
 }
 ?>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>

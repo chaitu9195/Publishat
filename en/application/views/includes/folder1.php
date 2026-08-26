@@ -1,7 +1,7 @@
 <?php
-$fid = $_GET["id"];
-$id = $_GET["f"];
-$viewtype = $this->input->cookie('viewtype',TRUE); 
+$fid = $_GET['id'];
+$id = $_GET['f'];
+$viewtype = $this->input->cookie('viewtype',TRUE);
 if(!empty($id)){
 	$fid = $id;
 }
@@ -59,14 +59,14 @@ if(empty($fid)){
 	 </div>
 </div>
 <div class="row path">
-<?php 
+<?php
 $counter = 0;
 foreach($fpath as $f_name){ ?>
-<a onClick="getfolderfiles('<?=$f_name["ParentId"];?>')" class="folder_path subfolderpath" style="display:none;"><?=$param['module']?><span class="glyphicon glyphicon-chevron-right arrow_ico" style="color: rgba(51, 122, 183, 0.48);"></span></a>
-<a onClick="getfolderfiles('<?=$f_name["_id"];?>')" class="folder_path"><?=$f_name["FolderName"];?>
-<?php 
+<a onClick="getfolderfiles('<?=$f_name['ParentId'];?>')" class="folder_path subfolderpath" style="display:none;"><?=$param['module']?><span class="glyphicon glyphicon-chevron-right arrow_ico" style="color: rgba(51, 122, 183, 0.48);"></span></a>
+<a onClick="getfolderfiles('<?=$f_name['_id'];?>')" class="folder_path"><?=$f_name['FolderName'];?>
+<?php
 $counter++;
-if ($counter < count($fpath ?? array())) { ?>
+if ($counter < count($fpath ?? [])) { ?>
 <span class="glyphicon glyphicon-chevron-right arrow_ico" style="color: rgba(51, 122, 183, 0.48);"></span>                 
 <?php } else { ?>
  <span class="glyphicon glyphicon-triangle-bottom arrow_ico"></span></a>
@@ -77,13 +77,13 @@ if ($counter < count($fpath ?? array())) { ?>
      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
      <strong id="msg"></strong> 
     </div>
-	<?php 
+	<?php
 	if($status == 'success'){
 		?>
 		 <div class="alert alert-success alert-dismissable" id="error">
      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
      <strong id="msg">File(s) successfully uploaded</strong> 
-<?	} else if($status == "failed"){?>
+<?	} else if($status == 'failed'){?>
 		 <div class="alert alert-danger alert-dismissable" id="error">
      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
      <strong id="msg">No File Selected</strong> 
@@ -95,7 +95,7 @@ if ($counter < count($fpath ?? array())) { ?>
 <div id="main_content">
 
 <div class="row attachments">
- <?php if(count($files ?? array())>0 && $files != "No Files") { ?> 
+ <?php if(count($files ?? []) > 0 && $files != 'No Files') { ?> 
 	<table class="table table-responsive table-stripped" id="fol_data">
 		<thead>
 			<tr>
@@ -110,52 +110,52 @@ if ($counter < count($fpath ?? array())) { ?>
 		</thead>
               <form name="folderForm" id="folderForm" method="POST" action"#">
 	     <tbody id="searchable_data">
-		<?php foreach($files as $file){ 
-             $id = $file['_id'];		
-		     $path = "../../".$file['FilePath'];
+		<?php foreach($files as $file){
+             $id = $file['_id'];
+		     $path = '../../' . $file['FilePath'];
 		     $type = strtolower($file['FileType']);
-			 $filename = $file["filename"];
+			 $filename = $file['filename'];
 			 if(empty($type)){
 				 $type = strtolower(get_file_extension($filename));
 			 }
-		     $images =array("jpg","png","jpeg","bmp","gif");
-			 $fileextension = array("zip","rar");
-			 
+		     $images = ['jpg','png','jpeg','bmp','gif'];
+			 $fileextension = ['zip','rar'];
+
              $not_image = get_folder_document_icon($type);
 			 $fol_type = $file['Type'];
-			 $fol_name = $file["FolderName"];
-			 
-			 if($fol_type == "Folder"){
+			 $fol_name = $file['FolderName'];
+
+			 if($fol_type == 'Folder'){
 				 $view_file = '<i class="glyphicon glyphicon-folder-open" style="font-size:22px;color:#fedd8a"></i>';
 			 }
 			 else{
-		        if(in_array($type, $images ?? array())){ $view_file = '<img src="../'.$path.'" id="img" class="img-responsive img imag" >'; }
-		        else { $view_file = '<img src="../../../'.$not_image.'" id="img" class="img-responsive img imag" >'; }
+		        if(in_array($type, $images ?? [])){ $view_file = '<img src="../' . $path . '" id="img" class="img-responsive img imag" >'; }
+		        else { $view_file = '<img src="../../../' . $not_image . '" id="img" class="img-responsive img imag" >'; }
 			 }
 			 $size = filesize_formatted($file['length']);
-			 $date = date("d-M-Y", strtotime($file['TS'])); 
-			 
+			 $date = date('d-M-Y', strtotime($file['TS']));
+
 			 if(empty($filename)){
-			    $filename = ucfirst(strtolower(substr(strstr(pathinfo($file['DocumentPath'], PATHINFO_FILENAME),"-"),1,20)));
+			    $filename = ucfirst(strtolower(substr(strstr(pathinfo($file['DocumentPath'], PATHINFO_FILENAME),'-'),1,20)));
 			 }
 			 ?>
-            <?php if($fol_type == "File"){ ?>
+            <?php if($fol_type == 'File'){ ?>
                <tr onClick="viewfile('viewfile?fid=<?=$file['_id'];?>')">
             <? } else { ?>
 			   <tr onClick="getfolderfiles('<?=$file['_id'];?>')">
 			<? } ?>
 			<td><input type="checkbox" name="doc_id" value="<?=$file['_id']?>" id="doc_id" class="doc_id"><input type="hidden" id="path<?=$id;?>" value="<?=$path;?>"><input type="hidden" id="filetype<?=$id;?>" value="<?=$type;?>"></td>
 				<td><?=$view_file?></td>
-				<td><?php if($fol_type == "File"){
+				<td><?php if($fol_type == 'File'){
 						echo $filename;
 					} else{
 						echo $fol_name;
 				}?></td>
-				<td><?php if($fol_type == "File"){ echo $type; } else{ echo "-"; }?></td>
-				<td><?php if($fol_type == "File"){ echo $size; } else{ echo "-"; }?></td>
+				<td><?php if($fol_type == 'File'){ echo $type; } else{ echo '-'; }?></td>
+				<td><?php if($fol_type == 'File'){ echo $size; } else{ echo '-'; }?></td>
 				<td><?=$date?></td>
 				<td>
-				<?php if($fol_type == "File" && !in_array($type, $fileextension ?? array())){ ?>
+				<?php if($fol_type == 'File' && !in_array($type, $fileextension ?? [])){ ?>
 				<i class="fa fa-print modal_data" aria-hidden="true" data-toggle="modal" id="<?=$id;?>"  data-target="#myModal<?=$id;?>" title="Print"></i>
 				<?php } ?>
 				</td>
@@ -258,7 +258,7 @@ if ($counter < count($fpath ?? array())) { ?>
             <button type="button" id="del_close" class="pull-right btn btn-danger btn-xs"><i class="fa fa-remove" aria-hidden="true"></i>   
             </button>
         </div>
-          <?php  $code=rand(100000,999999);
+          <?php  $code = rand(100000,999999);
              $this->session->set_userdata('folder_captcha', $code);  ?>     
 	  <div class="alert alert-danger alert-dismissable fade in err" id="del_error" style="display:none">
 	    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -863,7 +863,7 @@ tr:hover{
 
 </style>
 
-<?php 
+<?php
 function filesize_formatted($bytes)
 {
     //$bytes = filesize($file);
@@ -883,33 +883,33 @@ function filesize_formatted($bytes)
     }
 }
 
-function get_folder_document_icon($file_type){	
+function get_folder_document_icon($file_type){
     $file_type = strtolower($file_type);
 	switch($file_type){
-		case "pdf": $icon = "/graphics/foldericons/icon-pdf.jpg"; break;
-		case "doc": $icon = "/graphics/foldericons/icon-word.jpg"; break;
-		case "docx": $icon = "/graphics/foldericons/icon-word.jpg"; break;
-		case "odt": $icon = "/graphics/foldericons/icon-word-odt.png"; break;
-		case "ods": $icon = "/graphics/foldericons/icon-ods.jpg"; break;
-		case "odp": $icon = "/graphics/foldericons/icon-odp.jpg"; break;
-		case "txt": $icon = "/graphics/foldericons/icon-text.png"; break;
-		case "rtf": $icon = "/graphics/foldericons/icon-text.png"; break;
-		case "xls": $icon = "/graphics/foldericons/icon-xls.png"; break;
-		case "xlsx": $icon = "/graphics/foldericons/icon-xls.png"; break;
-		case "xps": $icon = "/graphics/foldericons/icon-xps.png"; break;
-		case "zip": $icon = "/graphics/foldericons/icon-zip.png"; break;
-		case "rar": $icon = "/graphics/foldericons/icon-rar.png"; break;
-        case "mp3": $icon = "/graphics/foldericons/icon-mp3.jpg"; break;
-        case "html": $icon = "/graphics/foldericons/icon-html.png"; break;
-        case "css": $icon = "/graphics/foldericons/icon-html.png"; break;
-        case "htm": $icon = "/graphics/foldericons/icon-html.png"; break;
-        case "js": $icon = "/graphics/foldericons/icon-js.gif"; break;
-        case "xml": $icon = "/graphics/foldericons/icon-xml.png"; break;
-        case "php": $icon = "/graphics/foldericons/icon-php.png"; break;
-        case "ppt": $icon = "/graphics/foldericons/icon-ppt.png"; break;
-        case "pptm": $icon = "/graphics/foldericons/icon-ppt.png"; break;
-        case "pptx": $icon = "/graphics/foldericons/icon-ppt.png"; break;
-        default: $icon = "/graphics/icon_pdf.png"; break;
+		case 'pdf': $icon = '/graphics/foldericons/icon-pdf.jpg'; break;
+		case 'doc': $icon = '/graphics/foldericons/icon-word.jpg'; break;
+		case 'docx': $icon = '/graphics/foldericons/icon-word.jpg'; break;
+		case 'odt': $icon = '/graphics/foldericons/icon-word-odt.png'; break;
+		case 'ods': $icon = '/graphics/foldericons/icon-ods.jpg'; break;
+		case 'odp': $icon = '/graphics/foldericons/icon-odp.jpg'; break;
+		case 'txt': $icon = '/graphics/foldericons/icon-text.png'; break;
+		case 'rtf': $icon = '/graphics/foldericons/icon-text.png'; break;
+		case 'xls': $icon = '/graphics/foldericons/icon-xls.png'; break;
+		case 'xlsx': $icon = '/graphics/foldericons/icon-xls.png'; break;
+		case 'xps': $icon = '/graphics/foldericons/icon-xps.png'; break;
+		case 'zip': $icon = '/graphics/foldericons/icon-zip.png'; break;
+		case 'rar': $icon = '/graphics/foldericons/icon-rar.png'; break;
+        case 'mp3': $icon = '/graphics/foldericons/icon-mp3.jpg'; break;
+        case 'html': $icon = '/graphics/foldericons/icon-html.png'; break;
+        case 'css': $icon = '/graphics/foldericons/icon-html.png'; break;
+        case 'htm': $icon = '/graphics/foldericons/icon-html.png'; break;
+        case 'js': $icon = '/graphics/foldericons/icon-js.gif'; break;
+        case 'xml': $icon = '/graphics/foldericons/icon-xml.png'; break;
+        case 'php': $icon = '/graphics/foldericons/icon-php.png'; break;
+        case 'ppt': $icon = '/graphics/foldericons/icon-ppt.png'; break;
+        case 'pptm': $icon = '/graphics/foldericons/icon-ppt.png'; break;
+        case 'pptx': $icon = '/graphics/foldericons/icon-ppt.png'; break;
+        default: $icon = '/graphics/icon_pdf.png'; break;
 	}
 	return $icon;
 }
@@ -1011,10 +1011,10 @@ function get_folder_document_icon($file_type){
 
 <!--************************************* Google Picker Code END ********************************************************-->
 
-<?php 
+<?php
 function get_file_extension($file_name){
-		$dot_index = strrpos($file_name, ".");
+		$dot_index = strrpos($file_name, '.');
 		$file_type = substr($file_name, $dot_index + 1);
-		return $file_type;		
+		return $file_type;
 	}
 	?>

@@ -3,16 +3,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $rid = $rid;
 $mod = $module;
 if(empty($rid)){
-  $rid = "1";
+  $rid = '1';
 }
 if(empty($mod)){
-  $mod = "academic";
+  $mod = 'academic';
 }
 $user_id = $this->session->user_id;
-$Upgraded = $this->session->userdata("Upgraded");
+$Upgraded = $this->session->userdata('Upgraded');
 //print_r($Upgraded);die;
 //echo base_url();
-$fileURL = $_GET["fileURL"];
+$fileURL = $_GET['fileURL'];
 ?>
 
 <!DOCTYPE html>
@@ -137,20 +137,20 @@ $fileURL = $_GET["fileURL"];
 					</div>
 					<?php
 					$user_id = trim($this->session->userdata('user_id'));
-						$orderid = $user_id."-".date('YmdHis')."_U";
-						setcookie("TotalAmount", AccountUpgradeAmonut, time() + (86400 * 30), "/");
-						setcookie("OrderID", $orderid, time() + (86400 * 30), "/");
+						$orderid = $user_id . '-' . date('YmdHis') . '_U';
+						setcookie('TotalAmount', AccountUpgradeAmonut, time() + (86400 * 30), '/');
+						setcookie('OrderID', $orderid, time() + (86400 * 30), '/');
 					?>
 					
-						<input type="hidden" name ="CUST_ID" value="<?=$user_id."-".date('YmdHis');?>">
+						<input type="hidden" name ="CUST_ID" value="<?=$user_id . '-' . date('YmdHis');?>">
 						<input type="hidden" name ="INDUSTRY_TYPE_ID" value="Retail120">
 						<input type="hidden" name ="CHANNEL_ID" value="WEB">
 					
-					<?php if($Upgraded == 'Y'){ 
-					    $disabled = "disabled";
+					<?php if($Upgraded == 'Y'){
+					    $disabled = 'disabled';
 					}
                     else{
-					     $disabled = "";	
+					     $disabled = '';
 					}
 					?>
 						<div class="col-md-12">

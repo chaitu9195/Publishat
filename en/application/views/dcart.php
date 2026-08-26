@@ -25,7 +25,7 @@
              <span class="caret pull-right"></span></button>
           <ul class="dropdown-menu" id="cartName">
 		        
-           <?php 
+           <?php
 		   foreach($names as $name) {
         ?>
 		   <li value="<?=$name?>"><a href="#"><?=$name?><i class="fa fa-remove pull-right" id="deletecart_data" onclick="cartRecDelete('<?=$name?>')"></i></a></li>           
@@ -53,14 +53,14 @@
             <tbody id="cart_body">            
               <?php foreach($cdata as $data){
 				  //print_r($data);
-               $doc_path= $data['DocumentPath'];
+               $doc_path = $data['DocumentPath'];
                $label = $data['Notes'];
-               $filename = $data["filename"];
-               $fid = $data["_id"];
+               $filename = $data['filename'];
+               $fid = $data['_id'];
                if(empty($filename)){
 					$filename = basename($doc_path);
-					$filename = substr($filename, strpos($filename, "-") + 1);
-                     
+					$filename = substr($filename, strpos($filename, '-') + 1);
+
                 }
                      $ext = pathinfo($filename, PATHINFO_EXTENSION);
 					 $filename = basename($filename, $ext);
@@ -68,9 +68,9 @@
               ?>
                  <tr>
                    <td class="col-xs-1"><input type="checkbox" name="document_id" id="doc_id" class="doc_id" value="<?=$data['DocumentId']?>"></td>
-                   <td class="col-xs-4"><?=$filename.".".$ext?></td>
+                   <td class="col-xs-4"><?=$filename . '.' . $ext?></td>
                    <td class="col-xs-5"><a href="./docviewer?fid=<?=$data['DocumentId']?>&type=<?=strtolower($ext);?>" target="_blank" title ='View / Download File'><span class="files">
-                    <?=get_icon(strtolower($ext));?> &nbsp; <?=$filename.$ext?> </span></a>
+                    <?=get_icon(strtolower($ext));?> &nbsp; <?=$filename . $ext?> </span></a>
                    </td>
                    <td class="col-xs-3"><?=$data['Path']?></td>
                  </tr>
@@ -139,7 +139,7 @@
             <button type="button" id="del_close" class="pull-right btn btn-danger btn-xs"><i class="fa fa-remove" aria-hidden="true"></i>   
             </button>
         </div>
-          <?php  $code=rand(100000,999999);
+          <?php  $code = rand(100000,999999);
              $this->session->set_userdata('cart_captcha', $code);  ?>     
 	  <div class="alert alert-danger alert-dismissable fade in err" id="del_error" style="display:none">
 	    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -413,46 +413,46 @@ height:96px !important;
 </style>
 
 
-<?php 
+<?php
 function get_icon($ext){
                switch ($ext) {
-                       case "jpeg":
+                       case 'jpeg':
                              echo '<i class="fa fa-file-image-o " aria-hidden="true"></i>';
                              break;
-                       case "png":
+                       case 'png':
                              echo '<i class="fa fa-file-image-o " aria-hidden="true"></i>';
                              break;
-                       case "jpg":
+                       case 'jpg':
                              echo '<i class="fa fa-file-image-o" aria-hidden="true"></i>';
                              break;
-                       case "doc":
+                       case 'doc':
                              echo '<i class="fa fa-file-word-o" aria-hidden="true"></i>';
                              break;
-                       case "docx":
+                       case 'docx':
                              echo '<i class="fa fa-file-word-o" aria-hidden="true"></i>';
                              break;
-                       case "pdf":
+                       case 'pdf':
                              echo '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>';
                              break;
-                       case "xls":
+                       case 'xls':
                              echo '<i class="fa fa-file-excel-o" aria-hidden="true"></i>';
                              break;
-                       case "xlsx":
+                       case 'xlsx':
                              echo '<i class="fa fa-file-excel-o" aria-hidden="true"></i>';
                              break;
-                       case "ppt":
+                       case 'ppt':
                              echo '<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>';
                              break;
-                       case "pptx":
+                       case 'pptx':
                              echo '<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>';
                              break;
-                       case "txt":
+                       case 'txt':
                              echo '<i class="fa fa-file-text-o" aria-hidden="true"></i>';
                              break;
-                       case "zip":
+                       case 'zip':
                              echo '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
                              break;
-                       case "rar":
+                       case 'rar':
                              echo '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
                              break;
                       default:
