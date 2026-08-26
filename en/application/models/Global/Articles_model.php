@@ -21,9 +21,9 @@ class Articles_model extends CI_Model
     {
         $user_id = $this->session->userdata('user_id');
         $articles_des = str_replace("'", '', $params['ArticleDescription']);
-        //$article_des = base64_encode($articles_des );
+
         $article_heading = $params['articleheading'];
-        //$art_heading = base64_encode($article_heading );
+
         $article_url = $params['articleurl'];
         $params['Date'] = date('F jS\, Y ');
         $params['UserId'] = $user_id;
@@ -41,7 +41,6 @@ class Articles_model extends CI_Model
             $image_path = '';
         }
         $query = $this->mongodb->insert('Articles', $params);
-
     }
     public function articleinfo()
     {
@@ -51,5 +50,4 @@ class Articles_model extends CI_Model
         }
         return ['article_info' => $article_data];
     }
-
 }

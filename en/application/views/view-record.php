@@ -317,15 +317,14 @@
             <h3> Attachments </h3>
             <?php if(count($files ?? [])) {
                for($i = 0;$i <= count($files ?? []) - 1; $i++){
-
 			    $doc_id = $files[$i]['DocumentId'];
                 $label = $files[$i]['Notes'];
-                //$label = substr_replace($label ,"",-7);
+
                 $path = $files[$i]['DocumentPath'];
 				$filename = $files[$i]['filename'];
 				if(empty($filename)){
                     $filename = basename($path);
-					//$filename = substr($filename, strpos($filename, "-") + 1);
+
 					$filename = end(explode('-',$filename));
 				}
 				  $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
@@ -355,7 +354,7 @@
                <?=($ext == 'jpeg' || $ext == 'png' || $ext = 'jpg' || $ext == 'pdf' || $ext == 'gif') ? 'View' : 'Download'; ?>   </a>
              </div> 
              <?php
-               }//for close
+               }
              } else {  echo 'Files not found'; }
            ?>
                  
@@ -761,8 +760,6 @@ function get_icon($ext){
                       default:
                               echo '<img src="https://png.icons8.com/binary-file-filled/ios7/50/000000">';
                 }
-
 }
-
 
 ?>

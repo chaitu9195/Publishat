@@ -14,7 +14,6 @@ class Signup extends REST_Controller
     public function index_get()
     {
         $this->load->view('index');
-
     }
 
     public function signup_get()
@@ -52,7 +51,6 @@ class Signup extends REST_Controller
     }
     public function googleoauth_get()
     {
-        // Modern google/apiclient flow (replaces the retired bundled Google_Client).
         $gClient = google_oauth_client();
 
         if (!isset($_GET['code'])) {
@@ -85,5 +83,3 @@ class Signup extends REST_Controller
         }
     }
 }
-/* End of file Signup.php */
-/* Location: ./application/controllers/Login.php */

@@ -1,6 +1,5 @@
 <?php
-      // Coerce controller-supplied values to arrays so count()/for loops below
-      // never receive null (fatal on PHP 8).
+
       $data = (isset($data) && is_array($data)) ? $data : [];
       $shared_result = (isset($shared_result) && is_array($shared_result)) ? $shared_result : [];
       $constants = get_defined_constants();

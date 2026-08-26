@@ -5,22 +5,21 @@
 							<div id="google-map" class="google-map">
 							</div>
 						</div>
-						<?php /* === MAP DATA === */ ?>
+						<?php  ?>
 						<?php
 
 						$locations = [];
 						$i = 1;
 						foreach ($data as $row)
 							{
-
 							  $name = $row['name'];
-								//$name =$row->LocationName;
+
                                 $lattitude = $row['latitude'];
 								$longitude = $row['longitude'];
 								$id = $i;
 								$code = $row['code'];
 								$location_address = $row['address'];
-                                //$lat = $data[$i]['LocationName'];
+
                                 $locations[] = ['google_map' => [
                                     'lat' => $lattitude,
                                     'lng' => $longitude,
@@ -35,9 +34,9 @@
                                 $i++;
 							}
 						?>
-						<?php /* === PRINT THE JAVASCRIPT === */ ?>
+						<?php  ?>
 						<?php
-						/* Set Default Map Area Using First Location */
+
 						$map_area_lat = isset( $locations[0]['google_map']['lat'] ) ? $locations[0]['google_map']['lat'] : '';
 						$map_area_lng = isset( $locations[0]['google_map']['lng'] ) ? $locations[0]['google_map']['lng'] : '';
 						?>
@@ -57,7 +56,7 @@
 								/* Map Bound */
 								var bounds = [];
 								
-						<?php /* For Each Location Create a Marker. */
+						<?php
 							foreach( $locations as $locationdata ){
 								$name = $locationdata['location_name'];
 								$addr = $locationdata['location_address'];
@@ -80,7 +79,7 @@
                                                    (this.infoWindow).open(this.map, this);
                                                 }
 									});
-						<?php } //end foreach locations ?>
+						<?php } ?>
 								/* Fit All Marker to map */
 								map.fitLatLngBounds(bounds);
 								/* Make Map Responsive */

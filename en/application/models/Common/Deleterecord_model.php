@@ -4,9 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Deleterecord_model extends CI_Model
 {
-    /*
-    Delete Record
-    -------------------------------------------*/
     public function delete_record($params)
     {
         $user_id = $this->session->userdata('user_id');
@@ -16,7 +13,6 @@ class Deleterecord_model extends CI_Model
         $this->mongodb->where(['RecordTypeId' => $RecordTypeId]);
         $getTableName = $this->mongodb->get(TBL_RECORDTYPE);
         if (count($getTableName ?? []) > 0) {
-
             if ($RecordTypeId == 1) {
                 $headers = ['key1' => 'Class','key2' => 'SchoolName','key3' => 'DocumentType'];
             }
@@ -131,10 +127,8 @@ class Deleterecord_model extends CI_Model
 
                     $RecordName = $rdresult[0][$recordNames];
 
-                    //$class = $rdresult["Class"];
                     $document_type = $rdresult[0]['DocumentType'];
 
-                    //query to delete record from school
                     $this->mongodb->where(['UserId' => mongo_id($user_id), 'RecordId' => mongo_id($id)]);
                     $qresult = $this->mongodb->delete($tableName);
                     $m = new MongoClient();
@@ -169,14 +163,13 @@ class Deleterecord_model extends CI_Model
                                     if ($RecordTypeId == 35) {
                                         $tempRecordTypeId = 39;
                                     }
-                                    //$this->deleltedocumentsfromfolder($user_id,$temprelatedrecid,$tempRecordTypeId);
                                 }
                             }
                             $qury = $this->mongodb->get($relatedTableName);
 
                             $delqry = $this->mongodb->delete($relatedTableName);
                         }
-                        //add event
+
                         $eventdata = ['UserId' => $user_id,
                                 'EventType' => 'Deleted',
                                 'Module' => $moduledetails[0]['Module'],
@@ -187,44 +180,22 @@ class Deleterecord_model extends CI_Model
                             ];
                         $eventquery = $this->mongodb->insert(TBL_EVENTS, $eventdata);
 
-                        //$this->deleltedocumentsfromfolder($user_id,$id,$RecordTypeId);
                         return ['status' => 'success','data' => 'Selected record has been deleted successfully'];
                     } else {
                         return ['status' => 'failed','data' => 'Not deleted'];
                     }
                 }
             }
-
         }
     }
-    /*
-    delete attachments form folder
-    ----------------------------------------------*/
+
     public function deleltedocumentsfromfolder($user_id, $id, $RecordTypeId)
     {
-        //delete attachments from folder
-
         $this->mongodb->where(['UserId' => mongo_id($user_id), 'RecordId' => mongo_id($id), 'RecordTypeId' => $RecordTypeId]);
         $qry = $this->mongodb->get('fs.files');
         if (count($qry ?? []) > 0) {
-            /*$rAttachments = $getDocuments->result_array();
-            foreach ($rAttachments as $documentAttach) {
-              $attachPath = $documentAttach["DocumentPath"];
-              $tempdocid = $documentAttach["DocumentId"];
-              $this->db->query("DELETE FROM ".TBL_KART." WHERE DocumentId = '$tempdocid' AND UserId = $user_id ");
-              $doc_path = "../.." . $attachPath;
-              if (file_exists($doc_path)) {
-                unlink($doc_path);
-              }
-            }*/
-            //query to delete record from documents if school table record is deleted successfully
             $this->mongodb->where(['UserId' => mongo_id($user_id), 'RecordId' => mongo_id($id), 'RecordTypeId' => $RecordTypeId]);
             $qry = $this->mongodb->delete('fs.files');
-
         }
     }
-
 }
-
-/* End of file Deleterecord_model.php */
-/* Location: ./application/models/Common/Deleterecord_model.php */

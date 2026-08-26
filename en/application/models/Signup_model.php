@@ -1,6 +1,5 @@
 <?php
 
-//require (APPPATH . '/libraries/email_utils.php');
 class Signup_model extends CI_Model
 {
     public function sign_up($params)
@@ -42,7 +41,7 @@ class Signup_model extends CI_Model
             $userdata['Facebook'] = '';
 
             $query = $this->db->insert(TBL_USER, $userdata);
-            //log_message('info',$query);
+
             if ($query) {
                 $user_id = $this->db->insert_id();
                 $email_template = 'mailtemplates/account-verification-template.html';
@@ -78,7 +77,6 @@ class Signup_model extends CI_Model
     public function read_file($filename)
     {
         if (file_exists($filename)) {
-            //log_message('info',$filename);
             $handle = fopen($filename, 'r');
             $contents = fread($handle, filesize($filename));
             fclose($handle);
@@ -90,46 +88,43 @@ class Signup_model extends CI_Model
     public function publishmail($from_email, $to_email, $subject, $message, $type)
     {
         $config = [
-        //  'protocol' => protocol,
           'smtp_host' => smtp_host,
           'smtp_port' => smtp_port,
-          'smtp_user' => smtp_user, // change it to yours
-          'smtp_pass' => smtp_pass, // change it to yours
+          'smtp_user' => smtp_user,
+          'smtp_pass' => smtp_pass,
           'mailpath' => mailpath,
           'charset' => charset,
           'wordwrap' => wordwrap,
         ];
 
-        if ($type == 'html') {   //html email
-
+        if ($type == 'html') {
             $mailheaders = 'From:' . admin_from_email . "\r\n" .
                            "MIME-Version:1.0\r\n" .
                            "Content-type:text/html\r\n" .
                            "Content-Transfer-Encoding:7bit\n" .
                            'Reply-To: ' . admin_from_email . "\n";
-        } else {     // text email
+        } else {
             $mailheaders = 'From:' . admin_from_email . "\r\nMIME-Version: 1.0\r\nContent-type:" .
                            "text/plain\r\nContent-Transfer-" .
                            "Encoding: 7bit\n" .
                            'Reply-To: ' . admin_from_email . "\n";
         }
-        //mail ( $to_email, $subject, $message, $mailheaders );
+
         $this->load->library('email', $config);
         $this->email->set_newline("\r\n");
-        $this->email->from(noreply); // change it to yours
-        $this->email->to($to_email);// change it to yours
+        $this->email->from(noreply);
+        $this->email->to($to_email);
         $this->email->subject($subject);
         $this->email->message($message);
         $this->email->set_mailtype('html');
-        //$this->email->mailheaders($mailheaders);
+
         if (mail($to_email, $subject, $message, $mailheaders)) {
             return true;
         } else {
             show_error($this->email->print_debugger());
         }
-
     }
-    /*initialising user settings*/
+
     public function initialise_user_settings($user_id)
     {
         $qry = $this->db->query('SELECT * FROM ' . TBL_ACCOUNTSETTINGS . " WHERE UserId = $user_id");

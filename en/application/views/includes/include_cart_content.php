@@ -68,8 +68,6 @@ function get_icon($ext){
                       default:
                               echo '<i class="fa fa-file-file-o" aria-hidden="true"></i>';
                 }
-
 }
-
 
 ?>

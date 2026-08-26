@@ -10,8 +10,7 @@ if(empty($mod)){
 }
 $user_id = $this->session->user_id;
 $Upgraded = $this->session->userdata('Upgraded');
-//print_r($Upgraded);die;
-//echo base_url();
+
 $fileURL = $_GET['fileURL'];
 ?>
 

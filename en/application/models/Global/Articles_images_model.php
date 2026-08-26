@@ -20,7 +20,5 @@ class Articles_images_model extends CI_Model
             $image_full_path = '';
         }
         return ['path' => $image_full_path];
-
     }
-
 }

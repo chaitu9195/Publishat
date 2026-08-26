@@ -3,9 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Mailrecord_model extends CI_Model
 {
-    /*
-    Mail records
-    -------------------------------------------*/
     public function mail_record($params)
     {
         $RecordTypeId = $params['record_type_id'];
@@ -17,7 +14,6 @@ class Mailrecord_model extends CI_Model
             $record_type = $utils['RecordType'];
             $module_name = $utils['Module'];
         }
-        //$status_style = $error_status_style;      // default style
 
         $selective_attach = $params['selective_attach'];
         $doc_id_arr = $params['document_id'];
@@ -25,14 +21,14 @@ class Mailrecord_model extends CI_Model
         $id_list = $params['ids'];
         $user_id = $this->session->userdata('user_id');
         $record_id_arr = explode(',', $id_list);
-        //mail ('chaithanyakondragunta@gmail.com', '', '', "From:".'admin@publishat.com');
+
         $this->mongodb->where(['UserId' => mongo_id($user_id)]);
         $validUser = $this->mongodb->get(TBL_USER);
         if (count($validUser ?? []) > 0) {
             foreach ($validUser as $userData) {
                 $user_email = $userData['Email'];
                 $user_fullname = $userData['Name'];
-                //log_message('info',$user_fullname);
+
                 $phone = $userData['Phone'];
             }
         } else {
@@ -40,22 +36,18 @@ class Mailrecord_model extends CI_Model
         }
 
         if (count($record_id_arr ?? []) > 0) {
-
-            //$email_content = "<html>";
             $email_content = header_top_record_mail;
 
             $table_bg_color = '#99CCCC';
             foreach ($record_id_arr as $l_record_id) {
                 $table_bg_color = ($table_bg_color == '#CCCC99') ? '#99CCCC' : '#99CCCC';
                 if (empty($selective_attach)) {
-
                 } else {
                     $this->mongodb->where(['RecordId' => mongo_id($l_record_id)]);
                     $tmp_qry = $this->mongodb->get($table_name);
                     foreach ($tmp_qry as $tmp_rec) {
-                        //$document_type = $tmp_rec["DocumentType"];
                         $document_type = '';
-                        //$subject = "Publishat.com | " . ucwords($record_type) . " | " . $tmp_rec["Class"] . " | " . $document_type ;
+
                         $subject = '';
                         if ($RecordTypeId == 1) {
                             $document_type = $tmp_rec['DocumentType'];
@@ -102,7 +94,6 @@ class Mailrecord_model extends CI_Model
                             $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . stripslashes($tmp_rec['SiteName']) . ' | ' . stripslashes($tmp_rec['Usage']);
                             $email_content .= $this->get_web_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $addtext);
                         } elseif ($RecordTypeId == 12) {
-                            //$document_type = $tmp_rec["TravelType"];
                             $travel_type = $tmp_rec['TravelType'];
                             $travellers = $tmp_rec['Travellers'];
                             $subject = "$user_fullname | " . ucwords($record_type) . ' | ' . stripslashes($tmp_rec['TravelType']) . ' | ' . stripslashes($tmp_rec['ToPlace']);
@@ -177,7 +168,7 @@ class Mailrecord_model extends CI_Model
                         } elseif ($RecordTypeId == 33) {
                             $card_type = $tmp_rec['CardType'];
                             $usage_type = $tmp_rec['UsageType'];
-                            //log_message('info','fin select');
+
                             $subject = "$user_fullname | Cards Record | " . $tmp_rec['CardType'] . ' | ' . $tmp_rec['ServiceProviderName'] ;
                             $email_content .= $this->get_fincards_select($doc_id_arr, $l_record_id, $table_bg_color, '#FFFFFF', $card_type, $usage_type, $addtext);
                         } elseif ($RecordTypeId == 34) {
@@ -205,7 +196,6 @@ class Mailrecord_model extends CI_Model
                 }
             }
 
-            //$email_content .= "</html>";
             $email_content .= header_bottom;
             $header_title = str_replace('Publishat.com | ', '', $subject);
             $email_content = str_replace('##HEADER-TITLE##', $header_title, $email_content);
@@ -213,7 +203,7 @@ class Mailrecord_model extends CI_Model
             $email_content = str_replace('##HEADER-NAME##', $user_fullname, $email_content);
             $email_content = str_replace('##HEADER-PHONE##', $phone, $email_content);
             $from_email = $this->session->userdata('email');
-            //$from_email = admin_from_email;
+
             $email_list = $params['email_list'];
             if (!empty($email_list)) {
                 $email_arr = explode(',', trim($email_list));
@@ -223,22 +213,13 @@ class Mailrecord_model extends CI_Model
                             $this->phpmail_nocc($from_email, trim($out_email), $subject, $email_content, 'html');
                             $status_code = 1;
                         } catch (Exception $e) {
-                            //log_message('info',$e);
                         }
-
                     }
                 }
             }
             if ($status_code == 1) {
                 $status_message = 'Emails have been sent with the record details';
-                //    $status_style = $success_status_style;
 
-                //events add
-                /* $ch1="select * from ".TBL_SCHOOL." where UserId = '$user_id' AND RecordId = '$l_record_id'";
-                 $ch2=$this->db->query($ch1);
-                 while($ch3=  $ch2->row_array())
-                 {
-*/
                 if ($RecordTypeId == 1) {
                     $headers = ['key1' => 'Class','key2' => 'SchoolName','key3' => 'DocumentType'];
                 }
@@ -344,7 +325,7 @@ class Mailrecord_model extends CI_Model
 
                 $document_type = $headers['key3'];
                 $record_name = $headers['key1'];
-                //$receiver=
+
                 $eventdata = ['UserId' => $user_id,
                  'EventType' => 'Shared',
                  'Module' => $module_name,
@@ -355,19 +336,14 @@ class Mailrecord_model extends CI_Model
                  'Date' => TimeStamp,
                   ];
                 $qry = $this->mongodb->insert(TBL_EVENTS, $eventdata);
-                //$this->db->query($qry);
+
                 return ['status' => 'success','data' => 'Mail has been sent.'];
-                //               }
-                //events end
             } else {
                 $status_message = 'Error: No emails have been sent. Please try again. ';
                 return ['status' => 'failed','data' => 'No mails sent'];
-                //    $status_style = $error_status_style;
             }
         }
     }
-
-    /* util functions for mailing school record*/
 
     public function get_school_select($document_id_arr, $record_id, $table_bg, $tr_bg, $document_type, $addtext)
     {
@@ -386,7 +362,6 @@ class Mailrecord_model extends CI_Model
 
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
-
                 $type = stripslashes($rec['Type']);
                 $class = stripslashes($rec['Class']);
                 $school_name = stripslashes($rec['SchoolName']);
@@ -433,8 +408,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*util function for mailing undergraduate records*/
-
     public function get_ug_select($document_id_arr, $record_id, $table_bg, $tr_bg, $document_type, $addtext, $sub_id_arr)
     {
         $record_type_id = 2;
@@ -450,7 +423,6 @@ class Mailrecord_model extends CI_Model
             $email_body = $this->read_file($email_template);
 
             foreach ($qry as $rec) {
-
                 $user_id = $rec['UserId'];
                 $record_id = $rec['RecordId'];
                 $level = stripslashes($rec['Level']);
@@ -504,8 +476,6 @@ class Mailrecord_model extends CI_Model
         }
         return $email_body;
     }
-
-    /*util function for mailing postgraduate records*/
 
     public function get_pg_select($document_id_arr, $record_id, $table_bg, $tr_bg, $document_type, $addtext, $sub_id_arr)
     {
@@ -574,8 +544,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*util function for mailing phd record*/
-
     public function get_phd_select($document_id_arr, $record_id, $table_bg, $tr_bg, $document_type, $addtext)
     {
         $record_type_id = 4;
@@ -639,8 +607,6 @@ class Mailrecord_model extends CI_Model
         }
         return $email_body;
     }
-
-    /*util function for mailing certification record*/
 
     public function get_certification_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
     {
@@ -707,8 +673,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*util function for mailing exam records*/
-
     public function get_exam_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
     {
         $record_type_id = 6;
@@ -762,8 +726,6 @@ class Mailrecord_model extends CI_Model
         }
         return $email_body;
     }
-
-    /*util function for mailing projects/research records under academic module*/
 
     public function get_projects_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
     {
@@ -831,11 +793,6 @@ class Mailrecord_model extends CI_Model
         }
         return $email_body;
     }
-
-    /*        end of academic records             */
-    /*        start of Personal records             */
-
-    /*util function for mailing location history records*/
 
     public function get_location_select($document_id_arr, $record_id, $table_bg, $tr_bg, $travel_status, $addtext)
     {
@@ -911,8 +868,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*util function for mailing govt records*/
-
     public function get_govt_select($document_id_arr, $record_id, $table_bg, $tr_bg, $document_type, $addtext)
     {
         $record_type_id = 9;
@@ -979,8 +934,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*util function for mailing relation records*/
-
     public function get_relation_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
     {
         $record_type_id = 10;
@@ -1037,8 +990,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*util function for mailing web history records*/
-
     public function get_web_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
     {
         $record_type_id = 11;
@@ -1091,8 +1042,6 @@ class Mailrecord_model extends CI_Model
         }
         return $email_body;
     }
-
-    /*util function for mailing travel records*/
 
     public function get_travel_select($document_id_arr, $record_id, $table_bg, $tr_bg, $travel_type, $travellers, $addtext)
     {
@@ -1186,8 +1135,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*util function for warranty records*/
-
     public function get_warranty_select($document_id_arr, $record_id, $table_bg, $tr_bg, $document_type, $addtext)
     {
         $record_type_id = 13;
@@ -1264,9 +1211,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*get events record for mailing all*/
-
-    //get events selected mailing record
     public function get_events_select($document_id_arr, $record_id, $table_bg, $tr_bg, $event_type, $addtext)
     {
         $record_type_id = 42;
@@ -1309,7 +1253,7 @@ class Mailrecord_model extends CI_Model
                 $email_body = str_replace('##STATUS##', $document_status, $email_body);
                 $email_body = str_replace('##DOCUMENT-TYPE##', $document_type, $email_body);
                 $email_body = str_replace('##TIME##', $time, $email_body);
-                //$email_body = str_replace("##MINUTES##", $minutes, $email_body);
+
                 $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
                 $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
@@ -1319,11 +1263,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*          end of personal records           */
-    /*          start of professional records         */
-
-    /*util function for mailing contacts records*/
-
     public function get_contacts_select($document_id_arr, $record_id, $table_bg, $tr_bg, $contact_type, $category, $addtext)
     {
         $record_type_id = 14;
@@ -1331,7 +1270,6 @@ class Mailrecord_model extends CI_Model
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_CONTACTS);
         if (count($qry ?? []) > 0) {
-
             if ($contact_type == 'Group' && !($category == 'Personal')) {
                 $email_template = '../../templates/email-professional-contacts-template.html';
             } elseif (!($contact_type == 'Group') && $category == 'Personal') {
@@ -1399,15 +1337,13 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*get related records for contacts*/
     public function get_pro_contact_related_html($document_id_arr, $user_id, $parent_record_id)
     {
         global $record_type_id, $user_email;
         $html_content = '';
-        //echo $parent_record_id;
-        //echo $user_id;
+
         $qry = "SELECT * FROM ContactsContacts WHERE ParentRecordId = '$parent_record_id' AND UserId = '$user_id'";
-        //echo $parent_record_id;
+
         $res = $this->db->query($qry);
         $output_str = '';
         if ($res->num_rows() > 0) {
@@ -1416,7 +1352,7 @@ class Mailrecord_model extends CI_Model
                 $html_content = read_file($print_template);
 
                 $record_id = $rec['RecordId'];
-                //echo $record_id;
+
                 $parent_record_id = $rec['ParentRecordId'];
                 $name = stripslashes($rec['Name']);
                 $mobile = stripslashes($rec['Mobile']);
@@ -1443,8 +1379,6 @@ class Mailrecord_model extends CI_Model
         }
         return $output_str;
     }
-
-    /*util function for mailing employment records*/
 
     public function get_employment_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
     {
@@ -1480,7 +1414,6 @@ class Mailrecord_model extends CI_Model
                 $issued_date = $this->date_format_short($issued_date);
                 $effected_date = $this->date_format_short($effected_date);
                 $from_date = $this->date_format_short($from_date);
-                //$to_date = $this->date_format_short($to_date);
 
                 $reference_1 = '';
                 if (!empty($ref_name_1)) {
@@ -1518,7 +1451,7 @@ class Mailrecord_model extends CI_Model
                 $email_body = str_replace('##ORGANISATION-NAME##', $organisation_name, $email_body);
                 $email_body = str_replace('##ISSUED-DATE##', $issued_date, $email_body);
                 $email_body = str_replace('##PLACE##', $place, $email_body);
-                //$email_body = str_replace("##EFFECTED-DATE##", $effected_date, $email_body);
+
                 $email_body = str_replace('##ADDRESS##', $address, $email_body);
                 $email_body = str_replace('##STATUS##', $employment_status, $email_body);
                 $email_body = str_replace('##COUNTRY##', $country, $email_body);
@@ -1534,8 +1467,6 @@ class Mailrecord_model extends CI_Model
         }
         return $email_body;
     }
-
-    /*util function for mailing projects records under professional category */
 
     public function get_proprojects_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext, $sub_id_arr)
     {
@@ -1630,8 +1561,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*util function for mailing skills records*/
-
     public function get_skills_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
     {
         $record_type_id = 17;
@@ -1687,8 +1616,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*util function for mailing apps records*/
-
     public function get_apps_select($document_id_arr, $record_id, $table_bg, $tr_bg, $password_change_status, $addtext)
     {
         $record_type_id = 18;
@@ -1703,7 +1630,6 @@ class Mailrecord_model extends CI_Model
             }
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
-
                 $app_type = stripslashes($rec['AppType']);
                 $app_name = stripslashes($rec['AppName']);
                 $usage = stripslashes($rec['Usage']);
@@ -1754,8 +1680,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*util function for mailing resume records*/
-
     public function get_resume_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
     {
         $record_type_id = 38;
@@ -1766,7 +1690,6 @@ class Mailrecord_model extends CI_Model
             $email_template = '../../templates/email-professional-resume-template.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
-
                 $ResumeType = stripslashes($rec['ResumeType']);
                 $Name = stripslashes($rec['Name']);
                 $FromDate = stripslashes($rec['FromDate']);
@@ -1782,9 +1705,6 @@ class Mailrecord_model extends CI_Model
                 $AlternateEmail = stripslashes($rec['AlternateEmail']);
                 $Mobile = stripslashes($rec['Mobile']);
                 $Summary = stripslashes($rec['Summary']);
-
-                //$FromDate= $this->date_format_short($FromDate);
-                //$ToDate= $this->date_format_short($ToDate);
 
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
                     $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
@@ -1816,14 +1736,8 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*          end of professional records         */
-    /*          start of health/medical records           */
-
-    /*util function for mailing medical test records*/
-
     public function get_medicaltest_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext, $sub_id_arr)
     {
-
         $record_type_id = 19;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
@@ -1890,7 +1804,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    //functions for getting medical test related records
     public function get_med_test_test_html($document_id_arr, $user_id, $parent_record_id, $sub_id_arr)
     {
         $output_str = '';
@@ -1923,8 +1836,6 @@ class Mailrecord_model extends CI_Model
                             $attachments = '<i>No documents are attached to this record</i>';
                         }
 
-                        //$attachments = get_document_email_links(23, $record_id);
-
                         $html_content = str_replace('##TEST-TYPE##', $test_type, $html_content);
                         $html_content = str_replace('##TEST-NAME##', $test_name, $html_content);
                         $html_content = str_replace('##TEST-DATE##', $test_date, $html_content);
@@ -1943,8 +1854,6 @@ class Mailrecord_model extends CI_Model
         }
         return $output_str;
     }
-
-    /*util function for mailing prescription records*/
 
     public function get_prescription_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext, $sub_id_arr)
     {
@@ -1980,7 +1889,7 @@ class Mailrecord_model extends CI_Model
                 } else {
                     $attachments = 'No Attachments';
                 }
-                //$prescription_loop_str = $this->get_med_prescription_prescription_html($document_id_arr, $user_id, $record_id);
+
                 $medicine_loop_str = $this->get_med_prescription_medicine_html($document_id_arr, $user_id, $record_id, $sub_id_arr);
 
                 $email_body = str_replace('##ADD-TEXT##', $addtext, $email_body);
@@ -2003,14 +1912,12 @@ class Mailrecord_model extends CI_Model
                 $email_body = str_replace('##PATIENT-NAME##', $patient_name, $email_body);
                 $email_body = str_replace('##TABLE_BGCOLOR##', $table_bg, $email_body);
                 $email_body = str_replace('##TR_BGCOLOR##', $tr_bg, $email_body);
-                //$email_body = str_replace("##PRESCRIPTION-LOOP##", $prescription_loop_str, $email_body);
+
                 $email_body = str_replace('##MEDICINE-LOOP##', $medicine_loop_str, $email_body);
             }
         }
         return $email_body;
     }
-
-    //function for medical prescription related records
 
     public function get_med_prescription_prescription_html($document_id_arr, $user_id, $parent_record_id)
     {
@@ -2127,11 +2034,8 @@ class Mailrecord_model extends CI_Model
         return $output_str;
     }
 
-    /*util function for mailing family health records*/
-
     public function get_familyhealth_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext, $sub_id_arr)
     {
-
         $record_type_id = 21;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
@@ -2140,7 +2044,6 @@ class Mailrecord_model extends CI_Model
             $email_template = '../../templates/email-medical-family-template.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
-
                 $user_id = $rec['UserId'];
                 $record_id = $rec['RecordId'];
                 $disease_type = stripslashes($rec['DiseaseType']);
@@ -2191,11 +2094,8 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*util function for mailing health insurance records*/
-
     public function get_healthinsurance_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext, $sub_id_arr)
     {
-
         $record_type_id = 22;
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
@@ -2269,11 +2169,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*          end of medical health records         */
-    /*          start of legal records            */
-
-    /*util function for mailing legal dispute records*/
-
     public function get_legaldispute_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
     {
         $record_type_id = 28;
@@ -2339,8 +2234,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*util function for mailing ownership transfer records*/
-
     public function get_ownershiptrnsfr_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
     {
         $record_type_id = 29;
@@ -2352,7 +2245,6 @@ class Mailrecord_model extends CI_Model
             $email_body = $this->read_file($email_template);
 
             foreach ($qry as $rec) {
-
                 $record_id = $rec['RecordId'];
                 $transfer_type = $rec['TransferType'];
                 $asset_name = stripslashes($rec['AssetName']);
@@ -2421,11 +2313,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*          end of legal records            */
-    /*          start of financial records          */
-
-    /*util function for mailing financial accounts records*/
-
     public function get_finaccounts_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
     {
         $record_type_id = 30;
@@ -2481,8 +2368,7 @@ class Mailrecord_model extends CI_Model
                 $email_body = str_replace('##SERVICE-TYPE##', $service_type, $email_body);
                 $email_body = str_replace('##CATEGORY##', $category, $email_body);
                 $email_body = str_replace('##ACCOUNT-STATUS##', $account_status, $email_body);
-                //$email_body = str_replace("##HEADER-EMAIL##", $user_email, $email_body);
-                //$email_body = str_replace("##HEADER-TITLE##", $header_title, $email_body);
+
                 $email_body = str_replace('##ATTACHMENTS##', $attachments, $email_body);
                 $email_body = str_replace('##NOTES##', $notes, $email_body);
                 $email_body = str_replace('##IFSC##', $ifsc, $email_body);
@@ -2492,8 +2378,6 @@ class Mailrecord_model extends CI_Model
         }
         return $email_body;
     }
-
-    /*util function for mailing financial assets records*/
 
     public function get_finassets_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
     {
@@ -2562,8 +2446,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*util function for mailing financial revenue records*/
-
     public function get_finrevenues_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext, $sub_id_arr)
     {
         $record_type_id = 32;
@@ -2631,7 +2513,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    //function for financial revenue related records
     public function get_fin_revenue_related_html($document_id_arr, $user_id, $parent_record_id, $sub_id_arr)
     {
         global $record_type_id, $user_email;
@@ -2647,7 +2528,7 @@ class Mailrecord_model extends CI_Model
                         $html_content = $this->read_file($print_template);
 
                         $record_id = $rec['RecordId'];
-                        //echo $record_id;
+
                         $parent_record_id = $rec['ParentRecordId'];
                         $revenue_date = stripslashes($rec['RevenueDate']);
                         $amount = stripslashes($rec['Amount']);
@@ -2677,8 +2558,6 @@ class Mailrecord_model extends CI_Model
         return $output_str;
     }
 
-    /*util function for mailing cards records*/
-
     public function get_fincards_select($document_id_arr, $record_id, $table_bg, $tr_bg, $card_type, $usage_type, $addtext)
     {
         $record_type_id = 33;
@@ -2686,7 +2565,6 @@ class Mailrecord_model extends CI_Model
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINCARDS);
         if (count($qry ?? []) > 0) {
-            //log_message('info','query success');
             if (($card_type == 'Credit' || $card_type == 'Others' || $card_type == '') && ($usage_type == 'Joint')) {
                 $email_template = '../../templates/email-financial-cards-template.html';
             } elseif (($card_type == 'Credit' || $card_type == 'Others' || $card_type == '') && ($usage_type == 'Self' || $usage_type == 'Others')) {
@@ -2725,10 +2603,8 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 $due_date = stripslashes($rec['DueDate']);
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
-                    //log_message('info','in fincards selected');
                     $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
                 } else {
-                    //log_message('info','no attachments fin card');
                     $attachments = 'No Attachments';
                 }
 
@@ -2760,8 +2636,6 @@ class Mailrecord_model extends CI_Model
         }
         return $email_body;
     }
-
-    /*util function for mailing financial liability records*/
 
     public function get_finliability_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
     {
@@ -2828,8 +2702,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*util function for mailing financial payment records*/
-
     public function get_finpayment_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext, $sub_id_arr)
     {
         $record_type_id = 35;
@@ -2867,7 +2739,7 @@ class Mailrecord_model extends CI_Model
                 $document_type = stripslashes($rec['DocumentType']);
                 $notes = stripslashes($rec['Notes']);
                 $due_date = stripslashes($rec['DueDate']);
-                //echo $user_id;
+
                 if (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
                     $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, $record_type_id, $record_id);
                 } else {
@@ -2898,7 +2770,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    //function for financial payment related records
     public function get_fin_payment_related_html($document_id_arr, $user_id, $parent_record_id, $sub_id_arr)
     {
         global $record_type_id, $user_email;
@@ -2914,7 +2785,7 @@ class Mailrecord_model extends CI_Model
                         $html_content = $this->read_file($print_template);
 
                         $record_id = $rec['RecordId'];
-                        //echo $record_id;
+
                         $parent_record_id = $rec['ParentRecordId'];
                         $payment_date = stripslashes($rec['PaymentDate']);
                         $amount = stripslashes($rec['Amount']);
@@ -2944,8 +2815,6 @@ class Mailrecord_model extends CI_Model
         return $output_str;
     }
 
-    /*util function for mailing financial tax records*/
-
     public function get_fintax_select($document_id_arr, $record_id, $table_bg, $tr_bg, $addtext)
     {
         $record_type_id = 36;
@@ -2957,7 +2826,6 @@ class Mailrecord_model extends CI_Model
             $email_body = $this->read_file($email_template);
 
             foreach ($qry as $rec) {
-
                 $record_id = $rec['RecordId'];
                 $tax_doc_type = $rec['TaxDocumentType'];
                 $assessment_year = stripslashes($rec['AssessmentYear']);
@@ -3009,8 +2877,6 @@ class Mailrecord_model extends CI_Model
         }
         return $email_body;
     }
-
-    /*util function for mailing financial insurance records*/
 
     public function get_fininsurance_select($document_id_arr, $record_id, $table_bg, $tr_bg, $insurance_type, $addtext)
     {
@@ -3095,10 +2961,6 @@ class Mailrecord_model extends CI_Model
         return $email_body;
     }
 
-    /*===============================================================*/
-    /*            Util Functions               */
-    /*===============================================================*/
-
     public function read_file($filename)
     {
         if (file_exists($filename)) {
@@ -3114,15 +2976,14 @@ class Mailrecord_model extends CI_Model
     public function get_document_email_links($record_type_id, $record_id)
     {
         ob_start();
-        //echo $record_type_id;
+
         $qry = 'SELECT * FROM ' . TBL_DOCUMENTS . " WHERE RecordTypeId = '$record_type_id' AND RecordId = '$record_id'";
         $res = $this->db->query($qry);
 
-        //$i = 0;
         if ($res->num_rows() > 0) {
             foreach ($res->result_array() as $rec) {
                 $document_id = $rec['DocumentId'];
-                //log_message('info',$document_id);
+
                 $user_id = $rec['UserId'];
                 $file_type = $rec['FileType'];
                 $doc_path = $rec['DocumentPath'];
@@ -3139,10 +3000,10 @@ class Mailrecord_model extends CI_Model
                 $key = $user_id . '###' . $document_id . '###email-attachment';
                 $doc_link_url = 'https://www.publishat.com/mobile_ws/GlobalController/viewattachment?key=' . $this->encript($key);
 
-                //if ($i > 0) echo "&nbsp;&nbsp;&nbsp; ";?>
+                ?>
       <a target="_blank" href="<?= $doc_link_url ?>"><img src="<?= $doc_icon ?>" width="20" height="20" border="0" align="absmiddle" /></a>&nbsp;
             <a target="_blank" href="<?= $doc_link_url ?>"><?= strtoupper($doc_tag) ?></a><?php
-                //$i++;
+
             }
         } else {
             echo '<i>No documents are attached to this record</i>';
@@ -3157,11 +3018,10 @@ class Mailrecord_model extends CI_Model
     {
         ob_start();
         if (count($document_id_arr ?? []) > 0) {
-            //$doc_id_str = implode(",",$document_id_arr);
             for ($i = 0;$i < count($document_id_arr ?? []);$i++) {
                 $this->mongodb->where(['RecordId' => mongo_id($record_id),'DocumentId' => mongo_id($document_id_arr[$i])]);
                 $qry = $this->mongodb->get('fs.files');
-                //$i = 0;
+
                 if (count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
                         $document_id = $rec['DocumentId'];
@@ -3175,9 +3035,7 @@ class Mailrecord_model extends CI_Model
                             $filename = basename($doc_path);
                             $filename = substr($filename, strpos($filename, '-') + 1);
                         }
-                        //$filename = '../..' . $doc_path;
-                        //$file_tag=strtolower(substr(strstr($filename,"-"),1));
-                        //$file_tag = substr($file_tag,'0','15');
+
                         if (empty($doc_tag)) {
                             $doc_tag = "$filename";
                         }
@@ -3186,10 +3044,10 @@ class Mailrecord_model extends CI_Model
                         $key = $user_id . '###' . $document_id . '###email-attachment';
                         $doc_link_url = 'https://www.publishat.com/mobile_ws/GlobalController/viewattachment?key=' . $this->encript($key);
 
-                        //if ($i > 0) echo "&nbsp;&nbsp;&nbsp; ";?>
+                        ?>
         <a target="_blank" href="https://www.publishat.com/digital/en/web/docviewer?fid=<?=$fid;?>&type=<?=strtolower($ext);?>"><img src="<?= $doc_icon ?>" width="20" height="20" border="0" align="absmiddle" /></a>&nbsp;
         <a target="_blank" href="https://www.publishat.com/digital/en/web/docviewer?fid=<?=$fid;?>&type=<?=strtolower($ext);?>"><?= strtoupper($filename) ?></a><?php
-                        //$i++;
+
                     }
                 }
             }
@@ -3249,7 +3107,7 @@ class Mailrecord_model extends CI_Model
             return false;
         }
         $text = $value;
-        // Legacy mcrypt Rijndael-256/ECB replaced by phpseclib (see legacy_crypto_helper).
+
         $crypttext = rijndael256_ecb_encrypt_raw($skey, $text);
         return trim($this->safe_b64encode($crypttext));
     }
@@ -3268,22 +3126,13 @@ class Mailrecord_model extends CI_Model
           'protocol' => protocol,
           'smtp_host' => smtp_host,
           'smtp_port' => smtp_port,
-          'smtp_user' => smtp_user, // change it to yours
-          'smtp_pass' => smtp_pass, // change it to yours
+          'smtp_user' => smtp_user,
+          'smtp_pass' => smtp_pass,
           'mailpath' => mailpath,
           'charset' => charset,
           'wordwrap' => wordwrap,
         ];
-        /* //SMTP & mail configuration
-        $config = array(
-            'protocol'  => 'smtp',
-            'smtp_host' => 'smtp.zoho.com',
-            'smtp_port' => 465,
-            'smtp_user' => 'admin@publishat.com',
-            'smtp_pass' => 'Vijaya@123',
-            'mailtype'  => 'html',
-            'charset'   => 'utf-8'
-        ); */
+
         $this->email->initialize($config);
         $this->email->set_mailtype('html');
         $this->email->set_newline("\r\n");
@@ -3292,66 +3141,18 @@ class Mailrecord_model extends CI_Model
         if ($cc) {
             $this->email->cc($cc);
         }
-        // $this->email->from('from_email','Publishat');
+
         $this->email->from(smtp_user);
         $this->email->subject("$subject");
         $this->email->message($message);
 
-        //Send email
         if ($this->email->send()) {
-
         } else {
             log_message('debug', 'Email Error Response: ' . json_encode($this->email->print_debugger()));
-            //Email Failed To Send
+
             return $this->email->print_debugger();
         }
     }
-
-    /*function get_med_prescription_medicine_html($document_id_arr, $user_id, $parent_record_id){
-      $record_type_id = 14;
-      $user_email;
-      $html_content = "";
-      //echo $parent_record_id;
-      //echo $user_id;
-      $qry = "SELECT * FROM ContactsContacts WHERE ParentRecordId = '$parent_record_id' AND UserId = '$user_id'";
-      //echo $parent_record_id;
-      $res = $this->db->query($qry);
-      $output_str = "";
-      if ($res->num_rows > 0){
-          while ($rec = $res->row_array()){
-          $print_template = "../../templates/email-professional-contacts-template1.html";
-          $html_content = $this->read_file($print_template);
-
-          $record_id = $rec["RecordId"];
-          //echo $record_id;
-          $parent_record_id = $rec["ParentRecordId"];
-          $name = stripslashes($rec["Name"]);
-          $mobile = stripslashes($rec["Mobile"]);
-          $email = stripslashes($rec["Email"]);
-          $notes = stripslashes($rec["Notes"]);
-          $header_title = "Contacts | $name | $mobile";
-
-          if ($document_id_arr == "-1"){
-            $this->get_document_email_links(40, $record_id);
-          }
-          else if (count($document_id_arr ?? array()) > 0){
-            $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, 40, $record_id);
-          }
-          else{
-              $attachments = "<i>No documents are attached to this record</i>";
-            }
-
-          $html_content = str_replace("##NAME##", $name, $html_content);
-          $html_content = str_replace("##MOBILE##", $mobile, $html_content);
-          $html_content = str_replace("##EMAIL##", $email, $html_content);
-          $html_content = str_replace("##NOTES##", $notes, $html_content);
-          $html_content = str_replace("##HEADER-TITLE##", $header_title, $html_content);
-          $html_content = str_replace("##ATTACHMENTS##", $attachments, $html_content);
-          $output_str .=  $html_content;
-        }
-      }
-      return $output_str;
-    }*/
 
     public function date_format_short($date)
     {
@@ -3364,7 +3165,6 @@ class Mailrecord_model extends CI_Model
 
     public function get_med_test_test_html1($document_id_arr, $user_id, $parent_record_id, $path)
     {
-
         $qry = "SELECT * FROM MedMedicalTestRecords WHERE ParentRecordId = '$parent_record_id' AND UserId = '$user_id'";
         $res = $this->db->query($qry);
         $output_str = '';
@@ -3377,7 +3177,6 @@ class Mailrecord_model extends CI_Model
                 } elseif (!empty($document_id_arr) && count($document_id_arr ?? []) > 0) {
                     $attachments = $this->get_document_email_links_by_id_arr1($document_id_arr, 23, $record_id, $path);
                 }
-
             }
         }
         return $output_str;
@@ -3390,7 +3189,6 @@ class Mailrecord_model extends CI_Model
         $qry = "SELECT * FROM Documents WHERE RecordTypeId = '$record_type_id' AND RecordId = '$record_id'";
         $res = $this->db->query($qry);
 
-        //$i = 0;
         if ($res->num_rows() > 0) {
             $kartname = $_POST['kart'];
             $kartname1 = $_POST['kart1'];
@@ -3410,10 +3208,9 @@ class Mailrecord_model extends CI_Model
                 } else {
                     $doc_tag = $rec['Notes'];
                 }
-                //if($i>0)
+
                 $qry1 = "Insert into kart(DocumentId,UserId,KartName,DocumentPath,FileType,Notes,Path) values ('$document_id','$user_id','$kart_name','$doc_path','$file_type','$doc_tag','$path')";
                 $res1 = $this->db->query($qry1);
-                //$i++;
             }
         }
 
@@ -3443,7 +3240,6 @@ class Mailrecord_model extends CI_Model
         AND DocumentId IN ($doc_id_str)";
             $res = $this->db->query($qry);
 
-            //$i = 0;
             if ($res->num_rows() > 0) {
                 foreach ($res->result_array() as $rec) {
                     $document_id = $rec['DocumentId'];
@@ -3456,13 +3252,9 @@ class Mailrecord_model extends CI_Model
                     } else {
                         $doc_tag = $rec['Notes'];
                     }
-                    // if($i>0)
 
                     $qry2 = "Insert into kart(DocumentId,UserId,KartName,DocumentPath,FileType,Notes,Path) values ('$document_id','$user_id','$kart_name','$doc_path','$file_type','$doc_tag','$path')";
                     $res2 = $this->db->query($qry2);
-
-                    //$i++;
-
                 }
             } else {
                 echo '<i>No documents are attached to this record</i>';
@@ -3477,67 +3269,6 @@ class Mailrecord_model extends CI_Model
         return $content;
     }
 
-    /*function get_med_prescription_prescription_html($document_id_arr, $user_id, $parent_record_id){
-      $record_type_id = 20;
-      global $user_email;
-      $html_content = "";
-
-
-      $qry = "SELECT * FROM MedPrescriptionPrescription WHERE ParentRecordId = '$parent_record_id' AND UserId = '$user_id'";
-      $res = $this->db->query($qry);
-      $output_str = "";
-      if ($res->num_rows() > 0){
-          while ($rec = $res->row_array()){
-          $print_template = "../../templates/email-medical-prescription-prescription.html";
-          $html_content = $this->read_file($print_template);
-
-          $record_id = $rec["RecordId"];
-          $parent_record_id = $rec["ParentRecordId"];
-          $medicine_name = stripslashes($rec["MedicineName"]);
-          $medicine_type = stripslashes($rec["MedicineType"]);
-          $doctor_name = stripslashes($rec["DoctorName"]);
-          $doctor_address = stripslashes($rec["DoctorAddress"]);
-          $from_date = stripslashes($rec["FromDate"]);
-          $to_date = stripslashes($rec["ToDate"]);
-          $frequency = stripslashes($rec["Frequency"]);
-          $times = stripslashes($rec["Times"]);
-          $dose = stripslashes($rec["Dose"]);
-          $special_conditions = stripslashes($rec["SpecialConditions"]);
-          $symptom = stripslashes($rec["Symptom"]);
-          $usage_str = stripslashes($rec["Usage"]);
-          $notes = stripslashes($rec["Notes"]);
-          $header_title = "Prescription | $medicine_name | $medicine_type";
-
-          if ($document_id_arr == "-1"){
-            $attachments = $this->get_document_email_links(25, $record_id);
-          }
-          else if (count($document_id_arr ?? array()) > 0){
-            $attachments = $this->get_document_email_links_by_id_arr($document_id_arr, 25, $record_id);
-          }
-          else{
-              $attachments = "<i>No documents are attached to this record</i>";
-            }
-
-          $html_content = str_replace("##MEDICINE-NAME##", $medicine_name, $html_content);
-          $html_content = str_replace("##MEDICINE-TYPE##", $medicine_type, $html_content);
-          $html_content = str_replace("##DOC-NAME##", $doctor_name, $html_content);
-          $html_content = str_replace("##DOC-ADDRESS##", $doctor_address, $html_content);
-          $html_content = str_replace("##FROM-DATE##", $from_date, $html_content);
-          $html_content = str_replace("##TO-DATE##", $to_date, $html_content);
-          $html_content = str_replace("##FREQUENCY##", $frequency, $html_content);
-          $html_content = str_replace("##TIMES##", $times, $html_content);
-          $html_content = str_replace("##SYMPTOM##", $symptom, $html_content);
-          $html_content = str_replace("##USAGE##", $usage_str, $html_content);
-          $html_content = str_replace("##DOSE##", $dose, $html_content);
-          $html_content = str_replace("##SPECIAL-CONDITIONS##", $special_conditions, $html_content);
-          $html_content = str_replace("##NOTES##", $notes, $html_content);
-          $html_content = str_replace("##HEADER-TITLE##", $header_title, $html_content);
-          $html_content = str_replace("##ATTACHMENTS##", $attachments, $html_content);
-          $output_str .=  $html_content;
-        }
-      }
-      return $output_str;
-    }*/
     public function get_project_task_html($document_id_arr, $user_id, $parent_record_id, $sub_id_arr)
     {
         global $record_type_id, $user_email;
@@ -3621,7 +3352,6 @@ class Mailrecord_model extends CI_Model
                         $html_content = str_replace('##ATTACHMENTS##', $attachments, $html_content);
 
                         $output_str .= $html_content;
-
                     }
                 }
             }
@@ -3668,7 +3398,6 @@ class Mailrecord_model extends CI_Model
                         $html_content = str_replace('##ATTACHMENTS##', $attachments, $html_content);
 
                         $output_str .= $html_content;
-
                     }
                 }
             }
@@ -3778,10 +3507,5 @@ class Mailrecord_model extends CI_Model
             }
         }
         return $output_str;
-        //end of mail_record
     }
-
-}//end of class
-
-/* End of file Mailrecord_model.php.php */
-/* Location: ./application/models/Common/Mailrecord_model.php.php */
+}

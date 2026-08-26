@@ -27,5 +27,6 @@ return (new PhpCsFixer\Config())
         'concat_space'                        => ['spacing' => 'one'],
         'no_empty_statement'                  => true,
         'switch_case_semicolon_to_colon'      => true,
+        'no_extra_blank_lines'                => ['tokens' => ['extra', 'curly_brace_block']],
     ])
     ->setFinder($finder);

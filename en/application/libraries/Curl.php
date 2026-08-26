@@ -363,7 +363,6 @@ class Curl
         $this->error_string = '';
         $this->session = null;
     }
-
 }
 
 /* End of file Curl.php */

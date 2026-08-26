@@ -4,25 +4,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Addrecord_model extends CI_Model
 {
-    /*
-    Add records
-    -------------------------------------------*/
     public function add_record($params)
     {
-        //print_r($params);die;
         $user_id = $this->session->userdata('user_id');
         $params['UserId'] = $user_id;
         $RecordTypeId = $params['record_type_id'];
         $label = $params['uploadedfile_tag'];
         $fileids = $params['fileids'];
 
-        //Removing variables from POST  array
         unset($params['record_type_id']);
         unset($params['uploadedfile_tag']);
         unset($params['fileids']);
         unset($params['filename']);
-        //Checking Files count
-        //log_message("info", "params insert".json_encode($params));
+
         $docArray = [];
         if (count($_FILES ?? []) > 0) {
             $docArray = $this->document_validation($user_id);
@@ -139,7 +133,6 @@ class Addrecord_model extends CI_Model
         $recordNames = $headers['key1'];
         $RecordName = $params[$recordNames];
 
-        //Getting Table name from table using RecordYypeID
         $this->mongodb->where(['RecordTypeId' => $RecordTypeId]);
         $dbtable = TBL_RECORDTYPE;
         $dbresult = $this->mongodb->get($dbtable);
@@ -149,16 +142,11 @@ class Addrecord_model extends CI_Model
         $params['RecordId'] = $mongoid;
         $params['TS'] = TimeStamp;
         $params = array_filter($params);
-        //Inserting data into table
+
         $result = $this->mongodb->insert($RecordDetails[0]['DBTable'], $params);
         if ($result) {
-            $record_id = $mongoid;  //log_message("info",$record_id);
+            $record_id = $mongoid;
 
-            //$user_id = $params['UserId'];
-
-            /*
-            Move file from folder to record Start
-            ---------------------------------------------------------------------*/
             if (count($fileids ?? []) > 0) {
                 for ($i = 0; $i < count($fileids ?? []); $i++) {
                     $file_id = $fileids[$i];
@@ -174,7 +162,7 @@ class Addrecord_model extends CI_Model
                     }
                 }
             }
-            /*------------------------Move file from folder to record End ---------------------*/
+
             if (count($docArray ?? []) > 0) {
                 $file_extension = strtolower($docArray['ext']);
                 $mongo_connection = new MongoClient();
@@ -198,26 +186,22 @@ class Addrecord_model extends CI_Model
         } else {
             return ['status' => 'failed','data' => 'invalid post parameters'];
         }
-
     }
 
-    /*
-    add related
-    ------------------------------------ */
     public function add_sub_record($params)
     {
         $user_id = $this->session->userdata('user_id');
         $params['UserId'] = $user_id;
-        // storing the hidden variable data into varibles for further use
+
         $RecordTypeId = $params['record_type_id'];
         $label = $params['uploadedfile_tag'];
         $fileids = $params['fileids'];
         $params['ParentRecordId'] = mongo_id($params['ParentRecordId']);
-        //Removing variables from POST  array
+
         unset($params['record_type_id']);
         unset($params['uploadedfile_tag']);
         unset($params['fileids']);
-        //Checking Files count
+
         $docArray = [];
         if (count($_FILES ?? []) > 0) {
             $docArray = $this->document_validation($user_id);
@@ -226,7 +210,6 @@ class Addrecord_model extends CI_Model
             }
         }
 
-        //Getting Table name from table using RecordYypeID
         $this->mongodb->where(['RecordTypeId' => $RecordTypeId]);
         $dbtable = TBL_RECORDTYPE;
         $dbresult = $this->mongodb->get($dbtable);
@@ -236,7 +219,7 @@ class Addrecord_model extends CI_Model
         $params['RecordId'] = $mongoid;
         $params['TS'] = TimeStamp;
         $params = array_filter($params);
-        //Inserting data into table
+
         $result = $this->mongodb->insert($RecordDetails[0]['DBTable'], $params);
         if ($result) {
             $record_id = $mongoid;
@@ -263,11 +246,7 @@ class Addrecord_model extends CI_Model
                 $this->mongodb->set(['Amount' => $total]);
                 $this->mongodb->update(TBL_FINPAYMENT);
             }
-            //log_message("info",$record_id);
-            //$user_id = $params['UserId'];
-            /*
-                Move file from folder to record Start
-                ---------------------------------------------------------------------*/
+
             if (count($fileids ?? []) > 0) {
                 for ($i = 0; $i < count($fileids ?? []); $i++) {
                     $file_id = $fileids[$i];
@@ -282,7 +261,7 @@ class Addrecord_model extends CI_Model
                     }
                 }
             }
-            /*------------------------Move file from folder to record End ---------------------*/
+
             if (count($docArray ?? []) > 0) {
                 $file_extension = strtolower($docArray['ext']);
                 $mongo_connection = new MongoClient();
@@ -294,18 +273,12 @@ class Addrecord_model extends CI_Model
         } else {
             return ['status' => 'failed','data' => 'invalid post parameters'];
         }
-
     }
 
-    /*
-        Validate document
-    ---------------------------------------*/
     public function document_validation($user_id)
     {
         $docs = [];
         if (!empty($_FILES['uploadImage']['name'])) {
-            //log_message('info',$_FILES['uploadImage']['name']);
-
             $file_extension = $this->get_file_extension();
             if (!$file_extension) {
                 return ['status' => 'failed','data' => 'Invalid File Type. Only PDF, DOC, DOCX, JPEG, JPG, GIF & PNG formats are allowed'];
@@ -329,8 +302,7 @@ class Addrecord_model extends CI_Model
         } else {
             return false;
         }
-        //log_message('info','file type is');
-        //log_message('info',$file_type);
+
         return $file_type;
     }
     public function upload_thumbnail($user_id)
@@ -359,7 +331,7 @@ class Addrecord_model extends CI_Model
     {
         $folder_name = strtolower($path);
 
-        if (!is_dir($folder_name)) {   //if this folder doesn't exist
+        if (!is_dir($folder_name)) {
             if (!mkdir($folder_name, 0755, true)) {
                 die('Failed to create folder...' . $folder_name);
                 return false;
@@ -378,8 +350,4 @@ class Addrecord_model extends CI_Model
         }
         return true;
     }
-
 }
-
-/* End of file Addrecord_model.php */
-/* Location: ./application/models/Common/Addrecord_model.php */

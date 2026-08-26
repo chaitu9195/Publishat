@@ -30,7 +30,6 @@ $main_record_type_id = $record_type_id;
 		$record_type_id = 45;
 	}
 
-
 ?>
 <div class="row">
    <div class="left-heading col-md-6">
@@ -65,7 +64,6 @@ $main_record_type_id = $record_type_id;
 	<input type="hidden" name = 'module' value="<?=strtolower($moduleName);?>" >
 <?php
 foreach($fields['data'] as $field){
-	//echo json_encode($field);
 	$fieldType = $field['FieldType'];
 	$isFeildMandatoty = $field['isFeildMandatoty'];
 	$typeId = $field['RecordTypeId'];
@@ -201,7 +199,7 @@ foreach($fields['data'] as $field){
              <a href="#/delete?module=&id=" class="downloadpop" onclick= "deleterecord('<?=$record_type_id;?>','<?=strtolower($moduleName);?>','<?=$files[$i]['RecordId']?>','<?=$files[$i]['DocumentId']?>','<?=$parentRecTypeId;?>')"><i class="fa fa-remove" ></i>          </a>
              </div> 
              <?php
-               }//for close
+               }
              } else {  echo "<div class='file_nt_fnd'>Files not found</div>"; }
            ?>
               
@@ -257,12 +255,10 @@ foreach($fields['data'] as $field){
 						}
 						else { $view_file = '<img src="../../../' . $not_image . '" id="img" class="img-responsive img imag" width="30px" height="30px" >'; }
 
-
 					 $size = filesize_formatted($file['length']);
 					 $date = date('d-M-Y', strtotime($file['TS']));
 
 					 if(empty($filename)){
-						//$filename = ucfirst(strtolower(substr(strstr(pathinfo($file['DocumentPath'], PATHINFO_FILENAME),"-"),1,20)));
 						$doc_path = $file['DocumentPath'];
 						$filename = basename($doc_path);
 						$filename = end(explode('-',$filename));
@@ -374,7 +370,6 @@ function get_icon($ext){
                       default:
                               echo '<i class="fa fa-file-file-o fa-3x" aria-hidden="true"></i>';
                 }
-
 }
 
 function get_folder_document_icon($file_type){
@@ -417,8 +412,6 @@ function get_file_extension($file_name){
 	}
 function filesize_formatted($bytes)
 {
-    //$bytes = filesize($file);
-
     if ($bytes >= 1073741824) {
         return number_format($bytes / 1073741824, 2) . ' GB';
     } elseif ($bytes >= 1048576) {

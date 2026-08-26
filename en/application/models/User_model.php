@@ -9,7 +9,6 @@ class User_model extends CI_Model
         $this->load->database();
         $useridsqry = $this->db->query('SELECT UserId FROM ' . TBL_USER_VENDOR . " WHERE VendorId = '2' ");
         if ($useridsqry->num_rows() > 0) {
-
             foreach ($useridsqry->result_array() as $singleUserId) {
                 $contctsrecqry = $this->db->query('SELECT UserId,ContactName,ContactType,TS as CreatedDate FROM ' . TBL_CONTACTS . " WHERE UserId = '$singleUserId[UserId]' ");
                 if ($contctsrecqry->num_rows() > 0) {
@@ -22,7 +21,6 @@ class User_model extends CI_Model
                 if ($contctsrecqry->num_rows() > 0) {
                     foreach ($contctsrecqry->result_array() as $singleContact1) {
                         $tempArr1[] = $singleContact1;
-
                     }
                 }
             }
@@ -53,28 +51,26 @@ class User_model extends CI_Model
 
     public function readexcel($params)
     {
-        //$selectedexcel = $_FILES["UploadExcel"]["tmp_name"];
         $file = $_FILES['UploadedExcel']['tmp_name'];
-        //load the excel library
+
         $this->load->library('excel');
-        //read file from path
+
         $objPHPExcel = PHPExcel_IOFactory::load($file);
-        //get only the Cell Collection (PhpSpreadsheet: getCoordinates() returns the
-        //array of coordinate strings that old PHPExcel's getCellCollection() returned)
+
         $cell_collection = $objPHPExcel->getActiveSheet()->getCoordinates();
-        //extract to a PHP readable array format
+
         foreach ($cell_collection as $cell) {
             $column = $objPHPExcel->getActiveSheet()->getCell($cell)->getColumn();
             $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
             $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
-            //header will/should be in row 1 only. of course this can be modified to suit your need.
+
             if ($row == 1) {
                 $header[$column] = $data_value;
             } else {
                 $arr_data[$row][$column] = $data_value;
             }
         }
-        //send the data in an array format
+
         $data['header'] = $header;
         $data['values'] = array_values($arr_data ?? []);
         $finallarr = [];
@@ -88,7 +84,6 @@ class User_model extends CI_Model
                     } else {
                         $temparr[$hvalue] = '';
                     }
-
                 }
             }
             $finallarr[] = $temparr;
@@ -110,19 +105,15 @@ class User_model extends CI_Model
                     $emailids[] = strtolower(str_replace(' ', '', $email_id));
                 }
             }
-
         }
         $this->mongodb->where(['UserId' => mongo_id($user_id)]);
         $qry = $this->mongodb->get(TBL_CONTACTS);
         foreach ($qry as $email_data) {
             $email[] = strtolower($email_data['PersonalEmail']);
         }
-        //log_message("info",json_encode($email));
+
         $emailid = (array)$email + (array)$emailids;
         $emailids = array_keys(array_flip($emailid ?? []));
         return ['Email' => $emailids];
     }
 }
-
-/* End of file User_model.php */
-/* Location: ./application/controllers/User_model.php */

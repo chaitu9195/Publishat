@@ -1,5 +1,5 @@
 <?php
-########## Google "Sign in" URL via google_oauth_helper #############
+
 $authUrl = google_login_url();
 
 ?>

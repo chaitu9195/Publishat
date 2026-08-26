@@ -4,9 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Uploadfile_model extends CI_Model
 {
-    /*
-    Upload File (from edit mode )
-    -------------------------------------------*/
     public function upload_file($params)
     {
         $user_id = $this->session->userdata('user_id');
@@ -52,7 +49,6 @@ class Uploadfile_model extends CI_Model
                 if (strpos($output[0], 'Error')) {
                     log_message('debug', 'Conversion Error: ' . $output[0]);
                 } else {
-                    // $qry = $gridfs->put('/var/www/html/print.doc', array("_id"=>$mid, "DocumentId"=>$mid, "UserId"=>$user_id, "RecordId"=>mongo_id($record_id), "RecordTypeId"=>$RecordTypeId,"FileType"=>$file_extension, "Notes"=>$label));
                     $Status = 'SUCCESS';
                 }
             } else {
@@ -62,12 +58,8 @@ class Uploadfile_model extends CI_Model
         } else {
             return ['data' => 'Please upload your Document'];
         }
+    }
 
-    }//end of upload file function
-
-    /*
-    Get the file extension
-    -----------------------------------------*/
     public function get_file_extension()
     {
         $document = $_FILES['uploadImage']['name'];
@@ -78,11 +70,10 @@ class Uploadfile_model extends CI_Model
         } else {
             return '';
         }
-        //log_message('info','file type is');
-        //log_message('info',$file_type);
+
         return $file_type;
     }
-    /* Upload file into folder*/
+
     public function upload_thumbnail($params)
     {
         $document = $_FILES['uploadImage'];
@@ -96,7 +87,6 @@ class Uploadfile_model extends CI_Model
             }
         }
         if ($document['size'] > max_document_file_size) {
-            //log_message('info',$document["size"]);
             return '';
         } else {
             $db_document_filename = $_FILES['uploadImage']['name'];
@@ -108,12 +98,12 @@ class Uploadfile_model extends CI_Model
             }
         }
     }
-    /* Create folder if not available */
+
     public function create_folder($path)
     {
         $folder_name = strtolower($path);
 
-        if (!is_dir($folder_name)) {   //if this folder doesn't exist
+        if (!is_dir($folder_name)) {
             if (!mkdir($folder_name, 0755, true)) {
                 die('Failed to create folder...' . $folder_name);
                 return false;
@@ -122,8 +112,4 @@ class Uploadfile_model extends CI_Model
             }
         }
     }
-
 }
-
-/* End of file Uploadfile_model.php */
-/* Location: ./application/models/Common/Uploadfile_model.php */

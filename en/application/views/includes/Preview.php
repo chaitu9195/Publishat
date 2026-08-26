@@ -31,7 +31,6 @@ else if($filetype == 'pptx'){
 	unlink('../../../print.' . $filetype);
 }
 else{
-
 }
 
 function PageCount_PPTX($file) {
@@ -230,13 +229,12 @@ var loc = $(this).val();
 							<div id="google-map" class="google-map">
 							</div>
 						</div>-->
-						<?php /* === MAP DATA === */ ?>
+						<?php  ?>
 						<?php
 						$locations = [];
                         $i = 1;
 						foreach ($data as $row)
 							{
-
 								$name = $row['name'];
                                 $lattitude = $row['latitude'];
 								$longitude = $row['longitude'];
@@ -256,64 +254,12 @@ var loc = $(this).val();
                          <?php
                                 $i++;
 							}
-							//print_r($locations);
-						?>
-						<?php /* === PRINT THE JAVASCRIPT === */ ?>
-						<?php
-						/* Set Default Map Area Using First Location */
-						/* 
-						$map_area_lat = isset( $locations[0]['google_map']['lat'] ) ? $locations[0]['google_map']['lat'] : '';
-						$map_area_lng = isset( $locations[0]['google_map']['lng'] ) ? $locations[0]['google_map']['lng'] : '';
-						?>
-<!-- maps disabled: 						<script type='text/javascript' src='https://publishat.com/restapp/en/assets/js/gmaps.js'></script> -->
-							<script>
-								jQuery( document ).ready( function($) { 
-								var is_touch_device = 'ontouchstart' in document.documentElement; 
-								var map = new GMaps({
-									el: '#google-map',
-									lat: <?php echo $map_area_lat; ?>,
-									lng: <?php echo $map_area_lng; ?>,
-									width: '200px',
-									height: '200px',
-									scrollwheel: false,
-									draggable: ! is_touch_device
-								});
-								var bounds = [];
-								
-						<?php 
-						foreach( $locations as $location ){
-							    $id = $location['id'];
-								$name = $location['location_name'];
-								$addr = $location['location_address'];
-								$map_lat = $location['google_map']['lat'];
-								$map_lng = $location['google_map']['lng'];
-						?>
-								var latlng = new google.maps.LatLng(<?php echo $map_lat; ?>, <?php echo $map_lng; ?>);
-								bounds.push(latlng);
-									map.addMarker({
-											lat: <?php echo $map_lat; ?>,
-											lng: <?php echo $map_lng; ?>,
-											title: '<?php echo $name; ?>',
-											infoWindow: {
-												content: '<a href="#"  onClick = "printpage(<?=$id;?>)"><p class="popup"><?php echo $name; ?><br><?php echo $addr; ?></p></a>'
-												},
-                                                click: function(){
-                                                   (this.infoWindow).open(this.map, this);
-                                                }
-									});
-						<?php } //end foreach locations ?>
-								map.fitLatLngBounds(bounds);
-								var $window = $(window);
-								function mapWidth() { 
-									var size = $('.google-map-wrap').width();
-									$('.google-map').css({width: size + 'px', height: (size/1.5) + 'px'});
-								}
-								mapWidth();
-								$(window).resize(mapWidth);
 
-								});
-							</script>
-						<?php */ ?>
+						?>
+						<?php  ?>
+						<?php
+
+						 ?>
 					</div>
 				</article>
 			</div>
@@ -412,10 +358,9 @@ function CheckIsProject(value){
 </script>
 <?php
 function remote_file_size($url){
-# Get all header information
 $data = get_headers($url, true);
-# Look up validity
+
 if (isset($data['Content-Length']))
-    # Return file size
+
     return (int) $data['Content-Length'];
 }

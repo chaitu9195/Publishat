@@ -92,7 +92,7 @@
                <?=($ext == 'jpeg' || $ext == 'png' || $ext = 'jpg' || $ext == 'pdf' || $ext == 'gif') ? 'View' : 'Download'; ?>   </a>
              </div> 
              <?php
-               }//for close
+               }
              } else {  echo '<br>Files not found<br><br>'; }
            ?>
                  
@@ -232,8 +232,6 @@ function get_icon($ext){
                       default:
                               echo '<i class="fa fa-file-file-o fa-4x" aria-hidden="true"></i>';
                 }
-
 }
-
 
 ?>

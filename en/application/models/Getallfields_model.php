@@ -25,10 +25,8 @@ class Getallfields_model extends CI_Model
                 }
 
                 if ($dropdown->num_rows() > 0) {
-                    //echo "<pre>";print_r($dropdown->result_array());die;
                     if (!empty($groupdropdownarray) && count($groupdropdownarray ?? []) > 0) {
                         $groupdropdownarray = array_merge($groupdropdownarray ?? [], $dropdown->result_array());
-
                     } else {
                         $groupdropdownarray = $dropdown->result_array();
                     }
@@ -40,7 +38,6 @@ class Getallfields_model extends CI_Model
                         $completeArray[] = array_merge($singleRow ?? [], $dropdownarray ?? []);
                     } else {
                         $completeArray[] = $singleRow;
-
                     }
                 }
             }
@@ -48,7 +45,6 @@ class Getallfields_model extends CI_Model
         } else {
             return ['status' => 'failed','data' => 'No data found'];
         }
-
     }
 
     public function get_dropdowndata($params)
@@ -62,7 +58,5 @@ class Getallfields_model extends CI_Model
         } else {
             return ['status' => 'failed','data' => 'No data found'];
         }
-
     }
-
 }

@@ -4,9 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Folder_model extends CI_Model
 {
-    /*
-    Get Folder Data
-    ----------------------------------------*/
     public function folder_data($params)
     {
         $user_id = $this->session->userdata('user_id');
@@ -25,9 +22,7 @@ class Folder_model extends CI_Model
         $files = $this->msort($files, ['Type', 'TS']);
         log_message('info', json_encode($files));
         return ['files' => $files];
-    }	        /*
-        Get BookMark Data
-        ----------------------------------------*/
+    }
     public function bookmark_data($params)
     {
         $user_id = $this->session->userdata('user_id');
@@ -44,9 +39,7 @@ class Folder_model extends CI_Model
         }
         return ['bookmarksdata' => $bookmarkdata];
     }
-    /*
-    Upload files
-    ------------------------------------------------------*/
+
     public function uploadfile($params)
     {
         $user_id = $this->session->userdata('user_id') ? mongo_id($this->session->userdata('user_id')) : mongo_id($params['UserId']);
@@ -71,9 +64,6 @@ class Folder_model extends CI_Model
         return ['status' => $status];
     }
 
-    /*
-    Delete Folder Attachment
-    -------------------------------------------*/
     public function delete_file($params)
     {
         $user_id = $this->session->userdata('user_id');
@@ -123,12 +113,11 @@ class Folder_model extends CI_Model
         return $status;
     }
 
-    /* Create folder if not available */
     public function create_folder($path)
     {
         $folder_name = strtolower($path);
 
-        if (!is_dir($folder_name)) {   //if this folder doesn't exist
+        if (!is_dir($folder_name)) {
             if (!mkdir($folder_name, 0755, true)) {
                 die('Failed to create folder...' . $folder_name);
                 return false;
@@ -258,36 +247,23 @@ class Folder_model extends CI_Model
         $location = $params['location'];
         $regex = new MongoRegex("/$location/i");
         $where = ['$or' => [['address' => $regex],['name' => new MongoRegex("/$location/i")]]];
-        //$cursor = $collection->find($where)
-        // $this->mongodb->like(array("LocationName" => new MongoRegex('/'.$location.'/i')));
-        /* $qury = $this->mongodb->get("Maps");
-        log_message("info",json_encode($qury)); */
+
         $m = new MongoClient();
         $db = $m->jobs;
         $collection = $db->printers;
         $query = $collection->find($where);
 
-        //$qury = $this->db->query("SELECT * FROM Maps WHERE LocationName LIKE '" . $location . "%'");
         foreach ($query as $result) {
-            //print_r($result);die;
             $data[] = $result;
             $loc[] = $result['name'];
         }
         return ['data' => $data,'location' => $loc];
     }
-    /*
-        Validate document
-    ---------------------------------------*/
+
     public function document_validation($user_id)
     {
         $docs = [];
         if (!empty($_FILES['uploadImage']['name'])) {
-            //log_message('info',$_FILES['uploadImage']['name']);
-
-            /* $file_extension = $this->get_file_extension();
-            if(!$file_extension){
-              return array("status"=>"failed","data"=>"Invalid File Type. Only PDF, DOC, DOCX, JPEG, JPG, GIF & PNG formats are allowed");
-            } */
             $uploaded_filename = $this->upload_thumbnail($user_id);
             if (!$uploaded_filename) {
                 return ['status' => 'failed','data' => 'File size is too high. Document should not be more than ' . max_document_file_size_text];
@@ -306,8 +282,7 @@ class Folder_model extends CI_Model
         } else {
             return false;
         }
-        //log_message('info','file type is');
-        //log_message('info',$file_type);
+
         return $file_type;
     }
     public function upload_thumbnail($user_id)
@@ -341,7 +316,6 @@ class Folder_model extends CI_Model
                     if (!is_array($key)) {
                         $sort_key = $v[$key];
                     } else {
-                        // @TODO This should be fixed, now it will be sorted as string
                         foreach ($key as $key_key) {
                             $sort_key .= $v[$key_key];
                         }
@@ -376,9 +350,7 @@ class Folder_model extends CI_Model
         foreach ($result as $rowData) {
             $data[] = $rowData;
         }
-        //echo "<pre>";print_r($data); die;
+
         return $data;
     }
 }
-/* End of file Folder_model.php */
-/* Location: ./application/models/Global/Folder_model.php */

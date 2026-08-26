@@ -4,9 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Editrecord_model extends CI_Model
 {
-    /*
-    Update records
-    -------------------------------------------*/
     public function update_record($params)
     {
         $user_id = $this->session->userdata('user_id');
@@ -24,7 +21,7 @@ class Editrecord_model extends CI_Model
         unset($params['parent_record_type_id']);
         unset($params['ParentRecordId']);
         $params = array_filter($params);
-        //log_message("info", "params".json_encode($params));
+
         if ($RecordTypeId == 1) {
             $headers = ['key1' => 'Class','key2' => 'SchoolName','key3' => 'DocumentType'];
         }
@@ -138,18 +135,13 @@ class Editrecord_model extends CI_Model
         $dbresult = $this->mongodb->get(TBL_RECORDTYPE);
         $RecordDetails = $dbresult;
         $params['TS'] = TimeStamp;
-        //			$this->db->where('RecordId', $RecordId);
-        //print_r($params); die;
+
         $this->mongodb->set($params);
 
         $this->mongodb->where(['RecordId' => mongo_id($RecordId)]);
         $result = $this->mongodb->update($RecordDetails[0]['DBTable']);
 
         if ($result) {
-
-            /*
-                Move file from folder to record Start
-                ---------------------------------------------------------------------*/
             if (count($fileids ?? []) > 0) {
                 for ($i = 0; $i < count($fileids ?? []); $i++) {
                     $file_id = $fileids[$i];
@@ -164,7 +156,7 @@ class Editrecord_model extends CI_Model
                     }
                 }
             }
-            /*------------------------Move file from folder to record End ---------------------*/
+
             if ($RecordTypeId == 14) {
                 $checkdupgrp = $this->db->query('SELECT * FROM ' . TBL_GROUPNAMES . " WHERE UserId = '$params[UserId]' AND GroupName = '$params[GroupName]' ");
                 if ($checkdupgrp->num_rows() == 0) {
@@ -182,7 +174,6 @@ class Editrecord_model extends CI_Model
             $qry1 = $this->mongodb->insert(TBL_EVENTS, $eventdata);
 
             if (empty($addrelated)) {
-
                 return ['status' => 'success','data' => 'record updated successfully'];
             } else {
                 return ['status' => 'success','data' => 'record updated successfully','addrelated' => '1','record_id' => $RecordId];
@@ -190,14 +181,13 @@ class Editrecord_model extends CI_Model
         } else {
             return ['data' => 'Updation Failed'];
         }
-    }//end of update record
+    }
 
-    /* Create folder if not available */
     public function create_folder($path)
     {
         $folder_name = strtolower($path);
 
-        if (!is_dir($folder_name)) {   //if this folder doesn't exist
+        if (!is_dir($folder_name)) {
             if (!mkdir($folder_name, 0755, true)) {
                 die('Failed to create folder...' . $folder_name);
                 return false;
@@ -206,8 +196,4 @@ class Editrecord_model extends CI_Model
             }
         }
     }
-
-}//end of class
-
-/* End of file Editrecord_model.php.php */
-/* Location: ./application/models/Common/Editrecord_model.php.php */
+}

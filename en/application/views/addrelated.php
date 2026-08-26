@@ -63,7 +63,6 @@ if($addrelated){
 <?php
 
 foreach($fields['data'] as $field){
-	//echo json_encode($field);
 	$fieldType = $field['FieldType'];
 	$isFeildMandatoty = $field['isFeildMandatoty'];
 	$typeId = $field['RecordTypeId'];
@@ -206,12 +205,10 @@ foreach($fields['data'] as $field){
 						}
 						else { $view_file = '<img src="../../../' . $not_image . '" id="img" class="img-responsive img imag" width="30px" height="30px" >'; }
 
-
 					 $size = filesize_formatted($file['length']);
 					 $date = date('d-M-Y', strtotime($file['TS']));
 
 					 if(empty($filename)){
-						//$filename = ucfirst(strtolower(substr(strstr(pathinfo($file['DocumentPath'], PATHINFO_FILENAME),"-"),1,20)));
 						$doc_path = $file['DocumentPath'];
 						$filename = basename($doc_path);
 						$filename = end(explode('-',$filename));
@@ -316,8 +313,6 @@ div.folder_img_border{
 	}
 	function filesize_formatted($bytes)
 {
-    //$bytes = filesize($file);
-
     if ($bytes >= 1073741824) {
         return number_format($bytes / 1073741824, 2) . ' GB';
     } elseif ($bytes >= 1048576) {

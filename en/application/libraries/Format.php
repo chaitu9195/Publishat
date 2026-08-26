@@ -96,7 +96,6 @@ class Format
         }
 
         foreach ($data as $key => $value) {
-
             //change false/true to 0/1
             if (is_bool($value)) {
                 $value = (int) $value;
@@ -190,7 +189,6 @@ class Format
                 $row = str_replace('"', '""', $row); // Escape dbl quotes per RFC 4180
                 $output .= '"' . implode('","', $row) . '"' . PHP_EOL;
             }
-
         }
 
         return $output;
@@ -202,7 +200,6 @@ class Format
         $callback = isset($_GET['callback']) ? $_GET['callback'] : '';
         if ($callback === '') {
             return json_encode($this->_data);
-
             /* Had to take out this code, it doesn't work on Objects.
             $str = $this->_data;
             array_walk_recursive($str, function(&$item, $key)
@@ -279,7 +276,6 @@ class Format
     {
         return unserialize(trim($string));
     }
-
 }
 
 /* End of file format.php */

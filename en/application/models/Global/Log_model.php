@@ -13,7 +13,6 @@ class Log_model extends CI_Model
         }
         $start = ($page * recordsPerPage) - recordsPerPage;
         $end = recordsPerPage;
-        //echo $page; echo $start; echo $end;
 
         $user_id = $this->session->userdata('user_id');
         if ($event_name == 'All') {
@@ -22,8 +21,7 @@ class Log_model extends CI_Model
             $this->mongodb->where(['UserId' => mongo_id($user_id), 'EventType' => $event_name]);
         }
         $this->mongodb->order_by(['Date' => 'DESC']);
-        //$qry = $this->mongodb->limit($start, $perPage)->get("events");
-        //$this->mongodb->offset($start);
+
         $this->mongodb->offset($start);
         $this->mongodb->limit($end);
         $qry = $this->mongodb->get('events');
@@ -38,15 +36,10 @@ class Log_model extends CI_Model
                 $log['_id'] = $id;
                 $log['ename'] = $event_name;
                 $logs[] = $log;
-
             }
-
         } else {
             $logs = 'No Log Found';
         }
         return ['log' => $logs, 'e_name' => $event_name];
-
     }
 }
-/* End of file Log_model.php */
-/* Location: ./application/models/Global/Log_model.php */

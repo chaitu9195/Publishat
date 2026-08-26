@@ -3,9 +3,6 @@
 date_default_timezone_set('Asia/Kolkata');
 class Login_model extends CI_Model
 {
-    /**
-     * Login Check
-     */
     public function login_check($params)
     {
         $this->load->database();
@@ -66,5 +63,4 @@ class Login_model extends CI_Model
         $Upgraded = $query[0]['Upgraded'];
         return $Upgraded;
     }
-
 }

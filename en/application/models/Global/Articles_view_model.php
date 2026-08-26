@@ -20,13 +20,11 @@ class Articles_view_model extends CI_Model
         $user_id = $this->session->userdata('user_id');
         $this->mongodb->where(['_id' => $params]);
         $query = $this->mongodb->get('Articles');
-        //$query = $this->db->query("SELECT * FROM Articles WHERE UserId = '$user_id' AND id= '$params'");
+
         foreach ($query as $info) {
             $article_edit[] = $info;
-
         }
         return ['articleinfo' => $article_edit];
-
     }
     public function articleupdate($params)
     {
@@ -35,7 +33,5 @@ class Articles_view_model extends CI_Model
         $art_heading = $params['articleheading'];
         $art_url = $params['articleurl'];
         $query = $this->db->query("UPDATE `Articles` SET `ArticleDescription`='$articledes',`ArticleHeading`='$art_heading',`ArticleUrl`='$art_url' WHERE id = '$id'");
-
     }
-
 }

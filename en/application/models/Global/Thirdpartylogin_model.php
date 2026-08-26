@@ -55,7 +55,6 @@ class Thirdpartylogin_model extends CI_Model
                                             'FirstLogin' => '0',
                                             'Password' => '',
                                             'PhotoPath' => '',
-
                              ];
 
             $this->mongodb->insert(TBL_USER, $user_details);
@@ -63,7 +62,6 @@ class Thirdpartylogin_model extends CI_Model
             $result = ['UserId' => $user_id, 'Name' => $name, 'Email' => $email];
             $this->mongodb->insert('UserLoginHistory', ['UserId' => mongo_id($user_id),'PrevLoginTime' => $joined_on, 'InitialIP' => $ipaddress, 'PrevIP' => $ipaddress, 'LatestLoginTime' => $joined_on,'LatestIP' => $ipaddress]);
             return ['status' => 'oauth','data' => $result];
-
         }
     }
 
@@ -85,7 +83,6 @@ class Thirdpartylogin_model extends CI_Model
             ];
             $this->mongodb->insert(TBL_CONTACTS, $contacts);
         }
-
     }
 
     public function gpicker($params)
@@ -118,7 +115,7 @@ class Thirdpartylogin_model extends CI_Model
         }
         $this->mongodb->where(['id' => $record_type_id]);
         $qry = $this->mongodb->get('Folders');
-        //$qry = $this->db->query("SELECT * FROM Folders Where id = '$record_type_id'");
+
         $rec = $qry[0];
         $folder_name = $rec['FolderName'];
         $document_folder = '../../fileupload/' . $user_id . '/' . $folder_name;
@@ -143,16 +140,14 @@ class Thirdpartylogin_model extends CI_Model
                              'TS' => $date,
                    ];
             $query = $this->mongodb->insert('fs.files', $file);
-
         }
-
     }
 
     public function create_folder($path)
     {
         $folder_name = strtolower($path);
 
-        if (!is_dir($folder_name)) {   //if this folder doesn't exist
+        if (!is_dir($folder_name)) {
             if (!mkdir($folder_name, 0755, true)) {
                 die('Failed to create folder...' . $folder_name);
                 return false;
@@ -168,9 +163,7 @@ class Thirdpartylogin_model extends CI_Model
         $res = $this->mongodb->get($qry);
 
         if (count($res ?? []) == 0) {
-
             $sett = $this->mongodb->order_by(['_id' => 'ASC'])->get('Settings');
-            //$sett = $this->mongodb;
 
             foreach ($sett as $setting) {
                 $setting_id = $setting['SettingId'];
@@ -197,7 +190,6 @@ class Thirdpartylogin_model extends CI_Model
                 ];
                 $this->mongodb->insert(TBL_ACCOUNTSETTINGS, $acc_setting);
             }
-
         }
     }
 }

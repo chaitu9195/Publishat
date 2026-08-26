@@ -69,8 +69,7 @@ $imagepath = $articleinfo['ArticleImage'];
 $articledes = $articleinfo['ArticleDescription'];
 $art_heading = $articleinfo['articleheading'];
 $art_url = $articleinfo['ArticleUrl'];
-//$article_heading = base64_decode($art_heading );
-//$art_des = base64_decode($articledes);
+
 ?>
 
     <div class="col-md-12" style="padding:10px;border-bottom:1px solid #ddd;">

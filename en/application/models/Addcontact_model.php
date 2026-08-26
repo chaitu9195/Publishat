@@ -56,8 +56,4 @@ class Addcontact_model extends CI_Model
             return 'failed';
         }
     }
-
 }
-
-/* End of file Addcontact_model.php */
-/* Location: ./application/models/Addcontact_model.php */

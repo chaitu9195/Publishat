@@ -16,9 +16,6 @@ class Settings_model extends CI_Model
         return ['module' => $module,'data' => $settings];
     }
 
-    /*
-    Update settings
-    ------------------------------------------*/
     public function updateSettings($params)
     {
         $user_id = $this->session->userdata('user_id');
@@ -43,10 +40,5 @@ class Settings_model extends CI_Model
         } else {
             return 'failed';
         }
-
     }
-
 }
-
-/* End of file Settings_model.php */
-/* Location: ./application/models/Global/Settings_model.php */

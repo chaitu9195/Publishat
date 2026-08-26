@@ -833,7 +833,6 @@ class Mongo_db
     */
     public function find_one($collection = '')
     {
-
         if (empty($collection)) {
             show_error('In order to retrieve documents from MongoDB, a collection name must be passed', 500);
         }
@@ -1289,7 +1288,6 @@ class Mongo_db
             } else {
                 show_error('Delete of data into MongoDB failed', 500);
             }
-
         }
     }
 
@@ -1404,7 +1402,6 @@ class Mongo_db
         } else {
             return new MongoDate($stamp);
         }
-
     }
 
     /**

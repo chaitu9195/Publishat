@@ -35,7 +35,6 @@ class Signup_model extends CI_Model
             return ['status' => 'success'];
         } else {
             return ['status' => 'failure'];
-
         }
     }
 
@@ -66,14 +65,13 @@ class Signup_model extends CI_Model
 
     public function phpmail_nocc($from_email, $to_email, $subject, $message, $type = 'html')
     {
-
-        if ($type == 'html') {   //html email
+        if ($type == 'html') {
             $mailheaders = "From:$from_email\r\n" .
                               "MIME-Version:1.0\r\n" .
                               "Content-type:text/html\r\n" .
                               "Content-Transfer-Encoding:7bit\n" .
                               "Reply-To: $from_email\n";
-        } else {     // text email
+        } else {
             $mailheaders = "From:$from_email\r\nMIME-Version: 1.0\r\nContent-type:" .
                            "text/plain\r\nContent-Transfer-" .
                            "Encoding: 7bit\n" .
@@ -81,5 +79,4 @@ class Signup_model extends CI_Model
         }
         mail($to_email, $subject, $message, $mailheaders);
     }
-
 }

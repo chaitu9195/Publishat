@@ -3,9 +3,6 @@
 require(APPPATH . '/libraries/REST_Controller.php');
 class Thirdparty extends REST_Controller
 {
-    /*
-    Constructor
-    --------------------------------*/
     public function __construct()
     {
         parent::__construct();
@@ -14,7 +11,6 @@ class Thirdparty extends REST_Controller
         $this->load->library('session');
         $user_id = $this->session->userdata('user_id');
         $this->load->library('mongo_db', ['activate' => 'newdb'], 'mongodb');
-
     }
 
     public function gcontacts_get()
@@ -23,7 +19,7 @@ class Thirdparty extends REST_Controller
         $client_id = '298801891056-boiv3nlutpsqfdurfidvd9aktsiaditb.apps.googleusercontent.com';
         $client_secret = 'qkc-OnA6UrBTiyGSDuo6_J2E';
         $redirect_uri = 'https://www.publishat.com/digital/en/Thirdparty/gcontacts';
-        // $simple_api_key = 'AIzaSyB_IOM7pfIAc3OEFZZBC5LpoACPPgwJ_hg';
+
         $max_results = 10000;
         $auth_code = $_GET['code'];
 
@@ -58,7 +54,6 @@ class Thirdparty extends REST_Controller
         }
 
         if (isset($_GET['code'])) {
-
             $accesstoken = $_SESSION['access_token'];
         }
 
@@ -74,12 +69,9 @@ class Thirdparty extends REST_Controller
         $return = [];
         if (!empty($contacts['feed']['entry'])) {
             foreach ($contacts['feed']['entry'] as $contact) {
-
-                //retrieve Name + email and store into array
                 $return[] = [
                     'name' => $contact['title']['$t'],
                     'email' => $contact['gd$email'][0]['address'],
-
                 ];
             }
         }
@@ -93,12 +85,10 @@ class Thirdparty extends REST_Controller
             if ($name == '') {
                 $name_arr = explode('@', $email);
                 $name = $name_arr[0];
-
             }
 
             $this->load->model('Global/Thirdpartylogin_model');
             $result = $this->Thirdpartylogin_model->google_contacts($name, $email);
-
         }
 
         header('Location: https://www.publishat.com/digital/en/web/records?page_id=14&module=professional');
@@ -115,7 +105,6 @@ class Thirdparty extends REST_Controller
         $this->load->model('Global/Folder_model');
         $data = $this->Folder_model->getfolderfilesdata($folder_id, $type_id, $module);
         $this->load->view('includes/folder', ['files' => $data['ff'],'fpath' => $data['fdetails'],'param' => $data,'status' => 'success','folid' => $folder_id]);
-
     }
     public function curl_file_get_contents($url)
     {
@@ -134,5 +123,4 @@ class Thirdparty extends REST_Controller
         curl_close($curl);
         return $contents;
     }
-
 }

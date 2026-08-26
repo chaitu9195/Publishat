@@ -188,7 +188,6 @@ abstract class REST_Controller extends CI_Controller
      */
     protected function early_checks()
     {
-
     }
 
     /**
@@ -333,7 +332,6 @@ abstract class REST_Controller extends CI_Controller
         if (config_item('rest_enable_logging')) {
             $this->_log_access_time();
         }
-
     }
 
     /**
@@ -844,7 +842,6 @@ abstract class REST_Controller extends CI_Controller
      */
     protected function _auth_override_check()
     {
-
         // Assign the class/method auth type override array from the config
         $this->overrides_array = $this->config->item('auth_override_class_method');
 
@@ -958,7 +955,6 @@ abstract class REST_Controller extends CI_Controller
         else {
             parse_str(file_get_contents('php://input'), $this->_put_args);
         }
-
     }
 
     /**
@@ -1188,7 +1184,6 @@ abstract class REST_Controller extends CI_Controller
         $ldapconn = ldap_connect($ldaphost, $ldapport);
 
         if ($ldapconn) {
-
             log_message('debug', 'Setting timeout to ' . $ldaptimeout . ' seconds');
 
             ldap_set_option($ldapconn, LDAP_OPT_NETWORK_TIMEOUT, $ldaptimeout);
@@ -1206,7 +1201,6 @@ abstract class REST_Controller extends CI_Controller
 
                 return false;
             }
-
         }
 
         // search for user
@@ -1533,7 +1527,6 @@ abstract class REST_Controller extends CI_Controller
         $uname = $this->input->server('PHP_AUTH_USER');
         $pwd = $this->input->server('PHP_AUTH_PW');
         return $this->check_user_details($uname, md5($pwd));
-
         /*$this->load->database ();
         $uname = $this->input->server('PHP_AUTH_USER');
         $pwd  = $this->input->server('PHP_AUTH_PW');
@@ -1559,7 +1552,6 @@ abstract class REST_Controller extends CI_Controller
     }
     public function check_general_user_details($uname, $password)
     {
-
         $sql = 'SELECT id FROM ' . TBL_USER . " WHERE username ='$uname' and password='$password' limit 1";
         $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {

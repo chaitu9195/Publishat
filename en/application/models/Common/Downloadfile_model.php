@@ -4,9 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Downloadfile_model extends CI_Model
 {
-    /*
-    Download File
-    -------------------------------------------*/
     public function download($params)
     {
         $label = '';
@@ -17,33 +14,21 @@ class Downloadfile_model extends CI_Model
 
         $ctype = $this->get_mime($file_extension);
         if (file_exists($filename)) {
-            /*header("Content-Type: $ctype");
-            if($label)
-                    {
-                        header("Content-Disposition: attachment; filename='$label.$file_extension'");
-                    }
-                    else {
-                        header("Content-Disposition: attachment; filename='$filename'");
-                    }
-            header("Content-Length: ".@filesize($filename));
-            readfile($filename);		*/
-            header('Pragma: public');     // required
-            header('Expires: 0');         // no cache
+            header('Pragma: public');
+            header('Expires: 0');
             header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
             header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($filename)) . ' GMT');
             header('Cache-Control: private', false);
-            header('Content-Type: ' . $ctype);  // Add the mime type from Code igniter.
-            header('Content-Disposition: inline; filename="' . basename($filename) . '"');  // Add the file name
+            header('Content-Type: ' . $ctype);
+            header('Content-Disposition: inline; filename="' . basename($filename) . '"');
             header('Content-Transfer-Encoding: binary');
-            header('Content-Length: ' . filesize($filename)); // provide file size
+            header('Content-Length: ' . filesize($filename));
             header('Connection: close');
-            readfile($filename); // push it out
+            readfile($filename);
             exit();
         } else {
             return 'Sorry attachment not found';
-            //log_message("info","failed");
         }
-
     }
     public function download_file($params, $recordid)
     {
@@ -54,7 +39,6 @@ class Downloadfile_model extends CI_Model
         $result = $qry->result_array();
         foreach ($result as $value) {
             $usersid = $value['UserId'];
-
         }
         $userid = $usersid;
         $filename = FCPATH . 'pwdocs/' . $userid . '/' . $params;
@@ -62,36 +46,23 @@ class Downloadfile_model extends CI_Model
 
         $ctype = $this->get_mime($file_extension);
         if (file_exists($filename)) {
-            /*header("Content-Type: $ctype");
-            if($label)
-                    {
-                        header("Content-Disposition: attachment; filename='$label.$file_extension'");
-                    }
-                    else {
-                        header("Content-Disposition: attachment; filename='$filename'");
-                    }
-            header("Content-Length: ".@filesize($filename));
-            readfile($filename);		*/
-            header('Pragma: public');     // required
-            header('Expires: 0');         // no cache
+            header('Pragma: public');
+            header('Expires: 0');
             header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
             header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($filename)) . ' GMT');
             header('Cache-Control: private', false);
-            header('Content-Type: ' . $ctype);  // Add the mime type from Code igniter.
-            header('Content-Disposition: inline; filename="' . basename($filename) . '"');  // Add the file name
+            header('Content-Type: ' . $ctype);
+            header('Content-Disposition: inline; filename="' . basename($filename) . '"');
             header('Content-Transfer-Encoding: binary');
-            header('Content-Length: ' . filesize($filename)); // provide file size
+            header('Content-Length: ' . filesize($filename));
             header('Connection: close');
-            readfile($filename); // push it out
+            readfile($filename);
             exit();
         } else {
             return 'Sorry attachment not found';
-            //log_message("info","failed");
         }
-
     }
 
-    /*get mime type*/
     public function get_mime($file_extension)
     {
         $file_extension = strtolower($file_extension);
@@ -139,7 +110,6 @@ class Downloadfile_model extends CI_Model
         return $ctype;
     }
 
-    /*disposition attachment*/
     public function is_disposition_attach($ctype)
     {
         $user_agent = strtoupper($_SERVER['HTTP_USER_AGENT']);
@@ -148,12 +118,6 @@ class Downloadfile_model extends CI_Model
         $browsers_arr = ['MSIE 6.0', 'MSIE 7.0', 'MSIE 8.0', 'MSIE 9.0'];
 
         if (in_array($ctype, $ctype_arr ?? [])) {
-            /*foreach($browsers_arr as $browser_ver){
-                if (strpos($user_agent, $browser_ver) > 0){
-                    return true;
-                    break;
-                }
-            }*/
             return true;
         } else {
             return false;
@@ -172,9 +136,7 @@ class Downloadfile_model extends CI_Model
             $file_extension = $filedetails['FileType'];
             $path = $filedetails['DocumentPath'];
             $uploadedFrom = $filedetails['UploadedFrom'];
-            // Resolve filesystem-stored docs from an absolute, restore-friendly
-            // path (pwdocs restored under the app root). DocumentPath looks like
-            // /pwdocs/<uid>/<file>, so FCPATH + that path points at en/pwdocs/...
+
             $filename = FCPATH . ltrim((string)$path, '/');
             $ctype = $this->get_mime($file_extension);
         }
@@ -187,7 +149,7 @@ class Downloadfile_model extends CI_Model
             $file = $gridfs->findOne(['_id' => mongo_id($fid)]);
             header('Content-Description: File Transfer');
             header('Content-Type: ' . $ctype);
-            header('Content-Disposition: inline; filename="' . $filename . '"');  // Add the file name
+            header('Content-Disposition: inline; filename="' . $filename . '"');
             header('Content-Transfer-Encoding: binary');
             header('Expires: 0');
             header('Cache-Control: must-revalidate');
@@ -200,7 +162,7 @@ class Downloadfile_model extends CI_Model
             if (file_exists($filename)) {
                 header('Content-Description: File Transfer');
                 header('Content-Type: ' . $ctype);
-                header('Content-Disposition: inline; filename="' . basename($filename) . '"');  // Add the file name
+                header('Content-Disposition: inline; filename="' . basename($filename) . '"');
                 header('Content-Transfer-Encoding: binary');
                 header('Expires: 0');
                 header('Cache-Control: must-revalidate');
@@ -217,5 +179,3 @@ class Downloadfile_model extends CI_Model
         return $file_type;
     }
 }
-/* End of file Downloadfile_model.php */
-/* Location: ./application/models/Common/Downloadfile_model.php */

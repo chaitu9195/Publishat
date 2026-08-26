@@ -32,7 +32,6 @@ class Api extends CI_Controller
                 $Status = 'SUCCESS';
                 $this->load->model('Global/Navheader_model');
                 $wsData['SubModules'] = $this->Navheader_model->getSubModules($Module);
-
             } else {
                 $Status = 'ERROR';
                 $message = 'Module is Required.';

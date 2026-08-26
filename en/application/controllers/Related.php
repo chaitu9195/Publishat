@@ -3,7 +3,6 @@
 require(APPPATH . '/libraries/REST_Controller.php');
 class Related extends REST_Controller
 {
-    /** @var mixed Current user id, resolved from session. */
     protected $user_id;
 
     public function __construct()
@@ -15,9 +14,7 @@ class Related extends REST_Controller
         $this->load->library('mongo_db', ['activate' => 'newdb'], 'mongodb');
         $this->user_id = $this->session->userdata('user_id');
     }
-    /*
-      get Edit record view page
-      -------------------------------------------*/
+
     public function editrecord_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -38,9 +35,7 @@ class Related extends REST_Controller
             $this->load->view('edit-related', ['data' => 'No Data']);
         }
     }
-    /*
-     Upload attachments(to be uploaded from edit mode)
-    ----------------------------------------------------------*/
+
     public function attachfiles_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -68,9 +63,7 @@ class Related extends REST_Controller
             echo 'No File Selected';
         }
     }
-    /*
-    Delete single attchment(from Edit mode)
-    ------------------------------------------------------*/
+
     public function deleteattachment_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -96,8 +89,4 @@ class Related extends REST_Controller
             }
         }
     }
-
 }
-
-/* End of file Related.php */
-/* Location: ./application/controllers/Related.php */

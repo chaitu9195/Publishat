@@ -29,6 +29,7 @@ print.doc
 
 # Local tooling binaries (config .php-cs-fixer.dist.php is tracked; phar is not)
 tools/php-cs-fixer.phar
+.php-cs-fixer.cache
 
 # OS / editor cruft
 Thumbs.db

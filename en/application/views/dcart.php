@@ -52,7 +52,6 @@
           <form class="form-horizontal col-sm-12 pad" name="cartForm" id ='cartForm'>  
             <tbody id="cart_body">            
               <?php foreach($cdata as $data){
-				  //print_r($data);
                $doc_path = $data['DocumentPath'];
                $label = $data['Notes'];
                $filename = $data['filename'];
@@ -60,7 +59,6 @@
                if(empty($filename)){
 					$filename = basename($doc_path);
 					$filename = substr($filename, strpos($filename, '-') + 1);
-
                 }
                      $ext = pathinfo($filename, PATHINFO_EXTENSION);
 					 $filename = basename($filename, $ext);
@@ -458,8 +456,6 @@ function get_icon($ext){
                       default:
                               echo '<i class="fa fa-file-file-o" aria-hidden="true"></i>';
                 }
-
 }
-
 
 ?>

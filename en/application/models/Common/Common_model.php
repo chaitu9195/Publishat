@@ -4,9 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Common_model extends CI_Model
 {
-    /*
-    Get Records
-    --------------------------------------------*/
     public function get_records($params)
     {
         $recordTypeId = $params['mod_id'];
@@ -17,9 +14,9 @@ class Common_model extends CI_Model
         $start = ($page * recordsPerPage) - recordsPerPage;
         $end = recordsPerPage;
         $table_name = $this->get_table($recordTypeId);
-        $user_id = $this->session->userdata('user_id'); //log_message('info',$user_id.','.$table_name);
+        $user_id = $this->session->userdata('user_id');
         $user_id = $user_id ? $user_id : $this->input->cookie('user_id', true);
-        //echo $user_id."----".$table_name;
+
         if (!empty($table_name) && $table_name != 'failed') {
             $this->mongodb->order_by(['TS' => 'DESC']);
             $this->mongodb->where(['UserId' => mongo_id($user_id)]);
@@ -36,26 +33,21 @@ class Common_model extends CI_Model
                 $key['UserId'] = $user_id;
                 $key['RecordId'] = $recordid;
                 $key['_id'] = $id;
-                //$data[]  = $key;
+
                 $this->mongodb->where(['UserId' => mongo_id($user_id), 'RecordId' => mongo_id($key['RecordId']), 'RecordTypeId' => $recordTypeId]);
-                // Count files server-side instead of fetching all file docs (faster).
+
                 $fcount = $this->mongodb->count('fs.files');
                 $file_count[] = $fcount;
                 $key['count'] = $fcount;
                 $data[] = $key;
-
             }
 
             return ['status' => 'success','data' => $data,'count' => $file_count,'table' => $table_name];
         } else {
             return ['status' => 'failed'];
         }
-
     }
 
-    /*
-    Get Header Count
-    ----------------------------------------*/
     public function rec_count($recordTypeId)
     {
         $table_name = $this->get_table($recordTypeId);
@@ -70,9 +62,6 @@ class Common_model extends CI_Model
         }
     }
 
-    /*
-    Get single records data
-    -------------------------------------------*/
     public function viewrecord_data($params)
     {
         $recordTypeId = $params['modid'];
@@ -98,9 +87,6 @@ class Common_model extends CI_Model
         }
     }
 
-    /*
-    Get Add related data
-    -------------------------------------------*/
     public function get_subRecords($params)
     {
         $recordTypeId = $params['rel_type_id'];
@@ -133,9 +119,6 @@ class Common_model extends CI_Model
         }
     }
 
-    /*
-    Delete Sub Record
-    ------------------------------------------*/
     public function deleteSubRecord($params)
     {
         $record_id = $params['rec_id'];
@@ -169,9 +152,6 @@ class Common_model extends CI_Model
         }
     }
 
-    /*
-    Get Table Name
-    -------------------------------------------*/
     public function get_table($RecordTypeId)
     {
         if (!empty($RecordTypeId)) {
@@ -183,7 +163,6 @@ class Common_model extends CI_Model
         } else {
             return 'failed';
         }
-
     }
 
     public function get_tabName($RecordTypeId)
@@ -197,7 +176,6 @@ class Common_model extends CI_Model
         } else {
             return 'failed';
         }
-
     }
     public function get_moduleName($RecordTypeId)
     {
@@ -210,12 +188,8 @@ class Common_model extends CI_Model
         } else {
             return 'failed';
         }
-
     }
 
-    /*
-    Edit single record data
-    ------------------------------------------*/
     public function get_editrecord_data($record_id, $record_type_id)
     {
         $user_id = $this->session->userdata('user_id');
@@ -234,9 +208,6 @@ class Common_model extends CI_Model
         return ['data' => $record_data,'files' => $file_data];
     }
 
-    /*
-    Validate parameters
-    ---------------------------------------*/
     public function validation_check($params)
     {
         foreach ($params as $key => $value) {
@@ -247,9 +218,6 @@ class Common_model extends CI_Model
         return true;
     }
 
-    /*
-    Delete Single attachment(from edit mode)
-    ---------------------------------------*/
     public function delete_single_rec($params)
     {
         $document_id = $params['docid'];
@@ -260,30 +228,12 @@ class Common_model extends CI_Model
         $qry = $this->mongodb->get('fs.files');
 
         if (count($qry ?? []) > 0) {
-            /*$doc = $qry1->row_array();
-            $db_document_filename=$doc["DocumentPath"];
-            $doc_path = "../../.." . $db_document_filename;
-            if (file_exists($doc_path)) {
-                unlink($doc_path);
-            }*/
             $this->mongodb->where(['DocumentId' => mongo_id($document_id),'UserId' => mongo_id($user_id), 'RecordId' => mongo_id($record_id), 'RecordTypeId' => $record_type_id]);
             $qry = $this->mongodb->delete('fs.files');
             return ['status' => 'Success'];
-
-            /*	$delqry = $this->db->query("DELETE FROM ".TBL_DOCUMENTS." WHERE DocumentId = '$document_id' AND RecordId = '$record_id' AND UserId = '$user_id' AND RecordTypeId = '$record_type_id' ");
-                if($delqry){
-                    $this->db->query("DELETE FROM ".TBL_KART." WHERE DocumentId = '$document_id' AND UserId = $user_id ");
-                    return array("status"=>"Success");
-                }
-                else{
-                    return array("status"=>"Failed");
-                }*/
         }
     }
 
-    /*
-    Folder Files
-    ----------------------------------------------*/
     public function folderfiles($rec_type_id)
     {
         $user_id = $this->session->userdata('user_id');
@@ -343,7 +293,6 @@ class Common_model extends CI_Model
                             }
                         }
                         $status_code = 1;
-
                     }
                 }
             }
@@ -354,7 +303,6 @@ class Common_model extends CI_Model
         } else {
             $status_message = 'Error: No emails have been shared. Please try again. ';
             return ['status' => 'failed','data' => 'No mails shared'];
-            //    $status_style = $error_status_style;
         }
     }
     public function collaboration_rec($recordTypeId)
@@ -377,8 +325,4 @@ class Common_model extends CI_Model
         }
         return ['shared_data' => $colaboration_res,'col_files_count' => $file_count];
     }
-
-} //End of class
-
-/* End of file Common_model.php */
-/* Location: ./application/models/Common/Common_model.php */
+}

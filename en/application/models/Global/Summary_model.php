@@ -27,7 +27,6 @@ class Summary_model extends CI_Model
         $uploaded_filename = '';
         $file_extension = '';
         if (!empty($_FILES['UpdProfilePhoto']['name'])) {
-
             $uploaded_filename = $this->upload_thumbnail($params);
             unlink('../..' . $photo_path);
         } else {
@@ -66,12 +65,8 @@ class Summary_model extends CI_Model
         $this->mongodb->where(['UserId' => mongo_id($user_id)]);
         $this->mongodb->set($user_details_arr);
         $this->mongodb->update('User');
-
     }
 
-    /*
-    Get the file extension
-    -----------------------------------------*/
     public function get_file_extension()
     {
         $document = $_FILES['UpdProfilePhoto']['name'];
@@ -82,33 +77,29 @@ class Summary_model extends CI_Model
         } else {
             return '';
         }
-        //log_message('info','file type is');
-        //log_message('info',$file_type);
+
         return $file_type;
     }
-    /* Upload file into folder*/
+
     public function upload_thumbnail($params)
     {
         $document = $_FILES['UpdProfilePhoto'];
         $user_id = $this->session->userdata('user_id');
         if ($document['size'] > max_document_file_size) {
-            //log_message('info',$document["size"]);
             return '';
         } else {
             $fileName = $_FILES['UpdProfilePhoto']['name'];
             $tmp_path = $_FILES['UpdProfilePhoto']['tmp_name'];
             $ext = pathinfo($fileName, PATHINFO_EXTENSION);
 
-            /*folder creation*/
             $document_folder = '../../profile/' . $user_id;
             $createFolder = $this->create_folder($document_folder);
             $document_filename = date('YmdHis') . '-' . str_replace(' ', '-', $fileName);
             $target_file_name = $document_folder . '/' . $document_filename;
             $db_document_filename = str_replace('../..', '', $target_file_name);
-            /*end*/
 
             $moveResult = move_uploaded_file($tmp_path, $target_file_name);
-            // Evaluate the value returned from the function if needed
+
             if ($moveResult == true) {
                 return $db_document_filename;
             } else {
@@ -116,12 +107,12 @@ class Summary_model extends CI_Model
             }
         }
     }
-    /* Create folder if not available */
+
     public function create_folder($path)
     {
         $folder_name = strtolower($path);
 
-        if (!is_dir($folder_name)) {   //if this folder doesn't exist
+        if (!is_dir($folder_name)) {
             if (!mkdir($folder_name, 0755, true)) {
                 die('Failed to create folder...' . $folder_name);
                 return false;
@@ -130,7 +121,4 @@ class Summary_model extends CI_Model
             }
         }
     }
-
 }
-/* End of file Summary_model.php */
-/* Location: ./application/models/Global/Summary_model.php */

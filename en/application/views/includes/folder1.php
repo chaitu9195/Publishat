@@ -866,8 +866,6 @@ tr:hover{
 <?php
 function filesize_formatted($bytes)
 {
-    //$bytes = filesize($file);
-
     if ($bytes >= 1073741824) {
         return number_format($bytes / 1073741824, 2) . ' GB';
     } elseif ($bytes >= 1048576) {
@@ -913,7 +911,6 @@ function get_folder_document_icon($file_type){
 	}
 	return $icon;
 }
-
 
 ?>
 

@@ -3,7 +3,6 @@
 require(APPPATH . '/libraries/REST_Controller.php');
 class Web extends REST_Controller
 {
-    /** @var mixed Current user id, resolved from cookie or session. */
     protected $user_id;
 
     public function __construct()
@@ -25,7 +24,7 @@ class Web extends REST_Controller
         $params = $this->sanitize($this->input->post());
         $this->load->model('Login_model');
         $result = $this->Login_model->login_check($params);
-        //$this->response($result,200);
+
         if ($result['status'] == 'success') {
             $userarray = [
                 'user_id' => $result['data']['UserId'],
@@ -40,7 +39,6 @@ class Web extends REST_Controller
             } else {
                 $this->load->view('index');
             }
-
         } else {
             $this->load->view('index', ['failed' => 1,'data' => $result['data']]);
         }
@@ -48,7 +46,6 @@ class Web extends REST_Controller
 
     public function index_get()
     {
-        //die;
         $user_id = $this->session->userdata('user_id');
         $user_id = $user_id ? $user_id : $this->input->cookie('user_id', true);
         if ($user_id) {
@@ -56,8 +53,7 @@ class Web extends REST_Controller
             $Upgraded = $this->Login_model->upgradeStatus($user_id);
             $this->session->set_userdata(['Upgraded' => $Upgraded]);
         }
-        //echo $user_id; die;
-        //print_r($this->session->userdata());die;
+
         if (empty(trim((string)$user_id)) || $user_id === '') {
             $this->load->view('index');
         } else {
@@ -65,9 +61,6 @@ class Web extends REST_Controller
         }
     }
 
-    /*
-    Index
-    -------------------------------*/
     public function records_get()
     {
         $rid = $this->input->get('page_id');
@@ -82,13 +75,8 @@ class Web extends REST_Controller
 
     public function recordsCount1_post()
     {
-        //  $rec_type_id = $this->sanitize($this->input->post('rid'));
-        //log_message("info","testme".json_encode($rec_type_id));
-
     }
-    /*
-    Header Navigation Menu
-    ----------------------------*/
+
     public function header_post()
     {
         $this->load->model('Global/Navheader_model');
@@ -100,19 +88,6 @@ class Web extends REST_Controller
         $this->load->view('includes/header', $data);
     }
 
-    /*
-    No of Records Count for header level
-    ----------------------------------------
-    function recordsCount_post() {
-            $rec_type_id = $this->sanitize($this->input->post('rid'));
-            $result = $this -> Common_model-> rec_count($rec_type_id);
-            if($result['status'] == 'success'){
-               echo '('.$result['count'].')';
-            } else { echo "(0)"; }
-    }*/
-    /*
-    Global records page data
-    -----------------------------------------*/
     public function moduledata_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -124,7 +99,6 @@ class Web extends REST_Controller
         $moduleName = $this->Common_model->get_moduleName($recTypeId);
         $tableName = $this->Common_model->get_table($recTypeId);
         if ($result['status'] == 'success') {
-            //$file_name = $module.'/'.strtolower($result['table']).'/records';
             $file_name = 'allrecords';
             $data['data'] = $result['data'];
             $data['count'] = $result['count'];
@@ -158,9 +132,6 @@ class Web extends REST_Controller
         }
     }
 
-    /*
-    Create mode pageview
-    -----------------------------------------*/
     public function addnew_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -196,9 +167,7 @@ class Web extends REST_Controller
         $data['ocrData'] = $ocrData;
         $this->load->view($file_name, $data);
     }
-    /*
-    add related Page view
-    -----------------------------------------*/
+
     public function addrelated_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -210,7 +179,7 @@ class Web extends REST_Controller
         $moduleName = $this->Common_model->get_moduleName($recTypeId);
         $this->load->model('Getallfields_model');
         $fields = $this->Getallfields_model->get_allfields($recTypeId, $this->user_id, 1);
-        //$file_name = $module.'/'.strtolower($result).'/addrelated';
+
         $file_name = 'addrelated';
         $folder_files = $this->Common_model->folderfiles($recTypeId);
         $data['recordId'] = $record_id;
@@ -222,9 +191,7 @@ class Web extends REST_Controller
         $data['addrelated'] = 1;
         $this->load->view($file_name, $data);
     }
-    /*
-     Add Sub(related) Record into DB
-     ------------------------------------------*/
+
     public function addSubRecord_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -236,9 +203,7 @@ class Web extends REST_Controller
             echo $result['status'];
         }
     }
-    /*
-    View single subrecord
-    --------------------------------------------*/
+
     public function relatedview_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -264,9 +229,7 @@ class Web extends REST_Controller
             echo $result['status'];
         }
     }
-    /*
-    Delete single sub record
-    -------------------------------------------*/
+
     public function deleteSubRecord_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -275,14 +238,11 @@ class Web extends REST_Controller
         echo $result;
     }
 
-    /*
-    Add New Record into DB
-    ------------------------------------------*/
     public function schoolnew_post()
     {
         $params = $this->sanitize($this->input->post());
         $this->load->model('Common/Addrecord_model');
-        //print_r($params); die;
+
         $result = $this->Addrecord_model->add_record($params);
         if ($result['status'] == 'success') {
             echo $result['rid'];
@@ -290,9 +250,7 @@ class Web extends REST_Controller
             echo $result['status'];
         }
     }
-    /*
-     View Record
-     ------------------------------------------*/
+
     public function displayView_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -336,9 +294,7 @@ class Web extends REST_Controller
             echo $result['status'];
         }
     }
-    /*
-    Download File
-    -------------------------------------------*/
+
     public function downloadfile_get()
     {
         $path = $this->sanitize($this->input->get('rid'));
@@ -353,17 +309,13 @@ class Web extends REST_Controller
         $result = $this->Downloadfile_model->download_file($path, $recordid);
     }
 
-    /*Download File Mongo DB
-    --------------------------------------------*/
     public function viewfile_get()
     {
         $file_id = $this->input->get('fid');
         $this->load->model('Common/Downloadfile_model');
         $result = $this->Downloadfile_model->mongodownload($file_id);
     }
-    /*
-    get Edit record view page
-    -------------------------------------------*/
+
     public function editrecord_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -390,9 +342,7 @@ class Web extends REST_Controller
             $this->load->view('edit-record', ['data' => 'No Data']);
         }
     }
-    /*
-    Update DB with Posted data
-    -----------------------------------------*/
+
     public function updatedata_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -400,12 +350,9 @@ class Web extends REST_Controller
         $result = $this->Editrecord_model->update_record($params);
         echo mongo_json_encode($result);
     }
-    /*
-    Upload attachments(to be uploaded from edit mode)
-    ----------------------------------------------------------*/
+
     public function attachfiles_post()
     {
-
         $params = $this->sanitize($this->input->post());
         $record_id = $params['RecordId'];
         $module = $params['module'];
@@ -436,9 +383,7 @@ class Web extends REST_Controller
             echo 'No File Selected';
         }
     }
-    /*
-    Delete single attchment(from Edit mode)
-    ------------------------------------------------------*/
+
     public function deleteattachment_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -468,9 +413,7 @@ class Web extends REST_Controller
             }
         }
     }
-    /*
-    Delete Entire record with attachments
-    --------------------------------------------------*/
+
     public function deleteRecord_post()
     {
         $cpatcha = $this->session->userdata('captcha');
@@ -484,11 +427,8 @@ class Web extends REST_Controller
         } else {
             echo 'failed';
         }
-
     }
-    /*
-    Send Mails
-    -----------------------------------------*/
+
     public function mailRecord_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -506,9 +446,6 @@ class Web extends REST_Controller
         }
     }
 
-    /*
-    get Edit record view page
-    -------------------------------------------*/
     public function getKart_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -542,9 +479,7 @@ class Web extends REST_Controller
             $this->load->view('addkart', ['data' => 'No Data']);
         }
     }
-    /*
-    Add to cart
-    -------------------------------------------*/
+
     public function saveToCart_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -552,9 +487,7 @@ class Web extends REST_Controller
         $result = $this->Cart_model->savetocart($params);
         echo $result['status'];
     }
-    /*
-    Dcart page
-    ---------------------------------------*/
+
     public function dKart_post()
     {
         $this->load->model('Common/Cart_model');
@@ -568,9 +501,6 @@ class Web extends REST_Controller
         $this->load->view('dcart', $data);
     }
 
-    /*
-    Get data based on cartname
-    ------------------------------------------*/
     public function cartdata_post()
     {
         $cartName = $this->sanitize($this->post('cName'));
@@ -579,9 +509,7 @@ class Web extends REST_Controller
         $data['cdata'] = $result['data'];
         $this->load->view('includes/include_cart_content', $data);
     }
-    /*
-    Send Mails from Cart
-    -----------------------------------------*/
+
     public function mailCartRecord_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -598,9 +526,7 @@ class Web extends REST_Controller
             echo 'No data';
         }
     }
-    /*
-    Delete Cart files
-    ------------------------------------------*/
+
     public function deleteCartRecord_post()
     {
         $cpatcha = $this->session->userdata('cart_captcha');
@@ -613,11 +539,8 @@ class Web extends REST_Controller
         } else {
             echo 'failed';
         }
-
     }
-    /*
-      Delete Cart folder
-      ------------------------------------------*/
+
     public function deleteCartdata_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -625,9 +548,7 @@ class Web extends REST_Controller
         $result = $this->Cart_model->delete_cart_record($params);
         echo $result;
     }
-    /*
-    Account Settings page
-    ----------------------------------*/
+
     public function settings_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -637,11 +558,8 @@ class Web extends REST_Controller
         $data['settings'] = $result['data'];
         $data['module'] = $module;
         $this->load->view('settings', $data);
-
     }
-    /*
-    bookjmarks
-    --------------------------------*/
+
     public function bookmarks_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -652,9 +570,7 @@ class Web extends REST_Controller
         $data['bookmark'] = $bookmarkresult['bookmarksdata'];
         $this->load->view('includes/bookmark', $data);
     }
-    /*
-    Fetch Settings data based on module selection
-    -----------------------------------------------*/
+
     public function getsettings_data_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -666,9 +582,6 @@ class Web extends REST_Controller
         $this->load->view('includes/include_settings', $data);
     }
 
-    /*
-    Save Settings
-    --------------------------------------------------*/
     public function updateSettings_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -676,9 +589,6 @@ class Web extends REST_Controller
         echo $result = $this->Settings_model->updateSettings($params);
     }
 
-    /*
-    Get Folder Page
-    ---------------------------------------------------*/
     public function getFolder_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -694,13 +604,11 @@ class Web extends REST_Controller
         $data['email'] = $email;
         $this->load->view('includes/folder', $data);
     }
-    /*
-    uploadfolderfiles
-    --------------------------------------------------*/
+
     public function uploadfolderfiles_post()
     {
         $params = $this->sanitize($this->input->post());
-        //echo "<pre>";print_r($params); die;
+
         $folder_id = $params['foldid'];
         $type_id = $params['typeId'];
         $module = $params['module'];
@@ -720,9 +628,7 @@ class Web extends REST_Controller
             $this->load->view('includes/folder', $filesData);
         }
     }
-    /*
-    Delete Files from Folder
-    -----------------------------------------------*/
+
     public function deleteFolderFile_post()
     {
         $cpatcha = $this->session->userdata('folder_captcha');
@@ -750,9 +656,6 @@ class Web extends REST_Controller
         }
     }
 
-    /*
-    Send Mails from Folder
-    -----------------------------------------*/
     public function mailFolderRecord_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -768,9 +671,7 @@ class Web extends REST_Controller
             echo 'No data';
         }
     }
-    /*
-      Send Mails from bookmarks
-      -----------------------------------------*/
+
     public function mailbookmarkRecord_post()
     {
         $params = $this->sanitize($this->input->post());
@@ -786,9 +687,7 @@ class Web extends REST_Controller
             echo 'No data';
         }
     }
-    /*
-     Log Page
-    ----------------------------------------*/
+
     public function getlog_post()
     {
         $params = $this->input->post();
@@ -806,18 +705,14 @@ class Web extends REST_Controller
         $result['data'] = $result['e_name'];
         $result['data'] = $result['log'];
         echo $response = mongo_json_encode($result['data']);
-
     }
-    /*
-     Account Summary
-    ---------------------------------------------- */
+
     public function accSummary_post()
     {
         $this->load->model('Global/Summary_model');
         $result = $this->Summary_model->getuserinfo();
         $data['data'] = $result;
         $this->load->view('includes/acc_summary', $data);
-
     }
     public function updateuserinfo_post()
     {
@@ -828,15 +723,13 @@ class Web extends REST_Controller
         $data['data'] = $result;
         $this->load->view('includes/acc_summary', $data);
     }
-    /***
-    Logout
-    ***/
+
     public function logout_get()
     {
         $data = ['user_id', 'email'];
         $this->session->unset_userdata($data);
         session_destroy();
-        //log_message('info','logged out');
+
         $this->load->view('index');
     }
 
@@ -925,10 +818,8 @@ class Web extends REST_Controller
         $folderData['param'] = $data;
         $folderData['folid'] = $folder_id;
         $this->load->view('includes/folder', $folderData);
-
     }
 
-    /* Print Preview */
     public function previewdata_get()
     {
         $id = $this->input->get('id');
@@ -966,7 +857,6 @@ class Web extends REST_Controller
         echo $data['cost'];
     }
 
-    /*** Location Search in Maps ****/
     public function locationsearch_post()
     {
         $params = $this->input->post();
@@ -998,7 +888,6 @@ class Web extends REST_Controller
         $this->load->view('article', $id);
     }
 
-    /* Confirmation Page(Check Out) */
     public function printcheckoutpage_post()
     {
         $params = $this->input->post();
@@ -1073,7 +962,7 @@ class Web extends REST_Controller
         $this->load->model('Getallfields_model');
         $fields = $this->Getallfields_model->get_allfields($recTypeId, $user_id, 0);
         $file_name = 'create';
-        //echo "<pre>";print_r($data); die;
+
         $this->load->view('template', ['module' => $moduleName, 'rid' => $recTypeId]);
     }
 
@@ -1095,21 +984,14 @@ class Web extends REST_Controller
         }
         curl_close($ch);
         return $result;
-
     }
     public function object_2_array($result)
     {
         $array = [];
         foreach ($result as $key => $value) {
-            # if $value is an array then
             if (is_array($value)) {
-                #you are feeding an array to object_2_array function it could potentially be a perpetual loop.
                 $array[$key] = $this->object_2_array($value);
-            }
-
-            # if $value is not an array then (it also includes objects)
-            else {
-                # if $value is an object then
+            } else {
                 if (is_object($value)) {
                     $array[$key] = $this->object_2_array($value);
                 } else {
@@ -1125,7 +1007,7 @@ class Web extends REST_Controller
         $user_id = trim($this->session->userdata('user_id'));
         $this->load->model('Global/Folder_model');
         $data['PrintHistory'] = $this->Folder_model->getPrintHistory($user_id);
-        //echo "<pre>";print_r($printHistory); die;
+
         $this->load->view('print_history_view', $data);
     }
     public function aboutus_get()
@@ -1155,8 +1037,8 @@ class Web extends REST_Controller
           'protocol' => protocol,
           'smtp_host' => smtp_host,
           'smtp_port' => smtp_port,
-          'smtp_user' => smtp_user, // change it to yours
-          'smtp_pass' => smtp_pass, // change it to yours
+          'smtp_user' => smtp_user,
+          'smtp_pass' => smtp_pass,
           'mailpath' => mailpath,
           'charset' => charset,
           'wordwrap' => wordwrap,
@@ -1177,18 +1059,11 @@ class Web extends REST_Controller
         $this->email->subject($subject);
         $this->email->message($message);
 
-        //Send email
         if ($this->email->send()) {
-
         } else {
-            //Email Failed To Send
             echo '<pre>';
             print_r($this->email->print_debugger());
             die;
         }
-
     }
 }
-
-/* End of file Web.php */
-/* Location: ./application/controllers/Web.php */

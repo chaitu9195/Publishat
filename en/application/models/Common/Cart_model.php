@@ -4,9 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Cart_model extends CI_Model
 {
-    /*
-    Get Cart Data
-    -------------------------------*/
     public function getkart_data($record_id, $record_type_id)
     {
         $user_id = $this->session->userdata('user_id');
@@ -30,9 +27,6 @@ class Cart_model extends CI_Model
         }
     }
 
-    /*
-    Save to Cart
-    ---------------------------------*/
     public function savetocart($params)
     {
         $user_id = $this->session->userdata('user_id');
@@ -84,7 +78,6 @@ class Cart_model extends CI_Model
                         'FileType' => $ext,
                         'Path' => $path,
                       ];
-
                 }
                 $cartqry = $this->mongodb->insert('kart', $kart_data);
                 if ($cartqry) {
@@ -94,9 +87,6 @@ class Cart_model extends CI_Model
                     $status = 'failed';
                     $data = 'Something went wrong with query';
                 }
-
-                // } else { return array("status"=>"failed", "data"=>"No documents"); }
-
             }
         } else {
             $status = 'failed';
@@ -104,12 +94,9 @@ class Cart_model extends CI_Model
         }
         return ['status' => $status, 'data' => $data];
     }
-    /*
-    Display cart data in Document Cart page
-    ------------------------------------------*/
+
     public function dcart_data()
     {
-
         $user_id = $this->session->userdata('user_id');
         $this->mongodb->order_by(['KartName' => 'ASC']);
         $this->mongodb->where(['UserId' => mongo_id($user_id)]);
@@ -128,13 +115,10 @@ class Cart_model extends CI_Model
         return ['status' => 'success','cart_names' => $kartNames,'data' => $cartdata];
     }
 
-    /*
-    get data based on kartname selection
-    -----------------------------------------*/
     public function cname_data($cartName)
     {
         $user_id = $this->session->userdata('user_id');
-        //$this->mongodb->order_by(array("KartName"=>"ASC"));
+
         $this->mongodb->where(['UserId' => mongo_id($user_id), 'KartName' => $cartName]);
         $qry = $this->mongodb->get('kart');
         foreach ($qry as $val) {
@@ -142,12 +126,8 @@ class Cart_model extends CI_Model
         }
 
         return ['status' => 'success','data' => $cartdata];
-
     }
 
-    /*
-    Delete Record
-    -------------------------------------------*/
     public function delete_record($params)
     {
         $user_id = $this->session->userdata('user_id');
@@ -160,7 +140,7 @@ class Cart_model extends CI_Model
                 } else {
                     $this->mongodb->where(['DocumentId' => mongo_id($id),'KartName' => $cartname]);
                 }
-                //$qry1 = $this->mongodb->get("kart");
+
                 $qry = $this->mongodb->delete('kart');
                 if ($qry) {
                     $status = 'success';
@@ -168,15 +148,12 @@ class Cart_model extends CI_Model
                     $status = 'failed';
                 }
             }
-
         } else {
             $status = 'failed';
         }
         return $status;
     }
-    /*
-      Delete Record
-      -------------------------------------------*/
+
     public function delete_cart_record($params)
     {
         $user_id = $this->session->userdata('user_id');
@@ -197,5 +174,4 @@ class Cart_model extends CI_Model
         $file_type = substr($file_name, $dot_index + 1);
         return $file_type;
     }
-
 }

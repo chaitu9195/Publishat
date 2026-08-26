@@ -112,7 +112,7 @@ if ($counter < count($fpath ?? [])) { ?>
 		</thead>
               <form name="folderForm" id="folderForm" method="POST" action="#">
 	     <tbody id="searchable_data">
-		<?php foreach($files as $file){ //echo json_encode($file);
+		<?php foreach($files as $file){
              $id = $file['_id'];
 		     $path = $file['DocumentPath'];
 		     $type = strtolower($file['FileType']);
@@ -134,7 +134,6 @@ if ($counter < count($fpath ?? [])) { ?>
 				if(in_array($type, $images ?? [])){
 					$url = base_url() . "web/viewfile?fid=$id&type=png";
 					$view_file = "<img src='$url' alt='$filename;' width='30px' height='30px'>";
-
 				}
 		        else { $view_file = '<img src="../../../' . $not_image . '" id="img" class="img-responsive img imag" >'; }
 			 }
@@ -143,11 +142,9 @@ if ($counter < count($fpath ?? [])) { ?>
 			 $date = date('d-M-Y', strtotime($file['TS']));
 
 			 if(empty($filename)){
-			    //$filename = ucfirst(strtolower(substr(strstr(pathinfo($file['DocumentPath'], PATHINFO_FILENAME),"-"),1,20)));
 				$doc_path = $file['DocumentPath'];
 		        $filename = basename($doc_path);
-				//$filenameArr = explode('-',$filename);
-				//$filename  = $filenameArr[1];
+
 				$filename = substr($filename, strrpos($filename, '-') + 1);
 				}
 			 $ext = pathinfo($filename, PATHINFO_EXTENSION);
@@ -920,8 +917,6 @@ tr:hover{
 <?php
 function filesize_formatted($bytes)
 {
-    //$bytes = filesize($file);
-
     if ($bytes >= 1073741824) {
         return number_format($bytes / 1073741824, 2) . ' GB';
     } elseif ($bytes >= 1048576) {
@@ -936,7 +931,6 @@ function filesize_formatted($bytes)
         return '0 bytes';
     }
 }
-
 
 function get_folder_document_icon($file_type){
     $file_type = strtolower($file_type);
