@@ -8,6 +8,8 @@ class Api extends CI_Controller
     }
     public function Module()
     {
+        $wsData = [];
+        $message = '';
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $Status = 'SUCCESS';
             $this->load->model('Global/Navheader_model');
@@ -22,6 +24,8 @@ class Api extends CI_Controller
     }
     public function SubModule()
     {
+        $wsData = [];
+        $message = '';
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $Module = $_GET['Module'];
             if ($Module) {

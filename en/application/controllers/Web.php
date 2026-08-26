@@ -3,9 +3,9 @@
 require(APPPATH . '/libraries/REST_Controller.php');
 class Web extends REST_Controller
 {
-    /*
-    Constructor
-    --------------------------------*/
+    /** @var mixed Current user id, resolved from cookie or session. */
+    protected $user_id;
+
     public function __construct()
     {
         parent::__construct();
@@ -15,11 +15,9 @@ class Web extends REST_Controller
         $this->load->library('mongo_db', ['activate' => 'newdb'], 'mongodb');
         $userIdFromCookie = $this->input->cookie('user_id', true);
         if ($userIdFromCookie) {
-            $userarray = ['user_id' => $userIdFromCookie];
             $this->session->set_userdata('user_id', $userIdFromCookie);
         }
-        $user_id = $this->session->userdata('user_id');
-
+        $this->user_id = $this->session->userdata('user_id');
     }
 
     public function login_post()
@@ -171,7 +169,7 @@ class Web extends REST_Controller
         $tabName = $this->Common_model->get_tabName($recTypeId);
         $moduleName = $this->Common_model->get_moduleName($recTypeId);
         $this->load->model('Getallfields_model');
-        $fields = $this->Getallfields_model->get_allfields($recTypeId, $user_id, 0);
+        $fields = $this->Getallfields_model->get_allfields($recTypeId, $this->user_id, 0);
         $file_name = 'create';
         $folder_files = $this->Common_model->folderfiles($recTypeId);
         $fileURL = $this->input->post('fileURL');
@@ -211,7 +209,7 @@ class Web extends REST_Controller
         $tabName = $this->Common_model->get_tabName($recTypeId);
         $moduleName = $this->Common_model->get_moduleName($recTypeId);
         $this->load->model('Getallfields_model');
-        $fields = $this->Getallfields_model->get_allfields($recTypeId, $user_id, 1);
+        $fields = $this->Getallfields_model->get_allfields($recTypeId, $this->user_id, 1);
         //$file_name = $module.'/'.strtolower($result).'/addrelated';
         $file_name = 'addrelated';
         $folder_files = $this->Common_model->folderfiles($recTypeId);
@@ -376,7 +374,7 @@ class Web extends REST_Controller
         $tabName = $this->Common_model->get_tabName($record_type_id);
         $moduleName = $this->Common_model->get_moduleName($record_type_id);
         $this->load->model('Getallfields_model');
-        $fields = $this->Getallfields_model->get_allfields($record_type_id, $user_id, 0);
+        $fields = $this->Getallfields_model->get_allfields($record_type_id, $this->user_id, 0);
         if (!empty($tableName) && $tableName != 'failed') {
             $result = $this->Common_model->get_editrecord_data($record_id, $record_type_id);
             $folder_files = $this->Common_model->folderfiles($record_type_id);
@@ -420,7 +418,7 @@ class Web extends REST_Controller
                 $tabName = $this->Common_model->get_tabName($record_type_id);
                 $moduleName = $this->Common_model->get_moduleName($record_type_id);
                 $this->load->model('Getallfields_model');
-                $fields = $this->Getallfields_model->get_allfields($record_type_id, $user_id, 0);
+                $fields = $this->Getallfields_model->get_allfields($record_type_id, $this->user_id, 0);
                 if (!empty($tableName) && $tableName != 'failed') {
                     $result = $this->Common_model->get_editrecord_data($record_id, $record_type_id);
                     $data['data'] = $result['data'][0];
@@ -454,7 +452,7 @@ class Web extends REST_Controller
                 $tabName = $this->Common_model->get_tabName($record_type_id);
                 $moduleName = $this->Common_model->get_moduleName($record_type_id);
                 $this->load->model('Getallfields_model');
-                $fields = $this->Getallfields_model->get_allfields($record_type_id, $user_id, 0);
+                $fields = $this->Getallfields_model->get_allfields($record_type_id, $this->user_id, 0);
                 if (!empty($tableName) && $tableName != 'failed') {
                     $result = $this->Common_model->get_editrecord_data($record_id, $record_type_id);
                     $data['data'] = $result['data'][0];
@@ -462,7 +460,7 @@ class Web extends REST_Controller
                     $data['fields'] = $fields;
                     $data['tabName'] = $tabName;
                     $data['moduleName'] = $moduleName;
-                    $date['recTypeId'] = $record_type_id;
+                    $data['recTypeId'] = $record_type_id;
                     $this->load->view('edit-record', $data);
                 }
             } else {
@@ -925,7 +923,7 @@ class Web extends REST_Controller
         $folderData['files'] = $data['ff'];
         $folderData['fpath'] = $data['fdetails'];
         $folderData['param'] = $data;
-        $folderData['folid'] = $flder_id;
+        $folderData['folid'] = $folder_id;
         $this->load->view('includes/folder', $folderData);
 
     }
@@ -1163,26 +1161,20 @@ class Web extends REST_Controller
           'charset' => charset,
           'wordwrap' => wordwrap,
         ];
-        /* //SMTP & mail configuration
-        $config = array(
-            'protocol'  => 'smtp',
-            'smtp_host' => 'smtp.zoho.com',
-            'smtp_port' => 465,
-            'smtp_user' => 'admin@publishat.com',
-            'smtp_pass' => 'Vijaya@123',
-            'mailtype'  => 'html',
-            'charset'   => 'utf-8'
-        ); */
         $this->email->initialize($config);
         $this->email->set_mailtype('html');
         $this->email->set_newline("\r\n");
+
+        $cc = $this->input->get('cc');
+        $subject = $this->input->get('subject') ?: 'Publishat mail test';
+        $message = $this->input->get('message') ?: 'This is a test email from Publishat.';
 
         $this->email->to('chaithanyakondragunta@gmail.com');
         if ($cc) {
             $this->email->cc($cc);
         }
         $this->email->from('admin@publishat.com');
-        $this->email->subject("$subject");
+        $this->email->subject($subject);
         $this->email->message($message);
 
         //Send email

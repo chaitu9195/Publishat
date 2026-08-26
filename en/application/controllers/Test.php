@@ -4,8 +4,8 @@ class Test extends CI_Controller
 {
     public function Login($email = 0, $password = 0)
     {
-        $email = $_POST['email'] ? $_POST['email'] : $email;
-        $password = $_POST['password'] ? $_POST['password'] : $password;
+        $email = $_POST['email'] ?? $email;
+        $password = $_POST['password'] ?? $password;
         $data['email'] = $email;
         $data['password'] = $password;
         if ($email && $password) {

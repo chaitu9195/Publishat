@@ -3,18 +3,17 @@
 require(APPPATH . '/libraries/REST_Controller.php');
 class Related extends REST_Controller
 {
-    /*
-    Constructor
-    --------------------------------*/
+    /** @var mixed Current user id, resolved from session. */
+    protected $user_id;
+
     public function __construct()
     {
         parent::__construct();
         $this->load->database();
         $this->load->model('Common/Common_model');
         $this->load->library('session');
-        $user_id = $this->session->userdata('user_id');
         $this->load->library('mongo_db', ['activate' => 'newdb'], 'mongodb');
-
+        $this->user_id = $this->session->userdata('user_id');
     }
     /*
       get Edit record view page
@@ -30,7 +29,7 @@ class Related extends REST_Controller
         $tabName = $this->Common_model->get_tabName($record_type_id);
         $moduleName = $this->Common_model->get_moduleName($record_type_id);
         $this->load->model('Getallfields_model');
-        $fields = $this->Getallfields_model->get_allfields($parent_record_type_id, $user_id, 1);
+        $fields = $this->Getallfields_model->get_allfields($parent_record_type_id, $this->user_id, 1);
         if (!empty($tableName) && $tableName != 'failed') {
             $result = $this->Common_model->get_editrecord_data($record_id, $record_type_id);
             $folder_files = $this->Common_model->folderfiles($parent_record_type_id);
@@ -57,7 +56,7 @@ class Related extends REST_Controller
                 $tabName = $this->Common_model->get_tabName($record_type_id);
                 $moduleName = $this->Common_model->get_moduleName($record_type_id);
                 $this->load->model('Getallfields_model');
-                $fields = $this->Getallfields_model->get_allfields($parent_record_type_id, $user_id, 1);
+                $fields = $this->Getallfields_model->get_allfields($parent_record_type_id, $this->user_id, 1);
                 if (!empty($tableName) && $tableName != 'failed') {
                     $result = $this->Common_model->get_editrecord_data($record_id, $record_type_id);
                     $this->load->view('edit-related', ['data' => $result['data'][0],'files' => $result['files'], 'fields' => $fields, 'tabName' => $tabName, 'moduleName' => $moduleName, 'recTypeId' => $record_type_id, 'parentRecTypeId' => $parent_record_type_id]);
@@ -82,7 +81,7 @@ class Related extends REST_Controller
         $tabName = $this->Common_model->get_tabName($record_type_id);
         $moduleName = $this->Common_model->get_moduleName($record_type_id);
         $this->load->model('Getallfields_model');
-        $fields = $this->Getallfields_model->get_allfields($parent_record_type_id, $user_id, 1);
+        $fields = $this->Getallfields_model->get_allfields($parent_record_type_id, $this->user_id, 1);
         if (count($params ?? [])) {
             $this->load->model('Common/Common_model');
             $del_status = $this->Common_model->delete_single_rec($params);
