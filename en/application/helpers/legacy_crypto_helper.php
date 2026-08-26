@@ -1,6 +1,7 @@
 <?php
+
 if (!defined('BASEPATH')) {
-	exit('No direct script access allowed');
+    exit('No direct script access allowed');
 }
 
 use phpseclib3\Crypt\Rijndael;
@@ -29,75 +30,75 @@ use phpseclib3\Crypt\Rijndael;
  * overridden below.
  */
 if (!function_exists('rijndael256_ecb_encrypt_raw')) {
-	/**
-	 * Encrypt and return the raw ciphertext bytes (mcrypt-compatible).
-	 *
-	 * @param string $key  Secret key (zero-padded to next valid size).
-	 * @param string $text Plaintext.
-	 * @return string Raw ciphertext.
-	 */
-	function rijndael256_ecb_encrypt_raw($key, $text)
-	{
-		$blockSize = 32; // 256-bit block
+    /**
+     * Encrypt and return the raw ciphertext bytes (mcrypt-compatible).
+     *
+     * @param string $key  Secret key (zero-padded to next valid size).
+     * @param string $text Plaintext.
+     * @return string Raw ciphertext.
+     */
+    function rijndael256_ecb_encrypt_raw($key, $text)
+    {
+        $blockSize = 32; // 256-bit block
 
-		// (1) Replicate mcrypt key handling: zero-pad the key UP TO the next
-		// valid Rijndael key size (16, 24 or 32 bytes). A key that is already
-		// a valid size is used verbatim (str_pad to the same length is a no-op).
-		// The app's historical key "hserus$#@!^&*()-" is exactly 16 bytes, so
-		// no padding occurs.
-		$keyLen = strlen($key);
-		if ($keyLen <= 16) {
-			$key = str_pad($key, 16, "\0");
-		} elseif ($keyLen <= 24) {
-			$key = str_pad($key, 24, "\0");
-		} elseif ($keyLen <= 32) {
-			$key = str_pad($key, 32, "\0");
-		} else {
-			$key = substr($key, 0, 32);
-		}
+        // (1) Replicate mcrypt key handling: zero-pad the key UP TO the next
+        // valid Rijndael key size (16, 24 or 32 bytes). A key that is already
+        // a valid size is used verbatim (str_pad to the same length is a no-op).
+        // The app's historical key "hserus$#@!^&*()-" is exactly 16 bytes, so
+        // no padding occurs.
+        $keyLen = strlen($key);
+        if ($keyLen <= 16) {
+            $key = str_pad($key, 16, "\0");
+        } elseif ($keyLen <= 24) {
+            $key = str_pad($key, 24, "\0");
+        } elseif ($keyLen <= 32) {
+            $key = str_pad($key, 32, "\0");
+        } else {
+            $key = substr($key, 0, 32);
+        }
 
-		// (3) Replicate mcrypt data handling: zero-pad plaintext to a full block.
-		$rem = strlen($text) % $blockSize;
-		if ($rem !== 0) {
-			$text = str_pad($text, strlen($text) + ($blockSize - $rem), "\0");
-		}
+        // (3) Replicate mcrypt data handling: zero-pad plaintext to a full block.
+        $rem = strlen($text) % $blockSize;
+        if ($rem !== 0) {
+            $text = str_pad($text, strlen($text) + ($blockSize - $rem), "\0");
+        }
 
-		$cipher = new Rijndael('ecb');
-		$cipher->setBlockLength(256);   // (2) 256-bit block
-		$cipher->setKey($key);
-		$cipher->disablePadding();       // (3) we zero-pad manually, like mcrypt
+        $cipher = new Rijndael('ecb');
+        $cipher->setBlockLength(256);   // (2) 256-bit block
+        $cipher->setKey($key);
+        $cipher->disablePadding();       // (3) we zero-pad manually, like mcrypt
 
-		return $cipher->encrypt($text);
-	}
+        return $cipher->encrypt($text);
+    }
 }
 
 if (!function_exists('legacy_safe_b64encode')) {
-	/**
-	 * URL-safe base64 identical to the models' safe_b64encode().
-	 */
-	function legacy_safe_b64encode($string)
-	{
-		$data = base64_encode($string);
-		$data = str_replace(array('+', '/', '='), array('-', '_', ''), $data);
-		return $data;
-	}
+    /**
+     * URL-safe base64 identical to the models' safe_b64encode().
+     */
+    function legacy_safe_b64encode($string)
+    {
+        $data = base64_encode($string);
+        $data = str_replace(['+', '/', '='], ['-', '_', ''], $data);
+        return $data;
+    }
 }
 
 if (!function_exists('legacy_encript')) {
-	/**
-	 * Drop-in replacement for the models' encript() method.
-	 * Produces the same token the old mcrypt code produced.
-	 *
-	 * @param string $value Plaintext to encrypt.
-	 * @param string $skey  Secret key (defaults to the app's historical key).
-	 * @return string|false URL-safe base64 token, or false for empty input.
-	 */
-	function legacy_encript($value, $skey = 'hserus$#@!^&*()-')
-	{
-		if (!$value) {
-			return false;
-		}
-		$crypttext = rijndael256_ecb_encrypt_raw($skey, $value);
-		return trim(legacy_safe_b64encode($crypttext));
-	}
+    /**
+     * Drop-in replacement for the models' encript() method.
+     * Produces the same token the old mcrypt code produced.
+     *
+     * @param string $value Plaintext to encrypt.
+     * @param string $skey  Secret key (defaults to the app's historical key).
+     * @return string|false URL-safe base64 token, or false for empty input.
+     */
+    function legacy_encript($value, $skey = 'hserus$#@!^&*()-')
+    {
+        if (!$value) {
+            return false;
+        }
+        $crypttext = rijndael256_ecb_encrypt_raw($skey, $value);
+        return trim(legacy_safe_b64encode($crypttext));
+    }
 }
