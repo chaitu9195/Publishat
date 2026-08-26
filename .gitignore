@@ -1,0 +1,33 @@
+# Dependencies / third-party (not our code)
+en/vendor/
+en/system/
+en/system_old_3.0rc3/
+en/third_party/
+en/application/third_party/
+composer.phar
+en/composer.phar
+
+# Backups, temp & build artifacts
+en_backup_pre_php84_*/
+_ci3_php84_tmp/
+_mongodb_ext/
+*.recovery-backup
+
+# Runtime / generated
+en/ci_sessions/
+en/sessionfiles/
+en/application/cache/
+en/application/logs/
+en/files/
+en/pwdocs/
+
+# Large binaries
+*.pdf
+*.doc
+converted.pdf
+print.doc
+
+# OS / editor cruft
+Thumbs.db
+.DS_Store
+*.log

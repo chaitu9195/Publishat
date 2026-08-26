@@ -1,0 +1,144 @@
+/* Example tokeninput style #2: Facebook style */
+
+/* The actual top level element */
+ul.token-input-list-facebook {
+    overflow: hidden; 
+    height: auto !important; 
+    height: 1%;
+    width: 591px;
+    border: 1px solid #adacac; /*change this to proper grey - this was just apporximated*/
+    cursor: text;
+    font-size: 12px;
+    font-family: Arial;
+    min-height: 1px;
+    z-index: 999;
+    margin: 10px 0 0 10px;
+    padding-left: 0;
+    background-color: #fff;
+    list-style-type: none;
+    float: left;
+    /*border-radius: 3px;*/
+}
+
+
+
+
+
+ul.token-input-list-facebook li input {
+    border: 0;
+    width: 100px;
+    padding: 3px 8px;
+    background-color: white;
+    margin: 2px 0;
+    -webkit-appearance: caret;
+}
+
+/*actual token created*/
+li.token-input-token-facebook {
+    overflow: hidden; 
+    height: auto !important; 
+    height: 15px;
+    margin: 2px;
+    padding: 5px 3px 5px 5px;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(170, 214, 221, 1)), to(rgba(0, 128, 183, 1)));
+    color: white;
+    cursor: default;    
+    border-radius: 4px;
+    float: left;
+    white-space: nowrap;
+}
+
+/*actual writing inside token*/
+li.token-input-token-facebook p {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    line-height: 20px; /* this value depends on your font size */
+}
+
+/*Little "x" button to cancel token*/
+li.token-input-token-facebook span {
+    color: white;
+    margin: 0 0 0 12px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 20px;
+    float: right;
+}
+
+li.token-input-selected-token-facebook {
+    background-color: #5670a6;
+    border: 1px solid #3b5998;
+    color: #fff;
+}
+
+li.token-input-input-token-facebook {
+    float: left;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+}
+
+/*Dropdown prompt box i.e. Please enter surname...*/
+div.token-input-dropdown-facebook {
+    position: absolute;
+    width: 400px;
+    background-color:  #edf5f9;
+    overflow: hidden;
+    padding: 5px -5px 5px 5px;
+    border-left: 1px solid #adacac;      /*change this to proper grey - this was just apporximated*/
+    border-right: 1px solid #adacac;    /*change this to proper grey - this was just apporximated*/
+    border-bottom: 1px solid #adacac;    /*change this to proper grey - this was just apporximated*/
+    border-radius: 0 0 10px 10px ;
+    cursor: default;
+    font-size: 11px;
+    font-family: Arial;
+    z-index: 1;
+}
+
+div.token-input-dropdown-facebook p {
+    margin: 0;
+    padding: 5px;
+    font-weight: bold;
+    color: #777;
+}
+
+div.token-input-dropdown-facebook ul {
+    margin: 0;
+    padding: 0;
+}
+
+div.token-input-dropdown-facebook ul li {
+    background-color: #fff;
+    padding: 3px;
+    margin: 10px;
+    list-style-type: none;
+}
+
+div.token-input-dropdown-facebook ul li.token-input-dropdown-item-facebook {
+    background-color: #fff;
+    background-color: #edf5f9;
+         padding: 5px;
+  
+}
+
+div.token-input-dropdown-facebook ul li.token-input-dropdown-item2-facebook {
+    background-color: #fff;
+            background-color:  #edf5f9;
+                 padding: 5px;
+     
+}
+
+div.token-input-dropdown-facebook ul li em {
+    font-weight: bold;
+    font-style: normal;
+}
+
+div.token-input-dropdown-facebook ul li.token-input-selected-dropdown-item-facebook {
+    margin-left: 10px;    
+     padding: 5px;
+    background-color: rgba(117,176,198, 1);
+    color: #fff;
+ 
+}
