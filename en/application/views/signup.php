@@ -136,7 +136,7 @@ $authUrl = google_login_url();
         if($status == 'error'){
        ?>
                 <div class="alert alert-danger">The email you entered has already been registered on Publishat.com...</div>
-                <?  }
+                <?php   }
       ?>
                 <form action="signup" method="POST">
                     <div class="form-group">

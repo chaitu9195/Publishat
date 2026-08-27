@@ -34,7 +34,7 @@ $Upgraded = $this->session->userdata('Upgraded'); ?>
                     $domain == 'www.mydzvault.com'
                 ) { ?>
                 <span class="h1 active" style="color:white;font-family:serif">myDZvault</span>
-                <? } else { ?>
+                <?php  } else { ?>
                 <span class="h1 active" style="color:white;font-family:serif">Ntotalworld</span>
                 <?php }
                 ?>

@@ -290,7 +290,7 @@ if ($moduleName == 'medical') {
                     '_id'
                 ] ?>&type=<?= strtolower($ext) ?>')">
                     <td>
-                        <input type="checkbox" name="fileids[]" class="doc_id" value="<?= $doc_id ?>" <? if(in_array($doc_id, $fileids ?? [])) { echo 'checked'; } ?>>
+                        <input type="checkbox" name="fileids[]" class="doc_id" value="<?= $doc_id ?>" <?php  if(in_array($doc_id, $fileids ?? [])) { echo 'checked'; } ?>>
                         <input type="hidden" name="filename[]" id="fname" value="<?= $filename ?>">
 
                     </td>

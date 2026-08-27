@@ -72,7 +72,7 @@ if ($counter < count($fpath ?? [])) { ?>
 <span class="glyphicon glyphicon-chevron-right arrow_ico" style="color: rgba(51, 122, 183, 0.48);"></span>                 
 <?php } else { ?>
  <span class="glyphicon glyphicon-triangle-bottom arrow_ico"></span></a>
-<? } }?>
+<?php  } }?>
 </div>
 <div class="row"> 
    <div class="alert alert-danger alert-dismissable" id="error" style="display:none">
@@ -85,12 +85,12 @@ if ($counter < count($fpath ?? [])) { ?>
 		 <div class="alert alert-success alert-dismissable" id="error">
      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
      <strong id="msg">File(s) successfully uploaded</strong> 
-<?	} else if($status == 'failed'){?>
+<?php 	} else if($status == 'failed'){?>
 		 <div class="alert alert-danger alert-dismissable" id="error">
      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
      <strong id="msg">No File Selected</strong> 
 
-<?}
+<?php }
 	?>
     <div id="progress-bar"></div>  
 </div>
@@ -152,9 +152,9 @@ if ($counter < count($fpath ?? [])) { ?>
 			 ?>
             <?php if($fol_type == 'File'){ ?>
                <tr onClick="viewfile('docviewer?fid=<?=$file['_id'];?>&type=<?=strtolower($ext);?>')">
-            <? } else { ?>
+            <?php  } else { ?>
 			   <tr onClick="getfolderfiles('<?=$file['_id'];?>')">
-			<? } ?>
+			<?php  } ?>
 			<td>
 			<input type="checkbox" name="doc_id" value="<?=$file['_id']?>" id="doc_id" class="doc_id"><input type="hidden" id="path<?=$id;?>" value="<?=$path;?>"> 
 			<input type="hidden" id="filetype<?=$id;?>" value="<?=$type;?>">
