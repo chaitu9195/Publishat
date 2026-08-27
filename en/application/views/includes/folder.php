@@ -68,7 +68,7 @@ foreach((array) $fpath as $f_name){ ?>
 <a onClick="getfolderfiles('<?=$f_name['_id'];?>')" class="folder_path"><?=$f_name['FolderName'];?>
 <?php
 $counter++;
-if ($counter < count($fpath ?? [])) { ?>
+if ($counter < count(is_array($fpath) ? $fpath : [])) { ?>
 <span class="glyphicon glyphicon-chevron-right arrow_ico" style="color: rgba(51, 122, 183, 0.48);"></span>                 
 <?php } else { ?>
  <span class="glyphicon glyphicon-triangle-bottom arrow_ico"></span></a>
@@ -97,7 +97,7 @@ if ($counter < count($fpath ?? [])) { ?>
 <div id="main_content">
 
 <div class="row attachments">
- <?php if(count($files ?? []) > 0 && $files != 'No Files') { ?> 
+ <?php if(is_array($files) && count($files) > 0 && $files != 'No Files') { ?>
 	<table class="table table-responsive table-stripped" id="fol_data">
 		<thead>
 			<tr>
