@@ -166,6 +166,7 @@ class Web extends REST_Controller
         $data['files'] = $folder_files['folder'];
         $data['fileids'] = $params['ids'];
         $data['fields'] = $fields;
+        $data['recTypeId'] = $recTypeId;
         $data['tabName'] = $tabName;
         $data['moduleName'] = $moduleName;
         $data['data'] = $params['data'];
