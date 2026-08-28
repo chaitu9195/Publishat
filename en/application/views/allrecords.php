@@ -99,7 +99,12 @@ if ($recTypeId == 16) {
                  ] ?>" style="display:none;padding:1px 10px;"> <span class='hidden-xs'>Share</span> <i class="fa fa-share" area-hidden='true' ></i></span></td>-->
                 </tr>
 
-	 	<?php } ?>	
+	 	<?php } ?>
+	 	<?php if (safe_count($data ?? []) == 0) { ?>
+	 	<tr id="no_records_row">
+	 		<td colspan="5" class="text-center text-muted" style="padding:20px;">No records found</td>
+	 	</tr>
+	 	<?php } ?>
 	     </tbody>
 	 </table>
 	 <?php if (safe_count($shared_result ?? []) > 0 && $recTypeId == 16) { ?>
