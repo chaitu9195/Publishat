@@ -9,6 +9,23 @@ if(!empty($id)){
 if(empty($fid)){
 	$fid = $folid;
 }
+if (!function_exists('file_type_fa')) {
+	function file_type_fa($type) {
+		$type = strtolower((string) $type);
+		$map = [
+			'pdf' => 'fa-file-pdf-o',
+			'doc' => 'fa-file-word-o', 'docx' => 'fa-file-word-o', 'odt' => 'fa-file-word-o', 'rtf' => 'fa-file-word-o',
+			'xls' => 'fa-file-excel-o', 'xlsx' => 'fa-file-excel-o', 'ods' => 'fa-file-excel-o', 'csv' => 'fa-file-excel-o',
+			'ppt' => 'fa-file-powerpoint-o', 'pptx' => 'fa-file-powerpoint-o', 'odp' => 'fa-file-powerpoint-o',
+			'jpg' => 'fa-file-image-o', 'jpeg' => 'fa-file-image-o', 'png' => 'fa-file-image-o', 'gif' => 'fa-file-image-o', 'bmp' => 'fa-file-image-o', 'svg' => 'fa-file-image-o',
+			'zip' => 'fa-file-archive-o', 'rar' => 'fa-file-archive-o', '7z' => 'fa-file-archive-o', 'tar' => 'fa-file-archive-o', 'gz' => 'fa-file-archive-o',
+			'txt' => 'fa-file-text-o',
+			'mp3' => 'fa-file-audio-o', 'wav' => 'fa-file-audio-o', 'ogg' => 'fa-file-audio-o',
+			'mp4' => 'fa-file-video-o', 'avi' => 'fa-file-video-o', 'mov' => 'fa-file-video-o', 'wmv' => 'fa-file-video-o', 'mkv' => 'fa-file-video-o',
+		];
+		return isset($map[$type]) ? $map[$type] : 'fa-file-o';
+	}
+}
 ?>
 
 <div id="content_data">
@@ -123,7 +140,7 @@ if ($counter < safe_count(is_array($fpath) ? $fpath : [])) { ?>
 		     $images = ['jpg', 'png', 'jpeg', 'gif', ''];
 			 $fileextension = ['zip','rar'];
 
-             $not_image = get_folder_document_icon($type);
+             $faicon = file_type_fa($type);
 			 $fol_type = $file['Type'];
 			 $fol_name = $file['FolderName'];
 
@@ -133,9 +150,11 @@ if ($counter < safe_count(is_array($fpath) ? $fpath : [])) { ?>
 			 else{
 				if(in_array($type, $images ?? [])){
 					$url = base_url() . "web/viewfile?fid=$id&type=png";
-					$view_file = "<img src='$url' alt='$filename;' width='30px' height='30px'>";
+					// Show the image thumbnail; if it fails to load (missing/empty),
+					// fall back to the file-type icon (the hidden <i> next to it).
+					$view_file = '<img src="' . $url . '" alt="' . htmlspecialchars((string) $filename) . '" width="30px" height="30px" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-block\'"><i class="fa ' . $faicon . ' fa-2x" style="display:none;color:#5a6b7b"></i>';
 				}
-		        else { $view_file = '<img src="../../../' . $not_image . '" id="img" class="img-responsive img imag" >'; }
+				else { $view_file = '<i class="fa ' . $faicon . ' fa-2x" style="color:#5a6b7b"></i>'; }
 			 }
 
 			 $size = filesize_formatted($file['length']);
