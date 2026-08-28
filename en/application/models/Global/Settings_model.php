@@ -23,30 +23,31 @@ class Settings_model extends CI_Model
     {
         $user_id = $this->session->userdata('user_id');
         $module = $params['module'];
-        $account_setting_id_arr = $params['account_setting_id'];
-        if (safe_count($account_setting_id_arr ?? []) > 0) {
-            $this->mongodb->set(['SettingValue' => 'N']);
+        $account_setting_id_arr = isset($params['account_setting_id'])
+            ? $params['account_setting_id']
+            : [];
+
+        // Always reset every setting for this module to 'N' first, so that
+        // unchecking all settings still persists.
+        $this->mongodb->set(['SettingValue' => 'N']);
+        $this->mongodb->where([
+            'Module' => $module,
+            'UserId' => mongo_id($user_id),
+        ]);
+        $qry = $this->mongodb->update('AccountSettings', ['multiple' => true]);
+
+        for ($i = 0; $i < safe_count($account_setting_id_arr ?? []); $i++) {
+            $account_setting_id = $account_setting_id_arr[$i];
+            $this->mongodb->set(['SettingValue' => 'Y']);
             $this->mongodb->where([
+                'AccountSettingId' => mongo_id($account_setting_id),
                 'Module' => $module,
                 'UserId' => mongo_id($user_id),
             ]);
-            $this->mongodb->update('AccountSettings', ['multiple' => true]);
-
-            for ($i = 0; $i < safe_count($account_setting_id_arr ?? []); $i++) {
-                $account_setting_id = $account_setting_id_arr[$i];
-                $this->mongodb->set(['SettingValue' => 'Y']);
-                $this->mongodb->where([
-                    'AccountSettingId' => mongo_id($account_setting_id),
-                    'Module' => $module,
-                    'UserId' => mongo_id($user_id),
-                ]);
-                $qry = $this->mongodb->update('AccountSettings');
-            }
-            if ($qry) {
-                return 'success';
-            } else {
-                return 'failed';
-            }
+            $qry = $this->mongodb->update('AccountSettings');
+        }
+        if ($qry) {
+            return 'success';
         } else {
             return 'failed';
         }
