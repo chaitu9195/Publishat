@@ -1204,11 +1204,17 @@ class Mongo_db
             $this->_convert_legacy_types($update);
 
             $write = $this->_write_options();
-            // Ignore legacy multiple/w/j keys if passed
+            // Honor the legacy "multiple" flag (multi-document update); ignore
+            // the other legacy w/j/justOne keys.
+            $multiple = !empty($options['multiple']);
             unset($options['multiple'], $options['w'], $options['j'], $options['justOne']);
             $write = array_merge($write, $options);
 
-            $this->db->{$collection}->updateOne($filter, $update, $write);
+            if ($multiple) {
+                $this->db->{$collection}->updateMany($filter, $update, $write);
+            } else {
+                $this->db->{$collection}->updateOne($filter, $update, $write);
+            }
             $this->_clear();
             return (true);
         } catch (Exception $e) {
