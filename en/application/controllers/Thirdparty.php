@@ -16,9 +16,8 @@ class Thirdparty extends REST_Controller
     public function gcontacts_get()
     {
         $accesstoken = '';
-        $client_id =
-            '298801891056-boiv3nlutpsqfdurfidvd9aktsiaditb.apps.googleusercontent.com';
-        $client_secret = 'qkc-OnA6UrBTiyGSDuo6_J2E';
+        $client_id = GOOGLE_OAUTH_CLIENT_ID;
+        $client_secret = GOOGLE_OAUTH_CLIENT_SECRET;
         $redirect_uri = base_url() . 'Thirdparty/gcontacts';
 
         $max_results = 10000;
