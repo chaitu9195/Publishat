@@ -34,7 +34,16 @@ if ($moduleName == 'medical') {
         </div>
     </div>
     <input type="hidden" name="record_type_id" value="<?= $record_type_id ?>">
-    <?php foreach ($fields['data'] as $field) {
+    <?php $fieldList =
+        isset($fields['data']) && is_array($fields['data'])
+            ? $fields['data']
+            : [];
+    if (empty($fieldList)) { ?>
+    <div class="col-md-12 text-center text-muted" style="padding:20px;">
+        No fields are configured for this record type.
+    </div>
+    <?php }
+    foreach ($fieldList as $field) {
         $fieldType = $field['FieldType'];
         $isFeildMandatoty = $field['isFeildMandatoty'];
         $typeId = $field['RecordTypeId'];
