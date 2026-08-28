@@ -38,7 +38,7 @@ class User_model extends CI_Model
                 }
             }
 
-            if (count($tempArr ?? []) > 0) {
+            if (safe_count($tempArr ?? []) > 0) {
                 return [
                     'status' => 'success',
                     'data' => $tempArr,
@@ -138,7 +138,7 @@ class User_model extends CI_Model
         foreach ($qury as $result) {
             $emailadd = $result['Receiver'];
             $email_id_arr = explode(',', $emailadd);
-            for ($i = 0; $i < count($email_id_arr ?? []); $i++) {
+            for ($i = 0; $i < safe_count($email_id_arr ?? []); $i++) {
                 if ($email_id_arr[$i] != '' && $email_id_arr[$i] != '\r\n') {
                     $email_id = str_replace(
                         "\r\n",

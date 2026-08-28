@@ -24,9 +24,9 @@
                 <div id="msg_mail"> </div>
             </div>
             <form class="form-horizontal col-sm-12 pad" name="cartForm" id='cartForm'>
-                <?php if (count($files ?? []) || count($sub_files ?? [])) { ?>
+                <?php if (safe_count($files ?? []) || safe_count($sub_files ?? [])) { ?>
                 <div class="form-group">
-                    <?php for ($i = 0; $i <= count($files ?? []) - 1; $i++) {
+                    <?php for ($i = 0; $i <= safe_count($files ?? []) - 1; $i++) {
 
                         $label = $files[$i]['Notes'];
                         $doc_id = $files[$i]['DocumentId'];
@@ -53,7 +53,7 @@
                 <div class="form-group">
                     <?php for (
                         $i = 0;
-                        $i <= count($sub_files ?? []) - 1;
+                        $i <= safe_count($sub_files ?? []) - 1;
                         $i++
                     ) {
 

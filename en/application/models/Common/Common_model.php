@@ -64,7 +64,7 @@ class Common_model extends CI_Model
         if (!empty($table_name) && $table_name != 'failed') {
             $this->mongodb->where(['UserId' => $user_id]);
             $qry = $this->mongodb->get($table_name);
-            $count = count($qry ?? []);
+            $count = safe_count($qry ?? []);
             return ['status' => 'success', 'count' => $count];
         } else {
             return ['status' => 'failed'];
@@ -132,7 +132,7 @@ class Common_model extends CI_Model
                     'RecordTypeId' => $recordTypeId,
                 ]);
                 $qry = $this->mongodb->get('fs.files');
-                $file_count[] = count($qry ?? []);
+                $file_count[] = safe_count($qry ?? []);
                 foreach ($qry as $key) {
                     $file_data[] = $key;
                 }
@@ -281,7 +281,7 @@ class Common_model extends CI_Model
         ]);
         $qry = $this->mongodb->get('fs.files');
 
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $this->mongodb->where([
                 'DocumentId' => mongo_id($document_id),
                 'UserId' => mongo_id($user_id),
@@ -320,7 +320,7 @@ class Common_model extends CI_Model
         $record_type_id = $params['record_type_id'];
         $table_name = $this->get_table($record_type_id);
         $useremail = explode(',', $col_useremail);
-        for ($i = 0; $i < count($useremail ?? []); $i++) {
+        for ($i = 0; $i < safe_count($useremail ?? []); $i++) {
             $user_email = $useremail[$i];
             $this->mongodb->where(['Email' => $user_email]);
             $qry = $this->mongodb->get('User');
@@ -332,7 +332,7 @@ class Common_model extends CI_Model
                 'recordid' => mongo_id($recordid),
             ]);
             $qury = $this->mongodb->get('privileges');
-            if (count($qury ?? []) > 0) {
+            if (safe_count($qury ?? []) > 0) {
                 $this->mongodb->where([
                     'touserid' => mongo_id($userid),
                     'recordid' => mongo_id($recordid),

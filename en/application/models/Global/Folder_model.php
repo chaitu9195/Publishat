@@ -16,7 +16,7 @@ class Folder_model extends CI_Model
             'UploadedFrom' => 'Folder',
         ]);
         $qry = $this->mongodb->get('fs.files');
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             foreach ($qry as $file) {
                 $files[] = $file;
             }
@@ -38,7 +38,7 @@ class Folder_model extends CI_Model
             'RecordTypeId' => $typeId,
         ]);
         $qry = $this->mongodb->get('Bookmarks');
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             foreach ($qry as $data) {
                 $bookmarkdata[] = $data;
             }
@@ -63,7 +63,7 @@ class Folder_model extends CI_Model
         $rec = $qry;
         $folder_name = $rec[0]['FolderName'];
         $date = date('Y-m-d H:i:s');
-        if (count($_FILES['uploadedfile']['name']) > 0) {
+        if (safe_count($_FILES['uploadedfile']['name']) > 0) {
             $mongo_connection = new MongoClient();
             $gridfs = $mongo_connection
                 ->selectDB('publisha_dbase')
@@ -89,14 +89,14 @@ class Folder_model extends CI_Model
         $user_id = $this->session->userdata('user_id');
         $document_ids = explode(',', $params['del_doc_id']);
         $typeId = $params['typeId'];
-        if (count($document_ids ?? []) > 0) {
+        if (safe_count($document_ids ?? []) > 0) {
             foreach ($document_ids as $id) {
                 $this->mongodb->where([
                     '_id' => mongo_id($id),
                     'RecordTypeId' => $typeId,
                 ]);
                 $qry = $this->mongodb->get('fs.files');
-                if (count($qry ?? []) > 0) {
+                if (safe_count($qry ?? []) > 0) {
                     $rec = $qry;
                     $filetype = $rec[0]['Type'];
                     if ($filetype == 'Folder') {
@@ -106,7 +106,7 @@ class Folder_model extends CI_Model
                             'ParentId' => mongo_id($id),
                         ]);
                         $qry = $this->mongodb->get('fs.files');
-                        if (count($qry ?? []) > 0) {
+                        if (safe_count($qry ?? []) > 0) {
                             $status = 'FolderData';
                         } else {
                             $m = new MongoClient();
@@ -178,7 +178,7 @@ class Folder_model extends CI_Model
             'RecordTypeId' => $record_type_id,
         ]);
         $qry = $this->mongodb->get('fs.files');
-        if (count($qry ?? []) == 0) {
+        if (safe_count($qry ?? []) == 0) {
             $folder_data = [
                 'UserId' => mongo_id($user_id),
                 'RecordTypeId' => $record_type_id,
@@ -285,7 +285,7 @@ class Folder_model extends CI_Model
         $totalcost = $cost * $pages_count * $copies;
         if ($print_type == 'Project') {
             $ProjectPageNos = $params['ProjectPageNos'];
-            $ProjectColorPagesCount = count(array_filter($ProjectPageNos));
+            $ProjectColorPagesCount = safe_count(array_filter($ProjectPageNos));
             $costForProjectColorPrint =
                 $ProjectColorPagesCount * $pco * $copies;
             $totalcost = $totalcost + $costForProjectColorPrint;
@@ -407,7 +407,7 @@ class Folder_model extends CI_Model
         $sort_flags = SORT_REGULAR,
         $order = SORT_DESC,
     ) {
-        if (is_array($array) && count($array ?? []) > 0) {
+        if (is_array($array) && safe_count($array ?? []) > 0) {
             if (!empty($key)) {
                 $mapping = [];
                 foreach ($array as $k => $v) {

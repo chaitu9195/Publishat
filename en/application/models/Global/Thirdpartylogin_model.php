@@ -15,7 +15,7 @@ class Thirdpartylogin_model extends CI_Model
         }
         $this->mongodb->where(['Email' => $email]);
         $query = $this->mongodb->get(TBL_USER);
-        if (count($query ?? []) > 0) {
+        if (safe_count($query ?? []) > 0) {
             $user_id = $query[0]['UserId'];
             $name = $query[0]['Name'];
             $email = $query[0]['Email'];
@@ -23,7 +23,7 @@ class Thirdpartylogin_model extends CI_Model
             $Upgraded = $query[0]['Upgraded'];
             $this->mongodb->where(['UserId' => mongo_id($user_id)]);
             $data = $this->mongodb->get('UserLoginHistory');
-            if (count($data ?? []) > 0) {
+            if (safe_count($data ?? []) > 0) {
                 $this->mongodb->where(['UserId' => mongo_id($user_id)]);
                 $this->mongodb->set([
                     'PrevLoginTime' => $joined_on,
@@ -35,9 +35,9 @@ class Thirdpartylogin_model extends CI_Model
                 $date = date('Y-m-d');
                 $this->mongodb->where(['Date' => $date]);
                 $login = $this->mongodb->get('login');
-                $cnt = count($login ?? []);
+                $cnt = safe_count($login ?? []);
 
-                if (count($login ?? []) == 0) {
+                if (safe_count($login ?? []) == 0) {
                     $this->mongodb->insert('login', ['Date' => $date]);
                 }
             } else {
@@ -104,7 +104,7 @@ class Thirdpartylogin_model extends CI_Model
             'PersonalEmail' => $email,
         ]);
         $qry = $this->mongodb->get(TBL_CONTACTS);
-        if (count($qry ?? []) == 0) {
+        if (safe_count($qry ?? []) == 0) {
             $mid = mongo_id();
             $contacts = [
                 'UserId' => mongo_id($user_id),
@@ -197,7 +197,7 @@ class Thirdpartylogin_model extends CI_Model
         $qry = TBL_ACCOUNTSETTINGS;
         $res = $this->mongodb->get($qry);
 
-        if (count($res ?? []) == 0) {
+        if (safe_count($res ?? []) == 0) {
             $sett = $this->mongodb->order_by(['_id' => 'ASC'])->get('Settings');
 
             foreach ($sett as $setting) {

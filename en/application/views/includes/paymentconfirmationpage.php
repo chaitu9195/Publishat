@@ -52,7 +52,7 @@ setcookie('TotalAmount', $cost, time() + 86400 * 30, '/');
                     <?php if ($print_type == 'Project') { ?>
                     <tr>
                         <td>Color Pages</td>
-                        <td><?php echo count($ProjectPageNos ?? []); ?></td>
+                        <td><?php echo safe_count($ProjectPageNos ?? []); ?></td>
                     </tr>
                     <?php } ?>
                     <tr>

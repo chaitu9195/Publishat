@@ -51,8 +51,8 @@ if (strtolower($moduleName) == 'medical') {
         </div>
         <div class="col-sm-4 col-xs-12">
             <h3> Attachments </h3>
-            <?php if (count($files ?? [])) {
-                for ($i = 0; $i <= count($files ?? []) - 1; $i++) {
+            <?php if (safe_count($files ?? [])) {
+                for ($i = 0; $i <= safe_count($files ?? []) - 1; $i++) {
 
                     $doc_id = $files[$i]['DocumentId'];
                     $label = $files[$i]['Notes'];

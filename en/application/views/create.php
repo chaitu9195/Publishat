@@ -1,6 +1,6 @@
 <?php
 $Upgraded = $this->session->userdata('Upgraded');
-$record_type_id = $fields['data'][0]['RecordTypeId'];
+$record_type_id = (isset($fields['data'][0]) && is_array($fields['data'][0])) ? ($fields['data'][0]['RecordTypeId'] ?? '') : '';
 $moduleName = strtolower($moduleName);
 $modName = $moduleName;
 if ($moduleName == 'medical') {

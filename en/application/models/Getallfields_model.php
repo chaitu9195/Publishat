@@ -45,7 +45,7 @@ class Getallfields_model extends CI_Model
                 if ($dropdown->num_rows() > 0) {
                     if (
                         !empty($groupdropdownarray) &&
-                        count($groupdropdownarray ?? []) > 0
+                        safe_count($groupdropdownarray ?? []) > 0
                     ) {
                         $groupdropdownarray = array_merge(
                             $groupdropdownarray ?? [],
@@ -62,7 +62,7 @@ class Getallfields_model extends CI_Model
                 } else {
                     if (
                         !empty($groupdropdownarray) &&
-                        count($groupdropdownarray ?? []) > 0
+                        safe_count($groupdropdownarray ?? []) > 0
                     ) {
                         $dropdownarray = [
                             'dropDownValues' => $groupdropdownarray,

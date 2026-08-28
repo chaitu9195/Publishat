@@ -167,8 +167,8 @@ if ($moduleName == 'medical') {
     <div class="attach_left col-xs-12">
         <div class='attach_title'> <span class="">View / Delete Existing Documents</span></div>
         <div class="upload_input">
-            <?php if (count($files ?? [])) {
-                for ($i = 0; $i <= count($files ?? []) - 1; $i++) {
+            <?php if (safe_count($files ?? [])) {
+                for ($i = 0; $i <= safe_count($files ?? []) - 1; $i++) {
 
                     $doc_id = $files[$i]['DocumentId'];
                     $label = $files[$i]['Notes'];

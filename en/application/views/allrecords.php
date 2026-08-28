@@ -83,7 +83,7 @@ if ($recTypeId == 16) {
                         <!--<th  class='col-sm-1 hidden-xs'></th>-->
 	     </thead>
 	     <tbody id="searchable_data"> 
-                 <?php for ($i = 0; $i <= count($data ?? []) - 1; $i++) { ?>
+                 <?php for ($i = 0; $i <= safe_count($data ?? []) - 1; $i++) { ?>
                 <tr onclick='displayView("<?= $recTypeId ?>","<?= $data[$i][
     'RecordId'
 ] ?>","<?= strtolower(
@@ -102,7 +102,7 @@ if ($recTypeId == 16) {
 	 	<?php } ?>	
 	     </tbody>
 	 </table>
-	 <?php if (count($shared_result ?? []) > 0 && $recTypeId == 16) { ?>
+	 <?php if (safe_count($shared_result ?? []) > 0 && $recTypeId == 16) { ?>
 <div class="col-sm-12 collaboration"><span>Collaboration Data</span></div>
 	  <table class="table table-responsive table-striped table-hover">
 	     <thead>
@@ -116,7 +116,7 @@ if ($recTypeId == 16) {
 	     <tbody id="searchable_data">
                  <?php for (
                      $i = 0;
-                     $i <= count($shared_result ?? []) - 1;
+                     $i <= safe_count($shared_result ?? []) - 1;
                      $i++
                  ) { ?>
 				 <tr onclick='displayView("<?= $recTypeId ?>","<?= $shared_result[$i][
@@ -168,7 +168,7 @@ id = $(this).closest('tr').attr('id');
 $('#share'+id).hide();
 }); 
 $(document).ready(function () {
-$("#count1,#mcount1").html("(<?= count($data ?? []) ?>)");
+$("#count1,#mcount1").html("(<?= safe_count($data ?? []) ?>)");
     (function ($) {
 
         $('#filter_table').keyup(function () {

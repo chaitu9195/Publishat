@@ -24,7 +24,7 @@ class Mailrecord_model extends CI_Model
 
         $this->mongodb->where(['UserId' => mongo_id($user_id)]);
         $validUser = $this->mongodb->get(TBL_USER);
-        if (count($validUser ?? []) > 0) {
+        if (safe_count($validUser ?? []) > 0) {
             foreach ($validUser as $userData) {
                 $user_email = $userData['Email'];
                 $user_fullname = $userData['Name'];
@@ -35,7 +35,7 @@ class Mailrecord_model extends CI_Model
             return ['status' => 'failed', 'data' => 'invalid user'];
         }
 
-        if (count($record_id_arr ?? []) > 0) {
+        if (safe_count($record_id_arr ?? []) > 0) {
             $email_content = header_top_record_mail;
 
             $table_bg_color = '#99CCCC';
@@ -632,7 +632,7 @@ class Mailrecord_model extends CI_Model
             $email_list = $params['email_list'];
             if (!empty($email_list)) {
                 $email_arr = explode(',', trim($email_list));
-                if (count($email_arr ?? []) > 0) {
+                if (safe_count($email_arr ?? []) > 0) {
                     foreach ($email_arr as $out_email) {
                         try {
                             $this->phpmail_nocc(
@@ -927,7 +927,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_SCHOOL);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             if ($document_type == 'Marks Memo') {
                 $email_template =
                     '../../templates/email-academic-school-template.html';
@@ -962,7 +962,7 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -1066,7 +1066,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_UNDERGRADUATE);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             if ($document_type == 'Marks Memo') {
                 $email_template =
                     '../../templates/email-academic-ug-template.html';
@@ -1099,7 +1099,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -1212,7 +1212,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_POSTGRADUATE);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             if ($document_type == 'Marks Memo') {
                 $email_template =
                     '../../templates/email-academic-pg-template.html';
@@ -1243,7 +1243,7 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -1359,7 +1359,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_PHD);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             if ($document_type == 'Marks Memo') {
                 $email_template =
                     '../../templates/email-academic-phd-template.html';
@@ -1389,7 +1389,7 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -1489,7 +1489,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_CERTIFICATION);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-academic-certification-template.html';
             $email_body = $this->read_file($email_template);
@@ -1521,7 +1521,7 @@ class Mailrecord_model extends CI_Model
                 }
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -1633,7 +1633,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_EXAM);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-academic-exam-template.html';
             $email_body = $this->read_file($email_template);
@@ -1655,7 +1655,7 @@ class Mailrecord_model extends CI_Model
                 $exam_date = $this->date_format_short($exam_date);
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -1752,7 +1752,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_PROJECT);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-academic-project-template.html';
             $email_body = $this->read_file($email_template);
@@ -1787,7 +1787,7 @@ class Mailrecord_model extends CI_Model
                 }
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -1887,7 +1887,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_LOCATIONHISTORY);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             if ($travel_status == 'Single' || $travel_status == '') {
                 $email_template =
                     '../../templates/email-personal-location-history-template1.html';
@@ -1930,7 +1930,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -2034,7 +2034,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_GOVERNMENTCERTIFICATES);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             if (
                 $document_type == 'Passport' ||
                 $document_type == 'Marriage Certificate' ||
@@ -2075,7 +2075,7 @@ class Mailrecord_model extends CI_Model
                 $valid_to = $this->date_format_short($valid_to);
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -2194,7 +2194,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_RELATIONSHIP);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-personal-relation-template.html';
             $email_body = $this->read_file($email_template);
@@ -2217,7 +2217,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -2323,7 +2323,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_WEBHISTORY);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-personal-web-template.html';
             $email_body = $this->read_file($email_template);
@@ -2345,7 +2345,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -2439,7 +2439,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_TRAVEL);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             if (
                 $travel_type == 'International' &&
                 ($travellers == 'Family' || $travellers == 'Group')
@@ -2502,7 +2502,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -2645,7 +2645,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_DEVICES);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             if ($document_type == 'Warranty') {
                 $email_template =
                     '../../templates/email-personal-devices-template.html';
@@ -2683,7 +2683,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -2818,7 +2818,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_PERSONALEVENTS);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             if ($event_type == 'Wishes') {
                 $email_template =
                     '../../templates/email-personal-Events-template1.html';
@@ -2842,7 +2842,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -2922,7 +2922,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_CONTACTS);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             if ($contact_type == 'Group' && !($category == 'Personal')) {
                 $email_template =
                     '../../templates/email-professional-contacts-template.html';
@@ -2961,7 +2961,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -3106,7 +3106,7 @@ class Mailrecord_model extends CI_Model
 
                 if ($document_id_arr == '-1') {
                     get_document_email_links(40, $record_id);
-                } elseif (count($document_id_arr ?? []) > 0) {
+                } elseif (safe_count($document_id_arr ?? []) > 0) {
                     $attachments = get_document_email_links_by_id_arr(
                         $document_id_arr,
                         40,
@@ -3152,7 +3152,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_EMPLOYMENT);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-professional-employment-template.html';
             $email_body = $this->read_file($email_template);
@@ -3206,7 +3206,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -3314,7 +3314,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_PROJECTS);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-professional-projects-template.html';
             $email_body = $this->read_file($email_template);
@@ -3370,7 +3370,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -3497,7 +3497,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_SKILLS);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-professional-skills-template.html';
             $email_body = $this->read_file($email_template);
@@ -3521,7 +3521,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -3614,7 +3614,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_APPS);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             if ($password_change_status == 'Required') {
                 $email_template =
                     '../../templates/email-professional-apps-template.html';
@@ -3648,7 +3648,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -3760,7 +3760,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_RESUME);
-        if (count($rec ?? []) > 0) {
+        if (safe_count($rec ?? []) > 0) {
             $email_template =
                 '../../templates/email-professional-resume-template.html';
             $email_body = $this->read_file($email_template);
@@ -3783,7 +3783,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -3890,7 +3890,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_MEDMEDICALTEST);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-medical-test-template.html';
             $email_body = $this->read_file($email_template);
@@ -3925,7 +3925,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -4062,14 +4062,14 @@ class Mailrecord_model extends CI_Model
         $sub_id_arr,
     ) {
         $output_str = '';
-        if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+        if (safe_count($sub_id_arr ?? []) > 0) {
+            for ($i = 0; $i < safe_count($sub_id_arr ?? []); $i++) {
                 $this->mongodb->where([
                     'RecordId' => mongo_id($sub_id_arr[$i]),
                     'UserId' => mongo_id($user_id),
                 ]);
                 $qry = $this->mongodb->get('MedMedicalTestRecords');
-                if (count($qry ?? []) > 0) {
+                if (safe_count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
                         $print_template =
                             '../../templates/email-medical-test-test.html';
@@ -4098,7 +4098,7 @@ class Mailrecord_model extends CI_Model
                             );
                         } elseif (
                             !empty($document_id_arr) &&
-                            count($document_id_arr ?? []) > 0
+                            safe_count($document_id_arr ?? []) > 0
                         ) {
                             $attachments = $this->get_document_email_links_by_id_arr(
                                 $document_id_arr,
@@ -4181,7 +4181,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_MEDPRESCRIPTION);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-medical-prescription-template.html';
             $email_body = $this->read_file($email_template);
@@ -4207,7 +4207,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -4352,7 +4352,7 @@ class Mailrecord_model extends CI_Model
                         $record_id,
                     );
                 } elseif (
-                    count($document_id_arr ?? []) > 0 &&
+                    safe_count($document_id_arr ?? []) > 0 &&
                     !empty($document_id_arr)
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
@@ -4443,14 +4443,14 @@ class Mailrecord_model extends CI_Model
         global $record_type_id, $user_email;
         $html_content = '';
         $output_str = '';
-        if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+        if (safe_count($sub_id_arr ?? []) > 0) {
+            for ($i = 0; $i < safe_count($sub_id_arr ?? []); $i++) {
                 $this->mongodb->where([
                     'RecordId' => mongo_id($sub_id_arr[$i]),
                     'UserId' => mongo_id($user_id),
                 ]);
                 $qry = $this->mongodb->get('MedPrescriptionMedicine');
-                if (count($qry ?? []) > 0) {
+                if (safe_count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
                         $print_template =
                             '../../templates/email-medical-prescription-medicine.html';
@@ -4475,7 +4475,7 @@ class Mailrecord_model extends CI_Model
                         if ($document_id_arr == '-1') {
                             $this->get_document_email_links(24, $record_id);
                         } elseif (
-                            count($document_id_arr ?? []) > 0 &&
+                            safe_count($document_id_arr ?? []) > 0 &&
                             !empty($document_id_arr)
                         ) {
                             $attachments = $this->get_document_email_links_by_id_arr(
@@ -4568,7 +4568,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_MEDFAMILY);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-medical-family-template.html';
             $email_body = $this->read_file($email_template);
@@ -4593,7 +4593,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -4715,7 +4715,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_MEDHEALTHINSURANCE);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-medical-health-insurance-template.html';
             $email_body = $this->read_file($email_template);
@@ -4748,7 +4748,7 @@ class Mailrecord_model extends CI_Model
                 $currency = stripslashes($rec['Currency']);
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -4906,7 +4906,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_LEGALDISPUTE);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-legal-dispute-template.html';
             $email_body = $this->read_file($email_template);
@@ -4934,7 +4934,7 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -5068,7 +5068,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_LEGALOWNERSHIPTRANSFER);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-legal-ownership-template.html';
             $email_body = $this->read_file($email_template);
@@ -5111,7 +5111,7 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -5272,7 +5272,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINFINANCIALACCOUNTS);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-financial-accounts-template.html';
             $email_body = $this->read_file($email_template);
@@ -5300,7 +5300,7 @@ class Mailrecord_model extends CI_Model
                 $ifsc = stripslashes($rec['Ifsc']);
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -5435,7 +5435,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINASSET);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-financial-assets-template.html';
             $email_body = $this->read_file($email_template);
@@ -5464,7 +5464,7 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -5596,7 +5596,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINREVENUE);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-financial-revenues-template.html';
             $email_body = $this->read_file($email_template);
@@ -5630,7 +5630,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -5727,14 +5727,14 @@ class Mailrecord_model extends CI_Model
         global $record_type_id, $user_email;
         $html_content = '';
         $output_str = '';
-        if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+        if (safe_count($sub_id_arr ?? []) > 0) {
+            for ($i = 0; $i < safe_count($sub_id_arr ?? []); $i++) {
                 $this->mongodb->where([
                     'RecordId' => mongo_id($sub_id_arr[$i]),
                     'UserId' => mongo_id($user_id),
                 ]);
                 $qry = $this->mongodb->get('revenue');
-                if (count($qry ?? []) > 0) {
+                if (safe_count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
                         $print_template =
                             '../../templates/email-financial-revenues-template1.html';
@@ -5753,7 +5753,7 @@ class Mailrecord_model extends CI_Model
                             $this->get_document_email_links(41, $record_id);
                         } elseif (
                             !empty($document_id_arr) &&
-                            count($document_id_arr ?? []) > 0
+                            safe_count($document_id_arr ?? []) > 0
                         ) {
                             $attachments = $this->get_document_email_links_by_id_arr(
                                 $document_id_arr,
@@ -5816,7 +5816,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINCARDS);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             if (
                 ($card_type == 'Credit' ||
                     $card_type == 'Others' ||
@@ -5881,7 +5881,7 @@ class Mailrecord_model extends CI_Model
                 $due_date = stripslashes($rec['DueDate']);
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -6012,7 +6012,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINLIABILITY);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-financial-liability-template.html';
             $email_body = $this->read_file($email_template);
@@ -6040,7 +6040,7 @@ class Mailrecord_model extends CI_Model
                 $due_date = stripslashes($rec['DueDate']);
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -6163,7 +6163,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINPAYMENT);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-financial-payments-template.html';
             $email_body = $this->read_file($email_template);
@@ -6198,7 +6198,7 @@ class Mailrecord_model extends CI_Model
 
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -6303,14 +6303,14 @@ class Mailrecord_model extends CI_Model
         global $record_type_id, $user_email;
         $html_content = '';
         $output_str = '';
-        if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+        if (safe_count($sub_id_arr ?? []) > 0) {
+            for ($i = 0; $i < safe_count($sub_id_arr ?? []); $i++) {
                 $this->mongodb->where([
                     'RecordId' => mongo_id($sub_id_arr[$i]),
                     'UserId' => mongo_id($user_id),
                 ]);
                 $qry = $this->mongodb->get('payments');
-                if (count($qry ?? []) > 0) {
+                if (safe_count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
                         $print_template =
                             '../../templates/email-financial-payments-template1.html';
@@ -6328,7 +6328,7 @@ class Mailrecord_model extends CI_Model
                         if ($document_id_arr == '-1') {
                             $this->get_document_email_links(39, $record_id);
                         } elseif (
-                            count($document_id_arr ?? []) > 0 &&
+                            safe_count($document_id_arr ?? []) > 0 &&
                             !empty($document_id_arr)
                         ) {
                             $attachments = $this->get_document_email_links_by_id_arr(
@@ -6390,7 +6390,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FINTAX);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template =
                 '../../templates/email-financial-tax-template.html';
             $email_body = $this->read_file($email_template);
@@ -6417,7 +6417,7 @@ class Mailrecord_model extends CI_Model
                 $notes = stripslashes($rec['Notes']);
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -6535,7 +6535,7 @@ class Mailrecord_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['RecordId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get(TBL_FININSURANCE);
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             if ($insurance_type == 'Life') {
                 $email_template =
                     '../../templates/email-financial-insurance-template.html';
@@ -6579,7 +6579,7 @@ class Mailrecord_model extends CI_Model
                 $due_date = stripslashes($rec['DueDate']);
                 if (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr(
                         $document_id_arr,
@@ -6796,15 +6796,15 @@ class Mailrecord_model extends CI_Model
         $record_id,
     ) {
         ob_start();
-        if (count($document_id_arr ?? []) > 0) {
-            for ($i = 0; $i < count($document_id_arr ?? []); $i++) {
+        if (safe_count($document_id_arr ?? []) > 0) {
+            for ($i = 0; $i < safe_count($document_id_arr ?? []); $i++) {
                 $this->mongodb->where([
                     'RecordId' => mongo_id($record_id),
                     'DocumentId' => mongo_id($document_id_arr[$i]),
                 ]);
                 $qry = $this->mongodb->get('fs.files');
 
-                if (count($qry ?? []) > 0) {
+                if (safe_count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
 
                         $document_id = $rec['DocumentId'];
@@ -7004,7 +7004,7 @@ class Mailrecord_model extends CI_Model
                     );
                 } elseif (
                     !empty($document_id_arr) &&
-                    count($document_id_arr ?? []) > 0
+                    safe_count($document_id_arr ?? []) > 0
                 ) {
                     $attachments = $this->get_document_email_links_by_id_arr1(
                         $document_id_arr,
@@ -7067,7 +7067,7 @@ class Mailrecord_model extends CI_Model
     ) {
         ob_start();
 
-        if (count($document_id_arr ?? []) > 0) {
+        if (safe_count($document_id_arr ?? []) > 0) {
             $$kartname = $_POST['kart'];
             $kartname1 = $_POST['kart1'];
             if ($kartname1) {
@@ -7121,14 +7121,14 @@ class Mailrecord_model extends CI_Model
         global $record_type_id, $user_email;
         $html_content = '';
         $output_str = '';
-        if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+        if (safe_count($sub_id_arr ?? []) > 0) {
+            for ($i = 0; $i < safe_count($sub_id_arr ?? []); $i++) {
                 $this->mongodb->where([
                     'RecordId' => mongo_id($sub_id_arr[$i]),
                     'UserId' => mongo_id($user_id),
                 ]);
                 $qry = $this->mongodb->get('projectinclude');
-                if (count($qry ?? []) > 0) {
+                if (safe_count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
                         $print_template =
                             '../../templates/email-professional-projects-task.html';
@@ -7147,7 +7147,7 @@ class Mailrecord_model extends CI_Model
                                 $record_id,
                             );
                         } elseif (
-                            count($document_id_arr ?? []) > 0 &&
+                            safe_count($document_id_arr ?? []) > 0 &&
                             !empty($document_id_arr)
                         ) {
                             $attachments = $this->get_document_email_links_by_id_arr(
@@ -7208,14 +7208,14 @@ class Mailrecord_model extends CI_Model
         global $record_type_id, $user_email;
         $html_content = '';
         $output_str = '';
-        if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+        if (safe_count($sub_id_arr ?? []) > 0) {
+            for ($i = 0; $i < safe_count($sub_id_arr ?? []); $i++) {
                 $this->mongodb->where([
                     'RecordId' => mongo_id($sub_id_arr[$i]),
                     'UserId' => mongo_id($user_id),
                 ]);
                 $qry = $this->mongodb->get('UndergraduateSub');
-                if (count($qry ?? []) > 0) {
+                if (safe_count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
                         $print_template =
                             '../../templates/email-academic-ug-marksmemo.html';
@@ -7235,7 +7235,7 @@ class Mailrecord_model extends CI_Model
                                 $record_id,
                             );
                         } elseif (
-                            count($document_id_arr ?? []) > 0 &&
+                            safe_count($document_id_arr ?? []) > 0 &&
                             !empty($document_id_arr)
                         ) {
                             $attachments = $this->get_document_email_links_by_id_arr(
@@ -7305,14 +7305,14 @@ class Mailrecord_model extends CI_Model
         global $record_type_id, $user_email;
         $html_content = '';
         $output_str = '';
-        if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+        if (safe_count($sub_id_arr ?? []) > 0) {
+            for ($i = 0; $i < safe_count($sub_id_arr ?? []); $i++) {
                 $this->mongodb->where([
                     'RecordId' => mongo_id($sub_id_arr[$i]),
                     'UserId' => mongo_id($user_id),
                 ]);
                 $qry = $this->mongodb->get('PostgraduateSub');
-                if (count($qry ?? []) > 0) {
+                if (safe_count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
                         $print_template =
                             '../../templates/email-academic-pg-marksmemo.html';
@@ -7332,7 +7332,7 @@ class Mailrecord_model extends CI_Model
                                 $record_id,
                             );
                         } elseif (
-                            count($document_id_arr ?? []) > 0 &&
+                            safe_count($document_id_arr ?? []) > 0 &&
                             !empty($document_id_arr)
                         ) {
                             $attachments = $this->get_document_email_links_by_id_arr(
@@ -7401,14 +7401,14 @@ class Mailrecord_model extends CI_Model
         global $record_type_id, $user_email;
         $html_content = '';
         $output_str = '';
-        if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+        if (safe_count($sub_id_arr ?? []) > 0) {
+            for ($i = 0; $i < safe_count($sub_id_arr ?? []); $i++) {
                 $this->mongodb->where([
                     'RecordId' => mongo_id($sub_id_arr[$i]),
                     'UserId' => mongo_id($user_id),
                 ]);
                 $qry = $this->mongodb->get('MedFamilyMember');
-                if (count($qry ?? []) > 0) {
+                if (safe_count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
                         $print_template =
                             '../../templates/email-medical-family-patient.html';
@@ -7433,7 +7433,7 @@ class Mailrecord_model extends CI_Model
                                 $record_id,
                             );
                         } elseif (
-                            count($document_id_arr ?? []) > 0 &&
+                            safe_count($document_id_arr ?? []) > 0 &&
                             !empty($document_id_arr)
                         ) {
                             $attachments = $this->get_document_email_links_by_id_arr(
@@ -7517,14 +7517,14 @@ class Mailrecord_model extends CI_Model
         $sub_id_arr,
     ) {
         $output_str = '';
-        if (count($sub_id_arr ?? []) > 0) {
-            for ($i = 0; $i < count($sub_id_arr ?? []); $i++) {
+        if (safe_count($sub_id_arr ?? []) > 0) {
+            for ($i = 0; $i < safe_count($sub_id_arr ?? []); $i++) {
                 $this->mongodb->where([
                     'RecordId' => mongo_id($sub_id_arr[$i]),
                     'UserId' => mongo_id($user_id),
                 ]);
                 $qry = $this->mongodb->get('MedHealthInsuranceBeneficiary');
-                if (count($qry ?? []) > 0) {
+                if (safe_count($qry ?? []) > 0) {
                     foreach ($qry as $rec) {
                         $print_template =
                             '../../templates/email-medical-health-insurance-beneficiary.html';
@@ -7551,7 +7551,7 @@ class Mailrecord_model extends CI_Model
                                 $record_id,
                             );
                         } elseif (
-                            count($document_id_arr ?? []) > 0 &&
+                            safe_count($document_id_arr ?? []) > 0 &&
                             !empty($document_id_arr)
                         ) {
                             $attachments = $this->get_document_email_links_by_id_arr(

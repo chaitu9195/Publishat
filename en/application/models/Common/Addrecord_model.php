@@ -18,7 +18,7 @@ class Addrecord_model extends CI_Model
         unset($params['filename']);
 
         $docArray = [];
-        if (count($_FILES ?? []) > 0) {
+        if (safe_count($_FILES ?? []) > 0) {
             $docArray = $this->document_validation($user_id);
             if (isset($docArray['status'])) {
                 return $docArray;
@@ -279,8 +279,8 @@ class Addrecord_model extends CI_Model
         if ($result) {
             $record_id = $mongoid;
 
-            if (count($fileids ?? []) > 0) {
-                for ($i = 0; $i < count($fileids ?? []); $i++) {
+            if (safe_count($fileids ?? []) > 0) {
+                for ($i = 0; $i < safe_count($fileids ?? []); $i++) {
                     $file_id = $fileids[$i];
                     if ($file_id != '') {
                         $this->mongodb->where([
@@ -288,7 +288,7 @@ class Addrecord_model extends CI_Model
                             'UserId' => mongo_id($user_id),
                         ]);
                         $file_qry = $this->mongodb->get('fs.files');
-                        if (count($file_qry ?? []) > 0) {
+                        if (safe_count($file_qry ?? []) > 0) {
                             $this->mongodb->where([
                                 '_id' => mongo_id($file_id),
                             ]);
@@ -306,7 +306,7 @@ class Addrecord_model extends CI_Model
                 }
             }
 
-            if (count($docArray ?? []) > 0) {
+            if (safe_count($docArray ?? []) > 0) {
                 $file_extension = strtolower($docArray['ext']);
                 $mongo_connection = new MongoClient();
                 $mid = mongo_id();
@@ -357,7 +357,7 @@ class Addrecord_model extends CI_Model
         unset($params['fileids']);
 
         $docArray = [];
-        if (count($_FILES ?? []) > 0) {
+        if (safe_count($_FILES ?? []) > 0) {
             $docArray = $this->document_validation($user_id);
             if (isset($docArray['status'])) {
                 return $docArray;
@@ -413,8 +413,8 @@ class Addrecord_model extends CI_Model
                 $this->mongodb->update(TBL_FINPAYMENT);
             }
 
-            if (count($fileids ?? []) > 0) {
-                for ($i = 0; $i < count($fileids ?? []); $i++) {
+            if (safe_count($fileids ?? []) > 0) {
+                for ($i = 0; $i < safe_count($fileids ?? []); $i++) {
                     $file_id = $fileids[$i];
                     if ($file_id != '') {
                         $this->mongodb->where([
@@ -422,7 +422,7 @@ class Addrecord_model extends CI_Model
                             'UserId' => mongo_id($user_id),
                         ]);
                         $file_qry = $this->mongodb->get('fs.files');
-                        if (count($file_qry ?? []) > 0) {
+                        if (safe_count($file_qry ?? []) > 0) {
                             $this->mongodb->where([
                                 '_id' => mongo_id($file_id),
                             ]);
@@ -438,7 +438,7 @@ class Addrecord_model extends CI_Model
                 }
             }
 
-            if (count($docArray ?? []) > 0) {
+            if (safe_count($docArray ?? []) > 0) {
                 $file_extension = strtolower($docArray['ext']);
                 $mongo_connection = new MongoClient();
                 $mid = mongo_id();

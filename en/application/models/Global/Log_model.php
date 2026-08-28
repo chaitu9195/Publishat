@@ -29,7 +29,7 @@ class Log_model extends CI_Model
         $this->mongodb->limit($end);
         $qry = $this->mongodb->get('events');
 
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             foreach ($qry as $log) {
                 $user_id = (string) $log['UserId'];
                 $id = (string) $log['_id'];

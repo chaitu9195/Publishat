@@ -13,7 +13,7 @@ class Cart_model extends CI_Model
             'RecordTypeId' => $record_type_id,
         ]);
         $file_qry = $this->mongodb->get('fs.files');
-        if (count($file_qry ?? []) > 0) {
+        if (safe_count($file_qry ?? []) > 0) {
             foreach ($file_qry as $key) {
                 $file_data[] = $key;
             }
@@ -56,14 +56,14 @@ class Cart_model extends CI_Model
             'UserId' => mongo_id($user_id),
         ]);
         $kartqry = $this->mongodb->get('kartname');
-        if (count($kartqry ?? []) == 0) {
+        if (safe_count($kartqry ?? []) == 0) {
             $this->mongodb->insert('kartname', [
                 'UserId' => mongo_id($user_id),
                 'KartName' => $name,
             ]);
         }
 
-        if (count($document_id ?? []) > 0) {
+        if (safe_count($document_id ?? []) > 0) {
             foreach ($document_id as $id) {
                 $this->mongodb->where([
                     'UserId' => mongo_id($user_id),
@@ -178,7 +178,7 @@ class Cart_model extends CI_Model
         $user_id = $this->session->userdata('user_id');
         $document_ids = explode(',', $params['del_doc_id']);
         $cartname = $params['cartname'];
-        if (count($document_ids ?? []) > 0) {
+        if (safe_count($document_ids ?? []) > 0) {
             foreach ($document_ids as $id) {
                 if (empty($cartname)) {
                     $this->mongodb->where(['DocumentId' => mongo_id($id)]);

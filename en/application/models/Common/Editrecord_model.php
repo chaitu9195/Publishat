@@ -274,8 +274,8 @@ class Editrecord_model extends CI_Model
         $result = $this->mongodb->update($RecordDetails[0]['DBTable']);
 
         if ($result) {
-            if (count($fileids ?? []) > 0) {
-                for ($i = 0; $i < count($fileids ?? []); $i++) {
+            if (safe_count($fileids ?? []) > 0) {
+                for ($i = 0; $i < safe_count($fileids ?? []); $i++) {
                     $file_id = $fileids[$i];
                     if ($file_id != '') {
                         $this->mongodb->where([
@@ -283,7 +283,7 @@ class Editrecord_model extends CI_Model
                             'UserId' => mongo_id($user_id),
                         ]);
                         $file_qry = $this->mongodb->get('fs.files');
-                        if (count($file_qry ?? []) > 0) {
+                        if (safe_count($file_qry ?? []) > 0) {
                             $this->mongodb->where([
                                 '_id' => mongo_id($file_id),
                             ]);

@@ -24,7 +24,7 @@ class Settings_model extends CI_Model
         $user_id = $this->session->userdata('user_id');
         $module = $params['module'];
         $account_setting_id_arr = $params['account_setting_id'];
-        if (count($account_setting_id_arr ?? []) > 0) {
+        if (safe_count($account_setting_id_arr ?? []) > 0) {
             $this->mongodb->set(['SettingValue' => 'N']);
             $this->mongodb->where([
                 'Module' => $module,
@@ -32,7 +32,7 @@ class Settings_model extends CI_Model
             ]);
             $this->mongodb->update('AccountSettings', ['multiple' => true]);
 
-            for ($i = 0; $i < count($account_setting_id_arr ?? []); $i++) {
+            for ($i = 0; $i < safe_count($account_setting_id_arr ?? []); $i++) {
                 $account_setting_id = $account_setting_id_arr[$i];
                 $this->mongodb->set(['SettingValue' => 'Y']);
                 $this->mongodb->where([

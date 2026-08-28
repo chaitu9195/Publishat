@@ -11,12 +11,12 @@ class Mailcartitems_model extends CI_Model
 
         $this->mongodb->where(['UserId' => mongo_id($user_id)]);
         $validUser = $this->mongodb->get('User');
-        if (count($validUser ?? []) > 0) {
+        if (safe_count($validUser ?? []) > 0) {
             foreach ($validUser as $userData) {
                 $user_email = $userData['Email'];
                 $user_fullname = $userData['Name'];
                 $user_phone = $userData['Phone'];
-                if (count($document_ids ?? []) > 0) {
+                if (safe_count($document_ids ?? []) > 0) {
                     $email_content = header_top;
                     $table_bg_color = '#99CCCC';
                     foreach ($document_ids as $document_id) {
@@ -68,7 +68,7 @@ class Mailcartitems_model extends CI_Model
 
                     if (!empty($email_list)) {
                         $email_arr = explode(',', trim($email_list));
-                        if (count($email_arr ?? []) > 0) {
+                        if (safe_count($email_arr ?? []) > 0) {
                             foreach ($email_arr as $out_email) {
                                 $mailStatus = $this->sendcartmail(
                                     $from_email,
@@ -118,7 +118,7 @@ class Mailcartitems_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['DocumentId' => mongo_id($doc_id)]);
         $qry = $this->mongodb->get('fs.files');
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template = 'mailtemplates/email-showkart.html';
             $email_body = $this->read_file($email_template);
             foreach ($qry as $rec) {
@@ -156,7 +156,7 @@ class Mailcartitems_model extends CI_Model
 
         $this->mongodb->where(['DocumentId' => mongo_id($record_id)]);
         $qry = $this->mongodb->get('fs.files');
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             foreach ($qry as $rec) {
                 $document_id = $rec['DocumentId'];
                 $user_id = $rec['UserId'];

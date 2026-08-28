@@ -23,12 +23,12 @@ class Mailfolderfiles_model extends CI_Model
         $Issue_Status = $params['Issue_Status'];
         $this->mongodb->where(['UserId' => mongo_id($user_id)]);
         $validUser = $this->mongodb->get(TBL_USER);
-        if (count($validUser ?? []) > 0) {
+        if (safe_count($validUser ?? []) > 0) {
             $userData = $validUser;
             $user_email = $userData[0]['Email'];
             $user_fullname = $userData[0]['Name'];
             $user_phone = $userData[0]['Phone'];
-            if (count($document_ids ?? []) > 0) {
+            if (safe_count($document_ids ?? []) > 0) {
                 if (
                     $user_type == 'undefined' ||
                     $group == 'undefined' ||
@@ -108,7 +108,7 @@ class Mailfolderfiles_model extends CI_Model
 
                 if (!empty($email_list)) {
                     $email_arr = explode(',', trim($email_list));
-                    if (count($email_arr ?? []) > 0) {
+                    if (safe_count($email_arr ?? []) > 0) {
                         foreach ($email_arr as $out_email) {
                             $mailStatus = $this->sendcartmail(
                                 $from_email,
@@ -147,7 +147,7 @@ class Mailfolderfiles_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['_id' => mongo_id($doc_id)]);
         $qry = $this->mongodb->get('fs.files');
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template = 'mailtemplates/email-showkart.html';
             $email_body = $this->read_file($email_template);
             $rec = $qry;
@@ -182,12 +182,12 @@ class Mailfolderfiles_model extends CI_Model
         $issues = $params['issues'];
         $this->mongodb->where(['UserId' => mongo_id($user_id)]);
         $validUser = $this->mongodb->get(TBL_USER);
-        if (count($validUser ?? []) > 0) {
+        if (safe_count($validUser ?? []) > 0) {
             $userData = $validUser;
             $user_email = $userData[0]['Email'];
             $user_fullname = $userData[0]['Name'];
             $user_phone = $userData[0]['Phone'];
-            if (count($document_ids ?? []) > 0) {
+            if (safe_count($document_ids ?? []) > 0) {
                 $email_content = header_top;
                 $table_bg_color = '#99CCCC';
                 foreach ($document_ids as $document_id) {
@@ -250,7 +250,7 @@ class Mailfolderfiles_model extends CI_Model
 
                 if (!empty($email_list)) {
                     $email_arr = explode(',', trim($email_list));
-                    if (count($email_arr ?? []) > 0) {
+                    if (safe_count($email_arr ?? []) > 0) {
                         foreach ($email_arr as $out_email) {
                             $mailStatus = $this->sendcartmail(
                                 $from_email,
@@ -281,7 +281,7 @@ class Mailfolderfiles_model extends CI_Model
         $email_body = '';
         $this->mongodb->where(['_id' => mongo_id($doc_id)]);
         $qry = $this->mongodb->get('Bookmarks');
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $email_template = 'mailtemplates/email_bookmarks.php';
             $email_body = $this->read_file($email_template);
             $rec = $qry;
@@ -320,7 +320,7 @@ class Mailfolderfiles_model extends CI_Model
         ob_start();
         $this->mongodb->where(['_id' => $record_id]);
         $qry = $this->mongodb->get('fs.files');
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $rec = $qry;
             $file_type = $rec[0]['FileType'];
             $doc_path = $rec[0]['DocumentPath'];

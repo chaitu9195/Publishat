@@ -12,7 +12,7 @@ class Deleterecord_model extends CI_Model
         $recordDeleted = 0;
         $this->mongodb->where(['RecordTypeId' => $RecordTypeId]);
         $getTableName = $this->mongodb->get(TBL_RECORDTYPE);
-        if (count($getTableName ?? []) > 0) {
+        if (safe_count($getTableName ?? []) > 0) {
             if ($RecordTypeId == 1) {
                 $headers = [
                     'key1' => 'Class',
@@ -257,7 +257,7 @@ class Deleterecord_model extends CI_Model
                     'RecordId' => mongo_id($id),
                 ]);
                 $recordData = $this->mongodb->get($tableName);
-                if (count($recordData ?? []) > 0) {
+                if (safe_count($recordData ?? []) > 0) {
                     $rdresult = $recordData;
 
                     $RecordName = $rdresult[0][$recordNames];
@@ -292,7 +292,7 @@ class Deleterecord_model extends CI_Model
                             $checkrelatedrecsqry = $this->mongodb->get(
                                 $relatedTableName,
                             );
-                            if (count($checkrelatedrecsqry ?? []) > 0) {
+                            if (safe_count($checkrelatedrecsqry ?? []) > 0) {
                                 foreach (
                                     $checkrelatedrecsqry
                                     as $singlerelatedrec
@@ -359,7 +359,7 @@ class Deleterecord_model extends CI_Model
             'RecordTypeId' => $RecordTypeId,
         ]);
         $qry = $this->mongodb->get('fs.files');
-        if (count($qry ?? []) > 0) {
+        if (safe_count($qry ?? []) > 0) {
             $this->mongodb->where([
                 'UserId' => mongo_id($user_id),
                 'RecordId' => mongo_id($id),

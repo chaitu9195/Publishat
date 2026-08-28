@@ -9,7 +9,7 @@ class Summary_model extends CI_Model
         $user_id = $this->session->userdata('user_id');
         $this->mongodb->where(['UserId' => mongo_id($user_id)]);
         $query = $this->mongodb->get('User');
-        if (count($query ?? []) > 0) {
+        if (safe_count($query ?? []) > 0) {
             foreach ($query as $data) {
                 $user_data[] = $data;
             }

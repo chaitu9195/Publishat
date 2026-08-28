@@ -16,7 +16,7 @@ class Message_model extends CI_Model
         $subject = 'NTR Blood Bank';
         $email_template = 'mailtemplates/message_template.html';
         $email_arr = explode(',', trim($mailto));
-        if (count($email_arr ?? []) > 0) {
+        if (safe_count($email_arr ?? []) > 0) {
             foreach ($email_arr as $to_email) {
                 $from_email = admin_from_email;
                 $subject = 'NTR BLOOD BANK';

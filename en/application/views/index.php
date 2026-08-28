@@ -342,7 +342,7 @@ if (!empty(trim((string) $user_id))) {
                 <div class="row menuclass blogs">
                     <?php
                     $query = $this->mongodb->get('Articles');
-                    if (count($query ?? []) > 0) {
+                    if (safe_count($query ?? []) > 0) {
                         foreach ($query as $data) {
 
                             $id = $data['_id'];
@@ -361,7 +361,7 @@ if (!empty(trim((string) $user_id))) {
                             $date = $data['Date'];
                             $this->mongodb->where(['UserId' => $user_id]);
                             $res = $this->mongodb->get('User');
-                            if (count($res ?? []) > 0) {
+                            if (safe_count($res ?? []) > 0) {
                                 foreach ($res as $data) {
                                     $name = $data['Name'];
                                 }

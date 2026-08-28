@@ -10,7 +10,7 @@ class Articles_model extends CI_Model
         $this->mongodb->where(['UserId' => $user_id]);
 
         $query = $this->mongodb->get('User');
-        if (count($query ?? []) > 0) {
+        if (safe_count($query ?? []) > 0) {
             foreach ($query as $data) {
                 $user_data[] = $data;
             }

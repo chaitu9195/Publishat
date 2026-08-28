@@ -157,10 +157,10 @@ class Web extends REST_Controller
             $string = str_replace(' ,', '', $string);
             $wordData = explode(' ', $string);
             $ocrData['FromDate'] = $wordData[0];
-            for ($i = 1; $i < count($wordData ?? []) - 2; $i++) {
+            for ($i = 1; $i < safe_count($wordData ?? []) - 2; $i++) {
                 $ocrData['ReceiverName'] .= $wordData[$i] . ' ';
             }
-            $ocrData['Amount'] = $wordData[count($wordData ?? []) - 2];
+            $ocrData['Amount'] = $wordData[safe_count($wordData ?? []) - 2];
             $ocrData['Notes'] = $string;
         }
         $data['files'] = $folder_files['folder'];
@@ -373,7 +373,7 @@ class Web extends REST_Controller
         $record_id = $params['RecordId'];
         $module = $params['module'];
         $record_type_id = $params['record_type_id'];
-        if (count($_FILES ?? []) > 0) {
+        if (safe_count($_FILES ?? []) > 0) {
             $this->load->model('Common/Uploadfile_model');
             $result1 = $this->Uploadfile_model->upload_file($params);
             if ($result1['data'] == 'Success') {
@@ -415,7 +415,7 @@ class Web extends REST_Controller
         $record_type_id = $params['page_refer_id'];
         $record_id = $params['rid'];
         $module = $params['module'];
-        if (count($params ?? [])) {
+        if (safe_count($params ?? [])) {
             $del_status = $this->Common_model->delete_single_rec($params);
             if ($del_status['status'] == 'Success') {
                 $tableName = $this->Common_model->get_table($record_type_id);
@@ -467,7 +467,7 @@ class Web extends REST_Controller
     {
         $params = $this->sanitize($this->input->post());
         $module = $params['module'];
-        if (count($params ?? [])) {
+        if (safe_count($params ?? [])) {
             $this->load->model('Common/Mailrecord_model');
             $result = $this->Mailrecord_model->mail_record($params);
             if ($result['status'] == 'success') {
@@ -551,7 +551,7 @@ class Web extends REST_Controller
     {
         $params = $this->sanitize($this->input->post());
         $module = $params['module'];
-        if (count($params ?? [])) {
+        if (safe_count($params ?? [])) {
             $this->load->model('Common/Mailcartitems_model');
             $result = $this->Mailcartitems_model->mail_from_cart($params);
             if ($result['status'] == 'success') {
@@ -700,7 +700,7 @@ class Web extends REST_Controller
     public function mailFolderRecord_post()
     {
         $params = $this->sanitize($this->input->post());
-        if (count($params ?? [])) {
+        if (safe_count($params ?? [])) {
             $this->load->model('Global/Mailfolderfiles_model');
             $result = $this->Mailfolderfiles_model->mail_from_folder($params);
             if ($result['status'] == 'success') {
@@ -716,7 +716,7 @@ class Web extends REST_Controller
     public function mailbookmarkRecord_post()
     {
         $params = $this->sanitize($this->input->post());
-        if (count($params ?? [])) {
+        if (safe_count($params ?? [])) {
             $this->load->model('Global/Mailfolderfiles_model');
             $result = $this->Mailfolderfiles_model->mail_from_bookmarks(
                 $params,

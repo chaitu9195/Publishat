@@ -61,7 +61,7 @@ class Related extends REST_Controller
         $module = $params['module'];
         $record_type_id = $params['record_type_id'];
         $parent_record_type_id = $params['parent_record_type_id'];
-        if (count($_FILES ?? []) > 0) {
+        if (safe_count($_FILES ?? []) > 0) {
             $this->load->model('Common/Uploadfile_model');
             $result1 = $this->Uploadfile_model->upload_file($params);
             if ($result1['data'] == 'Success') {
@@ -116,7 +116,7 @@ class Related extends REST_Controller
             $this->user_id,
             1,
         );
-        if (count($params ?? [])) {
+        if (safe_count($params ?? [])) {
             $this->load->model('Common/Common_model');
             $del_status = $this->Common_model->delete_single_rec($params);
             if ($del_status['status'] == 'Success') {

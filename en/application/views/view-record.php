@@ -183,8 +183,8 @@ if ($record_type_id == 16) {
             </div>
             <form class="form-horizontal col-sm-12 pad" name="emailForm" id='emailForm'>
                 <div class="form-group">
-                    <?php if (count($files ?? [])) {
-                        for ($i = 0; $i <= count($files ?? []) - 1; $i++) {
+                    <?php if (safe_count($files ?? [])) {
+                        for ($i = 0; $i <= safe_count($files ?? []) - 1; $i++) {
 
                             $label = $files[$i]['Notes'];
                             $doc_id = $files[$i]['DocumentId'];
@@ -232,10 +232,10 @@ if ($record_type_id == 16) {
                         <label><?= $key_value1 ?> | <?= $key_value2 ?> | <?= $key_value3 ?></label>
                     </div>
                     <div class="col-md-11 col-md-offset-1 col-xs-12">
-                        <?php if (count($sub_files ?? [])) {
+                        <?php if (safe_count($sub_files ?? [])) {
                             for (
                                 $i = 0;
-                                $i <= count($sub_files ?? []) - 1;
+                                $i <= safe_count($sub_files ?? []) - 1;
                                 $i++
                             ) {
                                 if ($sub_files[$i]['RecordId'] == $sub_rec_id) {
@@ -330,13 +330,13 @@ if ($record_type_id == 16) {
 ) ?>')"> Add <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
                     </span>
                 </div>
-                <?php if ($sub_data != 'failed' && count($sub_data ?? []) > 0) {
+                <?php if ($sub_data != 'failed' && safe_count($sub_data ?? []) > 0) {
                     $constants = get_defined_constants();
                     $headers = json_decode($constants[$tableName], true);
                     $key1 = $headers['subheaders']['key1'];
                     $key2 = $headers['subheaders']['key2'];
                     $key3 = $headers['subheaders']['key3'];
-                    for ($i = 0; $i <= count($sub_data ?? []) - 1; $i++) {
+                    for ($i = 0; $i <= safe_count($sub_data ?? []) - 1; $i++) {
                         $rec_id = $sub_data[$i]['RecordId']; ?>
                 <div class='sub_rec_wrapper'>
                     <div class="" onclick="sub_view('<?= $recTypeId ?>','<?= $relatedRecTypeId ?>','<?= $rec_id ?>','<?= $record_id ?>','<?= $moduleName ?>')">
@@ -369,8 +369,8 @@ if ($record_type_id == 16) {
         </div>
         <div class="col-sm-4 col-xs-12">
             <h3> Attachments </h3>
-            <?php if (count($files ?? [])) {
-                for ($i = 0; $i <= count($files ?? []) - 1; $i++) {
+            <?php if (safe_count($files ?? [])) {
+                for ($i = 0; $i <= safe_count($files ?? []) - 1; $i++) {
 
                     $doc_id = $files[$i]['DocumentId'];
                     $label = $files[$i]['Notes'];
@@ -458,8 +458,8 @@ if ($record_type_id == 16) {
     });
     /* Get add cart page */
     $("#addKart").click(function() {
-        var file_count = "<?= count($files ?? []) ?>";
-        var sub_file_count = "<?= count($sub_files ?? []) ?>";
+        var file_count = "<?= safe_count($files ?? []) ?>";
+        var sub_file_count = "<?= safe_count($sub_files ?? []) ?>";
         if (file_count > 0 || sub_file_count > 0) {
             getkart('<?= $record_id ?>', '<?= $recTypeId ?>', '<?= strtolower(
     $moduleName,
