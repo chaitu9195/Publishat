@@ -119,15 +119,17 @@
         </form>
         <div class="col-md-12">
             <?php
-            $data = $data['articleinfo'];
+            $data = isset($data['articleinfo']) && is_array($data['articleinfo'])
+                ? $data['articleinfo']
+                : [];
             foreach ($data as $articleinfo) {
 
-                $id = $articleinfo['_id'];
-                $userid = $articleinfo['UserId'];
-                $imagepath = $articleinfo['ArticleImage'];
-                $articledes = $articleinfo['ArticleDescription'];
-                $art_heading = $articleinfo['articleheading'];
-                $art_url = $articleinfo['ArticleUrl'];
+                $id = $articleinfo['_id'] ?? '';
+                $userid = $articleinfo['UserId'] ?? '';
+                $imagepath = $articleinfo['ArticleImage'] ?? '';
+                $articledes = $articleinfo['ArticleDescription'] ?? '';
+                $art_heading = $articleinfo['articleheading'] ?? '';
+                $art_url = $articleinfo['ArticleUrl'] ?? '';
                 ?>
 
             <div class="col-md-12" style="padding:10px;border-bottom:1px solid #ddd;">

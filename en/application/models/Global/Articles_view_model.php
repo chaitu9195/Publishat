@@ -7,13 +7,11 @@ class Articles_view_model extends CI_Model
     public function getarticleinfo()
     {
         $user_id = $this->session->userdata('user_id');
-        $query = $this->db->query(
-            "SELECT * FROM Articles WHERE UserId = '$user_id'",
-        );
-        if ($query->num_rows() > 0) {
-            foreach ($query->result_array() as $data) {
-                $article_data[] = $data;
-            }
+        $this->mongodb->where(['UserId' => $user_id]);
+        $query = $this->mongodb->get('Articles');
+        $article_data = [];
+        foreach ($query as $data) {
+            $article_data[] = $data;
         }
         return ['articleinfo' => $article_data];
     }
@@ -31,11 +29,12 @@ class Articles_view_model extends CI_Model
     public function articleupdate($params)
     {
         $id = $params['id'];
-        $articledes = $params['ArticleDescription'];
-        $art_heading = $params['articleheading'];
-        $art_url = $params['articleurl'];
-        $query = $this->db->query(
-            "UPDATE `Articles` SET `ArticleDescription`='$articledes',`ArticleHeading`='$art_heading',`ArticleUrl`='$art_url' WHERE id = '$id'",
-        );
+        $this->mongodb->where(['_id' => mongo_id($id)]);
+        $this->mongodb->set([
+            'ArticleDescription' => $params['ArticleDescription'],
+            'articleheading' => $params['articleheading'],
+            'articleurl' => $params['articleurl'],
+        ]);
+        $this->mongodb->update('Articles');
     }
 }

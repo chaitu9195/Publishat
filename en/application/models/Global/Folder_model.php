@@ -445,7 +445,10 @@ class Folder_model extends CI_Model
         $db = $m->jobs;
         $collection = $db->job;
         $where = ['idUser' => $idUser];
-        $result = $collection->find($where)->sort(['datetime' => -1]);
+        $result = $collection->find($where, [
+            'sort' => ['datetime' => -1],
+        ]);
+        $data = [];
         foreach ($result as $rowData) {
             $data[] = $rowData;
         }

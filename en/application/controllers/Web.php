@@ -820,7 +820,8 @@ class Web extends REST_Controller
         $params = $this->input->post();
         $this->load->model('Global/Articles_model');
         $this->Articles_model->articles_info_data($params);
-        $result = $this->Articles_model->getuserinfo();
+        $this->load->model('Global/Articles_view_model');
+        $result = $this->Articles_view_model->getarticleinfo();
         $data['data'] = $result;
         $this->load->view('includes/article', $data);
     }
