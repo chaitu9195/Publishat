@@ -83,9 +83,15 @@ if (strtolower($moduleName) == 'medical') {
                         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
                         $src = curl_exec($ch);
                         curl_close($ch);
-                        echo "<img src='data:image/jpg;base64," .
-                            base64_encode($src) .
-                            "' alt='$filename;' width='100%' style='padding: 2px'>";
+                        echo empty($src)
+                            ? "<i class='fa " .
+                                file_type_fa($ext) .
+                                " fa-4x' style='color:#5a6b7b'></i>"
+                            : "<img src='data:image/jpg;base64," .
+                                base64_encode($src) .
+                                "' alt='$filename;' width='100%' style='padding: 2px' onerror=\"this.style.display='none';this.nextElementSibling.style.display='inline-block'\"><i class='fa " .
+                                file_type_fa($ext) .
+                                " fa-4x' style='display:none;color:#5a6b7b'></i>";
                     } else {
                          ?>
                     <?= get_icon($ext) ?>

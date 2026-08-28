@@ -248,11 +248,17 @@ if ($moduleName == 'medical') {
                     $images = ['jpg', 'png', 'jpeg', 'gif', ''];
                     $fileextension = ['zip', 'rar'];
 
-                    $not_image = get_folder_document_icon($type);
+                    $faicon = file_type_fa($type);
                     $fol_type = $file['Type'];
+                    $onerr =
+                        ' onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-block\'"><i class="fa ' .
+                        $faicon .
+                        ' fa-2x" style="display:none;color:#5a6b7b"></i>';
                     if (in_array($type, $images ?? [])) {
                         if ($path) {
-                            $view_file = "<img src='https://publishat.com/$path' alt='$filename;' width='30px' height='30px'>";
+                            $view_file =
+                                "<img src='https://publishat.com/$path' alt='$filename;' width='30px' height='30px'" .
+                                $onerr;
                         } else {
                             $filesrc = base_url() . 'web/viewfile?fid=' . $id;
                             $ch = curl_init();
@@ -262,16 +268,18 @@ if ($moduleName == 'medical') {
                             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
                             $src = curl_exec($ch);
                             curl_close($ch);
-                            $view_file =
-                                "<img src='data:image/jpg;base64," .
-                                base64_encode($src) .
-                                "' alt='$filename;' width='30px'>";
+                            $view_file = empty($src)
+                                ? '<i class="fa ' . $faicon . ' fa-2x" style="color:#5a6b7b"></i>'
+                                : "<img src='data:image/jpg;base64," .
+                                    base64_encode($src) .
+                                    "' alt='$filename;' width='30px'" .
+                                    $onerr;
                         }
                     } else {
                         $view_file =
-                            '<img src="../../../' .
-                            $not_image .
-                            '" id="img" class="img-responsive img imag" width="30px" height="30px" >';
+                            '<i class="fa ' .
+                            $faicon .
+                            ' fa-2x" style="color:#5a6b7b"></i>';
                     }
 
                     $size = filesize_formatted($file['length']);
