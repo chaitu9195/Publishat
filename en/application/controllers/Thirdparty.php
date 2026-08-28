@@ -19,8 +19,7 @@ class Thirdparty extends REST_Controller
         $client_id =
             '298801891056-boiv3nlutpsqfdurfidvd9aktsiaditb.apps.googleusercontent.com';
         $client_secret = 'qkc-OnA6UrBTiyGSDuo6_J2E';
-        $redirect_uri =
-            'https://www.publishat.com/digital/en/Thirdparty/gcontacts';
+        $redirect_uri = base_url() . 'Thirdparty/gcontacts';
 
         $max_results = 10000;
         $auth_code = $_GET['code'];
@@ -105,7 +104,9 @@ class Thirdparty extends REST_Controller
         }
 
         header(
-            'Location: https://www.publishat.com/digital/en/web/records?page_id=14&module=professional',
+            'Location: ' .
+                base_url() .
+                'web/records?page_id=14&module=professional',
         );
     }
 
