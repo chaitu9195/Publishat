@@ -28,7 +28,9 @@ class Summary_model extends CI_Model
         $file_extension = '';
         if (!empty($_FILES['UpdProfilePhoto']['name'])) {
             $uploaded_filename = $this->upload_thumbnail($params);
-            unlink('../..' . $photo_path);
+            if (!empty($photo_path)) {
+                @unlink(FCPATH . ltrim((string) $photo_path, '/'));
+            }
         } else {
             $uploaded_filename = $photo_path;
         }
@@ -110,12 +112,13 @@ class Summary_model extends CI_Model
             $tmp_path = $_FILES['UpdProfilePhoto']['tmp_name'];
             $ext = pathinfo($fileName, PATHINFO_EXTENSION);
 
-            $document_folder = '../../profile/' . $user_id;
+            $document_folder = FCPATH . 'profile/' . $user_id;
             $createFolder = $this->create_folder($document_folder);
             $document_filename =
                 date('YmdHis') . '-' . str_replace(' ', '-', $fileName);
             $target_file_name = $document_folder . '/' . $document_filename;
-            $db_document_filename = str_replace('../..', '', $target_file_name);
+            $db_document_filename =
+                '/' . str_replace(FCPATH, '', $target_file_name);
 
             $moveResult = move_uploaded_file($tmp_path, $target_file_name);
 

@@ -152,14 +152,14 @@ class Thirdpartylogin_model extends CI_Model
 
         $rec = $qry[0];
         $folder_name = $rec['FolderName'];
-        $document_folder = '../../fileupload/' . $user_id . '/' . $folder_name;
+        $document_folder = FCPATH . 'fileupload/' . $user_id . '/' . $folder_name;
         $this->create_folder($document_folder);
 
         $target_file_name =
             $document_folder . '/' . date('YmdHis') . '-' . $file_name;
         $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
         $file_extension = strtolower($file_extension);
-        $db_document_filename = str_replace('../../', '', $target_file_name);
+        $db_document_filename = str_replace(FCPATH, '', $target_file_name);
         $date = date('Y-m-d H:i:s');
 
         if (file_put_contents($target_file_name, $data)) {

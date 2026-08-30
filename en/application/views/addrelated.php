@@ -332,85 +332,85 @@ function get_folder_document_icon($file_type)
     $file_type = strtolower($file_type);
     switch ($file_type) {
         case 'jpg':
-            $icon = '/graphics/foldericons/icon-jpg.png';
+            $icon = base_url() . 'graphics/foldericons/icon-jpg.png';
             break;
         case 'png':
-            $icon = '/graphics/foldericons/icon-png.png';
+            $icon = base_url() . 'graphics/foldericons/icon-png.png';
             break;
         case 'jpeg':
-            $icon = '/graphics/foldericons/icon-jpeg.png';
+            $icon = base_url() . 'graphics/foldericons/icon-jpeg.png';
             break;
         case 'pdf':
-            $icon = '/graphics/foldericons/icon-pdf.jpg';
+            $icon = base_url() . 'graphics/foldericons/icon-pdf.jpg';
             break;
         case 'doc':
-            $icon = '/graphics/foldericons/icon-word.jpg';
+            $icon = base_url() . 'graphics/foldericons/icon-word.jpg';
             break;
         case 'docx':
-            $icon = '/graphics/foldericons/icon-word.jpg';
+            $icon = base_url() . 'graphics/foldericons/icon-word.jpg';
             break;
         case 'odt':
-            $icon = '/graphics/foldericons/icon-word-odt.png';
+            $icon = base_url() . 'graphics/foldericons/icon-word-odt.png';
             break;
         case 'ods':
-            $icon = '/graphics/foldericons/icon-ods.jpg';
+            $icon = base_url() . 'graphics/foldericons/icon-ods.jpg';
             break;
         case 'odp':
-            $icon = '/graphics/foldericons/icon-odp.jpg';
+            $icon = base_url() . 'graphics/foldericons/icon-odp.jpg';
             break;
         case 'txt':
-            $icon = '/graphics/foldericons/icon-text.png';
+            $icon = base_url() . 'graphics/foldericons/icon-text.png';
             break;
         case 'rtf':
-            $icon = '/graphics/foldericons/icon-text.png';
+            $icon = base_url() . 'graphics/foldericons/icon-text.png';
             break;
         case 'xls':
-            $icon = '/graphics/foldericons/icon-xls.png';
+            $icon = base_url() . 'graphics/foldericons/icon-xls.png';
             break;
         case 'xlsx':
-            $icon = '/graphics/foldericons/icon-xls.png';
+            $icon = base_url() . 'graphics/foldericons/icon-xls.png';
             break;
         case 'xps':
-            $icon = '/graphics/foldericons/icon-xps.png';
+            $icon = base_url() . 'graphics/foldericons/icon-xps.png';
             break;
         case 'zip':
-            $icon = '/graphics/foldericons/icon-zip.png';
+            $icon = base_url() . 'graphics/foldericons/icon-zip.png';
             break;
         case 'rar':
-            $icon = '/graphics/foldericons/icon-rar.png';
+            $icon = base_url() . 'graphics/foldericons/icon-rar.png';
             break;
         case 'mp3':
-            $icon = '/graphics/foldericons/icon-mp3.jpg';
+            $icon = base_url() . 'graphics/foldericons/icon-mp3.jpg';
             break;
         case 'html':
-            $icon = '/graphics/foldericons/icon-html.png';
+            $icon = base_url() . 'graphics/foldericons/icon-html.png';
             break;
         case 'css':
-            $icon = '/graphics/foldericons/icon-html.png';
+            $icon = base_url() . 'graphics/foldericons/icon-html.png';
             break;
         case 'htm':
-            $icon = '/graphics/foldericons/icon-html.png';
+            $icon = base_url() . 'graphics/foldericons/icon-html.png';
             break;
         case 'js':
-            $icon = '/graphics/foldericons/icon-js.gif';
+            $icon = base_url() . 'graphics/foldericons/icon-js.gif';
             break;
         case 'xml':
-            $icon = '/graphics/foldericons/icon-xml.png';
+            $icon = base_url() . 'graphics/foldericons/icon-xml.png';
             break;
         case 'php':
-            $icon = '/graphics/foldericons/icon-php.png';
+            $icon = base_url() . 'graphics/foldericons/icon-php.png';
             break;
         case 'ppt':
-            $icon = '/graphics/foldericons/icon-ppt.png';
+            $icon = base_url() . 'graphics/foldericons/icon-ppt.png';
             break;
         case 'pptm':
-            $icon = '/graphics/foldericons/icon-ppt.png';
+            $icon = base_url() . 'graphics/foldericons/icon-ppt.png';
             break;
         case 'pptx':
-            $icon = '/graphics/foldericons/icon-ppt.png';
+            $icon = base_url() . 'graphics/foldericons/icon-ppt.png';
             break;
         default:
-            $icon = '/graphics/icon_pdf.png';
+            $icon = base_url() . 'graphics/icon_pdf.png';
             break;
     }
     return $icon;

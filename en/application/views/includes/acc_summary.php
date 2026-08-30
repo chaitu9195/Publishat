@@ -28,9 +28,11 @@
                 <?php if (empty($userinfo['PhotoPath'])) { ?>
                 <i class="fa fa-user" style="font-size: 182px;color: #b8bcca;padding: 33px;"></i>
                 <?php } else { ?>
-                <img src="../../../<?= $userinfo[
-                    'PhotoPath'
-                ] ?>" class="img img-responsive img-spacing" id="img_profile">
+                <img src="<?= base_url() .
+                    ltrim(
+                        (string) $userinfo['PhotoPath'],
+                        '/',
+                    ) ?>" class="img img-responsive img-spacing" id="img_profile">
                 <?php } ?>
             </div>
             <div id="imagePreview" class="img_pro" style="display:none"></div>
