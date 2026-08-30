@@ -80,40 +80,39 @@ if ($recTypeId == 16) {
      $del_code = rand(100000, 999999);
      $this->session->set_userdata('captcha', $del_code);
      ?>
-	 <div class="row delete_rec" id="delete_selected_rec" style="display:none;">
-	     <div class="top_text">
-	         <span>Enter the Captcha to delete the selected record(s) &amp; related documents.</span>
-	         <button type="button" id="del_selected_close" class="pull-right btn btn-danger btn-xs" onclick="hideDeleteSelected()"><i class="fa fa-remove" aria-hidden="true"></i></button>
-	     </div>
-	     <div class="delete_body">
-	         <div class="alert alert-danger" id="del_selected_error" style="display:none">
-	             <div id="del_selected_msg"> </div>
+	 <div class="modal fade" id="delete_selected_rec" tabindex="-1" role="dialog" aria-labelledby="deleteSelectedLabel" aria-hidden="true">
+	     <div class="modal-dialog">
+	         <div class="modal-content">
+	             <div class="modal-header">
+	                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	                 <h4 class="modal-title" id="deleteSelectedLabel">Delete Selected Records</h4>
+	             </div>
+	             <form name="deleteSelectedForm" id="deleteSelectedForm">
+	                 <div class="modal-body">
+	                     <p>Enter the Captcha to delete the selected record(s) &amp; related documents.</p>
+	                     <div class="alert alert-danger" id="del_selected_error" style="display:none">
+	                         <div id="del_selected_msg"> </div>
+	                     </div>
+	                     <input type="hidden" name="record_type_id" value="<?= $recTypeId ?>">
+	                     <input type="hidden" name="RecordId" id="delete_selected_ids" value="">
+	                     <input type="hidden" name="module" value="<?= strtolower(
+                         $moduleName,
+                     ) ?>">
+	                     <div class="form-group">
+	                         <label class="control-label">Captcha</label>
+	                         <div><span class="captcha"><?= $del_code ?></span></div>
+	                     </div>
+	                     <div class="form-group">
+	                         <label class="control-label" for="delete_selected_captcha">Enter Captcha</label>
+	                         <input type="text" class="form-control" name="captcha" id="delete_selected_captcha" placeholder="Enter Captcha" autocomplete="off">
+	                     </div>
+	                 </div>
+	                 <div class="modal-footer">
+	                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	                     <button type="submit" class="btn btn-danger">Delete</button>
+	                 </div>
+	             </form>
 	         </div>
-	         <form class="form-horizontal col-sm-8 col-sm-offset-1 pad" name="deleteSelectedForm" id="deleteSelectedForm">
-	             <input type="hidden" name="record_type_id" value="<?= $recTypeId ?>">
-	             <input type="hidden" name="RecordId" id="delete_selected_ids" value="">
-	             <input type="hidden" name="module" value="<?= strtolower(
-             $moduleName,
-         ) ?>">
-	             <div class="form-group">
-	                 <label class="control-label col-sm-6 hidden-xs">Captcha <span style="float:right"> : </span></label>
-	                 <div class="col-sm-6 col-xs-12">
-	                     <span class="captcha"><?= $del_code ?> </span>
-	                 </div>
-	             </div>
-	             <div class="form-group">
-	                 <label class="control-label col-sm-6 hidden-xs">Enter Captcha <span style="float:right"> : </span></label>
-	                 <div class="col-sm-6 col-xs-12">
-	                     <input type="text" class="form-control" name="captcha" id="delete_selected_captcha" placeholder="Enter Captcha">
-	                 </div>
-	             </div>
-	             <div class="form-group">
-	                 <div class="col-sm-offset-6 col-sm-6">
-	                     <button type="submit" class="btn btn-primary">Submit</button>
-	                     <button type="reset" class="btn btn-default">Reset</button>
-	                 </div>
-	             </div>
-	         </form>
 	     </div>
 	 </div>
 
@@ -309,7 +308,7 @@ function refreshDeleteButton() {
         $('#delete_selected_btn').show().html('Delete Selected (' + count + ') <i class="fa fa-trash" aria-hidden="true"></i>');
     } else {
         $('#delete_selected_btn').hide();
-        $('#delete_selected_rec').hide();
+        $('#delete_selected_rec').modal('hide');
     }
     var total = $('#table_data tbody .rec-check').length;
     $('#select_all_records').prop('checked', total > 0 && count === total);
@@ -320,14 +319,9 @@ function showDeleteSelected() {
         return;
     }
     $('#delete_selected_ids').val(selectedRecordIds().join(','));
-    $('#del_selected_error').hide();
+    $('#del_selected_error').hide().removeClass('alert-success').addClass('alert-danger');
     $('#deleteSelectedForm')[0].reset();
-    $('#delete_selected_rec').show();
-    $('html, body').animate({ scrollTop: $('#delete_selected_rec').offset().top - 80 }, 300);
-}
-
-function hideDeleteSelected() {
-    $('#delete_selected_rec').hide();
+    $('#delete_selected_rec').modal('show');
 }
 
 $(document).on('change', '#select_all_records', function () {
@@ -363,12 +357,17 @@ $('#deleteSelectedForm').submit(function (e) {
                 $('#del_selected_msg').html('<i class="fa fa-thumbs-up-o"></i> Selected records deleted. Refreshing <i class="fa fa-spinner fa-spin"></i>');
                 $('#del_selected_error').show();
                 setTimeout(function () {
+                    $('#delete_selected_rec').modal('hide');
                     rec_count();
                     getVal('<?= $recTypeId ?>', '<?= strtolower($moduleName) ?>');
-                }, 3000);
+                }, 2500);
             }
         }
     });
+});
+
+$('#delete_selected_rec').on('shown.bs.modal', function () {
+    $('#delete_selected_captcha').focus();
 });
 </script>
 <style>
