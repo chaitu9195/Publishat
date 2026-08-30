@@ -61,8 +61,8 @@ if ($recTypeId == 16) {
          </div>
 	<?php } ?>
     </div>
-    <div class="col-sm-3 col-xs-9"><input type="text" class="form-control pull-right" id="filter_table" placeholder="Filter Here ...."></div>        
-	<div class="pull-right">
+    <div class="pull-right records-toolbar">
+	   <input type="text" class="form-control" id="filter_table" placeholder="Filter Here ....">
 	   <button class="btn btn-danger" id="delete_selected_btn" title="Delete selected records" style="display:none;" onclick="showDeleteSelected()"> Delete Selected <i class="fa fa-trash" aria-hidden="true"></i></button>
 	   <button class="btn btn-primary" href="#/newschool" title ="Add new record" onclick="getNew('<?= $recTypeId ?>','<?= $moduleName ?>')"> Add <i class="fa fa-plus-square" aria-hidden="true"></i></button>
     </div>
@@ -371,7 +371,20 @@ $('#deleteSelectedForm').submit(function (e) {
     });
 });
 </script>
-<style> 
+<style>
+.records-toolbar {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0 15px 10px 0;
+}
+.records-toolbar #filter_table { width: 200px; }
+.records-toolbar .btn { white-space: nowrap; }
+@media (max-width: 767px) {
+	.records-toolbar { width: 100%; margin-right: 0; justify-content: flex-end; }
+	.records-toolbar #filter_table { flex: 1 1 auto; width: auto; }
+}
 tr:hover { cursor: pointer; font-weight:600;color: #466e90;}
 .collaboration{
 	text-align: center;
