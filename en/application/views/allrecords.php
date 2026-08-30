@@ -52,15 +52,15 @@ if ($recTypeId == 16) {
 	   		 <span class="h4"><?= $tabName ?> Records</span>
 	    </span>
 	</div>
-	<div class="right-icons col-md-4 col-xs-6" id="right_icons" style="display:block;">
 	<?php if ($recTypeId == 14) { ?>
+	<div class="right-icons col-md-4 col-xs-6" id="right_icons" style="display:block;">
          <div class="pull-left">
 			<a href="https://accounts.google.com/o/oauth2/auth?client_id=<?= GOOGLE_OAUTH_CLIENT_ID ?>&redirect_uri=<?= urlencode(
      base_url() . 'Thirdparty/gcontacts',
  ) ?>&scope=https://www.google.com/m8/feeds/&response_type=code"><span class="h5 hidden-xs"> Syncronize Google Contacts </span> <img src="../../../images/g+icon.png" alt="" id="signimg" style="width:25px;"/></a>
          </div>
-	<?php } ?>
     </div>
+	<?php } ?>
     <div class="pull-right records-toolbar">
 	   <input type="text" class="form-control" id="filter_table" placeholder="Filter Here ....">
 	   <button class="btn btn-danger" id="delete_selected_btn" title="Delete selected records" style="display:none;" onclick="showDeleteSelected()"> Delete Selected <i class="fa fa-trash" aria-hidden="true"></i></button>
