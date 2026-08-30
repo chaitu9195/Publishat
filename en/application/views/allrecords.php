@@ -338,14 +338,30 @@ $(document).on('change', '#table_data tbody .rec-check', function () {
     refreshDeleteButton();
 });
 
+function closeDeleteModalAndReload() {
+    $('#delete_selected_rec').modal('hide');
+    // The list reload replaces #body_content (which contains the modal),
+    // so clean up the backdrop/body state manually to avoid a stuck overlay.
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open').css('padding-right', '');
+    rec_count();
+    getVal('<?= $recTypeId ?>', '<?= strtolower($moduleName) ?>');
+}
+
 $('#deleteSelectedForm').submit(function (e) {
     e.preventDefault();
-    if ($('#delete_selected_captcha').val() == '') {
-        $('#del_selected_msg').html('Enter Captcha.');
-        $('#del_selected_error').show();
+    var ids = selectedRecordIds();
+    if (ids.length === 0) {
+        $('#del_selected_msg').html('No records selected.');
+        $('#del_selected_error').removeClass('alert-success').addClass('alert-danger').show();
         return;
     }
-    $('#delete_selected_ids').val(selectedRecordIds().join(','));
+    if ($('#delete_selected_captcha').val() == '') {
+        $('#del_selected_msg').html('Enter Captcha.');
+        $('#del_selected_error').removeClass('alert-success').addClass('alert-danger').show();
+        return;
+    }
+    $('#delete_selected_ids').val(ids.join(','));
     var data = new FormData(this);
     $.ajax({
         type: 'POST',
@@ -354,18 +370,14 @@ $('#deleteSelectedForm').submit(function (e) {
         processData: false,
         contentType: false,
         success: function (resp) {
-            if (resp == 'failed') {
-                $('#del_selected_msg').html('Invalid Captcha!. Enter Valid Captcha.');
-                $('#del_selected_error').show();
-            } else if (resp == 'success') {
+            if (resp == 'success') {
                 $('#del_selected_error').removeClass('alert-danger').addClass('alert-success');
                 $('#del_selected_msg').html('<i class="fa fa-thumbs-up-o"></i> Selected records deleted. Refreshing <i class="fa fa-spinner fa-spin"></i>');
                 $('#del_selected_error').show();
-                setTimeout(function () {
-                    $('#delete_selected_rec').modal('hide');
-                    rec_count();
-                    getVal('<?= $recTypeId ?>', '<?= strtolower($moduleName) ?>');
-                }, 2500);
+                setTimeout(closeDeleteModalAndReload, 1500);
+            } else {
+                $('#del_selected_msg').html('Invalid Captcha!. Enter Valid Captcha.');
+                $('#del_selected_error').removeClass('alert-success').addClass('alert-danger').show();
             }
         }
     });

@@ -458,7 +458,15 @@ class Web extends REST_Controller
             $this->session->unset_userdata('captcha');
             $this->load->model('Common/Deleterecord_model');
             $result = $this->Deleterecord_model->delete_record($params);
-            echo 'success';
+            if (
+                is_array($result) &&
+                isset($result['status']) &&
+                $result['status'] == 'success'
+            ) {
+                echo 'success';
+            } else {
+                echo 'failed';
+            }
         } else {
             echo 'failed';
         }
