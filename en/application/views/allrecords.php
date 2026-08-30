@@ -374,15 +374,15 @@ $('#delete_selected_rec').on('shown.bs.modal', function () {
 .records-toolbar {
 	display: flex;
 	align-items: center;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
 	gap: 8px;
 	margin: 0 15px 10px 0;
 }
-.records-toolbar #filter_table { width: 200px; }
-.records-toolbar .btn { white-space: nowrap; }
+.records-toolbar #filter_table { flex: 1 1 140px; width: auto; min-width: 90px; max-width: 200px; }
+.records-toolbar .btn { white-space: nowrap; flex: 0 0 auto; }
 @media (max-width: 767px) {
-	.records-toolbar { width: 100%; margin-right: 0; justify-content: flex-end; }
-	.records-toolbar #filter_table { flex: 1 1 auto; width: auto; }
+	.records-toolbar { width: 100%; margin-right: 0; justify-content: flex-end; flex-wrap: wrap; }
+	.records-toolbar #filter_table { flex: 1 1 auto; max-width: none; }
 }
 tr:hover { cursor: pointer; font-weight:600;color: #466e90;}
 .collaboration{
