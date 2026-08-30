@@ -251,7 +251,13 @@ class Deleterecord_model extends CI_Model
             $moduledetails = $getTableName;
             $tableName = $tableName[0]['DBTable'];
 
+            $deletedCount = 0;
+            $failed = false;
             foreach ($ids as $id) {
+                $id = trim($id);
+                if ($id === '') {
+                    continue;
+                }
                 $this->mongodb->where([
                     'UserId' => mongo_id($user_id),
                     'RecordId' => mongo_id($id),
@@ -338,16 +344,27 @@ class Deleterecord_model extends CI_Model
                             $eventdata,
                         );
 
-                        return [
-                            'status' => 'success',
-                            'data' =>
-                                'Selected record has been deleted successfully',
-                        ];
+                        $deletedCount++;
                     } else {
-                        return ['status' => 'failed', 'data' => 'Not deleted'];
+                        $failed = true;
                     }
                 }
             }
+
+            if ($deletedCount > 0) {
+                return [
+                    'status' => 'success',
+                    'data' =>
+                        $deletedCount > 1
+                            ? 'Selected records have been deleted successfully'
+                            : 'Selected record has been deleted successfully',
+                ];
+            }
+
+            return [
+                'status' => 'failed',
+                'data' => $failed ? 'Not deleted' : 'No matching record found',
+            ];
         }
     }
 

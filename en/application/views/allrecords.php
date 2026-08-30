@@ -62,7 +62,8 @@ if ($recTypeId == 16) {
 	<?php } ?>
     </div>
     <div class="col-sm-3 col-xs-9"><input type="text" class="form-control pull-right" id="filter_table" placeholder="Filter Here ...."></div>        
-	<div class="pull-right">  
+	<div class="pull-right">
+	   <button class="btn btn-danger" id="delete_selected_btn" title="Delete selected records" style="display:none;" onclick="showDeleteSelected()"> Delete Selected <i class="fa fa-trash" aria-hidden="true"></i></button>
 	   <button class="btn btn-primary" href="#/newschool" title ="Add new record" onclick="getNew('<?= $recTypeId ?>','<?= $moduleName ?>')"> Add <i class="fa fa-plus-square" aria-hidden="true"></i></button>
     </div>
          
@@ -75,10 +76,52 @@ if ($recTypeId == 16) {
  	    <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
 	 </div>
 
+	 <?php
+     $del_code = rand(100000, 999999);
+     $this->session->set_userdata('captcha', $del_code);
+     ?>
+	 <div class="row delete_rec" id="delete_selected_rec" style="display:none;">
+	     <div class="top_text">
+	         <span>Enter the Captcha to delete the selected record(s) &amp; related documents.</span>
+	         <button type="button" id="del_selected_close" class="pull-right btn btn-danger btn-xs" onclick="hideDeleteSelected()"><i class="fa fa-remove" aria-hidden="true"></i></button>
+	     </div>
+	     <div class="delete_body">
+	         <div class="alert alert-danger" id="del_selected_error" style="display:none">
+	             <div id="del_selected_msg"> </div>
+	         </div>
+	         <form class="form-horizontal col-sm-8 col-sm-offset-1 pad" name="deleteSelectedForm" id="deleteSelectedForm">
+	             <input type="hidden" name="record_type_id" value="<?= $recTypeId ?>">
+	             <input type="hidden" name="RecordId" id="delete_selected_ids" value="">
+	             <input type="hidden" name="module" value="<?= strtolower(
+             $moduleName,
+         ) ?>">
+	             <div class="form-group">
+	                 <label class="control-label col-sm-6 hidden-xs">Captcha <span style="float:right"> : </span></label>
+	                 <div class="col-sm-6 col-xs-12">
+	                     <span class="captcha"><?= $del_code ?> </span>
+	                 </div>
+	             </div>
+	             <div class="form-group">
+	                 <label class="control-label col-sm-6 hidden-xs">Enter Captcha <span style="float:right"> : </span></label>
+	                 <div class="col-sm-6 col-xs-12">
+	                     <input type="text" class="form-control" name="captcha" id="delete_selected_captcha" placeholder="Enter Captcha">
+	                 </div>
+	             </div>
+	             <div class="form-group">
+	                 <div class="col-sm-offset-6 col-sm-6">
+	                     <button type="submit" class="btn btn-primary">Submit</button>
+	                     <button type="reset" class="btn btn-default">Reset</button>
+	                 </div>
+	             </div>
+	         </form>
+	     </div>
+	 </div>
+
 	 <table class="table table-responsive table-striped table-hover" id="table_data">
 	     <thead>
+	 		<th style="width:30px;" onclick="event.stopPropagation()"><input type="checkbox" id="select_all_records" title="Select all"></th>
 	 		<th class='col-sm-3'> <?= $key1 ?></th>
-	 		<th class='col-sm-3'> <?= $key2 ?></th> 
+	 		<th class='col-sm-3'> <?= $key2 ?></th>
 	 		<th class='col-sm-2'> <?= $key3 ?></th>
 	 		<th class='col-sm-1'> File(s)</th>
 	 		<th class="hidden-xs col-sm-2">Created / Modified</th>
@@ -91,6 +134,9 @@ if ($recTypeId == 16) {
 ] ?>","<?= strtolower(
     $moduleName,
 ) ?>","<?= $sub_record_type_id ?>")' id='<?= $data[$i]['RecordId'] ?>'>
+                 <td onclick="event.stopPropagation()"><input type="checkbox" class="rec-check" value="<?= $data[$i][
+    'RecordId'
+] ?>"></td>
                  <td><?= $data[$i][$key1] ?></td>
                  <td><?= $data[$i][$key2] ?></td>
                  <td><?= $data[$i][$key3] ?></td>
@@ -104,7 +150,7 @@ if ($recTypeId == 16) {
 	 	<?php } ?>
 	 	<?php if (safe_count($data ?? []) == 0) { ?>
 	 	<tr id="no_records_row">
-	 		<td colspan="5" class="text-center text-muted" style="padding:20px;">No records found</td>
+	 		<td colspan="6" class="text-center text-muted" style="padding:20px;">No records found</td>
 	 	</tr>
 	 	<?php } ?>
 	     </tbody>
@@ -239,7 +285,7 @@ function getVals(id,mod,page){
 					   var value6 = obj.RecordId;
 					  $('#table_data tbody').append("<tr id='"+ value6 +"' onclick=displayView('<?= $recTypeId ?>','"+ value6 +"','<?= strtolower(
     $moduleName,
-) ?>','<?= $sub_record_type_id ?>')><td>"+ value1 +"</td><td>" + value2 + "</td>" + value3 + "<td>" + value4 + "</td><td>"+ value5 +"</td></tr>"); 
+) ?>','<?= $sub_record_type_id ?>')><td onclick=event.stopPropagation()><input type='checkbox' class='rec-check' value='"+ value6 +"'></td><td>"+ value1 +"</td><td>" + value2 + "</td>" + value3 + "<td>" + value4 + "</td><td>"+ value5 +"</td></tr>");
 					});
 					var qstring = "?page_id="+id+"&module="+mod;
               if(history.replaceState) history.replaceState({}, "", "records"+qstring);
@@ -247,6 +293,83 @@ function getVals(id,mod,page){
             }
         });
   }
+
+/* ---- Multiple record delete ---- */
+function selectedRecordIds() {
+    var ids = [];
+    $('#table_data tbody .rec-check:checked').each(function () {
+        ids.push($(this).val());
+    });
+    return ids;
+}
+
+function refreshDeleteButton() {
+    var count = selectedRecordIds().length;
+    if (count > 0) {
+        $('#delete_selected_btn').show().html('Delete Selected (' + count + ') <i class="fa fa-trash" aria-hidden="true"></i>');
+    } else {
+        $('#delete_selected_btn').hide();
+        $('#delete_selected_rec').hide();
+    }
+    var total = $('#table_data tbody .rec-check').length;
+    $('#select_all_records').prop('checked', total > 0 && count === total);
+}
+
+function showDeleteSelected() {
+    if (selectedRecordIds().length === 0) {
+        return;
+    }
+    $('#delete_selected_ids').val(selectedRecordIds().join(','));
+    $('#del_selected_error').hide();
+    $('#deleteSelectedForm')[0].reset();
+    $('#delete_selected_rec').show();
+    $('html, body').animate({ scrollTop: $('#delete_selected_rec').offset().top - 80 }, 300);
+}
+
+function hideDeleteSelected() {
+    $('#delete_selected_rec').hide();
+}
+
+$(document).on('change', '#select_all_records', function () {
+    $('#table_data tbody .rec-check').prop('checked', $(this).prop('checked'));
+    refreshDeleteButton();
+});
+
+$(document).on('change', '#table_data tbody .rec-check', function () {
+    refreshDeleteButton();
+});
+
+$('#deleteSelectedForm').submit(function (e) {
+    e.preventDefault();
+    if ($('#delete_selected_captcha').val() == '') {
+        $('#del_selected_msg').html('Enter Captcha.');
+        $('#del_selected_error').show();
+        return;
+    }
+    $('#delete_selected_ids').val(selectedRecordIds().join(','));
+    var data = new FormData(this);
+    $.ajax({
+        type: 'POST',
+        url: '../web/deleteRecord',
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function (resp) {
+            if (resp == 'failed') {
+                $('#del_selected_msg').html('Invalid Captcha!. Enter Valid Captcha.');
+                $('#del_selected_error').show();
+            } else if (resp == 'success') {
+                $('#del_selected_error').removeClass('alert-danger').addClass('alert-success');
+                $('#del_selected_msg').html('<i class="fa fa-thumbs-up-o"></i> Selected records deleted. Refreshing <i class="fa fa-spinner fa-spin"></i>');
+                $('#del_selected_error').show();
+                setTimeout(function () {
+                    rec_count();
+                    getVal('<?= $recTypeId ?>', '<?= strtolower($moduleName) ?>');
+                }, 3000);
+            }
+        }
+    });
+});
 </script>
 <style> 
 tr:hover { cursor: pointer; font-weight:600;color: #466e90;}
